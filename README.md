@@ -23,7 +23,7 @@ These instructions will get you a project up and running on your local machine f
 
 Be sure to have the following properly installed:
 
-- [Node.js](https://nodejs.org/ru/) `v18.13` ([hydrogen](https://nodejs.org/ru/blog/release/v18.13.0/))
+- [Node.js](https://nodejs.org/ru/) `v16.19` ([gallium](https://nodejs.org/en/blog/release/v16.19.0/))
 - [yarn](https://yarnpkg.com)
 
 ### Setup
