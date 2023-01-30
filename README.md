@@ -2,6 +2,7 @@
 
 > 🔭 Dataverse Portal for the [OKP4 network](https://okp4.network).
 
+ [![lint](https://img.shields.io/github/actions/workflow/status/okp4/portal/lint.yml?label=lint&style=for-the-badge&logo=github)](https://github.com/okp4/portal/actions/workflows/lint.yml)
 ## Purpose
 
 🚀 Get ready to dive into the Dataverse! 💥 This portal is your gateway to an endless world of digital resources! 🪐 Explore the [Dataspaces](https://blog.okp4.network/what-is-a-data-space-b26ba51596b0), use, and contribute with datasets, algorithms, storage, and computational power!
