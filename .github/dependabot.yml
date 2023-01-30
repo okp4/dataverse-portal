@@ -25,3 +25,15 @@ updates:
       - ccamel
       - fredericvilcot
     open-pull-requests-limit: 5
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    reviewers:
+      - ccamel
+      - fredericvilcot
+      - ErikssonJoakim
+    assignees:
+      - ccamel
+      - fredericvilcot
+    open-pull-requests-limit: 5
