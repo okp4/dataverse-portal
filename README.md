@@ -15,7 +15,7 @@
 
 🚀 Get ready to dive into the Dataverse! 💥 This portal is your gateway to an endless world of digital resources! 🪐 Explore the [Dataspaces](https://blog.okp4.network/what-is-a-data-space-b26ba51596b0), use, and contribute with datasets, algorithms, storage, and computational power!
 
-## Getting started
+[![portal screen](./etc/image/portal-screen.webp)](https://okp4.network)
 
 These instructions will get you a project up and running on your local machine for development and testing purposes.
 
