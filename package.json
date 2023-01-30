@@ -9,6 +9,9 @@
     "lint": "next lint",
     "test": "jest --passWithNoTests"
   },
+  "engines": {
+    "node": "^16.19"
+  },
   "dependencies": {
     "next": "13.1.5",
     "react": "18.2.0",
