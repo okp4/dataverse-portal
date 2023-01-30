@@ -6,13 +6,38 @@
 
 🚀 Get ready to dive into the Dataverse! 💥 This portal is your gateway to an endless world of digital resources! 🪐 Explore the [Dataspaces](https://blog.okp4.network/what-is-a-data-space-b26ba51596b0), use, and contribute with datasets, algorithms, storage, and computational power!
 
+## Getting started
 
-> Template for opensource projects [@okp4](https://okp4.network).
+These instructions will get you a project up and running on your local machine for development and testing purposes.
 
-[![lint](https://img.shields.io/github/actions/workflow/status/okp4/template-oss/lint.yml?branch=main&label=lint&style=for-the-badge&logo=github)](https://github.com/okp4/template-oss/actions/workflows/lint.yml)
-[![conventional commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=for-the-badge&logo=conventionalcommits)](https://conventionalcommits.org)
-[![contributor covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/okp4/.github/blob/main/CODE_OF_CONDUCT.md)
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=for-the-badge)](https://opensource.org/licenses/BSD-3-Clause)
+### Prerequisites
+
+Be sure to have the following properly installed:
+
+- [Node.js](https://nodejs.org/ru/) `v18.13` ([hydrogen](https://nodejs.org/ru/blog/release/v18.13.0/))
+- [yarn](https://yarnpkg.com)
+
+### Setup
+
+🚚 Install the dependencies and build the project:
+
+```sh
+yarn
+
+yarn build
+```
+
+
+### Launch
+
+Run the server with the following command line.
+
+```sh
+yarn start
+```
+
+The portal will be available at <http://localhost:3000>.
+
 
 ## You want to get involved? 😍
 
