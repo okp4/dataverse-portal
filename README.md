@@ -27,6 +27,21 @@ yarn
 yarn build
 ```
 
+### Environment variables
+
+The project relies on several environment variables for proper functioning. These variables should be set in a file named `.env.local` at the root of the project.
+Checkout [nextjs documentation](https://nextjs.org/docs/basic-features/environment-variables) for more.
+
+```shell
+# The title of the application that will be displayed in the browser's title bar.
+APP_TITLE=
+# A comma-separated list of keywords relevant to the application (used by search engines).
+APP_KEYWORDS=
+# A brief description of the application (used by search engines).
+APP_DESCRIPTION=
+```
+
+Note that the `.env.local` file is not tracked by version control and should not be committed to the repository.
 
 ### Launch
 
