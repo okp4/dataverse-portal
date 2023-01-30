@@ -1,4 +1,11 @@
-# Template project
+# Dataverse Web Portal
+
+> 🔭 Dataverse Portal for the [OKP4 network](https://okp4.network).
+
+## Purpose
+
+🚀 Get ready to dive into the Dataverse! 💥 This portal is your gateway to an endless world of digital resources! 🪐 Explore the [Dataspaces](https://blog.okp4.network/what-is-a-data-space-b26ba51596b0), use, and contribute with datasets, algorithms, storage, and computational power!
+
 
 > Template for opensource projects [@okp4](https://okp4.network).
 
