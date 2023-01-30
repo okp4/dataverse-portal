@@ -53,10 +53,18 @@ yarn start
 
 The portal will be available at <http://localhost:3000>.
 
+## License
+
+The OKP4 documentation portal is open source and [3-Clause BSD][bsd-3-clause] licensed.
+
+The contents of the documentation (e.g. the `.md` files in the `/docs` folder) is [Creative Commons Attribution-ShareAlike 4.0 International][cc-by-sa] licensed.
 
 ## You want to get involved? 😍
 
-Please check out OKP4 health files :
+Please check out OKP4 health files:
 
 - [Contributing](https://github.com/okp4/.github/blob/main/CONTRIBUTING.md)
 - [Code of conduct](https://github.com/okp4/.github/blob/main/CODE_OF_CONDUCT.md)
+
+[bsd-3-clause]: https://opensource.org/licenses/BSD-3-Clause
+[cc-by-sa]: https://creativecommons.org/licenses/by-sa/4.0/
