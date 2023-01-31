@@ -17,6 +17,8 @@
 
 [![portal screen](./etc/image/portal-screen.webp)](https://okp4.network)
 
+## Install
+
 These instructions will get you a project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
@@ -64,9 +66,9 @@ The portal will be available at <http://localhost:3000>.
 
 ## License
 
-The OKP4 documentation portal is open source and [3-Clause BSD][bsd-3-clause] licensed.
+The code of this project is licensed under the [3-Clause BSD][bsd-3-clause].
 
-The contents of the documentation (e.g. the `.md` files in the `/docs` folder) is [Creative Commons Attribution-ShareAlike 4.0 International][cc-by-sa] licensed.
+All other resources, including documentation, graphical assets, etc., are licensed under the [Creative Commons Attribution-ShareAlike 4.0 International][cc-by-sa] license.
 
 ## You want to get involved? 😍
 
