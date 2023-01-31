@@ -1,5 +1,5 @@
 #-------------
-FROM node:16.19-alpine AS deps
+FROM node:19.5-alpine AS deps
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 #-------------
-FROM node:16.19-alpine AS builder
+FROM node:19.5-alpine AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn build
 
 #-------------
-FROM node:16.19-alpine AS runner
+FROM node:19.5-alpine AS runner
 
 WORKDIR /app
 
