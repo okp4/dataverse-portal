@@ -44,3 +44,25 @@ jobs:
           push: true
           tags: ${{ steps.docker_metadata.outputs.tags }}
           labels: ${{ steps.docker_metadata.outputs.labels }}
+
+  deploy-k8s-staging:
+    runs-on: ubuntu-22.04
+    env:
+      KUBECTL_VERSION: v1.21.4
+      DATAVERSE_PORTAL_IMAGE: ghcr.io/okp4/dataverse-portal
+    steps:
+      - name: Set up kubectl
+        run: |
+          curl -fsSL -o ./kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/bin/kubectl
+
+      - name: Set up kubernetes config
+        run: |
+          echo ${{ secrets.KUBECONFIG }} > config_enc
+          cat config_enc | base64 -d > config
+          rm config_enc
+
+      - name: Deploy staging
+        run: |
+          kubectl set image deployment/dataverse-portal dataverse-portal=${DATAVERSE_PORTAL_IMAGE}:nightly-${{ github.sha }} -n staging
