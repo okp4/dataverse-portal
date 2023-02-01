@@ -47,6 +47,8 @@ jobs:
 
   deploy-k8s-staging:
     runs-on: ubuntu-22.04
+    needs:
+      - publish-docker-images
     env:
       KUBECTL_VERSION: v1.21.4
       DATAVERSE_PORTAL_IMAGE: ghcr.io/okp4/dataverse-portal
