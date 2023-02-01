@@ -6,7 +6,7 @@ on:
       - "main"
 
 jobs:
-  update-cluster-graphs:
+  deploy-k8s-staging:
     runs-on: ubuntu-22.04
     env:
       KUBECTL_VERSION: v1.21.4
