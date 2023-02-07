@@ -1,4 +1,4 @@
-import './globals.css'
+import { ThemeProvider } from '@/components/providers/themeProvider'
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
@@ -8,7 +8,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }
