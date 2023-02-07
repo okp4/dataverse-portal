@@ -1,0 +1,65 @@
+@import './palette.scss';
+
+$themes: (
+  light: (
+    primary-color: $primary,
+    primary-color-variant-1: $primary-variant-1,
+    primary-color-variant-2: $primary-variant-2,
+    primary-color-variant-3: $primary-variant-3,
+    primary-color-variant-4: $primary-variant-4,
+    secondary-color: $secondary,
+    secondary-color-variant-1: $secondary-variant-1,
+    secondary-color-variant-2: $secondary-variant-2,
+    background: $background-light,
+    card: $card-light,
+    menu: $menu-light,
+    text: $text-light,
+    success: $success,
+    error: $error,
+    gradient: $gradient
+  ),
+  dark: (
+    primary-color: $primary,
+    primary-color-variant-1: $primary-variant-1,
+    primary-color-variant-2: $primary-variant-2,
+    primary-color-variant-3: $primary-variant-3,
+    primary-color-variant-4: $primary-variant-4,
+    secondary-color: $secondary,
+    secondary-color-variant-1: $secondary-variant-1,
+    secondary-color-variant-2: $secondary-variant-2,
+    background: $background-dark,
+    card: $card-dark,
+    menu: $menu-dark,
+    text: $text-dark,
+    success: $success,
+    error: $error,
+    gradient: $gradient
+  )
+);
+
+@mixin with-theme() {
+  @each $theme, $map in $themes {
+    .theme--#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @if (map-has-key($theme-map, $key)) {
+    @return map-get($theme-map, $key);
+  } @else {
+    @error 'ERROR: Specified key does not exist in themes';
+  }
+}
