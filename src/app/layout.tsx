@@ -1,4 +1,11 @@
-import { ThemeProvider } from '@/components/providers/themeProvider'
+'use client'
+import dynamic from 'next/dynamic'
+import '../styles/styles.scss'
+import LateralBar from '@/components/lateralBar/lateralBar'
+
+const ThemeProvider = dynamic(async () => import('@/components/providers/themeProvider'), {
+  ssr: false
+})
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
@@ -9,7 +16,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
       */}
       <head />
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <div className="okp4-dataverse-portal-root">
+            <LateralBar />
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
