@@ -1,0 +1,181 @@
+@import '../../styles/theme.scss';
+@import '../../styles/fonts.scss';
+
+$menu-icons: (
+  'home',
+  'explore',
+  'dataspaces',
+  'share',
+  'create-dataspace',
+  'create-knowledge',
+  'build-apps',
+  'documentation',
+  'help'
+);
+$variants: ('light', 'dark', 'active');
+$social-medias: ('twitter', 'linkedin', 'discord', 'medium');
+
+.okp4-dataverse-portal-lateral-bar-main {
+  @include with-theme() {
+    width: 240px;
+    background-color: themed('menu');
+    box-shadow: 4px 0px 18px rgba(16, 19, 49, 0.2);
+    border-radius: 0px 12px 12px 0px;
+    padding: 32px 21px 32px 31px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+
+    &.collapsed {
+      width: 100px;
+      padding: 30px;
+    }
+
+    .okp4-dataverse-portal-lateral-bar-collapse-container {
+      position: absolute;
+      top: 75px;
+      right: -18px;
+      width: 18px;
+      height: 31px;
+      background-color: themed('menu');
+      border-radius: 0px 6px 6px 0px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .okp4-dataverse-portal-lateral-bar-title-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &.collapsed {
+        flex-direction: column;
+        gap: 25px;
+      }
+    }
+
+    .okp4-dataverse-portal-lateral-bar-content-container {
+      margin-top: 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+
+      @media screen and (max-height: 800px) {
+        margin-top: 48px;
+        gap: 38px;
+      }
+
+      &.collapsed {
+        align-self: center;
+        gap: 88px;
+        @media screen and (max-height: 800px) {
+          gap: 78px;
+        }
+      }
+
+      .okp4-dataverse-portal-lateral-bar-content-block {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        &.collapsed {
+          align-self: center;
+        }
+
+        h3:first-of-type {
+          @include norse-font-bold();
+          color: themed('text');
+          font-size: 18px;
+          opacity: 0.4;
+          letter-spacing: 2px;
+        }
+
+        .okp4-dataverse-portal-lateral-bar-content-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+
+          [title] {
+            text-transform: capitalize;
+          }
+        }
+      }
+
+      @each $menu-icon in $menu-icons {
+        @each $variant in $variants {
+          $path: #{$menu-icon}-#{$variant};
+          .#{$path} {
+            width: 20px;
+            height: 20px;
+            margin-left: 3px;
+            background-image: url('/icons/#{$path}.svg');
+            background-repeat: no-repeat;
+          }
+        }
+      }
+    }
+    .text {
+      @include noto-sans-bold();
+      font-size: 14px;
+      color: themed('text');
+      text-transform: capitalize;
+      opacity: 0.4;
+
+      &.active {
+        color: themed('secondary-color');
+        opacity: 1;
+      }
+
+      &:hover {
+        color: themed('secondary-color-variant-1');
+        opacity: 1;
+      }
+    }
+
+    .okp4-dataverse-portal-lateral-bar-footer-container {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-left: -10px;
+      padding-top: 20px;
+
+      &.collapsed {
+        margin-left: 0;
+      }
+
+      > a:first-of-type {
+        text-decoration: unset;
+      }
+
+      .okp4-dataverse-portal-lateral-bar-footer-social-medias-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        &.collapsed {
+          flex-direction: column;
+          align-self: center;
+        }
+
+        @each $social-media in $social-medias {
+          @each $variant in $variants {
+            $path: #{$social-media}-#{$variant};
+            .#{$path} {
+              width: 28px;
+              height: 28px;
+              background-image: url('/icons/#{$path}.svg');
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+}
