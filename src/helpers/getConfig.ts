@@ -1,3 +1,4 @@
+import 'server-only'
 import type { Config } from 'pages/api/config'
 
 export const getConfig = async (): Promise<Config> => {
