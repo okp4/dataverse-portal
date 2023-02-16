@@ -25,9 +25,14 @@ jobs:
         with:
           node-version: 16.19
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.27.0
+
       - name: Fetch dependencies
         run: |
-          yarn
+          pnpm install
       - name: Test typescript
         run: |
-          yarn test
+          pnpm test

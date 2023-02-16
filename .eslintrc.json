@@ -1,6 +1,0 @@
-{
-  "extends": ["@okp4", "next/core-web-vitals"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  }
-}
