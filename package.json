@@ -4,7 +4,8 @@
     "private": false,
     "type": "module",
     "engines": {
-        "node": "^16.19"
+        "node": "^16.19",
+        "pnpm": "^7.27.0"
     },
     "scripts": {
         "dev": "vite",
