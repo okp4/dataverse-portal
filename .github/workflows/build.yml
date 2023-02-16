@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-yarn:
+  build-pnpm:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository
@@ -27,11 +27,11 @@ jobs:
 
       - name: Fetch dependencies
         run: |
-          yarn --frozen-lockfile
+          pnpm install --frozen-lockfile
 
       - name: Build project
         run: |
-          yarn build
+          pnpm build
 
   build-docker:
     runs-on: ubuntu-22.04

@@ -27,7 +27,7 @@ jobs:
 
       - name: Fetch dependencies
         run: |
-          yarn
+          pnpm install
       - name: Test typescript
         run: |
-          yarn test
+          pnpm test

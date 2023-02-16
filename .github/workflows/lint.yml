@@ -35,8 +35,8 @@ jobs:
       - name: Lint markdown files
         uses: avto-dev/markdown-lint@v1.5.0
         with:
-          args: '**/*.md'
-          ignore: './CHANGELOG.md'
+          args: "**/*.md"
+          ignore: "./CHANGELOG.md"
 
   lint-yaml:
     runs-on: ubuntu-22.04
@@ -93,11 +93,11 @@ jobs:
 
       - name: Fetch dependencies
         run: |
-          yarn
+          pnpm install
 
       - name: Lint typescript
         run: |
-          yarn lint
+          pnpm lint
 
   lint-branch-name:
     runs-on: ubuntu-22.04
@@ -106,7 +106,7 @@ jobs:
       - name: Check branch name conventions
         uses: AlbertHernandez/branch-name-action@v1.0.2
         with:
-          branch_pattern: 'feat|fix|build|ci|docs|style|refactor|perf|test|chore'
+          branch_pattern: "feat|fix|build|ci|docs|style|refactor|perf|test|chore"
           comment_for_invalid_branch_name: |
             🙋‍ Oops! This branch name does not follow the naming convention.
 
@@ -126,8 +126,8 @@ jobs:
             `perf/**`                | Code changes that improve performance
             `test/**`                | When adding tests or correcting existing tests
             `chore/**`               | Other changes that don't modify source
-          fail_if_invalid_branch_name: 'true'
-          ignore_branch_pattern: 'main'
+          fail_if_invalid_branch_name: "true"
+          ignore_branch_pattern: "main"
       - name: Close non-compliant branch
         if: ${{ failure() }}
         uses: codelytv/no-pull-requests@v1
