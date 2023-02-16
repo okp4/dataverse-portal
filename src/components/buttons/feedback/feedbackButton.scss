@@ -1,0 +1,35 @@
+@import '../../../styles/theme.scss';
+@import '../../../styles/fonts.scss';
+
+.okp4-dataverse-portal-feedback-button-main {
+  @include with-theme() {
+    background-color: unset;
+    color: themed('secondary-color');
+    border: 1px solid themed('secondary-color');
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+      color: themed('secondary-color-variant-1');
+      border-color: themed('secondary-color-variant-1');
+
+      img {
+        filter: brightness(0) saturate(100%) invert(78%) sepia(90%) saturate(712%)
+          hue-rotate(317deg) brightness(102%) contrast(103%);
+      }
+    }
+
+    .okp4-dataverse-portal-feedback-button-content-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      > p:first-of-type {
+        @include noto-sans-bold();
+        font-size: 11px;
+      }
+    }
+  }
+}
