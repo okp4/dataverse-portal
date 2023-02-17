@@ -1,0 +1,26 @@
+@import url('https://fonts.cdnfonts.com/css/norse');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700;900&display=swap');
+
+@mixin norse-font-regular {
+  font-family: Norse, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin norse-font-bold {
+  font-family: Norse, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@mixin noto-sans-regular {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin noto-sans-bold {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
