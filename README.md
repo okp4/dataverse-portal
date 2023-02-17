@@ -8,7 +8,7 @@
 [![conventional commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=for-the-badge&logo=conventionalcommits)](https://conventionalcommits.org)
 [![contributor covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/okp4/.github/blob/main/CODE_OF_CONDUCT.md)
 [![typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next JS](https://img.shields.io/badge/Next%2013-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://www.google.com/search?client=safari&rls=en&q=vitejs&ie=UTF-8&oe=UTF-8)
 [![prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://github.com/prettier/prettier)
 [![license][bsd-3-clause-image]][bsd-3-clause]
 [![cc-by-sa-4.0][cc-by-sa-image]][cc-by-sa]
