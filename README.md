@@ -28,30 +28,37 @@ These instructions will get you a project up and running on your local machine f
 Be sure to have the following properly installed:
 
 - [Node.js](https://nodejs.org/ru/) `v16.19` ([gallium](https://nodejs.org/en/blog/release/v16.19.0/))
-- [yarn](https://yarnpkg.com)
+- [pnpm](https://pnpm.io/) `v7.27`
+- [Docker](https://www.docker.com/)
 
 ### Setup
 
-🚚 Install the dependencies and build the project:
+Install the dependencies and build the project:
 
 ```sh
-yarn
-
-yarn build
+pnpm install
 ```
 
-### Environment variables
+### Launch
 
-The project relies on several environment variables for proper functioning. These variables should be set in a file named `.env.local` at the root of the project.
-Checkout [nextjs documentation](https://nextjs.org/docs/basic-features/environment-variables) for more.
+Run the server with the following command line.
 
-```shell
-# The title of the application that will be displayed in the browser's title bar.
-APP_TITLE=
-# A comma-separated list of keywords relevant to the application (used by search engines).
-APP_KEYWORDS=
-# A brief description of the application (used by search engines).
-APP_DESCRIPTION=
+```sh
+pnpm dev
+```
+
+The portal will be available at <http://127.0.0.1:5173>.
+
+## Docker image
+
+The Docker image can be used to run the application in a container. The Dockerfile is located in the root directory of the project.
+
+### Building the Docker Image
+
+To build the Docker image, use the following command:
+
+```sh
+docker build -t dataverse-portal .
 ```
 
 Note that the `.env.local` file is not tracked by version control and should not be committed to the repository.
