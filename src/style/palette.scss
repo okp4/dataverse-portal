@@ -1,0 +1,40 @@
+// primary (blue)
+$primary: #006796;
+$primary-variant-1: #004073;
+$primary-variant-2: #008fad;
+$primary-variant-3: #00b6b7;
+$primary-variant-4: #50ddb7;
+
+// secondary (orange)
+$secondary: #ff9500;
+$secondary-variant-1: #ffb855;
+$secondary-variant-2: #ffdcaa;
+
+// backgrounds
+$background-dark: #171821;
+$background-light: #dfe4e9;
+
+// switches
+$switch-dark: #242433;
+$switch-light: #ffdcaa;
+$switch-dark-variant-1: rgb(255 255 255 / 20%);
+$switch-light-variant-1: white;
+
+// cards
+$card-dark: #242433;
+$card-light: #f2f6f9;
+
+// menus
+$menu-dark: #121320;
+$menu-light: #f2f6f9;
+
+// texts
+$text-dark: white;
+$text-light: $primary-variant-1;
+
+// gradients
+$gradient: linear-gradient(270deg, #00b6b7 17.51%, #004073 100%);
+
+// semantic
+$success: #4ad377;
+$error: #ff3648;
