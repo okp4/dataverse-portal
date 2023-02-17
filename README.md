@@ -61,17 +61,15 @@ To build the Docker image, use the following command:
 docker build -t dataverse-portal .
 ```
 
-Note that the `.env.local` file is not tracked by version control and should not be committed to the repository.
+### Running the Docker Container
 
-### Launch
-
-Run the server with the following command line.
+To run the Docker container, use the following command (adapt the arguments as needed):
 
 ```sh
-yarn start
+docker run --rm -ti -p 8080:80 dataverse-portal
 ```
 
-The portal will be available at <http://localhost:3000>.
+The command will start the Docker container and bind it to port `8080` on your local machine. You can access the application by navigating to <http://localhost:8080> in your web browser.
 
 ## License
 
