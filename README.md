@@ -8,7 +8,8 @@
 [![conventional commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=for-the-badge&logo=conventionalcommits)](https://conventionalcommits.org)
 [![contributor covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/okp4/.github/blob/main/CODE_OF_CONDUCT.md)
 [![typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next JS](https://img.shields.io/badge/Next%2013-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://www.google.com/search?client=safari&rls=en&q=vitejs&ie=UTF-8&oe=UTF-8)
+[![pnpm](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](https://pnpm.io)
 [![prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://github.com/prettier/prettier)
 [![license][bsd-3-clause-image]][bsd-3-clause]
 [![cc-by-sa-4.0][cc-by-sa-image]][cc-by-sa]
@@ -28,43 +29,48 @@ These instructions will get you a project up and running on your local machine f
 Be sure to have the following properly installed:
 
 - [Node.js](https://nodejs.org/ru/) `v16.19` ([gallium](https://nodejs.org/en/blog/release/v16.19.0/))
-- [yarn](https://yarnpkg.com)
+- [pnpm](https://pnpm.io/) `v7.27`
+- [Docker](https://www.docker.com/)
 
 ### Setup
 
-🚚 Install the dependencies and build the project:
+Install the dependencies and build the project:
 
 ```sh
-yarn
-
-yarn build
+pnpm install
 ```
-
-### Environment variables
-
-The project relies on several environment variables for proper functioning. These variables should be set in a file named `.env.local` at the root of the project.
-Checkout [nextjs documentation](https://nextjs.org/docs/basic-features/environment-variables) for more.
-
-```shell
-# The title of the application that will be displayed in the browser's title bar.
-APP_TITLE=
-# A comma-separated list of keywords relevant to the application (used by search engines).
-APP_KEYWORDS=
-# A brief description of the application (used by search engines).
-APP_DESCRIPTION=
-```
-
-Note that the `.env.local` file is not tracked by version control and should not be committed to the repository.
 
 ### Launch
 
 Run the server with the following command line.
 
 ```sh
-yarn start
+pnpm dev
 ```
 
-The portal will be available at <http://localhost:3000>.
+The portal will be available at <http://127.0.0.1:5173>.
+
+## Docker image
+
+The Docker image can be used to run the application in a container. The Dockerfile is located in the root directory of the project.
+
+### Building the Docker Image
+
+To build the Docker image, use the following command:
+
+```sh
+docker build -t dataverse-portal .
+```
+
+### Running the Docker Container
+
+To run the Docker container, use the following command (adapt the arguments as needed):
+
+```sh
+docker run --rm -ti -p 8080:80 dataverse-portal
+```
+
+The command will start the Docker container and bind it to port `8080` on your local machine. You can access the application by navigating to <http://localhost:8080> in your web browser.
 
 ## License
 

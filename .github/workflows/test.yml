@@ -20,15 +20,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Setup node environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.19
-
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 7.27.0
+
+      - name: Setup node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.19
+          cache: 'pnpm'
 
       - name: Fetch dependencies
         run: |

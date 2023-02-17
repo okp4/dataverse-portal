@@ -86,19 +86,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Setup node environment (for building)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.19
-
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 7.27.0
 
+      - name: Setup node environment (for building)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.19
+          cache: 'pnpm'
+
       - name: Fetch dependencies
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
 
       - name: Lint typescript
         run: |
