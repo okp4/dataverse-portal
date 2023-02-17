@@ -1,0 +1,6 @@
+{
+    "extends": "@okp4",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    }
+}
