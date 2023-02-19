@@ -1,0 +1,21 @@
+@import '@/style/fonts.scss';
+@import '@/style/theme.scss';
+
+.okp4-dataverse-portal-work-in-progress-main {
+  @include with-theme() {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: themed('text');
+
+    h1 {
+      @include norse-font(700);
+    }
+
+    p {
+      @include noto-sans(400);
+    }
+  }
+}
