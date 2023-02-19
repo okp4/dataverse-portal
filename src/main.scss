@@ -1,12 +1,16 @@
-@import './style/theme.scss';
-@import './style/fonts.scss';
+@import '@/style/theme.scss';
+@import '@/style/fonts.scss';
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   width: 100%;
+}
+
+#root {
+  min-height: inherit;
 }
 
 p,
@@ -17,11 +21,14 @@ h3 {
 }
 
 .okp4-dataverse-portal-main {
-  @include norse-font-bold();
   @include with-theme() {
-    min-height: 100vh;
+    min-height: inherit;
     display: flex;
     width: 100%;
     background-color: themed('background');
+  }
+
+  .okp4-dataverse-portal-page-container {
+    flex: 1;
   }
 }
