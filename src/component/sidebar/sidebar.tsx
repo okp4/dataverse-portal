@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useCallback } from 'react'
 import classnames from 'classnames'
 import { Button } from '@/component/button/button'
 import { Okp4Logo } from '@/component/logo/okp4Logo'
@@ -41,6 +42,10 @@ export const Sidebar: FC = () => {
   const expandSidebar = useAppStore(store => store.expandSidebar)
   const switchTheme = useAppStore(store => store.switchTheme)
 
+  const handleFeedbackClick = useCallback(() => {
+    window.open('https://okp4.typeform.com/to/TNyFBH72', '_blank')
+  }, [])
+
   return (
     <div
       className={classnames('okp4-dataverse-portal-sidebar-main', {
@@ -75,7 +80,11 @@ export const Sidebar: FC = () => {
         })}
       >
         {isSidebarExpanded && (
-          <Button icons={{ startIcon: <Icon name="feedback" /> }} label="give us feedback" />
+          <Button
+            icons={{ startIcon: <Icon name="feedback" /> }}
+            label="give us feedback"
+            onClick={handleFeedbackClick}
+          />
         )}
         <div
           className={classnames('okp4-dataverse-portal-sidebar-footer-social-medias-container', {
