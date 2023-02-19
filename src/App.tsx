@@ -1,15 +1,18 @@
 import type { FC } from 'react'
-import React from 'react'
-import { useAppStore } from './store/appStore'
+import { AppRouter } from '@/component/router/appRouter'
+import { Sidebar } from '@/component/sidebar/sidebar'
+import { useAppStore } from '@/store/appStore'
 
 const App: FC = () => {
   const theme = useAppStore(store => store.theme)
-  const switchTheme = useAppStore(store => store.switchTheme)
 
   return (
-    <div className={`theme--${theme}`}>
+    <div className={`theme--${theme}`} style={{ minHeight: 'inherit' }}>
       <div className="okp4-dataverse-portal-main">
-        <button onClick={switchTheme}>ClickMe</button>
+        <Sidebar />
+        <div className="okp4-dataverse-portal-page-container">
+          <AppRouter />
+        </div>
       </div>
     </div>
   )
