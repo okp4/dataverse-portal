@@ -1,0 +1,80 @@
+@import '@/style/theme.scss';
+@import '@/style/fonts.scss';
+
+.okp4-dataverse-portal-sidebar-navigation-container {
+  @include with-theme() {
+    margin-top: 68px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    @media screen and (max-height: 830px) {
+      margin-top: 44px;
+      gap: 34px;
+    }
+
+    &.collapsed {
+      align-self: center;
+      gap: 88px;
+      @media screen and (max-height: 830px) {
+        gap: 66px;
+      }
+    }
+
+    .okp4-dataverse-portal-sidebar-navigation-block {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+
+      &.collapsed {
+        align-self: center;
+      }
+
+      h3:first-of-type {
+        @include norse-font(700);
+        color: themed('text');
+        font-size: 18px;
+        opacity: 0.4;
+        letter-spacing: 2px;
+      }
+
+      a {
+        text-decoration: unset;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+
+        &:hover {
+          svg {
+            path {
+              fill: themed('secondary-color');
+            }
+          }
+
+          p {
+            color: themed('secondary-color-variant-1');
+            opacity: 1;
+          }
+        }
+
+        &:not(.active) {
+          &:not(:hover) {
+            svg {
+              path {
+                fill: themed('text');
+              }
+            }
+          }
+        }
+
+        &.active {
+          p {
+            color: themed('secondary-color');
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
