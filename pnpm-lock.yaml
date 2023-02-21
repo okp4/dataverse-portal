@@ -12,12 +12,15 @@ specifiers:
   eslint: ^8.34.0
   eslint-plugin-react: ^7.32.2
   eslint-plugin-react-hooks: ^4.6.0
+  i18next: ^22.4.10
+  i18next-browser-languagedetector: ^7.0.1
   immer: ^9.0.19
   jest: ^29.4.3
   postcss: ^8.4.21
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-i18next: ^12.1.5
   react-router-dom: ^6.8.1
   sass: ^1.58.2
   stylelint: ^15.1.0
@@ -45,10 +48,13 @@ devDependencies:
   eslint: 8.34.0
   eslint-plugin-react: 7.32.2_eslint@8.34.0
   eslint-plugin-react-hooks: 4.6.0_eslint@8.34.0
+  i18next: 22.4.10
+  i18next-browser-languagedetector: 7.0.1
   immer: 9.0.19
   jest: 29.4.3
   postcss: 8.4.21
   prettier: 2.8.4
+  react-i18next: 12.1.5_3yopsigl4h4eb2nqrqfsy65uwi
   sass: 1.58.2
   stylelint: 15.1.0
   stylelint-config-sass-guidelines: 9.0.1_6kmz6pqyyc6yqevihcpt7hoegq
@@ -2788,6 +2794,12 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: true
 
+  /html-parse-stringify/3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: true
+
   /html-tags/3.2.0:
     resolution: {integrity: sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==}
     engines: {node: '>=8'}
@@ -2796,6 +2808,18 @@ packages:
   /human-signals/2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
+    dev: true
+
+  /i18next-browser-languagedetector/7.0.1:
+    resolution: {integrity: sha512-Pa5kFwaczXJAeHE56CHG2aWzFBMJNUNghf0Pm4SwSrEMps/PTKqW90EYWlIvhuYStf3Sn1K0vw+gH3+TLdkH1g==}
+    dependencies:
+      '@babel/runtime': 7.20.13
+    dev: true
+
+  /i18next/22.4.10:
+    resolution: {integrity: sha512-3EqgGK6fAJRjnGgfkNSStl4mYLCjUoJID338yVyLMj5APT67HUtWoqSayZewiiC5elzMUB1VEUwcmSCoeQcNEA==}
+    dependencies:
+      '@babel/runtime': 7.20.13
     dev: true
 
   /ignore/5.2.4:
@@ -4093,6 +4117,26 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
+  /react-i18next/12.1.5_3yopsigl4h4eb2nqrqfsy65uwi:
+    resolution: {integrity: sha512-7PQAv6DA0TcStG96fle+8RfTwxVbHVlZZJPoEszwUNvDuWpGldJmNWa3ZPesEsZQZGF6GkzwvEh6p57qpFD2gQ==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.20.13
+      html-parse-stringify: 3.0.1
+      i18next: 22.4.10
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: true
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
@@ -4813,6 +4857,11 @@ packages:
       sass: 1.58.2
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /walker/1.0.8:

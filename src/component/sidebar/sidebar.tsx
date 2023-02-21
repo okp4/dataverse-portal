@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
 import { Button } from '@/component/button/button'
 import { Okp4Logo } from '@/component/logo/okp4Logo'
@@ -7,8 +8,9 @@ import { Switch } from '@/component/switch/switch'
 import { useAppStore } from '@/store/appStore'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
-import './sidebar.scss'
 import { Navigation } from './navigation/navigation'
+import './sidebar.scss'
+import './i18n/index'
 
 type SocialMedia = {
   id: string
@@ -36,6 +38,7 @@ const socialMedias: SocialMedia[] = [
 
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: FC = () => {
+  const { t } = useTranslation('sidebar')
   const theme = useAppStore(store => store.theme)
   const isSidebarExpanded = useAppStore(store => store.isSidebarExpanded)
   const collapseSidebar = useAppStore(store => store.collapseSidebar)
@@ -82,7 +85,7 @@ export const Sidebar: FC = () => {
         {isSidebarExpanded && (
           <Button
             icons={{ startIcon: <Icon name="feedback" /> }}
-            label="give us feedback"
+            label={t('sidebar.footer.feedback')}
             onClick={handleFeedbackClick}
           />
         )}
@@ -99,7 +102,7 @@ export const Sidebar: FC = () => {
         </div>
         {isSidebarExpanded && (
           <a href="https://www.okp4.network" rel="noreferrer" target="_blank">
-            <p className="text">About OKP4</p>
+            <p className="text">{t('sidebar.footer.about')}</p>
           </a>
         )}
       </div>
