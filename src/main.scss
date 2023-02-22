@@ -20,7 +20,11 @@ h3 {
   margin: 0;
 }
 
-.okp4-dataverse-portal-main {
+p {
+  letter-spacing: 0.1px;
+}
+
+.okp4-dataverse-portal-main-layout {
   @include with-theme() {
     min-height: inherit;
     display: flex;
@@ -28,7 +32,9 @@ h3 {
     background-color: themed('background');
   }
 
-  .okp4-dataverse-portal-page-container {
+  .okp4-dataverse-portal-page-layout {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }
