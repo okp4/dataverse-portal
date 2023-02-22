@@ -8,13 +8,14 @@ type ButtonProps = {
     startIcon?: JSX.Element
     endIcon?: JSX.Element
   }
+  variant?: 'secondary' | 'tertiary'
 }
 
-export const Button: FC<ButtonProps> = ({ label, onClick, icons }) => (
-  <button className="okp4-dataverse-portal-button-main" onClick={onClick}>
-    <div className="okp4-dataverse-portal-content-container">
+export const Button: FC<ButtonProps> = ({ label, onClick, icons, variant = 'secondary' }) => (
+  <button className={`okp4-dataverse-portal-button-main ${variant}`} onClick={onClick}>
+    <div className={`okp4-dataverse-portal-content-container ${variant}`}>
       {icons?.startIcon && icons.startIcon}
-      <p className="okp4-dataverse-portal-button-label">{label}</p>
+      <p className={`okp4-dataverse-portal-button-label ${variant}`}>{label}</p>
       {icons?.endIcon && icons.endIcon}
     </div>
   </button>
