@@ -3,35 +3,62 @@
 
 .okp4-dataverse-portal-button-main {
   @include with-theme() {
-    height: 34px;
-    border: 1px solid themed('secondary-color');
-    color: themed('secondary-color');
-    border-radius: 6px;
-    background: unset;
     cursor: pointer;
     padding: unset;
+    box-sizing: border-box;
 
-    &:hover {
-      color: themed('secondary-color-variant-1');
-      border-color: themed('secondary-color-variant-1');
+    &.secondary {
+      border: 1px solid themed('secondary-color');
+      color: themed('secondary-color');
+      height: 34px;
+      border-radius: 6px;
+      background: unset;
 
-      svg {
-        path {
-          fill: themed('secondary-color-variant-1');
+      &:hover {
+        color: themed('secondary-color-variant-1');
+        border-color: themed('secondary-color-variant-1');
+
+        svg {
+          path {
+            fill: themed('secondary-color-variant-1');
+          }
         }
+      }
+    }
+
+    &.tertiary {
+      border: unset;
+      color: themed('text');
+      height: 44px;
+      border-radius: 12px;
+      background: themed('tertiary-button-background');
+
+      &:hover {
+        background: themed('tertiary-button-background-variant-1');
       }
     }
 
     .okp4-dataverse-portal-content-container {
       display: flex;
       align-items: center;
-      padding: 6px 10px;
+      padding: 0 10px;
       gap: 6px;
+
+      &.tertiary {
+        padding: 0 20px;
+        gap: 10px;
+      }
 
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
         font-size: 11px;
         text-transform: uppercase;
+
+        &.tertiary {
+          @include noto-sans(400);
+          text-transform: unset;
+          font-size: 16px;
+        }
       }
     }
   }
