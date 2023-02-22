@@ -18,7 +18,7 @@ import { ReactComponent as ExploreIcon } from '@/asset/icon/explore.svg'
 import { ReactComponent as ExploreActiveIcon } from '@/asset/icon/explore-active.svg'
 import { ReactComponent as FeedbackIcon } from '@/asset/icon/feedback.svg'
 import { ReactComponent as HelpIcon } from '@/asset/icon/help.svg'
-import { ReactComponent as HelpIActivecon } from '@/asset/icon/help-active.svg'
+import { ReactComponent as HelpActiveIcon } from '@/asset/icon/help-active.svg'
 import { ReactComponent as HomeIcon } from '@/asset/icon/home.svg'
 import { ReactComponent as HomeActiveIcon } from '@/asset/icon/home-active.svg'
 import { ReactComponent as LinkedinLightIcon } from '@/asset/icon/linkedin-light.svg'
@@ -29,8 +29,9 @@ import { ReactComponent as MoonIcon } from '@/asset/icon/moon.svg'
 import { ReactComponent as ShareIcon } from '@/asset/icon/share.svg'
 import { ReactComponent as ShareActiveIcon } from '@/asset/icon/share-active.svg'
 import { ReactComponent as SunIcon } from '@/asset/icon/sun.svg'
-import { ReactComponent as TwitterLight } from '@/asset/icon/twitter-light.svg'
-import { ReactComponent as TwitterDark } from '@/asset/icon/twitter-dark.svg'
+import { ReactComponent as TwitterLightIcon } from '@/asset/icon/twitter-light.svg'
+import { ReactComponent as TwitterDarkIcon } from '@/asset/icon/twitter-dark.svg'
+import { ReactComponent as WalletIcon } from '@/asset/icon/wallet.svg'
 
 export type IconName =
   | 'collapse'
@@ -64,6 +65,7 @@ export type IconName =
   | 'help-active'
   | 'share-active'
   | 'home-active'
+  | 'wallet'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -84,8 +86,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'linkedin-dark': LinkedinDarkIcon,
   'discord-dark': DiscordDarkIcon,
   'discord-light': DiscordLightIcon,
-  'twitter-light': TwitterLight,
-  'twitter-dark': TwitterDark,
+  'twitter-light': TwitterLightIcon,
+  'twitter-dark': TwitterDarkIcon,
   'medium-light': MediumLightIcon,
   'medium-dark': MediumDarkIcon,
   'build-apps-active': BuildAppsActiveIcon,
@@ -94,9 +96,10 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'dataspace-active': DataspaceActiveIcon,
   'explore-active': ExploreActiveIcon,
   'documentation-active': DocumentationActiveIcon,
-  'help-active': HelpIActivecon,
+  'help-active': HelpActiveIcon,
   'share-active': ShareActiveIcon,
-  'home-active': HomeActiveIcon
+  'home-active': HomeActiveIcon,
+  wallet: WalletIcon
 }
 
 type IconProps = {
