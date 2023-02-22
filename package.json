@@ -2,6 +2,14 @@
   "name": "@okp4/dataverse-portal",
   "version": "0.1.0",
   "private": false,
+  "repository": "git@github.com:okp4/dataverse-portal.git",
+  "license": "BSD-3-Clause",
+  "description": "Dataverse portal for the OKP4 network.",
+  "homepage": "https://github.com/okp4/dataverse-portal",
+  "author": {
+    "name": "OKP4",
+    "web": "https://okp4.network"
+  },
   "engines": {
     "node": "^16.19",
     "pnpm": "^7.27.0"
@@ -44,6 +52,7 @@
     "stylelint-scss": "^4.4.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-plugin-html-config": "^1.0.11",
     "vite-plugin-svgr": "^2.4.0",
     "zustand": "^4.3.3"
   }
