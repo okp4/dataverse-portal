@@ -95,7 +95,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.19
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Fetch dependencies
         run: |
@@ -104,6 +104,60 @@ jobs:
       - name: Lint typescript
         run: |
           pnpm lint
+
+  lint-web:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.27.0
+
+      - name: Setup node environment (for building)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.19
+          cache: "pnpm"
+
+      - name: Fetch dependencies
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Start web server
+        run: |
+          pnpm build
+          pnpm preview &
+          sleep 2
+
+      - name: Create artifacts directory
+        run: |
+          mkdir -p ${{ github.workspace }}/tmp/artifacts/desktop
+          mkdir -p ${{ github.workspace }}/tmp/artifacts/mobile
+
+      - name: Run Lighthouse
+        uses: foo-software/lighthouse-check-action@v9.1.1
+        with:
+          prCommentEnabled: true
+          maxRetries: 2
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts/mobile
+          device: all
+          urls: >-
+            http://localhost:4173/
+          gitHubAccessToken: ${{ secrets.OKP4_TOKEN }}
+
+      - name: Upload lighthouse reports
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: Lighthouse reports
+          path: ${{ github.workspace }}/tmp/artifacts
+
+      - name: Stop web server
+        if: always()
+        run: |
+          kill $(lsof -t -i:4173)
 
   lint-branch-name:
     runs-on: ubuntu-22.04
