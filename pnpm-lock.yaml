@@ -12,6 +12,7 @@ specifiers:
   eslint: ^8.34.0
   eslint-plugin-react: ^7.32.2
   eslint-plugin-react-hooks: ^4.6.0
+  fp-ts: ^2.13.1
   i18next: ^22.4.10
   i18next-browser-languagedetector: ^7.0.1
   immer: ^9.0.19
@@ -33,6 +34,7 @@ specifiers:
   zustand: ^4.3.3
 
 dependencies:
+  fp-ts: 2.13.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
@@ -2575,6 +2577,10 @@ packages:
     dependencies:
       is-callable: 1.2.7
     dev: true
+
+  /fp-ts/2.13.1:
+    resolution: {integrity: sha512-0eu5ULPS2c/jsa1lGFneEFFEdTbembJv8e4QKXeVJ3lm/5hyve06dlKZrpxmMwJt6rYen7sxmHHK2CLaXvWuWQ==}
+    dev: false
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
