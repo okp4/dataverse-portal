@@ -1,0 +1,14 @@
+{
+  "home": {
+    "blocks": {
+      "community": {
+        "label": "The community",
+        "stats": {
+          "dataspacesCreated": "Data Spaces created",
+          "datasetsShared": "Datasets shared",
+          "servicesShared": "Services shared"
+        }
+      }
+    }
+  }
+}
