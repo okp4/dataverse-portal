@@ -1,5 +1,6 @@
 @import '@/style/theme.scss';
 @import '@/style/fonts.scss';
+@import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-sidebar-main {
   @include with-theme() {
@@ -12,6 +13,10 @@
     flex-direction: column;
     position: relative;
     box-sizing: border-box;
+
+    @include for-big-desktop-up() {
+      width: 377px;
+    }
 
     &.collapsed {
       width: 100px;
