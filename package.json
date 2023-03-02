@@ -18,7 +18,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "lint": "eslint && stylelint '**/*.scss'",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx} && stylelint --fix '**/*.scss'"
   },
