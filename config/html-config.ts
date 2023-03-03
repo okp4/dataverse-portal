@@ -54,6 +54,12 @@ const options: Options = {
       name: 'version',
       content: pkg.version
     }
+  ],
+  headScripts: [
+    {
+      src: '/assets/env.js',
+      async: true,
+    }
   ]
 }
 
