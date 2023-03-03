@@ -1,4 +1,4 @@
-declare const settings: {
+declare const APP_ENV: {
   urls: Record<
     | 'social:twitter'
     | 'social:linkedin'

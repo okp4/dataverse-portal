@@ -1,4 +1,4 @@
-const settings = {
+const APP_ENV = {
     urls: {
         'social:twitter': 'https://twitter.com/OKP4_Protocol',
         'social:linkedin': 'https://www.linkedin.com/company/okp4-open-knowledge-platform-for/',

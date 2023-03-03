@@ -72,7 +72,7 @@ export const Sidebar: FC = () => {
         >
           {['twitter', 'linkedin', 'discord', 'medium'].map(id => (
             <a
-              href={settings.urls[`social:${id}` as keyof typeof settings.urls]}
+              href={APP_ENV.urls[`social:${id}` as keyof typeof APP_ENV.urls]}
               key={id}
               rel="noreferrer"
               target="_blank"
