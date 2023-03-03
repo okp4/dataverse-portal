@@ -22,7 +22,7 @@ export const Sidebar: FC = () => {
   const switchTheme = useAppStore(store => store.switchTheme)
 
   const handleFeedbackClick = useCallback(() => {
-    window.open('https://okp4.typeform.com/to/TNyFBH72', '_blank')
+    window.open(APP_ENV.urls['form:feedback'], '_blank')
   }, [])
 
   return (
@@ -82,7 +82,7 @@ export const Sidebar: FC = () => {
           ))}
         </div>
         {isSidebarExpanded && (
-          <a href="https://www.okp4.network" rel="noreferrer" target="_blank">
+          <a href={APP_ENV.urls['about:okp4']} rel="noreferrer" target="_blank">
             <p className="text">{t('sidebar.footer.about')}</p>
           </a>
         )}
