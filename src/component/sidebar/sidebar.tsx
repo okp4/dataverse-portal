@@ -12,30 +12,6 @@ import { Navigation } from './navigation/navigation'
 import './sidebar.scss'
 import './i18n/index'
 
-type SocialMedia = {
-  id: string
-  href: string
-}
-
-const socialMedias: SocialMedia[] = [
-  {
-    id: 'twitter',
-    href: 'https://twitter.com/OKP4_Protocol'
-  },
-  {
-    id: 'linkedin',
-    href: 'https://www.linkedin.com/company/okp4-open-knowledge-platform-for/'
-  },
-  {
-    id: 'discord',
-    href: 'https://discord.com/invite/okp4'
-  },
-  {
-    id: 'medium',
-    href: 'https://blog.okp4.network'
-  }
-]
-
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: FC = () => {
   const { t } = useTranslation('sidebar')
@@ -46,7 +22,7 @@ export const Sidebar: FC = () => {
   const switchTheme = useAppStore(store => store.switchTheme)
 
   const handleFeedbackClick = useCallback(() => {
-    window.open('https://okp4.typeform.com/to/TNyFBH72', '_blank')
+    window.open(APP_ENV.urls['form:feedback'], '_blank')
   }, [])
 
   return (
@@ -94,14 +70,19 @@ export const Sidebar: FC = () => {
             collapsed: !isSidebarExpanded
           })}
         >
-          {socialMedias.map(({ id, href }) => (
-            <a href={href} key={id} rel="noreferrer" target="_blank">
+          {['twitter', 'linkedin', 'discord', 'medium'].map(id => (
+            <a
+              href={APP_ENV.urls[`social:${id}` as keyof typeof APP_ENV.urls]}
+              key={id}
+              rel="noreferrer"
+              target="_blank"
+            >
               <Icon name={`${id}-${theme}` as IconName} />
             </a>
           ))}
         </div>
         {isSidebarExpanded && (
-          <a href="https://www.okp4.network" rel="noreferrer" target="_blank">
+          <a href={APP_ENV.urls['about:okp4']} rel="noreferrer" target="_blank">
             <p className="text">{t('sidebar.footer.about')}</p>
           </a>
         )}
