@@ -11,6 +11,7 @@ assignees: ""
 > **As a** [user concerned by the story],
 > **I want** to [goal of the story]
 > **So that** [reason for the story]
+
 ## Acceptance criteria
 
 ### Scenario: [Scenario's name]
@@ -23,21 +24,21 @@ assignees: ""
 
 ## Requirements
 
-1. Constraint 1;
-1. Constraint 2;
-1. Constraint 3.
+1. [Requirement 1]
+1. [Requirement 2]
+1. [Requirement 3]
 
 ## Resources
 
 ### Mockups
 
-Desktop
+#### Desktop
 
-Mobile
+#### Mobile
 
 ### Environment
 
-- staging URL: https://app.staging.okp4.network/
+- staging URL: <https://app.staging.okp4.network/>
 
 ## Additional informations
 
