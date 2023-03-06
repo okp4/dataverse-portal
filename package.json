@@ -18,11 +18,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
+    "test:watch": "jest --watch --no-cache",
     "lint": "eslint && stylelint '**/*.scss'",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx} && stylelint --fix '**/*.scss'"
   },
   "dependencies": {
+    "fp-ts": "^2.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1"
@@ -30,6 +32,8 @@
   "devDependencies": {
     "@okp4/eslint-config": "^1.2.0",
     "@radix-ui/react-switch": "^1.0.1",
+    "@swc/jest": "^0.2.24",
+    "@types/jest": "^29.4.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
