@@ -9,11 +9,12 @@ import * as E from 'fp-ts/Either'
 
 describe('Considering the toEffectul() function', () => {
   describe.each`
-    desc                                            | fn                                                      | args       | expectedResult
-    ${'an IO function that returns a string'}       | ${(): IO<string> => () => 'foo'}                        | ${[]}      | ${'foo'}
-    ${'an IOEither function that returns a string'} | ${(v: string): IOEither<never, string> => IOE.right(v)} | ${['foo']} | ${E.right('foo')}
+    desc                                             | fn                                                      | args       | expectedResult
+    ${'an IO function that returns a string'}        | ${(): IO<string> => () => 'foo'}                        | ${[]}      | ${'foo'}
+    ${'an IOEither function that returns a string'}  | ${(v: string): IOEither<never, string> => IOE.right(v)} | ${['foo']} | ${E.right('foo')}
     ${'a Task function that returns a number'} | ${(v: number): Task<number> =>
   () => Promise.resolve(v)} | ${[42]} | ${42}
+    ${'an effectful function that returns a number'} | ${(v: number): number => v}                             | ${[42]}    | ${42}
   `(
     'Given the test case <$desc>',
     ({
