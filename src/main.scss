@@ -1,5 +1,6 @@
 @import '@/style/theme.scss';
 @import '@/style/fonts.scss';
+@import '@/style/mixins.scss';
 
 html,
 body {
@@ -33,8 +34,18 @@ p {
   }
 
   .okp4-dataverse-portal-page-layout {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    grid-template-rows: max-content;
+    width: 100%;
+    margin: 0 2%;
+
+    @include desktop-bp {
+      @include grid-container($gutter: 34px);
+    }
+
+    @include large-desktop-bp {
+      @include grid-container($gutter: 48px) {
+        margin: 0 2.5%;
+      }
+    }
   }
 }
