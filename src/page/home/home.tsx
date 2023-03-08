@@ -58,7 +58,7 @@ export const Home: FC = () => {
   const { t } = useTranslation('home')
   return (
     <div className="okp4-dataverse-portal-home-page-main">
-      <div className="okp4-dataverse-portal-home-page-block-container">
+      <div className="okp4-dataverse-portal-home-page-block-container-community">
         <h1>{t('home.blocks.community.label')}</h1>
         <Stats />
       </div>
