@@ -9,6 +9,7 @@ import { useAppStore } from '@/store/appStore'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
 import { Navigation } from './navigation/navigation'
+import { LanguageSwitcher } from './languageSwitcher/languageSwitcher'
 import './sidebar.scss'
 import './i18n/index'
 
@@ -86,6 +87,7 @@ export const Sidebar: FC = () => {
             <p className="text">{t('sidebar.footer.about')}</p>
           </a>
         )}
+        <LanguageSwitcher />
       </div>
     </div>
   )
