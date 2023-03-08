@@ -1,0 +1,51 @@
+@import '@/style/theme.scss';
+@import '@/style/fonts.scss';
+
+.okp4-dataverse-portal-language-switcher-main {
+  @include with-theme() {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      @include noto-sans(400);
+      color: themed('text');
+      text-transform: capitalize;
+      font-size: 14px;
+
+      cursor: pointer;
+    }
+
+    .okp4-dataverse-portal-language-switcher-label {
+      opacity: 0.4;
+
+      &.active,
+      &:hover {
+        opacity: 1;
+      }
+
+      &:hover {
+        color: themed('secondary-color-variant-1');
+      }
+    }
+
+    .okp4-dataverse-portal-language-switcher-menu-container {
+      position: absolute;
+      background-color: themed('menu-variant-1');
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+      border-radius: 8px;
+      padding: 7px 25px;
+      bottom: 52px;
+
+      &.sidebar-collapsed {
+        left: 26px;
+        bottom: 64px;
+      }
+
+      .okp4-dataverse-portal-language-switcher-menu-item {
+        @include noto-sans(700);
+        line-height: 36px;
+      }
+    }
+  }
+}
