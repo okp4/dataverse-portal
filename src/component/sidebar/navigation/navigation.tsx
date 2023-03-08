@@ -36,11 +36,6 @@ export const Navigation: FC = () => {
           id: 'explore',
           label: t('sidebar.navigation.general.items.explore'),
           path: routes.catalog
-        },
-        {
-          id: 'dataspace',
-          label: t('sidebar.navigation.general.items.myDataSpaces'),
-          path: routes.myDataspaces
         }
       ],
       [t('sidebar.navigation.interact.label')]: [
