@@ -21,3 +21,18 @@
     @content;
   }
 }
+
+@mixin grid-container($colsNb: 12, $colsSize: 1fr, $gutter) {
+  display: grid;
+  grid-template-columns: repeat($colsNb, $colsSize);
+  column-gap: $gutter;
+  @content;
+}
+
+@mixin grid-item($colStart, $colEnd, $rowStart, $rowEnd) {
+  grid-column-start: $colStart;
+  grid-column-end: $colEnd;
+  grid-row-start: $rowStart;
+  grid-row-end: $rowEnd;
+  @content;
+}
