@@ -1,0 +1,34 @@
+{
+  "sidebar": {
+    "navigation": {
+      "general": {
+        "label": "Allgemein",
+        "items": {
+          "home": "Startseite",
+          "explore": "Erkunden",
+          "myDataSpaces": "Meine Data-Spaces"
+        }
+      },
+      "interact": {
+        "label": "Interagieren",
+        "items": {
+          "share": "Daten & Dienste teilen",
+          "createKnowledge": "Wissen schaffen",
+          "createDataspace": "Data-Spaces erstellen",
+          "buildApps": "Anwendungen erstellen"
+        }
+      },
+      "learn": {
+        "label": "Lernen",
+        "items": {
+          "documentation": "Dokumentation",
+          "help": "Hilfe-Center"
+        }
+      }
+    },
+    "footer": {
+      "feedback": "Geben Sie uns Feedback",
+      "about": "Über OKP4"
+    }
+  }
+}
