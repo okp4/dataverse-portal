@@ -1,7 +1,20 @@
+@import '@/style/mixins.scss';
+
 .okp4-dataverse-portal-toolbar-main {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 25px 0;
-  padding-right: 105px;
+  @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 2);
+  padding: 25px 0 45px;
+  justify-items: end;
+
+  @include desktop-bp {
+    @include grid-container($gutter: 34px);
+  }
+
+  @include large-desktop-bp {
+    @include grid-container($gutter: 48px);
+  }
+
+  .okp4-dataverse-portal-button-main {
+    @include grid-item($colStart: 13, $colEnd: 11, $rowStart: 1, $rowEnd: 1);
+    width: max-content;
+  }
 }
