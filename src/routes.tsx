@@ -3,7 +3,6 @@ import { WorkInProgress } from '@/page/workInProgress/workInProgress'
 export enum routes {
   home = '/',
   catalog = '/catalog',
-  myDataspaces = '/dataspace',
   sharing = '/sharing',
   knowledgeBuilder = '/knowledge-builder',
   dataspaceBuilder = '/dataspace-builder',
@@ -27,11 +26,6 @@ export const appRoutes: Route[] = [
   {
     id: 'catalog',
     path: routes.catalog,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'dataspace',
-    path: routes.myDataspaces,
     element: <WorkInProgress />
   },
   {
