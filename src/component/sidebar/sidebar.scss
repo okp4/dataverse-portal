@@ -14,7 +14,7 @@
     position: relative;
     box-sizing: border-box;
 
-    @include for-big-desktop-up() {
+    @include large-desktop-bp() {
       width: 377px;
     }
 
