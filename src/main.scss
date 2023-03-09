@@ -37,6 +37,7 @@ p {
     grid-template-rows: max-content;
     width: 100%;
     margin: 0 2%;
+    row-gap: 15px;
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);

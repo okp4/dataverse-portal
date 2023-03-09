@@ -2,7 +2,7 @@
 
 .okp4-dataverse-portal-toolbar-main {
   @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 2);
-  padding: 25px 0 45px;
+  padding: 25px 0 0;
   justify-items: end;
 
   @include desktop-bp {
