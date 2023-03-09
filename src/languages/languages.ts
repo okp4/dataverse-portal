@@ -1,4 +1,7 @@
 import * as O from 'fp-ts/Option'
+import * as A from 'fp-ts/Array'
+import type { Lazy } from 'fp-ts/function'
+import { pipe } from 'fp-ts/function'
 import { isCurrentLanguage } from '@/i18n/utils'
 
 export type Lng = string
@@ -25,5 +28,14 @@ export const languages: Language[] = [
   }
 ]
 
-export const getActiveLanguage = (): O.Option<Language> =>
-  O.fromNullable(languages.find(({ lng }) => isCurrentLanguage(lng)))
+export const activeLanguage = (): O.Option<Language> =>
+  pipe(
+    languages,
+    A.findFirst(({ lng }) => isCurrentLanguage(lng))
+  )
+
+export const activeLanguageWithDefault: Lazy<Language> = () =>
+  pipe(
+    activeLanguage(),
+    O.getOrElse(() => fallbackLanguage)
+  )

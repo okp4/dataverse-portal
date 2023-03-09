@@ -1,6 +1,4 @@
 import classNames from 'classnames'
-import * as O from 'fp-ts/Option'
-import { pipe } from 'fp-ts/function'
 import type { FC } from 'react'
 import { useState, useCallback, useRef } from 'react'
 import { isCurrentLanguage } from '@/i18n/utils'
@@ -9,7 +7,7 @@ import { changeLanguage } from 'i18next'
 import { useOnClickOutside } from '@/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/hook/useOnKeyboard'
 import type { Lng } from '@/languages/languages'
-import { fallbackLanguage, languages, getActiveLanguage } from '@/languages/languages'
+import { activeLanguageWithDefault, languages } from '@/languages/languages'
 import './languageSwitcher.scss'
 
 type MenuOption = Readonly<{
@@ -26,11 +24,6 @@ export const LanguageSwitcher: FC = () => {
   const menuOptions: MenuOption[] = languages
     .map(({ label, lng }) => ({ value: lng, label }))
     .filter(selectOption => !isCurrentLanguage(selectOption.value))
-
-  const activeLanguage = pipe(
-    getActiveLanguage(),
-    O.getOrElse(() => fallbackLanguage)
-  )
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false)
@@ -88,7 +81,7 @@ export const LanguageSwitcher: FC = () => {
         })}
         onClick={handleLanguageClick}
       >
-        {activeLanguage.label}
+        {activeLanguageWithDefault().label}
       </p>
     </div>
   )
