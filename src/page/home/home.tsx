@@ -15,22 +15,27 @@ type Stats = {
   description: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 const Stats: FC = () => {
   const { t } = useTranslation('home')
   const theme = useAppStore(store => store.theme)
-  const { dataspacesCreatedNb, datasetsSharedNb, servicesSharedNb } =
+  const { dataspacesCreatedNb, datasetsSharedNb, servicesSharedNb, communityParticipantNb } =
     useStatsAggregate(
       aggregate => ({
         dataspacesCreatedNb: aggregate.dataspacesCreatedNb,
         datasetsSharedNb: aggregate.datasetsSharedNb,
-        servicesSharedNb: aggregate.servicesSharedNb
+        servicesSharedNb: aggregate.servicesSharedNb,
+        communityParticipantNb: aggregate.communityParticipantNb
       }),
       shallow
     )
 
   const stats: Stats[] = useMemo(
     () => [
-      
+      {
+        stat: communityParticipantNb,
+        description: t('home.blocks.community.stats.communityParticipant')
+      },
       {
         icon: <Icon name={`dataspace-created-${theme}`} />,
         stat: dataspacesCreatedNb,
@@ -47,11 +52,24 @@ const Stats: FC = () => {
         description: t('home.blocks.community.stats.servicesShared')
       }
     ],
-    [ datasetsSharedNb, dataspacesCreatedNb, servicesSharedNb, t, theme]
+    [communityParticipantNb, datasetsSharedNb, dataspacesCreatedNb, servicesSharedNb, t, theme]
   )
 
   return (
-   
+    <>
+      <Card>
+        <>
+          <div className="okp4-dataverse-portal-home-page-stats-container">
+            <div className="okp4-dataverse-portal-home-page-stats-content-wrapper">
+              <div>
+                <h2>{stats[0].stat}</h2>
+                <p>{stats[0].description}</p>
+              </div>
+            </div>
+          </div>
+          <div className="okp4-dataverse-portal-home-page-ellipse" />
+        </>
+      </Card>
       <Card>
         <div className="okp4-dataverse-portal-home-page-stats-container">
           {stats.slice(1, 4).map(({ icon, stat, description }, index) => (
@@ -69,6 +87,7 @@ const Stats: FC = () => {
           ))}
         </div>
       </Card>
+    </>
   )
 }
 
