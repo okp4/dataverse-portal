@@ -1,10 +1,12 @@
 import classNames from 'classnames'
+import * as O from 'fp-ts/Option'
+import { pipe } from 'fp-ts/function'
 import type { FC } from 'react'
 import { useState, useCallback, useRef } from 'react'
 import { isCurrentLanguage } from '@/i18n/utils'
 import { useAppStore } from '@/store/appStore'
 import { changeLanguage } from 'i18next'
-import { useClickOutside } from '@/hook/useClickOutside'
+import { useOnClickOutside } from '@/hook/useClickOutside'
 import type { Lng } from '@/languages/languages'
 import { fallbackLanguage, languages, getActiveLanguage } from '@/languages/languages'
 import './languageSwitcher.scss'
@@ -24,7 +26,10 @@ export const LanguageSwitcher: FC = () => {
     .map(({ label, lng }) => ({ value: lng, label }))
     .filter(selectOption => !isCurrentLanguage(selectOption.value))
 
-  const activeLanguage = getActiveLanguage()
+  const activeLanguage = pipe(
+    getActiveLanguage(),
+    O.getOrElse(() => fallbackLanguage)
+  )
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false)
@@ -42,11 +47,11 @@ export const LanguageSwitcher: FC = () => {
     [closeMenu]
   )
 
-  const clickOutsidehandler = useCallback(() => {
+  const clickOutsideHandler = useCallback(() => {
     closeMenu()
   }, [closeMenu])
 
-  useClickOutside<HTMLDivElement>(mainRef, clickOutsidehandler)
+  useOnClickOutside<HTMLDivElement>(mainRef, clickOutsideHandler)
 
   return (
     <div className="okp4-dataverse-portal-language-switcher-main" ref={mainRef}>
@@ -73,7 +78,7 @@ export const LanguageSwitcher: FC = () => {
         })}
         onClick={handleLanguageClick}
       >
-        {activeLanguage?.label ?? fallbackLanguage.label}
+        {activeLanguage.label}
       </p>
     </div>
   )
