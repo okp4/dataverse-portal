@@ -44,7 +44,6 @@
       }
 
       .okp4-dataverse-portal-card-main {
-        @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
         width: 100%;
 
         .okp4-dataverse-portal-home-page-stats-container {
@@ -84,6 +83,37 @@
             }
           }
         }
+      }
+
+      .okp4-dataverse-portal-card-main:first-of-type {
+        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+        position: relative;
+        overflow: hidden;
+
+        .okp4-dataverse-portal-home-page-stats-container {
+          @include desktop-bp {
+            padding: 17px 72px 24px 34px;
+          }
+
+          @include large-desktop-bp {
+            padding: 21px 28px 21px 34px;
+          }
+        }
+
+        .okp4-dataverse-portal-home-page-ellipse {
+          position: absolute;
+          width: 205px;
+          height: 205px;
+          right: -90px;
+          bottom: -102.5px;
+          box-sizing: border-box;
+          border: 40px solid themed('background-variant-1');
+          border-radius: 50%;
+        }
+      }
+
+      .okp4-dataverse-portal-card-main:last-of-type {
+        @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
       }
     }
   }
