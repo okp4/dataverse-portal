@@ -1,0 +1,38 @@
+@mixin mobile-bp {
+  @media (max-width: 595px) {
+    @content;
+  }
+}
+
+@mixin tablet-bp {
+  @media (min-width: 596px) and (max-width: 1439px) {
+    @content;
+  }
+}
+
+@mixin desktop-bp {
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    @content;
+  }
+}
+
+@mixin large-desktop-bp {
+  @media (min-width: 1920px) {
+    @content;
+  }
+}
+
+@mixin grid-container($colsNb: 12, $colsSize: 1fr, $gutter) {
+  display: grid;
+  grid-template-columns: repeat($colsNb, $colsSize);
+  column-gap: $gutter;
+  @content;
+}
+
+@mixin grid-item($colStart, $colEnd, $rowStart, $rowEnd) {
+  grid-column-start: $colStart;
+  grid-column-end: $colEnd;
+  grid-row-start: $rowStart;
+  grid-row-end: $rowEnd;
+  @content;
+}

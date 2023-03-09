@@ -29,7 +29,6 @@
     &.tertiary {
       border: unset;
       color: themed('text');
-      height: 44px;
       border-radius: 12px;
       background: themed('tertiary-button-background');
 
@@ -45,7 +44,7 @@
       gap: 6px;
 
       &.tertiary {
-        padding: 0 20px;
+        padding: 11px 20px;
         gap: 10px;
       }
 

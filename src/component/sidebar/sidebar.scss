@@ -1,9 +1,10 @@
 @import '@/style/theme.scss';
 @import '@/style/fonts.scss';
+@import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-sidebar-main {
   @include with-theme() {
-    width: 240px;
+    min-width: 240px;
     background-color: themed('menu');
     box-shadow: 4px 0 18px rgba(16, 19, 49, 0.2);
     border-radius: 0 12px 12px 0;
@@ -13,7 +14,12 @@
     position: relative;
     box-sizing: border-box;
 
+    @include large-desktop-bp() {
+      min-width: 360px;
+    }
+
     &.collapsed {
+      min-width: unset;
       width: 100px;
       padding: 30px;
     }

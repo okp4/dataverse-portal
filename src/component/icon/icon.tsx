@@ -5,8 +5,12 @@ import { ReactComponent as BuildAppsActiveIcon } from '@/asset/icon/build-apps-a
 import { ReactComponent as CreateKnowledgeIcon } from '@/asset/icon/create-knowledge.svg'
 import { ReactComponent as CreateKnowledgeActiveIcon } from '@/asset/icon/create-knowledge-active.svg'
 import { ReactComponent as CreateDataspaceIcon } from '@/asset/icon/create-dataspace.svg'
+import { ReactComponent as DataspaceCreatedLightIcon } from '@/asset/icon/dataspace-created-light.svg'
+import { ReactComponent as DataspaceCreatedDarkIcon } from '@/asset/icon/dataspace-created-dark.svg'
 import { ReactComponent as CreateDataspaceActiveIcon } from '@/asset/icon/create-dataspace-active.svg'
 import { ReactComponent as CollapseIcon } from '@/asset/icon/collapse.svg'
+import { ReactComponent as DatasetFolderLightIcon } from '@/asset/icon/dataset-folder-light.svg'
+import { ReactComponent as DatasetFolderDarkIcon } from '@/asset/icon/dataset-folder-dark.svg'
 import { ReactComponent as DiscordLightIcon } from '@/asset/icon/discord-light.svg'
 import { ReactComponent as DiscordDarkIcon } from '@/asset/icon/discord-dark.svg'
 import { ReactComponent as DocumentationIcon } from '@/asset/icon/documentation.svg'
@@ -24,6 +28,8 @@ import { ReactComponent as LinkedinDarkIcon } from '@/asset/icon/linkedin-dark.s
 import { ReactComponent as MediumLightIcon } from '@/asset/icon/medium-light.svg'
 import { ReactComponent as MediumDarkIcon } from '@/asset/icon/medium-dark.svg'
 import { ReactComponent as MoonIcon } from '@/asset/icon/moon.svg'
+import { ReactComponent as ServiceFolderLightIcon } from '@/asset/icon/service-folder-light.svg'
+import { ReactComponent as ServiceFolderDarkIcon } from '@/asset/icon/service-folder-dark.svg'
 import { ReactComponent as ShareIcon } from '@/asset/icon/share.svg'
 import { ReactComponent as ShareActiveIcon } from '@/asset/icon/share-active.svg'
 import { ReactComponent as SunIcon } from '@/asset/icon/sun.svg'
@@ -62,6 +68,12 @@ export type IconName =
   | 'share-active'
   | 'home-active'
   | 'wallet'
+  | 'dataset-folder-light'
+  | 'dataset-folder-dark'
+  | 'service-folder-light'
+  | 'service-folder-dark'
+  | 'dataspace-created-light'
+  | 'dataspace-created-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -93,7 +105,13 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'help-active': HelpActiveIcon,
   'share-active': ShareActiveIcon,
   'home-active': HomeActiveIcon,
-  wallet: WalletIcon
+  wallet: WalletIcon,
+  'dataset-folder-dark': DatasetFolderDarkIcon,
+  'dataset-folder-light': DatasetFolderLightIcon,
+  'service-folder-dark': ServiceFolderDarkIcon,
+  'service-folder-light': ServiceFolderLightIcon,
+  'dataspace-created-dark': DataspaceCreatedDarkIcon,
+  'dataspace-created-light': DataspaceCreatedLightIcon
 }
 
 type IconProps = {

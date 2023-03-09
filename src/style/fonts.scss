@@ -8,6 +8,11 @@
   font-weight: $weight;
 }
 
+@mixin prompt($weight) {
+  font-family: 'Prompt', sans-serif;
+  font-weight: $weight;
+}
+
 @font-face {
   font-family: 'Norse';
   src: url('../asset/font/norse/Norse.woff') format('woff');
@@ -38,4 +43,12 @@
   font-display: swap;
   font-style: normal;
   font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Prompt';
+  src: url('../asset/font/prompt/Prompt-SemiBold.ttf') format('truetype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
 }

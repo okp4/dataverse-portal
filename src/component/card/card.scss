@@ -1,0 +1,12 @@
+@import '@/style/theme.scss';
+
+.okp4-dataverse-portal-card-main {
+  @include with-theme() {
+    min-height: 129px;
+    background-color: themed('card');
+    border-radius: 20px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+  }
+}
