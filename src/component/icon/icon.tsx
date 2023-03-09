@@ -9,8 +9,6 @@ import { ReactComponent as CreateDataspaceActiveIcon } from '@/asset/icon/create
 import { ReactComponent as CollapseIcon } from '@/asset/icon/collapse.svg'
 import { ReactComponent as DiscordLightIcon } from '@/asset/icon/discord-light.svg'
 import { ReactComponent as DiscordDarkIcon } from '@/asset/icon/discord-dark.svg'
-import { ReactComponent as DataspaceIcon } from '@/asset/icon/dataspace.svg'
-import { ReactComponent as DataspaceActiveIcon } from '@/asset/icon/dataspace-active.svg'
 import { ReactComponent as DocumentationIcon } from '@/asset/icon/documentation.svg'
 import { ReactComponent as DocumentationActiveIcon } from '@/asset/icon/documentation-active.svg'
 import { ReactComponent as ExpandIcon } from '@/asset/icon/expand.svg'
@@ -40,7 +38,6 @@ export type IconName =
   | 'build-apps'
   | 'create-knowledge'
   | 'create-dataspace'
-  | 'dataspace'
   | 'explore'
   | 'feedback'
   | 'help'
@@ -59,7 +56,6 @@ export type IconName =
   | 'build-apps-active'
   | 'create-knowledge-active'
   | 'create-dataspace-active'
-  | 'dataspace-active'
   | 'explore-active'
   | 'documentation-active'
   | 'help-active'
@@ -74,7 +70,6 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'build-apps': BuildAppsIcon,
   'create-knowledge': CreateKnowledgeIcon,
   'create-dataspace': CreateDataspaceIcon,
-  dataspace: DataspaceIcon,
   explore: ExploreIcon,
   feedback: FeedbackIcon,
   help: HelpIcon,
@@ -93,7 +88,6 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'build-apps-active': BuildAppsActiveIcon,
   'create-knowledge-active': CreateKnowledgeActiveIcon,
   'create-dataspace-active': CreateDataspaceActiveIcon,
-  'dataspace-active': DataspaceActiveIcon,
   'explore-active': ExploreActiveIcon,
   'documentation-active': DocumentationActiveIcon,
   'help-active': HelpActiveIcon,

@@ -8,16 +8,16 @@
     flex-direction: column;
     gap: 48px;
 
-    @media screen and (max-height: 830px) {
+    @media screen and (max-height: 880px) {
       margin-top: 44px;
-      gap: 34px;
+      gap: 30px;
     }
 
     &.collapsed {
       align-self: center;
       gap: 88px;
-      @media screen and (max-height: 830px) {
-        gap: 66px;
+      @media screen and (max-height: 880px) {
+        gap: 62px;
       }
     }
 

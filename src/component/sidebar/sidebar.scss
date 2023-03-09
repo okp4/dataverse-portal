@@ -7,7 +7,7 @@
     background-color: themed('menu');
     box-shadow: 4px 0 18px rgba(16, 19, 49, 0.2);
     border-radius: 0 12px 12px 0;
-    padding: 32px 21px 32px 31px;
+    padding: 32px 21px 22px 31px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -48,7 +48,6 @@
       @include noto-sans(700);
       font-size: 14px;
       color: themed('text');
-      text-transform: capitalize;
       opacity: 0.4;
 
       &:hover {
