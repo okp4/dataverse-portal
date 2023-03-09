@@ -1,3 +1,4 @@
+import * as O from 'fp-ts/Option'
 import { isCurrentLanguage } from '@/i18n/utils'
 
 export type Lng = string
@@ -24,5 +25,5 @@ export const languages: Language[] = [
   }
 ]
 
-export const getActiveLanguage = (): Language | null =>
-  languages.find(({ lng }) => isCurrentLanguage(lng)) ?? null
+export const getActiveLanguage = (): O.Option<Language> =>
+  O.fromNullable(languages.find(({ lng }) => isCurrentLanguage(lng)))
