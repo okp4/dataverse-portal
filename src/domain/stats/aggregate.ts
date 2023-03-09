@@ -5,12 +5,14 @@ type StatsAggregate = {
   dataspacesCreatedNb: number
   datasetsSharedNb: number
   servicesSharedNb: number
+  communityParticipantNb: number
 }
 
 export const useStatsAggregate = create<StatsAggregate, [['zustand/immer', never]]>(
   immer(() => ({
     dataspacesCreatedNb: 2,
     datasetsSharedNb: 18,
-    servicesSharedNb: 5
+    servicesSharedNb: 5,
+    communityParticipantNb: 34
   }))
 )
