@@ -6,7 +6,8 @@ import { useState, useCallback, useRef } from 'react'
 import { isCurrentLanguage } from '@/i18n/utils'
 import { useAppStore } from '@/store/appStore'
 import { changeLanguage } from 'i18next'
-import { useOnClickOutside } from '@/hook/useClickOutside'
+import { useOnClickOutside } from '@/hook/useOnClickOutside'
+import { useOnKeyboard } from '@/hook/useOnKeyboard'
 import type { Lng } from '@/languages/languages'
 import { fallbackLanguage, languages, getActiveLanguage } from '@/languages/languages'
 import './languageSwitcher.scss'
@@ -51,10 +52,19 @@ export const LanguageSwitcher: FC = () => {
     closeMenu()
   }, [closeMenu])
 
+  const handleMenuItemKeydown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Enter') setIsMenuOpen(true)
+      else if (event.key === 'Escape') closeMenu()
+    },
+    [setIsMenuOpen, closeMenu]
+  )
+
   useOnClickOutside<HTMLDivElement>(mainRef, clickOutsideHandler)
+  useOnKeyboard(handleMenuItemKeydown, 'keydown', mainRef)
 
   return (
-    <div className="okp4-dataverse-portal-language-switcher-main" ref={mainRef}>
+    <div className="okp4-dataverse-portal-language-switcher-main" ref={mainRef} tabIndex={0}>
       {isMenuOpen && (
         <div
           className={classNames('okp4-dataverse-portal-language-switcher-menu-container', {
