@@ -4,7 +4,7 @@
 
 .okp4-dataverse-portal-sidebar-main {
   @include with-theme() {
-    min-width: 240px;
+    width: 240px;
     background-color: themed('menu');
     box-shadow: 4px 0 18px rgba(16, 19, 49, 0.2);
     border-radius: 0 12px 12px 0;
@@ -15,7 +15,7 @@
     box-sizing: border-box;
 
     @include large-desktop-bp() {
-      min-width: 360px;
+      width: 360px;
     }
 
     &.collapsed {
