@@ -6,6 +6,16 @@
   @include with-theme() {
     @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 2, $rowEnd: auto);
 
+    @include mobile-bp {
+      @include grid-item($colStart: 1, $colEnd: 7, $rowStart: 2, $rowEnd: auto);
+      @include grid-container($colsNb: 6, $gutter: 34px);
+    }
+
+    @include tablet-bp {
+      @include grid-item($colStart: 1, $colEnd: 9, $rowStart: 2, $rowEnd: auto);
+      @include grid-container($colsNb: 8, $gutter: 34px);
+    }
+
     @include desktop-bp {
       @include grid-container($gutter: 34px);
     }
@@ -18,6 +28,16 @@
       @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
       grid-template-rows: max-content max-content;
       justify-items: end;
+
+      @include mobile-bp {
+        @include grid-item($colStart: 1, $colEnd: 7, $rowStart: 1, $rowEnd: 1);
+        @include grid-container($colsNb: 6, $gutter: 16px);
+      }
+
+      @include tablet-bp {
+        @include grid-item($colStart: 1, $colEnd: 9, $rowStart: 1, $rowEnd: 1);
+        @include grid-container($colsNb: 8, $gutter: 16px);
+      }
 
       @include desktop-bp {
         @include grid-container($gutter: 34px);
