@@ -22,6 +22,18 @@ type ActiveClassName = {
   isActive: boolean
 }
 
+const renderNavitem = (
+  isSidebarExpanded: boolean,
+  label: string,
+  id: string,
+  isActive?: boolean
+): JSX.Element => (
+  <>
+    <Icon name={isActive ? (`${id}-active` as IconName) : (id as IconName)} />
+    {isSidebarExpanded && <p className="text">{label}</p>}
+  </>
+)
+
 export const Navigation: FC = () => {
   const { t } = useTranslation('sidebar')
   const navigationItems: NavigationItems = useMemo(
@@ -89,16 +101,19 @@ export const Navigation: FC = () => {
           key={index}
         >
           {isSidebarExpanded && <h3>{group[0]}</h3>}
-          {group[1].map(({ label, id, path }) => (
-            <NavLink className={navLinkClassName} key={id} title={label} to={path}>
-              {({ isActive }: ActiveClassName): JSX.Element => (
-                <>
-                  <Icon name={isActive ? (`${id}-active` as IconName) : (id as IconName)} />
-                  {isSidebarExpanded && <p className="text">{label}</p>}
-                </>
-              )}
-            </NavLink>
-          ))}
+          {group[1].map(({ label, id, path }) => {
+            return path ? (
+              <NavLink className={navLinkClassName} key={id} title={label} to={path}>
+                {({ isActive }: ActiveClassName): JSX.Element =>
+                  renderNavitem(isSidebarExpanded, label, id, isActive)
+                }
+              </NavLink>
+            ) : (
+              <div className="okp4-dataverse-portal-sidebar-deactivated-navitem">
+                {renderNavitem(isSidebarExpanded, label, id)}
+              </div>
+            )
+          })}
         </div>
       ))}
     </nav>
