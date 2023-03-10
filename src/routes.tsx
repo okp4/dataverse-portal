@@ -3,13 +3,7 @@ import { Home } from '@/page/home/home'
 
 export enum routes {
   home = '/',
-  catalog = '/catalog',
-  sharing = '/sharing',
-  knowledgeBuilder = '/knowledge-builder',
-  dataspaceBuilder = '/dataspace-builder',
-  appBuilder = '/app-builder',
-  documentation = '/documentation',
-  help = '/help'
+  catalog = '/catalog'
 }
 
 export type Route = {
@@ -27,36 +21,6 @@ export const appRoutes: Route[] = [
   {
     id: 'catalog',
     path: routes.catalog,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'sharing',
-    path: routes.sharing,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'knowledgeBuilder',
-    path: routes.knowledgeBuilder,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'dataspaceBuilder',
-    path: routes.dataspaceBuilder,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'appBuilder',
-    path: routes.appBuilder,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'documentation',
-    path: routes.documentation,
-    element: <WorkInProgress />
-  },
-  {
-    id: 'help',
-    path: routes.help,
     element: <WorkInProgress />
   }
 ]
