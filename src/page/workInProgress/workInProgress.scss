@@ -9,8 +9,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     height: 100%;
     color: themed('text');
+
+    @include mobile-bp {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    }
+
+    @include tablet-bp {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    }
 
     h1 {
       @include norse-font(700);
