@@ -37,11 +37,23 @@ p {
     flex: 1;
     grid-template-rows: max-content;
     width: 100%;
-    margin: 0 2%;
+    min-height: inherit;
     row-gap: 15px;
+
+    @include mobile-bp {
+      @include grid-container($colsNb: 6, $gutter: 16px);
+      margin: 0 4%;
+    }
+
+    @include tablet-bp {
+      @include grid-container($colsNb: 8, $gutter: 16px);
+      margin: 0 3%;
+      row-gap: 48px;
+    }
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);
+      margin: 0 2%;
     }
 
     @include large-desktop-bp {
