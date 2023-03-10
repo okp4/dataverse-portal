@@ -13,7 +13,7 @@ import './navigation.scss'
 type NavigationItem = {
   id: string
   label: string
-  path: string
+  path?: string
 }
 
 type NavigationItems = Record<string, NavigationItem[]>
@@ -41,35 +41,29 @@ export const Navigation: FC = () => {
       [t('sidebar.navigation.interact.label')]: [
         {
           id: 'share',
-          label: t('sidebar.navigation.interact.items.share'),
-          path: routes.sharing
+          label: t('sidebar.navigation.interact.items.share')
         },
         {
           id: 'create-knowledge',
-          label: t('sidebar.navigation.interact.items.createKnowledge'),
-          path: routes.knowledgeBuilder
+          label: t('sidebar.navigation.interact.items.createKnowledge')
         },
         {
           id: 'create-dataspace',
-          label: t('sidebar.navigation.interact.items.createDataspace'),
-          path: routes.dataspaceBuilder
+          label: t('sidebar.navigation.interact.items.createDataspace')
         },
         {
           id: 'build-apps',
-          label: t('sidebar.navigation.interact.items.buildApps'),
-          path: routes.appBuilder
+          label: t('sidebar.navigation.interact.items.buildApps')
         }
       ],
       [t('sidebar.navigation.learn.label')]: [
         {
           id: 'documentation',
-          label: t('sidebar.navigation.learn.items.documentation'),
-          path: routes.documentation
+          label: t('sidebar.navigation.learn.items.documentation')
         },
         {
           id: 'help',
-          label: t('sidebar.navigation.learn.items.help'),
-          path: routes.help
+          label: t('sidebar.navigation.learn.items.help')
         }
       ]
     }),
