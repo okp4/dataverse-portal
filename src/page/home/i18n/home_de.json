@@ -1,0 +1,15 @@
+{
+  "home": {
+    "blocks": {
+      "community": {
+        "label": "Die Gemeinschaft",
+        "stats": {
+          "dataspacesCreated": "Erstellte Data Spaces",
+          "datasetsShared": "Geteilte Datensätze",
+          "servicesShared": "Geteilte Dienste",
+          "communityParticipants": "Anzahl der Teilnehmer am OKP4-Ökosystem"
+        }
+      }
+    }
+  }
+}
