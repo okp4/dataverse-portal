@@ -79,6 +79,16 @@
         text-decoration: unset;
       }
 
+      .okp4-dataverse-portal-sidebar-footer-version {
+        font-weight: 200;
+        text-transform: uppercase;
+
+        &:hover {
+          color: themed('text');
+          opacity: 0.4;
+        }
+      }
+
       .okp4-dataverse-portal-sidebar-footer-social-medias-container {
         display: flex;
         align-items: center;
