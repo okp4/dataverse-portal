@@ -13,7 +13,7 @@ import './navigation.scss'
 type NavigationItem = {
   id: string
   label: string
-  path: string
+  path?: string
 }
 
 type NavigationItems = Record<string, NavigationItem[]>
@@ -21,6 +21,18 @@ type NavigationItems = Record<string, NavigationItem[]>
 type ActiveClassName = {
   isActive: boolean
 }
+
+const renderNavitem = (
+  isSidebarExpanded: boolean,
+  label: string,
+  id: string,
+  isActive?: boolean
+): JSX.Element => (
+  <>
+    <Icon name={isActive ? (`${id}-active` as IconName) : (id as IconName)} />
+    {isSidebarExpanded && <p className="text">{label}</p>}
+  </>
+)
 
 export const Navigation: FC = () => {
   const { t } = useTranslation('sidebar')
@@ -35,41 +47,35 @@ export const Navigation: FC = () => {
         {
           id: 'explore',
           label: t('sidebar.navigation.general.items.explore'),
-          path: routes.catalog
+          path: routes.dataverse
         }
       ],
       [t('sidebar.navigation.interact.label')]: [
         {
           id: 'share',
-          label: t('sidebar.navigation.interact.items.share'),
-          path: routes.sharing
+          label: t('sidebar.navigation.interact.items.share')
         },
         {
           id: 'create-knowledge',
-          label: t('sidebar.navigation.interact.items.createKnowledge'),
-          path: routes.knowledgeBuilder
+          label: t('sidebar.navigation.interact.items.createKnowledge')
         },
         {
           id: 'create-dataspace',
-          label: t('sidebar.navigation.interact.items.createDataspace'),
-          path: routes.dataspaceBuilder
+          label: t('sidebar.navigation.interact.items.createDataspace')
         },
         {
           id: 'build-apps',
-          label: t('sidebar.navigation.interact.items.buildApps'),
-          path: routes.appBuilder
+          label: t('sidebar.navigation.interact.items.buildApps')
         }
       ],
       [t('sidebar.navigation.learn.label')]: [
         {
           id: 'documentation',
-          label: t('sidebar.navigation.learn.items.documentation'),
-          path: routes.documentation
+          label: t('sidebar.navigation.learn.items.documentation')
         },
         {
           id: 'help',
-          label: t('sidebar.navigation.learn.items.help'),
-          path: routes.help
+          label: t('sidebar.navigation.learn.items.help')
         }
       ]
     }),
@@ -95,16 +101,19 @@ export const Navigation: FC = () => {
           key={index}
         >
           {isSidebarExpanded && <h3>{group[0]}</h3>}
-          {group[1].map(({ label, id, path }) => (
-            <NavLink className={navLinkClassName} key={id} title={label} to={path}>
-              {({ isActive }: ActiveClassName): JSX.Element => (
-                <>
-                  <Icon name={isActive ? (`${id}-active` as IconName) : (id as IconName)} />
-                  {isSidebarExpanded && <p className="text">{label}</p>}
-                </>
-              )}
-            </NavLink>
-          ))}
+          {group[1].map(({ label, id, path }) => {
+            return path ? (
+              <NavLink className={navLinkClassName} key={id} title={label} to={path}>
+                {({ isActive }: ActiveClassName): JSX.Element =>
+                  renderNavitem(isSidebarExpanded, label, id, isActive)
+                }
+              </NavLink>
+            ) : (
+              <div className="okp4-dataverse-portal-sidebar-deactivated-navitem">
+                {renderNavitem(isSidebarExpanded, label, id)}
+              </div>
+            )
+          })}
         </div>
       ))}
     </nav>

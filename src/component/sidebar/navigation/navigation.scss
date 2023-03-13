@@ -1,6 +1,20 @@
 @import '@/style/theme.scss';
 @import '@/style/fonts.scss';
 
+@mixin nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@mixin text-themed-svg {
+  svg {
+    path {
+      fill: themed('text');
+    }
+  }
+}
+
 .okp4-dataverse-portal-sidebar-navigation-container {
   @include with-theme() {
     margin-top: 68px;
@@ -38,12 +52,27 @@
         letter-spacing: 2px;
       }
 
+      .okp4-dataverse-portal-sidebar-deactivated-navitem {
+        @include nav-item;
+        @include text-themed-svg;
+        cursor: default;
+
+        .text {
+          &:hover {
+            color: themed('text');
+            opacity: 0.4;
+          }
+        }
+      }
+
       a {
-        text-decoration: unset;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        @include nav-item;
         cursor: pointer;
+        text-decoration: unset;
+
+        &:not(.active) {
+          @include text-themed-svg;
+        }
 
         &:hover {
           svg {
@@ -55,16 +84,6 @@
           p {
             color: themed('secondary-color-variant-1');
             opacity: 1;
-          }
-        }
-
-        &:not(.active) {
-          &:not(:hover) {
-            svg {
-              path {
-                fill: themed('text');
-              }
-            }
           }
         }
 
