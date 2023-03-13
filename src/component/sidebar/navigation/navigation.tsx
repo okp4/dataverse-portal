@@ -47,7 +47,7 @@ export const Navigation: FC = () => {
         {
           id: 'explore',
           label: t('sidebar.navigation.general.items.explore'),
-          path: routes.catalog
+          path: routes.dataverse
         }
       ],
       [t('sidebar.navigation.interact.label')]: [

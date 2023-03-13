@@ -3,7 +3,7 @@ import { Home } from '@/page/home/home'
 
 export enum routes {
   home = '/',
-  catalog = '/catalog'
+  dataverse = '/dataverse'
 }
 
 export type Route = {
@@ -19,8 +19,8 @@ export const appRoutes: Route[] = [
     element: <Home />
   },
   {
-    id: 'catalog',
-    path: routes.catalog,
+    id: 'dataverse',
+    path: routes.dataverse,
     element: <WorkInProgress />
   }
 ]
