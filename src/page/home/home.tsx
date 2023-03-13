@@ -10,7 +10,7 @@ import './home.scss'
 import './i18n/index'
 
 type Stats = {
-  icon?: JSX.Element
+  icon: JSX.Element
   stat: number
   description: string
 }
@@ -33,10 +33,6 @@ const Stats: FC = () => {
   const stats: Stats[] = useMemo(
     () => [
       {
-        stat: communityParticipantNb,
-        description: t('home.blocks.community.stats.communityParticipant')
-      },
-      {
         icon: <Icon name={`dataspace-created-${theme}`} />,
         stat: dataspacesCreatedNb,
         description: t('home.blocks.community.stats.dataspacesCreated')
@@ -52,33 +48,29 @@ const Stats: FC = () => {
         description: t('home.blocks.community.stats.servicesShared')
       }
     ],
-    [communityParticipantNb, datasetsSharedNb, dataspacesCreatedNb, servicesSharedNb, t, theme]
+    [datasetsSharedNb, dataspacesCreatedNb, servicesSharedNb, t, theme]
   )
 
   return (
     <>
-      <Card>
-        <>
-          <div className="okp4-dataverse-portal-home-page-stats-container">
-            <div className="okp4-dataverse-portal-home-page-stats-content-wrapper">
-              <div>
-                <h2>{stats[0].stat}</h2>
-                <p>{stats[0].description}</p>
-              </div>
+      <div className="okp4-dataverse-portal-home-page-community-participants">
+        <Card>
+          <>
+            <div className="okp4-dataverse-portal-home-page-community-participants-content-wrapper">
+              <h2>{communityParticipantNb}</h2>
+              <p>{t('home.blocks.community.stats.communityParticipants')}</p>
             </div>
-          </div>
-          <div className="okp4-dataverse-portal-home-page-ellipse" />
-        </>
-      </Card>
+            <div className="okp4-dataverse-portal-home-page-ellipse" />
+          </>
+        </Card>
+      </div>
       <Card>
         <div className="okp4-dataverse-portal-home-page-stats-container">
-          {stats.slice(1, 4).map(({ icon, stat, description }, index) => (
+          {stats.map(({ icon, stat, description }, index) => (
             <div className="okp4-dataverse-portal-home-page-stats-content-wrapper" key={index}>
-              {icon && (
-                <div className="okp4-dataverse-portal-home-page-stats-content-icon-container">
-                  {icon}
-                </div>
-              )}
+              <div className="okp4-dataverse-portal-home-page-stats-content-icon-container">
+                {icon}
+              </div>
               <div>
                 <h2>{stat}</h2>
                 <p>{description}</p>
