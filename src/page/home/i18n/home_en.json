@@ -6,7 +6,8 @@
         "stats": {
           "dataspacesCreated": "Data Spaces created",
           "datasetsShared": "Datasets shared",
-          "servicesShared": "Services shared"
+          "servicesShared": "Services shared",
+          "communityParticipants": "Number of participants to OKP4 ecosystem"
         }
       }
     }
