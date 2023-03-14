@@ -59,13 +59,15 @@ export const Sidebar: FC = () => {
           collapsed: !isSidebarExpanded
         })}
       >
-        <p className="okp4-dataverse-portal-sidebar-footer-version text">Alpha Version</p>
         {isSidebarExpanded && (
-          <Button
-            icons={{ startIcon: <Icon name="feedback" /> }}
-            label={t('sidebar.footer.feedback')}
-            onClick={handleFeedbackClick}
-          />
+          <>
+            <p className="okp4-dataverse-portal-sidebar-footer-version text">Alpha Version</p>
+            <Button
+              icons={{ startIcon: <Icon name="feedback" /> }}
+              label={t('sidebar.footer.feedback')}
+              onClick={handleFeedbackClick}
+            />
+          </>
         )}
         <div
           className={classnames('okp4-dataverse-portal-sidebar-footer-social-medias-container', {
