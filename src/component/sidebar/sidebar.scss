@@ -14,6 +14,14 @@
     position: relative;
     box-sizing: border-box;
 
+    @include mobile-bp {
+      width: 299px;
+    }
+
+    @include tablet-bp {
+      width: 376px;
+    }
+
     @include large-desktop-bp() {
       width: 360px;
     }
@@ -22,6 +30,10 @@
       min-width: unset;
       width: 100px;
       padding: 30px;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        display: none;
+      }
     }
 
     .okp4-dataverse-portal-sidebar-collapse-container {
@@ -37,6 +49,10 @@
       flex-direction: column;
       align-items: flex-end;
       justify-content: center;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        display: none;
+      }
     }
 
     .okp4-dataverse-portal-sidebar-title-container {
@@ -47,6 +63,10 @@
       &.collapsed {
         flex-direction: column;
         gap: 25px;
+      }
+
+      .okp4-dataverse-portal-sidebar-close-icon {
+        cursor: pointer;
       }
     }
 
