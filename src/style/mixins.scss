@@ -22,6 +22,31 @@
   }
 }
 
+@mixin use-breakpoints($breakpoints) {
+  @each $breakpoint in $breakpoints {
+    @if $breakpoint == 'mobile' {
+      @include mobile-bp {
+        @content;
+      }
+    }
+    @if $breakpoint == 'tablet' {
+      @include tablet-bp {
+        @content;
+      }
+    }
+    @if $breakpoint == 'desktop' {
+      @include desktop-bp {
+        @content;
+      }
+    }
+    @if $breakpoint == 'large-desktop' {
+      @include large-desktop-bp {
+        @content;
+      }
+    }
+  }
+}
+
 @mixin grid-container($colsNb: 12, $colsSize: 1fr, $gutter) {
   display: grid;
   grid-template-columns: repeat($colsNb, $colsSize);
