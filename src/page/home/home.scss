@@ -14,11 +14,7 @@
       @include grid-container($gutter: 48px);
     }
 
-    .okp4-dataverse-portal-home-page-block-container-community {
-      @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
-      grid-template-rows: max-content max-content;
-      justify-items: end;
-
+    .okp4-dataverse-portal-home-page-block-container {
       @include desktop-bp {
         @include grid-container($gutter: 34px);
       }
@@ -30,7 +26,7 @@
       h1 {
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 1);
         @include norse-font(700);
-        width: 100%;
+        width: fit-content;
         line-height: 61px;
         display: flex;
         align-items: center;
@@ -43,47 +39,9 @@
         -webkit-text-fill-color: transparent;
       }
 
-      .okp4-dataverse-portal-card-main {
-        @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
-        width: 100%;
-
-        .okp4-dataverse-portal-home-page-stats-container {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          width: 100%;
-          gap: 50px;
-          padding: 0 40px;
-          color: themed('text');
-
-          .okp4-dataverse-portal-home-page-stats-content-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-
-            h2 {
-              @include prompt(600);
-              line-height: 48px;
-              font-size: 28px;
-            }
-
-            p {
-              @include noto-sans(400);
-              font-size: 14px;
-              opacity: 0.6;
-            }
-
-            .okp4-dataverse-portal-home-page-stats-content-icon-container {
-              width: 46px;
-              height: 46px;
-              display: flex;
-              align-items: center;
-              background: themed('background-variant-1');
-              border-radius: 6px;
-              justify-content: center;
-            }
-          }
-        }
+      &.community {
+        @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
+        grid-template-rows: max-content max-content;
       }
     }
   }

@@ -1,0 +1,87 @@
+@import '@/style/fonts.scss';
+@import '@/style/theme.scss';
+@import '@/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-community-singlestat-card {
+  @include with-theme {
+    @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    .okp4-dataverse-portal-home-page-community-singlestat-container {
+      @include desktop-bp {
+        padding: 17px 72px 24px 34px;
+      }
+
+      @include large-desktop-bp {
+        padding: 21px 28px 21px 34px;
+      }
+    }
+  }
+}
+
+.okp4-dataverse-portal-home-page-community-multistat-card {
+  @include with-theme {
+    @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    .okp4-dataverse-portal-home-page-community-multistat-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 50px;
+      padding: 0 40px;
+      width: 100%;
+    }
+  }
+}
+
+.okp4-dataverse-portal-home-page-community-ellipse {
+  @include with-theme {
+    position: absolute;
+    width: 205px;
+    height: 205px;
+    right: -90px;
+    bottom: -102.5px;
+    box-sizing: border-box;
+    border: 40px solid themed('background-variant-1');
+    border-radius: 50%;
+  }
+}
+
+.okp4-dataverse-portal-home-page-stat-main {
+  @include with-theme {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    color: themed('text');
+
+    .okp4-dataverse-portal-home-page-stat-icon-container {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      background: themed('background-variant-1');
+      border-radius: 6px;
+      justify-content: center;
+    }
+
+    .okp4-dataverse-portal-home-page-stat-content-wrapper {
+      h2 {
+        @include prompt(600);
+        line-height: 38px;
+        font-size: 28px;
+      }
+
+      p {
+        @include noto-sans(400);
+        font-size: 14px;
+        opacity: 0.6;
+        letter-spacing: unset;
+      }
+    }
+  }
+}
