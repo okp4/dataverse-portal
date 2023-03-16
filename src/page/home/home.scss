@@ -37,18 +37,24 @@
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 1);
         @include norse-font(700);
         width: fit-content;
-        line-height: 61px;
+        line-height: 36px;
         letter-spacing: 4px;
         font-size: 24px;
         background: themed('gradient');
         /* stylelint-disable-next-line property-no-vendor-prefix */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+
+        @include use-breakpoints(('tablet', 'mobile')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+          justify-self: center;
+        }
       }
 
       &.community {
         @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
         grid-template-rows: max-content max-content;
+        row-gap: 16px;
       }
     }
   }
