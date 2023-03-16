@@ -1,5 +1,9 @@
 import type { FC } from 'react'
 import { createElement } from 'react'
+import { ReactComponent as BurgerMenuLightIcon } from '@/asset/icon/burger-menu-light.svg'
+import { ReactComponent as BurgerMenuDarkIcon } from '@/asset/icon/burger-menu-dark.svg'
+import { ReactComponent as CloseLightIcon } from '@/asset/icon/close-light.svg'
+import { ReactComponent as CloseDarkIcon } from '@/asset/icon/close-dark.svg'
 import { ReactComponent as BuildAppsIcon } from '@/asset/icon/build-apps.svg'
 import { ReactComponent as BuildAppsActiveIcon } from '@/asset/icon/build-apps-active.svg'
 import { ReactComponent as CreateKnowledgeIcon } from '@/asset/icon/create-knowledge.svg'
@@ -74,6 +78,10 @@ export type IconName =
   | 'service-folder-dark'
   | 'dataspace-created-light'
   | 'dataspace-created-dark'
+  | 'burger-menu-light'
+  | 'burger-menu-dark'
+  | 'close-light'
+  | 'close-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -111,7 +119,11 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'service-folder-dark': ServiceFolderDarkIcon,
   'service-folder-light': ServiceFolderLightIcon,
   'dataspace-created-dark': DataspaceCreatedDarkIcon,
-  'dataspace-created-light': DataspaceCreatedLightIcon
+  'dataspace-created-light': DataspaceCreatedLightIcon,
+  'burger-menu-light': BurgerMenuLightIcon,
+  'burger-menu-dark': BurgerMenuDarkIcon,
+  'close-light': CloseLightIcon,
+  'close-dark': CloseDarkIcon
 }
 
 type IconProps = {

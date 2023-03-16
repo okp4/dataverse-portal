@@ -4,7 +4,17 @@
 
 .okp4-dataverse-portal-home-page-main {
   @include with-theme() {
-    @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 2, $rowEnd: auto);
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+
+    @include mobile-bp {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+      @include grid-container($colsNb: 6, $gutter: 34px);
+    }
+
+    @include tablet-bp {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+      @include grid-container($colsNb: 8, $gutter: 34px);
+    }
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);

@@ -2,6 +2,12 @@
 @import '@/style/fonts.scss';
 @import '@/style/mixins.scss';
 
+@mixin blurred-page($left-position) {
+  position: absolute;
+  filter: blur(1px);
+  left: $left-position;
+}
+
 html,
 body {
   min-height: 100vh;
@@ -31,22 +37,44 @@ p {
     display: flex;
     width: 100%;
     background-color: themed('background');
+    position: relative;
+    overflow-x: hidden;
   }
 
   .okp4-dataverse-portal-page-layout {
     flex: 1;
     grid-template-rows: max-content;
     width: 100%;
-    margin: 0 2%;
+    min-height: inherit;
     row-gap: 15px;
+
+    @include mobile-bp {
+      @include grid-container($colsNb: 6, $gutter: 16px);
+      padding: 0 4%;
+
+      &.expanded-sidebar {
+        @include blurred-page(299px);
+      }
+    }
+
+    @include tablet-bp {
+      @include grid-container($colsNb: 8, $gutter: 16px);
+      padding: 0 3%;
+      row-gap: 48px;
+
+      &.expanded-sidebar {
+        @include blurred-page(376px);
+      }
+    }
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);
+      padding: 0 2%;
     }
 
     @include large-desktop-bp {
       @include grid-container($gutter: 48px) {
-        margin: 0 2.5%;
+        padding: 0 2.5%;
       }
     }
   }

@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
+import { shallow } from 'zustand/shallow'
 import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
 import { Button } from '@/component/button/button'
@@ -8,6 +9,7 @@ import { Switch } from '@/component/switch/switch'
 import { useAppStore } from '@/store/appStore'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
+import { useBreakpoint } from '@/hook/useBreakpoint'
 import { Navigation } from './navigation/navigation'
 import { LanguageSwitcher } from './languageSwitcher/languageSwitcher'
 import './sidebar.scss'
@@ -16,11 +18,17 @@ import './i18n/index'
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: FC = () => {
   const { t } = useTranslation('sidebar')
-  const theme = useAppStore(store => store.theme)
-  const isSidebarExpanded = useAppStore(store => store.isSidebarExpanded)
-  const collapseSidebar = useAppStore(store => store.collapseSidebar)
-  const expandSidebar = useAppStore(store => store.expandSidebar)
-  const switchTheme = useAppStore(store => store.switchTheme)
+  const { isSidebarExpanded, switchTheme, toggleSidebar, theme } = useAppStore(
+    state => ({
+      toggleSidebar: state.toggleSidebar,
+      isSidebarExpanded: state.isSidebarExpanded,
+      switchTheme: state.switchTheme,
+      theme: state.theme
+    }),
+    shallow
+  )
+  const { isMobile, isTablet } = useBreakpoint()
+  const isMobileSidebarOpen = (isMobile || isTablet) && isSidebarExpanded
 
   const handleFeedbackClick = useCallback(() => {
     window.open(APP_ENV.urls['form:feedback'], '_blank')
@@ -32,10 +40,7 @@ export const Sidebar: FC = () => {
         collapsed: !isSidebarExpanded
       })}
     >
-      <div
-        className="okp4-dataverse-portal-sidebar-collapse-container"
-        onClick={isSidebarExpanded ? collapseSidebar : expandSidebar}
-      >
+      <div className="okp4-dataverse-portal-sidebar-collapse-container" onClick={toggleSidebar}>
         {isSidebarExpanded ? <Icon name="collapse" /> : <Icon name="expand" />}
       </div>
       <div
@@ -52,6 +57,11 @@ export const Sidebar: FC = () => {
           isChecked={theme === 'light'}
           onCheckedChange={switchTheme}
         />
+        {isMobileSidebarOpen && (
+          <div className="okp4-dataverse-portal-sidebar-close-icon" onClick={toggleSidebar}>
+            <Icon name={`close-${theme}`} />
+          </div>
+        )}
       </div>
       <Navigation />
       <div

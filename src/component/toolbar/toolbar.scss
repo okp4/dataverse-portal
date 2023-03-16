@@ -1,9 +1,22 @@
 @import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-toolbar-main {
-  @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 2);
+  @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
   padding: 25px 0 0;
   justify-items: end;
+  align-items: center;
+
+  @include mobile-bp {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+    @include grid-container($colsNb: 6, $gutter: 16px);
+    padding: 44px 0 0;
+  }
+
+  @include tablet-bp {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+    @include grid-container($colsNb: 8, $gutter: 16px);
+    padding: 44px 0 0;
+  }
 
   @include desktop-bp {
     @include grid-container($gutter: 34px);
@@ -13,8 +26,30 @@
     @include grid-container($gutter: 48px);
   }
 
-  .okp4-dataverse-portal-button-main {
-    @include grid-item($colStart: 13, $colEnd: 11, $rowStart: 1, $rowEnd: 1);
-    width: max-content;
+  .okp4-dataverse-portal-burger-menu {
+    @include grid-item($colStart: 1, $colEnd: 2, $rowStart: 1, $rowEnd: 1);
+    justify-self: flex-start;
+  }
+
+  .okp4-dataverse-portal-toolbar-logo {
+    justify-self: center;
+    @include mobile-bp {
+      @include grid-item($colStart: 3, $colEnd: 5, $rowStart: 1, $rowEnd: 1);
+    }
+    @include tablet-bp {
+      @include grid-item($colStart: 4, $colEnd: 6, $rowStart: 1, $rowEnd: 1);
+    }
+  }
+
+  .okp4-dataverse-portal-wallet {
+    @include grid-item($colStart: -1, $colEnd: -2, $rowStart: 1, $rowEnd: 1);
+    justify-self: flex-end;
+    @include use-breakpoints(('desktop', 'large-desktop')) {
+      @include grid-item($colStart: -1, $colEnd: -5, $rowStart: 1, $rowEnd: 1);
+    }
+
+    .okp4-dataverse-portal-wallet-icon {
+      padding: 11px;
+    }
   }
 }

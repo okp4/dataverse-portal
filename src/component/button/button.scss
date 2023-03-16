@@ -37,6 +37,14 @@
       }
     }
 
+    &.icon-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      line-height: 0;
+    }
+
     .okp4-dataverse-portal-content-container {
       display: flex;
       align-items: center;
