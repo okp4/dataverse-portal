@@ -1,0 +1,14 @@
+{
+  "data": {
+    "dataspace": "Data Space",
+    "dataset": "Données",
+    "service": "Service",
+    "dataspaces": "Data Spaces",
+    "datesets": "Données",
+    "services": "Services"
+  },
+  "actions": {
+    "explore": "Explorer",
+    "details": "Voir details"
+  }
+}
