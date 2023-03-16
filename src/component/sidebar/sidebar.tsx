@@ -18,10 +18,9 @@ import './i18n/index'
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: FC = () => {
   const { t } = useTranslation('sidebar')
-  const { collapseSidebar, expandSidebar, isSidebarExpanded, switchTheme, theme } = useAppStore(
+  const { isSidebarExpanded, switchTheme, toggleSidebar, theme } = useAppStore(
     state => ({
-      collapseSidebar: state.collapseSidebar,
-      expandSidebar: state.expandSidebar,
+      toggleSidebar: state.toggleSidebar,
       isSidebarExpanded: state.isSidebarExpanded,
       switchTheme: state.switchTheme,
       theme: state.theme
@@ -34,11 +33,6 @@ export const Sidebar: FC = () => {
   const handleFeedbackClick = useCallback(() => {
     window.open(APP_ENV.urls['form:feedback'], '_blank')
   }, [])
-
-  const toggleSidebar = useCallback(
-    () => (isSidebarExpanded ? collapseSidebar() : expandSidebar()),
-    [collapseSidebar, expandSidebar, isSidebarExpanded]
-  )
 
   return (
     <div
