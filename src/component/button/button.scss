@@ -59,11 +59,9 @@
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
         font-size: 11px;
-        text-transform: uppercase;
 
         &.tertiary {
           @include noto-sans(400);
-          text-transform: unset;
           font-size: 16px;
         }
       }
