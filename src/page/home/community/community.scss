@@ -3,39 +3,35 @@
 @import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-home-page-community-singlestat-card {
-  @include with-theme {
-    @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
-    position: relative;
-    overflow: hidden;
-    width: 100%;
+  @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+  position: relative;
+  overflow: hidden;
+  min-height: 129px;
 
-    .okp4-dataverse-portal-home-page-community-singlestat-container {
-      @include desktop-bp {
-        padding: 17px 72px 24px 34px;
-      }
+  .okp4-dataverse-portal-home-page-community-singlestat-container {
+    @include desktop-bp {
+      padding: 17px 72px 24px 34px;
+    }
 
-      @include large-desktop-bp {
-        padding: 21px 28px 21px 34px;
-      }
+    @include large-desktop-bp {
+      padding: 21px 28px 21px 34px;
     }
   }
 }
 
 .okp4-dataverse-portal-home-page-community-multistat-card {
-  @include with-theme {
-    @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
-    position: relative;
-    overflow: hidden;
-    width: 100%;
+  @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
+  position: relative;
+  overflow: hidden;
+  min-height: 129px;
 
-    .okp4-dataverse-portal-home-page-community-multistat-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      gap: 50px;
-      padding: 0 40px;
-      width: 100%;
-    }
+  .okp4-dataverse-portal-home-page-community-multistat-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 50px;
+    padding: 0 40px;
+    width: 100%;
   }
 }
 
