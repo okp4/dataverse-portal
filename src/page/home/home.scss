@@ -8,12 +8,12 @@
 
     @include mobile-bp {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      @include grid-container($colsNb: 6, $gutter: 34px);
+      @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
     @include tablet-bp {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      @include grid-container($colsNb: 8, $gutter: 34px);
+      @include grid-container($colsNb: 8, $gutter: 16px);
     }
 
     @include desktop-bp {
@@ -31,6 +31,14 @@
 
       @include large-desktop-bp {
         @include grid-container($gutter: 48px);
+      }
+
+      @include mobile-bp {
+        @include grid-container($colsNb: 6, $gutter: 16px);
+      }
+
+      @include tablet-bp {
+        @include grid-container($colsNb: 8, $gutter: 16px);
       }
 
       h1 {
