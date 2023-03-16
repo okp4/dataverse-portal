@@ -29,7 +29,14 @@ const BurgerMenu = ({ expandSidebar, theme }: BurgerProps): JSX.Element => (
 const WalletButton = ({ isSmallScreen, label }: WalletButtonProps): JSX.Element => (
   <div className="okp4-dataverse-portal-wallet">
     {isSmallScreen ? (
-      <Button iconButtonOnly={<Icon name="wallet" />} variant="tertiary" />
+      <Button
+        iconButtonOnly={
+          <div className="okp4-dataverse-portal-wallet-icon">
+            <Icon name="wallet" />
+          </div>
+        }
+        variant="tertiary"
+      />
     ) : (
       <Button icons={{ startIcon: <Icon name="wallet" /> }} label={label} variant="tertiary" />
     )}

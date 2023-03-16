@@ -47,5 +47,9 @@
     @include use-breakpoints(('desktop', 'large-desktop')) {
       @include grid-item($colStart: -1, $colEnd: -5, $rowStart: 1, $rowEnd: 1);
     }
+
+    .okp4-dataverse-portal-wallet-icon {
+      padding: 11px;
+    }
   }
 }
