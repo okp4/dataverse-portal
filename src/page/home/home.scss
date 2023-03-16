@@ -8,12 +8,12 @@
 
     @include mobile-bp {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      @include grid-container($colsNb: 6, $gutter: 34px);
+      @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
     @include tablet-bp {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      @include grid-container($colsNb: 8, $gutter: 34px);
+      @include grid-container($colsNb: 8, $gutter: 16px);
     }
 
     @include desktop-bp {
@@ -33,25 +33,36 @@
         @include grid-container($gutter: 48px);
       }
 
+      @include mobile-bp {
+        @include grid-container($colsNb: 6, $gutter: 16px);
+      }
+
+      @include tablet-bp {
+        @include grid-container($colsNb: 8, $gutter: 16px);
+      }
+
       h1 {
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 1);
         @include norse-font(700);
         width: fit-content;
-        line-height: 61px;
-        display: flex;
-        align-items: center;
-        text-transform: uppercase;
+        line-height: 36px;
         letter-spacing: 4px;
         font-size: 24px;
         background: themed('gradient');
         /* stylelint-disable-next-line property-no-vendor-prefix */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+
+        @include use-breakpoints(('tablet', 'mobile')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+          justify-self: center;
+        }
       }
 
       &.community {
         @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
         grid-template-rows: max-content max-content;
+        row-gap: 16px;
       }
     }
   }
