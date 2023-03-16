@@ -38,9 +38,6 @@
         @include norse-font(700);
         width: fit-content;
         line-height: 61px;
-        display: flex;
-        align-items: center;
-        text-transform: uppercase;
         letter-spacing: 4px;
         font-size: 24px;
         background: themed('gradient');
