@@ -7,6 +7,25 @@
     padding: unset;
     box-sizing: border-box;
 
+    &.primary {
+      border: 1px solid themed('primary-color');
+      color: themed('primary-text');
+      border-radius: 12px;
+      background: themed('primary-color');
+
+      &:hover {
+        background: themed('primary-color-variant-5');
+        border-color: themed('primary-color-variant-5');
+      }
+
+      &.disabled {
+        cursor: unset;
+        background: themed('neutral-variant-1');
+        border-color: themed('neutral-variant-1');
+        color: themed('neutral');
+      }
+    }
+
     &.secondary {
       border: 1px solid themed('secondary-color');
       color: themed('secondary-color');
@@ -59,6 +78,12 @@
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
         font-size: 11px;
+
+        &.primary {
+          font-size: 16px;
+          padding: 8px 16px;
+          line-height: 24px;
+        }
 
         &.tertiary {
           @include noto-sans(400);
