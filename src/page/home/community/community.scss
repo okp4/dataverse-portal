@@ -20,6 +20,16 @@
     @include large-desktop-bp {
       padding: 21px 28px 21px 34px;
     }
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      padding: 20px 28px;
+      max-width: 284px;
+    }
+
+    @include use-breakpoints(('mobile')) {
+      padding: 20px 28px;
+      max-width: 189px;
+    }
   }
 }
 
@@ -40,6 +50,13 @@
     gap: 50px;
     padding: 0 40px;
     width: 100%;
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      flex-direction: column;
+      align-items: unset;
+      padding: 31px 28px;
+      gap: 34px;
+    }
   }
 }
 
@@ -71,6 +88,11 @@
       background: themed('background-variant-1');
       border-radius: 6px;
       justify-content: center;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        width: 56px;
+        height: 56px;
+      }
     }
 
     .okp4-dataverse-portal-home-page-stat-content-wrapper {
@@ -78,6 +100,10 @@
         @include prompt(600);
         line-height: 38px;
         font-size: 28px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          font-size: 34px;
+        }
       }
 
       p {
@@ -85,6 +111,14 @@
         font-size: 14px;
         opacity: 0.6;
         letter-spacing: unset;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          font-size: 16px;
+        }
+
+        @include use-breakpoints(('tablet')) {
+          text-align: justify;
+        }
       }
     }
   }
