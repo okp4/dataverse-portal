@@ -60,9 +60,19 @@
       }
 
       &.community {
-        @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
         grid-template-rows: max-content max-content;
         row-gap: 16px;
+
+        @include use-breakpoints(('tablet', 'mobile')) {
+          grid-template-rows: max-content max-content max-content;
+        }
+
+        h1 {
+          @include use-breakpoints(('tablet', 'mobile')) {
+            margin-bottom: 4px;
+          }
+        }
       }
     }
   }
