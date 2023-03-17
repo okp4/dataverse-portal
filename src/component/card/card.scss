@@ -2,7 +2,7 @@
 
 $backgrounds: (
   'primary-color': '../../asset/images/knowledge-tree.png',
-  'primary-color-variant-1': '../../asset/images/data-services-tree-long.png',
+  'primary-color-variant-1': '../../asset/images/data-services-tree.png',
   'primary-color-variant-2': '../../asset/images/data-spaces-tree.png',
   'primary-color-variant-3': '../../asset/images/applications-tree.png'
 );
@@ -17,8 +17,6 @@ $backgrounds: (
     @each $background-key, $background-value in $backgrounds {
       &.#{$background-key} {
         background: themed($background-key) url($background-value) no-repeat;
-        background-size: auto;
-        background-origin: border-box;
 
         &:hover {
           background: #001526 url($background-value) no-repeat;
