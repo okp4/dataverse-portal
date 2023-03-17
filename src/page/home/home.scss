@@ -65,6 +65,25 @@
         grid-auto-rows: max-content;
         row-gap: 16px;
       }
+
+      &.interact {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 5, $rowEnd: 5);
+        grid-auto-rows: max-content max-content;
+        row-gap: 16px;
+        margin-bottom: 36px;
+
+        h1 {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+          @include tablet-bp {
+            margin-top: 36px;
+            margin-bottom: 24px;
+          }
+          @include mobile-bp {
+            margin-top: 36px;
+            margin-bottom: 4px;
+          }
+        }
+      }
     }
   }
 }

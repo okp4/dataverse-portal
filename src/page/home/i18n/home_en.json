@@ -9,6 +9,26 @@
           "servicesShared": "Services shared",
           "communityParticipants": "Number of participants to OKP4 ecosystem"
         }
+      },
+      "interact": {
+        "label": "Interact",
+        "card1": {
+          "category": "Share",
+          "title": "Data & Services"
+        },
+        "card2": {
+          "category": "Create",
+          "title": "Knowledge"
+        },
+        "card3": {
+          "category": "Create",
+          "title": "Data Spaces"
+        },
+        "card4": {
+          "category": "Build",
+          "title": "Applications"
+        },
+        "disabled": "Soon available"
       }
     }
   }

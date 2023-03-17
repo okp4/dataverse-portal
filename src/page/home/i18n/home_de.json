@@ -9,6 +9,26 @@
           "servicesShared": "Geteilte Dienste",
           "communityParticipants": "Anzahl der Teilnehmer am OKP4-Ökosystem"
         }
+      },
+      "interact": {
+        "label": "Interact",
+        "card1": {
+          "category": "Teilen",
+          "title": "Daten & Dienste"
+        },
+        "card2": {
+          "category": "Schaffen",
+          "title": "Wissen"
+        },
+        "card3": {
+          "category": "Erstellen",
+          "title": "Data-Spaces"
+        },
+        "card4": {
+          "category": "Erstellen",
+          "title": "Anwendungen"
+        },
+        "disabled": "Bald verfügbar"
       }
     }
   }
