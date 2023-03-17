@@ -56,23 +56,14 @@
         @include use-breakpoints(('tablet', 'mobile')) {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           justify-self: center;
+          margin-bottom: 4px;
         }
       }
 
       &.community {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-        grid-template-rows: max-content max-content;
+        grid-auto-rows: max-content;
         row-gap: 16px;
-
-        @include use-breakpoints(('tablet', 'mobile')) {
-          grid-template-rows: max-content max-content max-content;
-        }
-
-        h1 {
-          @include use-breakpoints(('tablet', 'mobile')) {
-            margin-bottom: 4px;
-          }
-        }
       }
     }
   }
