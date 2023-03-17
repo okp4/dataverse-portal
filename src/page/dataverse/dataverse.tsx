@@ -1,6 +1,9 @@
 import { useCallback } from 'react'
 import { Button } from '@/component/button/button'
 import { Card } from '@/component/card/card'
+import Tag from '@/component/tag/tag'
+import type { ColorVariant } from '@/component/tag/tag'
+
 import { useTranslation } from 'react-i18next'
 import '../i18n/index'
 import './dataverse.scss'
@@ -130,8 +133,22 @@ const dataverseItems: DataverseItemDetails[] = [
       'Elementum metus magnis commodo dictumst porttitor at eu pellentesque.Ipsum odor amet'
   }
 ]
+
+const renderColor = (itemType: DataverseItem): ColorVariant => {
+  switch (itemType) {
+    case 'dataset':
+      return 'primary-color'
+    case 'dataspace':
+      return 'primary-color-variant-3'
+    case 'service':
+      return 'primary-color-variant-4'
+  }
+}
+
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
+
+  const renderLabel = useCallback((itemType: DataverseItem) => t(`data.${itemType}`), [t])
 
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
@@ -140,6 +157,7 @@ const Dataverse = (): JSX.Element => {
         {dataverseItems.map(item => (
           <Card key={item.label}>
             <div className="okp4-dataverse-portal-dataverse-page-card">
+              <Tag colorVariant={renderColor(item.type)} label={renderLabel(item.type)} />
               <div className="okp4-dataverse-portal-dataverse-page-card-content">
                 <div className="okp4-dataverse-portal-dataverse-page-description">
                   <h3>{item.label}</h3>
