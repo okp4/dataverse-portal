@@ -13,22 +13,22 @@
   }
 
   .okp4-dataverse-portal-home-page-community-singlestat-container {
-    @include desktop-bp {
-      padding: 17px 72px 24px 34px;
+    padding: 17px 72px 24px 34px;
+
+    @include mobile-bp {
+      max-width: 189px;
     }
 
-    @include large-desktop-bp {
-      padding: 21px 28px 21px 34px;
+    @include tablet-bp {
+      max-width: 284px;
     }
 
     @include use-breakpoints(('mobile', 'tablet')) {
       padding: 20px 28px;
-      max-width: 284px;
     }
 
-    @include use-breakpoints(('mobile')) {
-      padding: 20px 28px;
-      max-width: 189px;
+    @include large-desktop-bp {
+      padding: 21px 28px 21px 34px;
     }
   }
 }
@@ -114,10 +114,6 @@
 
         @include use-breakpoints(('mobile', 'tablet')) {
           font-size: 16px;
-        }
-
-        @include use-breakpoints(('tablet')) {
-          text-align: justify;
         }
       }
     }
