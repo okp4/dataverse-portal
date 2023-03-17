@@ -56,12 +56,13 @@
         @include use-breakpoints(('tablet', 'mobile')) {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           justify-self: center;
+          margin-bottom: 4px;
         }
       }
 
       &.community {
-        @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 1, $rowEnd: 1);
-        grid-template-rows: max-content max-content;
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+        grid-auto-rows: max-content;
         row-gap: 16px;
       }
     }
