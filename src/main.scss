@@ -2,10 +2,9 @@
 @import '@/style/fonts.scss';
 @import '@/style/mixins.scss';
 
-@mixin blurred-page($left-position) {
-  position: absolute;
+@mixin blurred-page() {
+  position: relative;
   filter: blur(1px);
-  left: $left-position;
 }
 
 html,
@@ -53,7 +52,7 @@ p {
       padding: 0 4%;
 
       &.expanded-sidebar {
-        @include blurred-page(299px);
+        @include blurred-page();
       }
     }
 
@@ -63,7 +62,7 @@ p {
       row-gap: 48px;
 
       &.expanded-sidebar {
-        @include blurred-page(376px);
+        @include blurred-page();
       }
     }
 
