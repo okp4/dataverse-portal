@@ -1,10 +1,10 @@
 @import '@/style/theme.scss';
 
 $backgrounds: (
-  'primary-color': '../../asset/images/knowledge-tree.png',
-  'primary-color-variant-1': '../../asset/images/data-services-tree.png',
-  'primary-color-variant-2': '../../asset/images/data-spaces-tree.png',
-  'primary-color-variant-3': '../../asset/images/applications-tree.png'
+  'primary-color': 'knowledge-tree',
+  'primary-color-variant-1': 'data-services-tree',
+  'primary-color-variant-2': 'data-spaces-tree',
+  'primary-color-variant-3': 'applications-tree'
 );
 
 .okp4-dataverse-portal-card-main {
@@ -16,10 +16,12 @@ $backgrounds: (
 
     @each $background-key, $background-value in $backgrounds {
       &.#{$background-key} {
-        background: themed($background-key) url($background-value) no-repeat;
+        background: themed($background-key)
+          url('../../asset/images/' + $background-value + '.webp')
+          no-repeat;
 
         &:hover {
-          background: #001526 url($background-value) no-repeat;
+          background: #001526 url('../../asset/images/' + $background-value + '.webp') no-repeat;
         }
       }
     }

@@ -12,21 +12,21 @@
       },
       "interact": {
         "label": "Interact",
-        "card1": {
-          "category": "Partager",
-          "title": "des Données et Services"
+        "data-services": {
+          "action": "Partager",
+          "category": "des Données et Services"
         },
-        "card2": {
-          "category": "Créer",
-          "title": "des Connaissances"
+        "knowledge": {
+          "action": "Créer",
+          "category": "des Connaissances"
         },
-        "card3": {
-          "category": "Créer",
-          "title": "des Data Spaces"
+        "data-spaces": {
+          "action": "Créer",
+          "category": "des Data Spaces"
         },
-        "card4": {
-          "category": "Construire",
-          "title": "des Applications"
+        "applications": {
+          "action": "Construire",
+          "category": "des Applications"
         },
         "disabled": "Bientôt disponible"
       }

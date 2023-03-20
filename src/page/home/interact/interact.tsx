@@ -3,15 +3,12 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CardBackground } from '@/component/card/card'
 import { Card } from '@/component/card/card'
-import classNames from 'classnames'
 import './interact.scss'
 import '../i18n/index'
 
 type InteractCard = {
+  action: string
   category: string
-  title: string
-  tag: string
-  disabled: string
   backgroundColor: CardBackground
 }
 
@@ -22,31 +19,23 @@ export const Interact: FC = () => {
   const interactCards: InteractCard[] = useMemo(
     () => [
       {
-        category: t('home.blocks.interact.card1.category'),
-        title: t('home.blocks.interact.card1.title'),
-        tag: 'data-services',
-        disabled: t('home.blocks.interact.disabled'),
+        action: t('home.blocks.interact.data-services.action'),
+        category: t('home.blocks.interact.data-services.category'),
         backgroundColor: 'primary-color-variant-1'
       },
       {
-        category: t('home.blocks.interact.card2.category'),
-        title: t('home.blocks.interact.card2.title'),
-        tag: 'knowledge',
-        disabled: t('home.blocks.interact.disabled'),
+        action: t('home.blocks.interact.knowledge.action'),
+        category: t('home.blocks.interact.knowledge.category'),
         backgroundColor: 'primary-color'
       },
       {
-        category: t('home.blocks.interact.card3.category'),
-        title: t('home.blocks.interact.card3.title'),
-        tag: 'data-spaces',
-        disabled: t('home.blocks.interact.disabled'),
+        action: t('home.blocks.interact.data-spaces.action'),
+        category: t('home.blocks.interact.data-spaces.category'),
         backgroundColor: 'primary-color-variant-2'
       },
       {
-        category: t('home.blocks.interact.card4.category'),
-        title: t('home.blocks.interact.card4.title'),
-        tag: 'applications',
-        disabled: t('home.blocks.interact.disabled'),
+        action: t('home.blocks.interact.applications.action'),
+        category: t('home.blocks.interact.applications.category'),
         backgroundColor: 'primary-color-variant-3'
       }
     ],
@@ -55,17 +44,17 @@ export const Interact: FC = () => {
   return (
     <>
       <h1>{t('home.blocks.interact.label')}</h1>
-      {interactCards.map(({ category, title, tag, disabled, backgroundColor }, index) => (
+      {interactCards.map(({ action, category, backgroundColor }, index) => (
         <Card
           background={backgroundColor}
           key={index}
-          mainClassName={classNames('okp4-dataverse-portal-home-page-interact-card', tag)}
+          mainClassName="okp4-dataverse-portal-home-page-interact-card"
         >
           <div>
-            <h3>{category}</h3>
-            <h2>{title}</h2>
+            <h3>{action}</h3>
+            <h2>{category}</h2>
             <div className="okp4-dataverse-portal-home-page-interact-card-disabled">
-              <h2>{disabled}</h2>
+              <h2>{t('home.blocks.interact.disabled')}</h2>
             </div>
           </div>
         </Card>

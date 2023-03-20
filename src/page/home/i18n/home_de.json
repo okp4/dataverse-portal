@@ -12,21 +12,21 @@
       },
       "interact": {
         "label": "Interact",
-        "card1": {
-          "category": "Teilen",
-          "title": "Daten & Dienste"
+        "data-services": {
+          "action": "Teilen",
+          "category": "Daten & Dienste"
         },
-        "card2": {
-          "category": "Schaffen",
-          "title": "Wissen"
+        "knowledge": {
+          "action": "Schaffen",
+          "category": "Wissen"
         },
-        "card3": {
-          "category": "Erstellen",
-          "title": "Data Spaces"
+        "data-spaces": {
+          "action": "Erstellen",
+          "category": "Data Spaces"
         },
-        "card4": {
-          "category": "Erstellen",
-          "title": "Anwendungen"
+        "applications": {
+          "action": "Erstellen",
+          "category": "Anwendungen"
         },
         "disabled": "Bald verfügbar"
       }
