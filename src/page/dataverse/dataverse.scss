@@ -1,0 +1,150 @@
+@import '@/style/fonts.scss';
+@import '@/style/theme.scss';
+@import '@/style/mixins.scss';
+
+.okp4-dataverse-portal-dataverse-page-main {
+  @include with-theme() {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    @include grid-container($gutter: 48px);
+    color: themed('text');
+    grid-auto-rows: max-content;
+
+    @include desktop-bp {
+      @include grid-container($colsNb: 12, $gutter: 29px);
+    }
+
+    @include tablet-bp {
+      @include grid-container($colsNb: 8, $gutter: 16px);
+      row-gap: 30px;
+    }
+
+    @include mobile-bp {
+      @include grid-container($colsNb: 6, $gutter: 16px);
+    }
+
+    h1 {
+      @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 2);
+      @include norse-font(700);
+      width: 100%;
+      line-height: 61px;
+      letter-spacing: 4px;
+      font-size: 24px;
+      background: themed('gradient');
+      /* stylelint-disable-next-line property-no-vendor-prefix */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 2);
+        text-align: center;
+      }
+    }
+
+    .okp4-dataverse-portal-dataverse-page-cards-container {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-auto-rows: 220px;
+      gap: 43px;
+
+      @include mobile-bp {
+        grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
+        gap: 20px;
+      }
+
+      @include tablet-bp {
+        grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
+        gap: 36px;
+      }
+
+      @include large-desktop-bp {
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 29px;
+      }
+
+      .okp4-dataverse-portal-dataverse-page-card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        .okp4-dataverse-portal-tag-main {
+          position: absolute;
+          width: 137px;
+          right: 0;
+          text-transform: uppercase;
+          text-align: center;
+        }
+
+        .okp4-dataverse-portal-dataverse-page-card-content {
+          width: 84%;
+          padding-top: 55px;
+          padding-bottom: 24px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 27px;
+
+          @include desktop-bp {
+            width: 88%;
+          }
+
+          .okp4-dataverse-portal-dataverse-page-description {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+            text-align: center;
+            font-size: 16px;
+
+            h3 {
+              @include noto-sans(700);
+              width: inherit;
+              line-height: 28px;
+              letter-spacing: 0.4px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            p {
+              @include noto-sans(300);
+              width: inherit;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: pre-wrap;
+              height: 44px;
+              font-size: 16px;
+              line-height: 22px;
+              opacity: 0.8;
+              /* stylelint-disable-next-line value-no-vendor-prefix */
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+
+              img {
+                height: inherit;
+                object-fit: cover;
+              }
+
+              a:visited {
+                color: themed(text);
+              }
+            }
+          }
+
+          .okp4-dataverse-portal-button-main {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+            @include desktop-bp {
+              width: fit-content;
+            }
+          }
+        }
+      }
+    }
+  }
+}

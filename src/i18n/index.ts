@@ -15,7 +15,7 @@ i18n
     },
     resources: {},
     fallbackLng: 'en',
-    fallbackNS: 'translation',
+    fallbackNS: 'common',
     interpolation: {
       escapeValue: true,
       format: (value, format): string => {

@@ -1,5 +1,5 @@
-import { WorkInProgress } from '@/page/workInProgress/workInProgress'
 import { Home } from '@/page/home/home'
+import Dataverse from '@/page/dataverse/dataverse'
 
 export enum routes {
   home = '/',
@@ -21,6 +21,6 @@ export const appRoutes: Route[] = [
   {
     id: 'dataverse',
     path: routes.dataverse,
-    element: <WorkInProgress />
+    element: <Dataverse />
   }
 ]

@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import './button.scss'
 
 type ButtonProps = {
+  disabled?: boolean
   label?: string
   onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void
   iconButtonOnly?: JSX.Element
@@ -10,10 +11,11 @@ type ButtonProps = {
     startIcon?: JSX.Element
     endIcon?: JSX.Element
   }
-  variant?: 'secondary' | 'tertiary'
+  variant?: 'primary' | 'secondary' | 'tertiary'
 }
 
 export const Button: FC<ButtonProps> = ({
+  disabled = false,
   label,
   onClick,
   iconButtonOnly,
@@ -23,7 +25,8 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       className={classNames('okp4-dataverse-portal-button-main', variant, {
-        'icon-button': !!iconButtonOnly
+        'icon-button': !!iconButtonOnly,
+        disabled
       })}
       onClick={onClick}
     >

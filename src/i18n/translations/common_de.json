@@ -1,0 +1,14 @@
+{
+  "data": {
+    "dataspace": "Datenraum",
+    "dataset": "Datensatz",
+    "service": "Dienstleistung",
+    "dataspaces": "Datenräume",
+    "datesets": "Datensätze",
+    "services": "Dienstleistungen"
+  },
+  "actions": {
+    "explore": "Erkunden Sie",
+    "details": "Siehe Details"
+  }
+}
