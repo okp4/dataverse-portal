@@ -2,11 +2,6 @@
 @import '@/style/fonts.scss';
 @import '@/style/mixins.scss';
 
-@mixin blurred-page() {
-  position: relative;
-  filter: blur(1px);
-}
-
 html,
 body {
   min-height: 100vh;
@@ -52,7 +47,7 @@ p {
       padding: 0 4%;
 
       &.expanded-sidebar {
-        @include blurred-page();
+        @include blurred-page(1px);
       }
     }
 
@@ -62,7 +57,7 @@ p {
       row-gap: 48px;
 
       &.expanded-sidebar {
-        @include blurred-page();
+        @include blurred-page(1px);
       }
     }
 

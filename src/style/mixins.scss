@@ -61,3 +61,8 @@
   grid-row-end: $rowEnd;
   @content;
 }
+
+@mixin blurred-page($length) {
+  position: relative;
+  filter: blur($length);
+}
