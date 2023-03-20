@@ -10,7 +10,7 @@ import '../i18n/index'
 type InteractCard = {
   category: string
   title: string
-  _tag: string
+  tag: string
   disabled: string
   backgroundColor: CardBackground
 }
@@ -24,28 +24,28 @@ export const Interact: FC = () => {
       {
         category: t('home.blocks.interact.card1.category'),
         title: t('home.blocks.interact.card1.title'),
-        _tag: 'data-services',
+        tag: 'data-services',
         disabled: t('home.blocks.interact.disabled'),
         backgroundColor: 'primary-color-variant-1'
       },
       {
         category: t('home.blocks.interact.card2.category'),
         title: t('home.blocks.interact.card2.title'),
-        _tag: 'knowledge',
+        tag: 'knowledge',
         disabled: t('home.blocks.interact.disabled'),
         backgroundColor: 'primary-color'
       },
       {
         category: t('home.blocks.interact.card3.category'),
         title: t('home.blocks.interact.card3.title'),
-        _tag: 'data-spaces',
+        tag: 'data-spaces',
         disabled: t('home.blocks.interact.disabled'),
         backgroundColor: 'primary-color-variant-2'
       },
       {
         category: t('home.blocks.interact.card4.category'),
         title: t('home.blocks.interact.card4.title'),
-        _tag: 'applications',
+        tag: 'applications',
         disabled: t('home.blocks.interact.disabled'),
         backgroundColor: 'primary-color-variant-3'
       }
@@ -55,11 +55,11 @@ export const Interact: FC = () => {
   return (
     <>
       <h1>{t('home.blocks.interact.label')}</h1>
-      {interactCards.map(({ category, title, _tag, disabled, backgroundColor }, index) => (
+      {interactCards.map(({ category, title, tag, disabled, backgroundColor }, index) => (
         <Card
           background={backgroundColor}
           key={index}
-          mainClassName={classNames('okp4-dataverse-portal-home-page-interact-card', _tag)}
+          mainClassName={classNames('okp4-dataverse-portal-home-page-interact-card', tag)}
         >
           <div>
             <h3>{category}</h3>
