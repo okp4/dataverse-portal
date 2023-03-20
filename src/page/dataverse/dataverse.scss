@@ -49,7 +49,6 @@
 
       @include mobile-bp {
         grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
-
         gap: 20px;
       }
 
@@ -60,7 +59,6 @@
 
       @include large-desktop-bp {
         grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-
         gap: 29px;
       }
 
@@ -139,16 +137,10 @@
           .okp4-dataverse-portal-button-main {
             display: flex;
             justify-content: center;
-
-            @include tablet-bp {
-              width: 100%;
-            }
+            width: 100%;
 
             @include desktop-bp {
               width: fit-content;
-            }
-            @include large-desktop-bp {
-              width: 100%;
             }
           }
         }
