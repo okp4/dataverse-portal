@@ -17,11 +17,11 @@ $backgrounds: (
     @each $background-key, $background-value in $backgrounds {
       &.#{$background-key} {
         background: themed($background-key)
-          url('../../asset/images/' + $background-value + '.webp')
+          url('@/asset/images/#{$background-value}.webp')
           no-repeat;
 
         &:hover {
-          background: #001526 url('../../asset/images/' + $background-value + '.webp') no-repeat;
+          background-color: #001526;
         }
       }
     }
