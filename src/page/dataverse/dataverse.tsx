@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { Button } from '@/component/button/button'
 import { Card } from '@/component/card/card'
 import Tag from '@/component/tag/tag'
@@ -145,6 +146,9 @@ const renderTagColor = (itemType: DataverseItem): ColorVariant => {
   }
 }
 
+const renderItemContent = (item: DataverseItemDetails): string => `### ${item.label}
+${item.description}`
+
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
 
@@ -160,8 +164,7 @@ const Dataverse = (): JSX.Element => {
               <Tag colorVariant={renderTagColor(item.type)} label={renderLabel(item.type)} />
               <div className="okp4-dataverse-portal-dataverse-page-card-content">
                 <div className="okp4-dataverse-portal-dataverse-page-description">
-                  <h3>{item.label}</h3>
-                  <p>{item.description}</p>
+                  <ReactMarkdown>{renderItemContent(item)}</ReactMarkdown>
                 </div>
                 <Button disabled label={t('actions.details')} variant="primary" />
               </div>
