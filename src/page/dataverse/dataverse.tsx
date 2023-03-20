@@ -134,13 +134,13 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
-const renderColor = (itemType: DataverseItem): ColorVariant => {
+const renderTagColor = (itemType: DataverseItem): ColorVariant => {
   switch (itemType) {
-    case 'dataset':
+    case 'service':
       return 'primary-color'
     case 'dataspace':
       return 'primary-color-variant-3'
-    case 'service':
+    case 'dataset':
       return 'primary-color-variant-4'
   }
 }
@@ -157,7 +157,7 @@ const Dataverse = (): JSX.Element => {
         {dataverseItems.map(item => (
           <Card key={item.label}>
             <div className="okp4-dataverse-portal-dataverse-page-card">
-              <Tag colorVariant={renderColor(item.type)} label={renderLabel(item.type)} />
+              <Tag colorVariant={renderTagColor(item.type)} label={renderLabel(item.type)} />
               <div className="okp4-dataverse-portal-dataverse-page-card-content">
                 <div className="okp4-dataverse-portal-dataverse-page-description">
                   <h3>{item.label}</h3>
