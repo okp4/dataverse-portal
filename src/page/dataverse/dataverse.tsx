@@ -5,7 +5,6 @@ import { Button } from '@/component/button/button'
 import { Card } from '@/component/card/card'
 import Tag from '@/component/tag/tag'
 import type { ColorVariant } from '@/component/tag/tag'
-import '../i18n/index'
 import './dataverse.scss'
 
 type DataverseItem = 'dataspace' | 'dataset' | 'service'
