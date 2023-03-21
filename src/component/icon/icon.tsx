@@ -41,8 +41,12 @@ import { ReactComponent as TwitterLightIcon } from '@/asset/icon/twitter-light.s
 import { ReactComponent as TwitterDarkIcon } from '@/asset/icon/twitter-dark.svg'
 import { ReactComponent as WalletIcon } from '@/asset/icon/wallet.svg'
 import { ReactComponent as ArrowRightIcon } from '@/asset/icon/arrow-right.svg'
+import { ReactComponent as AllLightIcon } from '@/asset/icon/all-light.svg'
+import { ReactComponent as AllDarkIcon } from '@/asset/icon/all-dark.svg'
 
 export type IconName =
+  | 'all-light'
+  | 'all-dark'
   | 'collapse'
   | 'arrow-right'
   | 'expand'
@@ -126,7 +130,9 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'burger-menu-light': BurgerMenuLightIcon,
   'burger-menu-dark': BurgerMenuDarkIcon,
   'close-light': CloseLightIcon,
-  'close-dark': CloseDarkIcon
+  'close-dark': CloseDarkIcon,
+  'all-light': AllLightIcon,
+  'all-dark': AllDarkIcon
 }
 
 type IconProps = {
