@@ -9,7 +9,6 @@ $backgrounds: (
 
 .okp4-dataverse-portal-card-main {
   @include with-theme() {
-    background-color: themed('card');
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -21,7 +20,7 @@ $backgrounds: (
           no-repeat;
 
         &:hover {
-          background-color: #001526;
+          background-color: themed(card-background);
         }
       }
     }
