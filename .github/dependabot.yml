@@ -5,13 +5,15 @@ updates:
     schedule:
       interval: weekly
     reviewers:
-      - amimart
       - ccamel
       - fredericvilcot
       - ErikssonJoakim
+      - lolottetheclash
+      - AnjaMis
     assignees:
       - ccamel
       - fredericvilcot
+      - lolottetheclash
     open-pull-requests-limit: 5
   - package-ecosystem: npm
     directory: /
@@ -21,9 +23,12 @@ updates:
       - ccamel
       - fredericvilcot
       - ErikssonJoakim
+      - lolottetheclash
+      - AnjaMis
     assignees:
       - ccamel
       - fredericvilcot
+      - lolottetheclash
     open-pull-requests-limit: 5
   - package-ecosystem: docker
     directory: /
@@ -33,7 +38,10 @@ updates:
       - ccamel
       - fredericvilcot
       - ErikssonJoakim
+      - lolottetheclash
+      - AnjaMis
     assignees:
       - ccamel
       - fredericvilcot
+      - lolottetheclash
     open-pull-requests-limit: 5
