@@ -20,8 +20,10 @@ $backgrounds: (
           no-repeat;
         cursor: pointer;
 
-        &:hover {
-          background-color: themed(card-background-disabled);
+        &.disabled {
+          &:hover {
+            background-color: themed(card-background-disabled);
+          }
         }
       }
     }

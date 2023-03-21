@@ -32,21 +32,20 @@
     margin-bottom: 1px;
   }
 
-  .okp4-dataverse-portal-home-page-interact-card-disabled {
+  .okp4-dataverse-portal-home-page-interact-card-disabled-text {
     display: none;
     justify-content: center;
+  }
 
-    &:hover {
-      display: flex;
-
-      h2 {
+  &:hover {
+    &.disabled {
+      .okp4-dataverse-portal-home-page-interact-card-disabled-text {
+        display: flex;
         font-size: 20px;
         opacity: 1;
       }
     }
-  }
 
-  &:hover {
     h2 {
       font-size: 18px;
       opacity: 0.28;
@@ -55,15 +54,6 @@
     h3 {
       font-size: 20px;
       opacity: 0.28;
-    }
-
-    .okp4-dataverse-portal-home-page-interact-card-disabled {
-      display: flex;
-
-      h2 {
-        font-size: 20px;
-        opacity: 1;
-      }
     }
   }
 }
