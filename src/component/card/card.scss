@@ -18,9 +18,10 @@ $backgrounds: (
         background: themed($background-key)
           url('@/asset/images/#{$background-value}.webp')
           no-repeat;
+        cursor: pointer;
 
         &:hover {
-          background-color: themed(card-background);
+          background-color: themed(card-background-disabled);
         }
       }
     }
