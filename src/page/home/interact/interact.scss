@@ -4,44 +4,16 @@
 .okp4-dataverse-portal-home-page-interact-card {
   text-align: center;
   justify-content: center;
-  width: 100%;
-  min-height: 155px;
+  height: 155px;
   grid-column: span 3;
 
   @include use-breakpoints(('mobile', 'tablet')) {
-    min-height: 123px;
-    display: block;
-    grid-column: 1/-1;
+    height: 123px;
+    grid-column: 1 / -1;
   }
 
   @include large-desktop-bp {
-    min-height: 191px;
-  }
-
-  .okp4-dataverse-portal-home-page-interact-card-disabled {
-    display: none;
-    justify-content: center;
-  }
-
-  &:hover {
-    .okp4-dataverse-portal-home-page-interact-card-disabled {
-      display: flex;
-
-      h2 {
-        font-size: 20px;
-        opacity: 1;
-      }
-    }
-
-    h2 {
-      font-size: 18px;
-      opacity: 0.28;
-    }
-
-    h3 {
-      font-size: 20px;
-      opacity: 0.28;
-    }
+    height: 191px;
   }
 
   h3 {
@@ -58,5 +30,40 @@
     font-size: 22px;
     color: white;
     margin-bottom: 1px;
+  }
+
+  .okp4-dataverse-portal-home-page-interact-card-disabled {
+    display: none;
+    justify-content: center;
+
+    &:hover {
+      display: flex;
+
+      h2 {
+        font-size: 20px;
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover {
+    h2 {
+      font-size: 18px;
+      opacity: 0.28;
+    }
+
+    h3 {
+      font-size: 20px;
+      opacity: 0.28;
+    }
+
+    .okp4-dataverse-portal-home-page-interact-card-disabled {
+      display: flex;
+
+      h2 {
+        font-size: 20px;
+        opacity: 1;
+      }
+    }
   }
 }
