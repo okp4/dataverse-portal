@@ -8,7 +8,6 @@
     row-gap: 30px;
 
     @include use-breakpoints(('mobile', 'tablet')) {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
       row-gap: 40px;
     }
 
@@ -46,7 +45,7 @@
       }
 
       h1 {
-        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 1);
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
         @include norse-font(700);
         width: fit-content;
         line-height: 36px;
@@ -74,10 +73,6 @@
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         grid-auto-rows: max-content max-content;
         row-gap: 16px;
-
-        h1 {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-        }
       }
     }
   }
