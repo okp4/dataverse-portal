@@ -1,9 +1,48 @@
-import { useTranslation } from 'react-i18next'
 import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
 import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useBreakpoint } from '@/hook/useBreakpoint'
+import { useAppStore } from '@/store/appStore'
+import { Button } from '@/component/button/button'
+import Chip from '@/component/chip/chip'
+import { Icon } from '@/component/icon/icon'
+import type { IconName } from '@/component/icon/icon'
 import './dataverse.scss'
 
+type DataverseItem = 'dataspace' | 'dataset' | 'service'
+type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
+type FilterValue = DataverseItem | 'all'
 type DataverseItemDetails = DataverseCardProps
+
+type Filter = {
+  label: FilterLabel
+  value: FilterValue
+  icon: string
+}
+
+const filters: Filter[] = [
+  {
+    label: 'all',
+    value: 'all',
+    icon: 'all'
+  },
+  {
+    label: 'dataspaces',
+    value: 'dataspace',
+    icon: 'dataspace-created'
+  },
+  {
+    label: 'datasets',
+    value: 'dataset',
+    icon: 'dataset-folder'
+  },
+  {
+    label: 'services',
+    value: 'service',
+    icon: 'service-folder'
+  }
+]
 
 const dataverseItems: DataverseItemDetails[] = [
   {
@@ -123,16 +162,88 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
+const initialState: FilterValue[] = ['all']
+
+// eslint-disable-next-line max-lines-per-function
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
+  const theme = useAppStore(state => state.theme)
+  const { isMobile, isTablet, isDesktop, isLargeDesktop } = useBreakpoint()
+  const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(initialState)
+
+  const addAllFilter = useCallback((): void => {
+    setSelectedFilters(['all'])
+  }, [])
+
+  const removeFilter = useCallback(
+    (filterToRemove: FilterValue): void => {
+      const isAllOnlyFilter = selectedFilters.length === 1 && selectedFilters.includes('all')
+      !isAllOnlyFilter &&
+        setSelectedFilters(selectedFilters.filter(filter => filter !== filterToRemove))
+    },
+    [selectedFilters]
+  )
+
+  const addFilterAndRemoveAllFilter = useCallback(
+    (filterToAdd: FilterValue): void => {
+      const updatedFiltersWithoutAll = [...selectedFilters, filterToAdd].filter(
+        filter => filter !== 'all'
+      )
+      setSelectedFilters(updatedFiltersWithoutAll)
+    },
+    [selectedFilters]
+  )
+
+  const addFilter = useCallback(
+    (filterToAdd: FilterValue): void => {
+      filterToAdd === 'all' ? addAllFilter() : addFilterAndRemoveAllFilter(filterToAdd)
+    },
+    [addAllFilter, addFilterAndRemoveAllFilter]
+  )
+
+  const toggleFilter = useCallback(
+    (filter: FilterValue) => () => {
+      selectedFilters.includes(filter) ? removeFilter(filter) : addFilter(filter)
+    },
+    [addFilter, removeFilter, selectedFilters]
+  )
 
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
-      <h1>{t('actions.explore')}</h1>
-      <div className="okp4-dataverse-portal-dataverse-page-cards-container">
-        {dataverseItems.map(({ type, label, description }) => (
-          <DataverseCard description={description} key={label} label={label} type={type} />
-        ))}
+      <div className="okp4-dataverse-portal-dataverse-page-filters-container">
+        {(isDesktop || isLargeDesktop) && (
+          <div className="okp4-dataverse-portal-dataverse-page-filters">
+            <h1>{t('filters')}</h1>
+            <h2>{t('resources.label')}</h2>
+            <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
+              {filters.map(filter => (
+                <Chip
+                  className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
+                  icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
+                  isSelected={selectedFilters.includes(filter.value)}
+                  key={filter.label}
+                  label={t(`resources.${filter.label}`)}
+                  onClick={toggleFilter(filter.value)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="okp4-dataverse-portal-dataverse-page-catalog">
+        <h1>{t('actions.explore')}</h1>
+        {(isMobile || isTablet) && (
+          <Button
+            className="okp4-dataverse-portal-dataverse-page-filters-button"
+            label={t('filters')}
+            variant="primary"
+          />
+        )}
+        <div className="okp4-dataverse-portal-dataverse-page-cards-container">
+          {dataverseItems.map(({ type, label, description }) => (
+            <DataverseCard description={description} key={label} label={label} type={type} />
+          ))}
+        </div>
       </div>
     </div>
   )
