@@ -10,7 +10,7 @@ import '../i18n/index'
 type InteractCard = {
   action: string
   category: string
-  disabled: boolean
+  disabled?: boolean
   style: {
     backgroundColor: CardBackground
   }
@@ -70,9 +70,11 @@ export const Interact: FC = () => {
           <div>
             <h3>{action}</h3>
             <h2>{category}</h2>
-            <h2 className="okp4-dataverse-portal-home-page-interact-card-disabled-text">
-              {t('home.blocks.interact.disabled')}
-            </h2>
+            {disabled && (
+              <h2 className="okp4-dataverse-portal-home-page-interact-card-disabled-text">
+                {t('home.blocks.interact.disabled')}
+              </h2>
+            )}
           </div>
         </Card>
       ))}

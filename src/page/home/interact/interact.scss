@@ -36,12 +36,10 @@
   }
 
   &:hover {
-    &.disabled {
-      .okp4-dataverse-portal-home-page-interact-card-disabled-text {
-        display: flex;
-        font-size: 20px;
-        opacity: 1;
-      }
+    .okp4-dataverse-portal-home-page-interact-card-disabled-text {
+      display: flex;
+      font-size: 20px;
+      opacity: 1;
     }
 
     h2 {
