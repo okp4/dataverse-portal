@@ -1,0 +1,145 @@
+[
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Service"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/16c4cd10-521a-4829-b1bd-a1e2ac60459a",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Service"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:16c4cd10-521a-4829-b1bd-a1e2ac60459a"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentity": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/96f696a0-4b3d-471c-b533-e1989a455b0f",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-09-16T03:54:18Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/16c4cd10-521a-4829-b1bd-a1e2ac60459a"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-09-16T03:54:18Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/a4333358-fdf3-4e7b-a415-4b67a4d3ee72",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/16c4cd10-521a-4829-b1bd-a1e2ac60459a"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCategory": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/service-category/DataIntegration"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "Ce service permet d'injecter des fichiers de données dans OpenSearch afin de pouvoir connsommer la connaisance créée à l'aide de visualisation.",
+        "@language": "fr"
+      },
+      {
+        "@value": "This service allows you to inject data files into OpenSearch so that you can consume the knowledge created through visualization.",
+        "@language": "en"
+      },
+      {
+        "@value": "Dieser Dienst ermöglicht es, Datendateien in OpenSearch zu injizieren, um das erzeugte Wissen mithilfe von Visualisierungen zu konsumieren.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "dataviz"
+      },
+      {
+        "@value": "opensearch"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "Data Connector",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data Connector",
+        "@language": "en"
+      },
+      {
+        "@value": "Data Connector",
+        "@language": "de"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/service-category/DataIntegration"
+  },
+  {
+    "@id": "urn:uuid:16c4cd10-521a-4829-b1bd-a1e2ac60459a"
+  }
+]

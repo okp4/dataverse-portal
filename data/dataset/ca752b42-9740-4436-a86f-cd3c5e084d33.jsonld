@@ -1,0 +1,224 @@
+[
+  {
+    "@id": "_:b0",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Period"
+    ],
+    "https://ontology.okp4.space/core/hasStartDate": [
+      {
+        "@value": "2020-01-01T00:00:00+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ]
+  },
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://images.unsplash.com/photo-1537721664796-76f77222a5d0"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/DataSet"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Period"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/ca752b42-9740-4436-a86f-cd3c5e084d33",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/DataSet"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:ca752b42-9740-4436-a86f-cd3c5e084d33"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/providedBy": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/metadata/1c125fff-787b-44d3-bb41-03d811c574cd",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-10-16T16:51:28+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataset/ca752b42-9740-4436-a86f-cd3c5e084d33"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-10-16T16:51:28+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/metadata/7ca741b4-ab57-451e-bb8a-a6e8868c9ea9",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/dataset/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataset/ca752b42-9740-4436-a86f-cd3c5e084d33"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCreator": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "Jeu de données issu de la jointure entre les données du RPG et de l'AGRESTE. Obtenu grâce à un enchainement de traitements de la donnée à l'aide du protocole OKP4.",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data set resulting from the join between RPG and AGRESTE data. Obtained through a sequence of data processing using the OKP4 protocol.",
+        "@language": "en"
+      },
+      {
+        "@value": "Datensatz, der aus der Verknüpfung von GLR- und AGRESTE-Daten hervorgeht. Erhalten durch eine Verkettung von Datenverarbeitungen mithilfe des OKP4-Protokolls.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasFormat": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/media-type/text_csv"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasImage": [
+      {
+        "@id": "https://images.unsplash.com/photo-1537721664796-76f77222a5d0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasLicense": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/licence/LO-FR-2_0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasSpatialCoverage": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/area/250"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "RPG"
+      },
+      {
+        "@value": "agriculture"
+      },
+      {
+        "@value": "departement"
+      },
+      {
+        "@value": "france"
+      },
+      {
+        "@value": "open data"
+      },
+      {
+        "@value": "production"
+      },
+      {
+        "@value": "rendement"
+      },
+      {
+        "@value": "superficie"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTemporalCoverage": [
+      {
+        "@id": "_:b0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "RPG AGRESTE 2020",
+        "@language": "fr"
+      },
+      {
+        "@value": "RPG AGRESTE 2020",
+        "@language": "en"
+      },
+      {
+        "@value": "RPG AGRESTE 2020",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTopic": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/topic/AgricultureEnvironmentAndForestry"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/dataset/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/area/250"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/licence/LO-FR-2_0"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/media-type/text_csv"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/topic/AgricultureEnvironmentAndForestry"
+  },
+  {
+    "@id": "urn:uuid:ca752b42-9740-4436-a86f-cd3c5e084d33"
+  }
+]

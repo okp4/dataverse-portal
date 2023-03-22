@@ -1,0 +1,207 @@
+[
+  {
+    "@id": "_:b0",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Period"
+    ],
+    "https://ontology.okp4.space/core/hasStartDate": [
+      {
+        "@value": "2020-01-01T00:00:00+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ]
+  },
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://images.unsplash.com/photo-1537721664796-76f77222a5d0"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/DataSet"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Period"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/cb6ea0aa-e32d-4d79-8492-a6ebcc80b897",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/DataSet"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:cb6ea0aa-e32d-4d79-8492-a6ebcc80b897"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/providedBy": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/metadata/15592590-adf8-4ee7-b1ff-453f5a40256f",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/dataset/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataset/cb6ea0aa-e32d-4d79-8492-a6ebcc80b897"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCreator": [
+      {
+        "@value": "IGN"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "ADMIN EXPRESS permet d'effectuer des croisements avec d'autres sources de données dans le but de construire des représentations thématiques du territoire selon une granularité administrative (commune, arrondissement départementaux, département, région). ADMIN EXPRESS est décliné dans une édition \"COG\", conforme au code officiel géographique publié chaque année par l'INSEE.",
+        "@language": "fr"
+      },
+      {
+        "@value": "ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a \"COG\" edition, in accordance with the official geographic code published each year by INSEE.",
+        "@language": "en"
+      },
+      {
+        "@value": "ADMIN EXPRESS ermöglicht es, Kreuzungen mit anderen Datenquellen vorzunehmen, um thematische Darstellungen des Gebiets nach administrativer Granularität (Gemeinde, Departementsbezirke, Departement, Region) zu erstellen. ADMIN EXPRESS ist in einer \"COG\"-Ausgabe erhältlich, die dem offiziellen geografischen Code entspricht, der jedes Jahr vom INSEE veröffentlicht wird.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasFormat": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/media-type/application_vnd-shp"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasImage": [
+      {
+        "@id": "https://images.unsplash.com/photo-1537721664796-76f77222a5d0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasLicense": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/licence/LO-FR-2_0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasSpatialCoverage": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/area/250"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "INSEE"
+      },
+      {
+        "@value": "france"
+      },
+      {
+        "@value": "open data"
+      },
+      {
+        "@value": "region"
+      },
+      {
+        "@value": "territoire"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTemporalCoverage": [
+      {
+        "@id": "_:b0"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "ADMIN EXPRESS COG 2020 REGION",
+        "@language": "fr"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTopic": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/topic/Other"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataset/metadata/bf57a8ce-71d8-4c46-b068-4384f2bf190f",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-06-03T17:22:35+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataset/cb6ea0aa-e32d-4d79-8492-a6ebcc80b897"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-06-03T17:22:35+00:00",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/dataset/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/area/250"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/licence/LO-FR-2_0"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/media-type/application_vnd-shp"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/topic/Other"
+  },
+  {
+    "@id": "urn:uuid:cb6ea0aa-e32d-4d79-8492-a6ebcc80b897"
+  }
+]

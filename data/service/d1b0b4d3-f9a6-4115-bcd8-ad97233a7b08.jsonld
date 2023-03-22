@@ -1,0 +1,142 @@
+[
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Service"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Service"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentity": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/7de927d4-b4ab-401f-bfef-3899132ea2f1",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCategory": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/service-category/Storage"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "Service de stockage de données",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data storage service",
+        "@language": "en"
+      },
+      {
+        "@value": "Datenspeicherungsdienst",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "stockage"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "Stockage",
+        "@language": "fr"
+      },
+      {
+        "@value": "Storage",
+        "@language": "en"
+      },
+      {
+        "@value": "Speicherung",
+        "@language": "de"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/8f5a671d-ba50-4768-9354-4268bd4345e9",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2023-03-14T13:33:00Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2023-03-14T13:33:00Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/service-category/Storage"
+  },
+  {
+    "@id": "urn:uuid:d1b0b4d3-f9a6-4115-bcd8-ad97233a7b08"
+  }
+]

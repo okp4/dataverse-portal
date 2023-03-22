@@ -1,0 +1,145 @@
+[
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Service"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/fbe11a63-85da-4f82-97c4-f719ac1f4ce8",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Service"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:fbe11a63-85da-4f82-97c4-f719ac1f4ce8"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentity": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/37fb789f-23d8-41b3-900b-418147d115fd",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/fbe11a63-85da-4f82-97c4-f719ac1f4ce8"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCategory": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "L'outil Data Selector permet de sélectionner un échantillon de l'ensemble de données, en spécifiant un nombre de lignes. Il est possible de supprimer ou de conserver des colonnes. Un autre paramètre permet de sélectionner les données d'une colonne en fonction de sa (ses) valeur(s).",
+        "@language": "fr"
+      },
+      {
+        "@value": "The Data Selector tool allows you to select a sample of the data set, specifying a number of rows. It is possible to delete or keep columns. Another parameter allows you to select data from a column according to its value(s).",
+        "@language": "en"
+      },
+      {
+        "@value": "Mit dem Werkzeug Data Selector können Sie eine Stichprobe aus dem Datensatz auswählen, indem Sie eine Anzahl von Zeilen angeben. Es ist möglich, Spalten zu löschen oder beizubehalten. Eine weitere Einstellung ermöglicht es, die Daten einer Spalte anhand ihres Wertes (ihrer Werte) auszuwählen.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "selection"
+      },
+      {
+        "@value": "traitement de données"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "Data Selector",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data Selector",
+        "@language": "en"
+      },
+      {
+        "@value": "Data Selector",
+        "@language": "de"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/730f271e-022e-411c-9eb9-23d8140af611",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-09-28T11:13:13Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/fbe11a63-85da-4f82-97c4-f719ac1f4ce8"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-09-28T11:13:13Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+  },
+  {
+    "@id": "urn:uuid:fbe11a63-85da-4f82-97c4-f719ac1f4ce8"
+  }
+]

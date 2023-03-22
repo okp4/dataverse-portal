@@ -1,0 +1,145 @@
+[
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Service"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/e4fa9cb1-59f8-4f40-9ba3-f00f8a18e3de",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Service"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:e4fa9cb1-59f8-4f40-9ba3-f00f8a18e3de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentity": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/e7f1468b-f7f6-42da-85cf-f562b337554a",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-03-03T16:49:46Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/e4fa9cb1-59f8-4f40-9ba3-f00f8a18e3de"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-03-03T16:49:46Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/f9a890a3-e1fa-46ba-897d-60e6e414c457",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/e4fa9cb1-59f8-4f40-9ba3-f00f8a18e3de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCategory": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "L'outil Data Join Geospatial permet de joindre deux jeux de données géoréférencé.",
+        "@language": "fr"
+      },
+      {
+        "@value": "The Data Join Geospatial tool allows to join two georeferenced datasets.",
+        "@language": "en"
+      },
+      {
+        "@value": "Mit dem Tool Data Join Geospatial können Sie zwei georeferenzierte Datensätze miteinander verbinden.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "jointure"
+      },
+      {
+        "@value": "traitement de données"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "Data Join Geospatial",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data Join Geospatial",
+        "@language": "en"
+      },
+      {
+        "@value": "Data Join Geospatial",
+        "@language": "de"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+  },
+  {
+    "@id": "urn:uuid:e4fa9cb1-59f8-4f40-9ba3-f00f8a18e3de"
+  }
+]

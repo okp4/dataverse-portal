@@ -1,0 +1,145 @@
+[
+  {
+    "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+  },
+  {
+    "@id": "http://www.w3.org/2002/07/owl#NamedIndividual"
+  },
+  {
+    "@id": "https://ontology.okp4.space/core/Service"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/987e1ffd-05e7-48e4-a429-1172689477ee",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/core/Service"
+    ],
+    "https://ontology.okp4.space/core/belongsTo": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/dataspace/ef347285-e52a-430d-9679-dcb76b962ce7"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentifier": [
+      {
+        "@id": "urn:uuid:987e1ffd-05e7-48e4-a429-1172689477ee"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasIdentity": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasRegistrar": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/32ef3b7a-9cbb-4e2a-bc9c-3916687775fa",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/987e1ffd-05e7-48e4-a429-1172689477ee"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasCategory": [
+      {
+        "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasDescription": [
+      {
+        "@value": "L'outil Data Grouping permet organiser des données identiques en groupes.",
+        "@language": "fr"
+      },
+      {
+        "@value": "The Data Grouping tool allows you to organize identical data into groups.",
+        "@language": "en"
+      },
+      {
+        "@value": "Mit dem Tool Data Grouping können Sie identische Daten in Gruppen organisieren.",
+        "@language": "de"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasPublisher": [
+      {
+        "@value": "OKP4"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTag": [
+      {
+        "@value": "regroupement"
+      },
+      {
+        "@value": "traitement de données"
+      }
+    ],
+    "https://ontology.okp4.space/core/hasTitle": [
+      {
+        "@value": "Data Grouping",
+        "@language": "fr"
+      },
+      {
+        "@value": "Data Grouping",
+        "@language": "en"
+      },
+      {
+        "@value": "Data Grouping",
+        "@language": "de"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/dataverse/service/metadata/a65267da-98ec-4db6-a8ad-29aeb48efd5e",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual",
+      "https://ontology.okp4.space/metadata/AuditMetadata"
+    ],
+    "https://ontology.okp4.space/core/createdBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/createdOn": [
+      {
+        "@value": "2022-08-30T05:33:00Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ],
+    "https://ontology.okp4.space/core/describes": [
+      {
+        "@id": "https://ontology.okp4.space/dataverse/service/987e1ffd-05e7-48e4-a429-1172689477ee"
+      }
+    ],
+    "https://ontology.okp4.space/core/lastModifiedBy": [
+      {
+        "@id": "did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655"
+      }
+    ],
+    "https://ontology.okp4.space/core/updatedOn": [
+      {
+        "@value": "2022-08-30T05:33:00Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+      }
+    ]
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/AuditMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/metadata/service/GeneralMetadata"
+  },
+  {
+    "@id": "https://ontology.okp4.space/thesaurus/service-category/DataTransformation"
+  },
+  {
+    "@id": "urn:uuid:987e1ffd-05e7-48e4-a429-1172689477ee"
+  }
+]
