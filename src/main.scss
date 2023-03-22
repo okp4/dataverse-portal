@@ -28,11 +28,12 @@ p {
 .okp4-dataverse-portal-main-layout {
   @include with-theme() {
     min-height: inherit;
+    max-height: 100vh;
     display: flex;
     width: 100%;
     background-color: themed('background');
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   .okp4-dataverse-portal-page-layout {
