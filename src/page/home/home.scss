@@ -5,14 +5,17 @@
 .okp4-dataverse-portal-home-page-main {
   @include with-theme() {
     @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    row-gap: 30px;
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      row-gap: 40px;
+    }
 
     @include mobile-bp {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
       @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
     @include tablet-bp {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
       @include grid-container($colsNb: 8, $gutter: 16px);
     }
 
@@ -42,7 +45,7 @@
       }
 
       h1 {
-        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: 1);
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
         @include norse-font(700);
         width: fit-content;
         line-height: 36px;
@@ -63,6 +66,12 @@
       &.community {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
         grid-auto-rows: max-content;
+        row-gap: 16px;
+      }
+
+      &.interact {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        grid-auto-rows: max-content max-content;
         row-gap: 16px;
       }
     }

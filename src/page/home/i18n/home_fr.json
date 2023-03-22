@@ -9,6 +9,26 @@
           "servicesShared": "Services partagés",
           "communityParticipants": "Nombre de participants à l'écosystème OKP4"
         }
+      },
+      "interact": {
+        "label": "Interact",
+        "data-services": {
+          "action": "Partager",
+          "category": "des Données et Services"
+        },
+        "knowledge": {
+          "action": "Créer",
+          "category": "des Connaissances"
+        },
+        "data-spaces": {
+          "action": "Créer",
+          "category": "des Data Spaces"
+        },
+        "applications": {
+          "action": "Construire",
+          "category": "des Applications"
+        },
+        "disabled": "Bientôt disponible"
       }
     }
   }
