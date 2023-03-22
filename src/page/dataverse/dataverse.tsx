@@ -1,6 +1,6 @@
 import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
 import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBreakpoint } from '@/hook/useBreakpoint'
 import { useAppStore } from '@/store/appStore'
@@ -162,14 +162,16 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
-const initialState: FilterValue[] = ['all']
+const filtersInitialState: FilterValue[] = ['all']
 
 // eslint-disable-next-line max-lines-per-function
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
   const theme = useAppStore(state => state.theme)
   const { isMobile, isTablet, isDesktop, isLargeDesktop } = useBreakpoint()
-  const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(initialState)
+  const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(filtersInitialState)
+  const [dataverseResources, setDataverseResources] =
+    useState<DataverseItemDetails[]>(dataverseItems)
 
   const addAllFilter = useCallback((): void => {
     setSelectedFilters(['all'])
@@ -208,6 +210,21 @@ const Dataverse = (): JSX.Element => {
     [addFilter, removeFilter, selectedFilters]
   )
 
+  useEffect(() => {
+    if (selectedFilters === filtersInitialState) {
+      setDataverseResources(dataverseItems)
+    } else {
+      const updatedResources = dataverseItems.filter(resource =>
+        selectedFilters.includes(resource.type)
+      )
+      setDataverseResources(updatedResources)
+    }
+  }, [selectedFilters])
+
+  useEffect(() => {
+    !selectedFilters.length && setSelectedFilters(filtersInitialState)
+  }, [selectedFilters.length])
+
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
       <div className="okp4-dataverse-portal-dataverse-page-filters-container">
@@ -240,7 +257,7 @@ const Dataverse = (): JSX.Element => {
           />
         )}
         <div className="okp4-dataverse-portal-dataverse-page-cards-container">
-          {dataverseItems.map(({ type, label, description }) => (
+          {dataverseResources.map(({ type, label, description }) => (
             <DataverseCard description={description} key={label} label={label} type={type} />
           ))}
         </div>
