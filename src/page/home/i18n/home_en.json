@@ -10,6 +10,10 @@
           "communityParticipants": "Number of participants to OKP4 ecosystem"
         }
       },
+      "explore": {
+        "label": "Explore",
+        "catalog": "Explore the catalog"
+      },
       "interact": {
         "label": "Interact",
         "data-services": {

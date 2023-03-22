@@ -56,6 +56,26 @@
       }
     }
 
+    &.catalog {
+      border: 1px solid themed('secondary-color');
+      color: themed('primary-text');
+      border-radius: 12px;
+      background: themed('secondary-color');
+      box-shadow: 0 4px 12px rgba(255, 149, 0, 0.6);
+
+      transition: background-color 200ms ease-in-out;
+
+      &:hover {
+        background: themed('secondary-color-variant-1');
+        border-color: themed('secondary-color-variant-1');
+        box-shadow: none;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
     &.icon-button {
       display: flex;
       flex-direction: row;
@@ -75,6 +95,11 @@
         gap: 10px;
       }
 
+      &.catalog {
+        padding: 12px 20px;
+        gap: 12px;
+      }
+
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
         font-size: 11px;
@@ -88,6 +113,11 @@
         &.tertiary {
           @include noto-sans(400);
           font-size: 16px;
+        }
+
+        &.catalog {
+          font-size: 16px;
+          line-height: 24px;
         }
       }
     }
