@@ -68,16 +68,6 @@ p {
       @include grid-container($gutter: 48px);
     }
 
-    .okp4-dataverse-portal-toolbar-wrapper {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-    }
-
-    .okp4-dataverse-portal-page-wrapper {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      overflow-y: overlay;
-      height: 100%;
-    }
-
     .okp4-dataverse-portal-toolbar-wrapper,
     .okp4-dataverse-portal-page-wrapper {
       @include mobile-bp {
@@ -94,6 +84,25 @@ p {
 
       @include large-desktop-bp {
         padding: 0 3.1%;
+      }
+    }
+
+    .okp4-dataverse-portal-toolbar-wrapper {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+      padding-top: 25px;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        padding-top: 44px;
+      }
+    }
+
+    .okp4-dataverse-portal-page-wrapper {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+      overflow-y: overlay;
+      padding-bottom: 25px;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        padding-bottom: 44px;
       }
     }
   }
