@@ -45,7 +45,6 @@ p {
 
     @include mobile-bp {
       @include grid-container($colsNb: 6, $gutter: 16px);
-      padding: 0 4%;
 
       &.expanded-sidebar {
         @include blurred-page(1px);
@@ -54,7 +53,6 @@ p {
 
     @include tablet-bp {
       @include grid-container($colsNb: 8, $gutter: 16px);
-      padding: 0 3%;
       row-gap: 48px;
 
       &.expanded-sidebar {
@@ -64,19 +62,39 @@ p {
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);
-      padding: 0 2%;
     }
 
     @include large-desktop-bp {
-      @include grid-container($gutter: 48px) {
-        padding: 0 2.5%;
-      }
+      @include grid-container($gutter: 48px);
+    }
+
+    .okp4-dataverse-portal-toolbar-wrapper {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
     }
 
     .okp4-dataverse-portal-page-wrapper {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      overflow: auto;
+      overflow-y: overlay;
       height: 100%;
+    }
+
+    .okp4-dataverse-portal-toolbar-wrapper,
+    .okp4-dataverse-portal-page-wrapper {
+      @include mobile-bp {
+        padding: 0 4.2%;
+      }
+
+      @include tablet-bp {
+        padding: 0 3.1%;
+      }
+
+      @include desktop-bp {
+        padding: 0 2.4%;
+      }
+
+      @include large-desktop-bp {
+        padding: 0 3.1%;
+      }
     }
   }
 }
