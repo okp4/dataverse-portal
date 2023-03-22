@@ -11,7 +11,7 @@
         }
       },
       "interact": {
-        "label": "Interact",
+        "label": "Interagieren",
         "data-services": {
           "action": "Teilen",
           "category": "Daten & Dienste"
@@ -25,7 +25,7 @@
           "category": "Data Spaces"
         },
         "applications": {
-          "action": "Erstellen",
+          "action": "Kreieren",
           "category": "Anwendungen"
         },
         "disabled": "Bald verfügbar"
