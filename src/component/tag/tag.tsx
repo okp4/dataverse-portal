@@ -8,8 +8,6 @@ type TagProps = {
   colorVariant?: ColorVariant
 }
 
-const Tag = ({ label, colorVariant = 'primary-color-variant-3' }: TagProps): JSX.Element => (
+export const Tag = ({ label, colorVariant = 'primary-color-variant-3' }: TagProps): JSX.Element => (
   <div className={classNames('okp4-dataverse-portal-tag-main', colorVariant)}>{label}</div>
 )
-
-export default Tag

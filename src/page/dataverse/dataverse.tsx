@@ -1,19 +1,9 @@
-import { useCallback } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/component/button/button'
-import { Card } from '@/component/card/card'
-import Tag from '@/component/tag/tag'
-import type { ColorVariant } from '@/component/tag/tag'
+import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
+import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
 import './dataverse.scss'
 
-type DataverseItem = 'dataspace' | 'dataset' | 'service'
-
-type DataverseItemDetails = {
-  type: DataverseItem
-  label: string
-  description: string
-}
+type DataverseItemDetails = DataverseCardProps
 
 const dataverseItems: DataverseItemDetails[] = [
   {
@@ -133,41 +123,15 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
-const renderTagColor = (itemType: DataverseItem): ColorVariant => {
-  switch (itemType) {
-    case 'service':
-      return 'primary-color'
-    case 'dataspace':
-      return 'primary-color-variant-3'
-    case 'dataset':
-      return 'primary-color-variant-4'
-  }
-}
-
-const renderItemContent = (item: DataverseItemDetails): string => `### ${item.label}
-${item.description}`
-
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
-
-  const renderLabel = useCallback((itemType: DataverseItem) => t(`data.${itemType}`), [t])
 
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
       <h1>{t('actions.explore')}</h1>
       <div className="okp4-dataverse-portal-dataverse-page-cards-container">
-        {dataverseItems.map(item => (
-          <Card key={item.label}>
-            <div className="okp4-dataverse-portal-dataverse-page-card">
-              <Tag colorVariant={renderTagColor(item.type)} label={renderLabel(item.type)} />
-              <div className="okp4-dataverse-portal-dataverse-page-card-content">
-                <div className="okp4-dataverse-portal-dataverse-page-description">
-                  <ReactMarkdown>{renderItemContent(item)}</ReactMarkdown>
-                </div>
-                <Button disabled label={t('actions.details')} variant="primary" />
-              </div>
-            </div>
-          </Card>
+        {dataverseItems.map(({ type, label, description }) => (
+          <DataverseCard description={description} key={label} label={label} type={type} />
         ))}
       </div>
     </div>
