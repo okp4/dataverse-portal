@@ -24,8 +24,8 @@
 
     .okp4-dataverse-portal-dataverse-page-filters-container {
       @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
-      @include use-breakpoints(('tablet')) {
-        @include grid-item($colStart: 1, $colEnd: 3, $rowStart: 2, $rowEnd: 3);
+      @include use-breakpoints(('mobile', 'tablet')) {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
       }
 
       .okp4-dataverse-portal-dataverse-page-filters {
@@ -35,6 +35,7 @@
         h1 {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           @include norse-font(700);
+          width: fit-content;
           line-height: 61px;
           letter-spacing: 4px;
           font-size: 24px;
@@ -47,10 +48,20 @@
         h2 {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 2);
           @include norse-font(700);
+          width: fit-content;
           font-size: 18px;
           line-height: 36px;
           letter-spacing: 2px;
           text-transform: uppercase;
+        }
+
+        .okp4-dataverse-portal-dataverse-page-filters-mobile {
+          display: flex;
+          align-items: center;
+
+          h1 {
+            margin-left: 12px;
+          }
         }
 
         .okp4-dataverse-portal-dataverse-page-filters-chips {
@@ -58,12 +69,43 @@
           display: flex;
           flex-wrap: wrap;
 
+          @include use-breakpoints(('mobile', 'tablet')) {
+            @include grid-container($colsNb: 8, $gutter: 12px);
+            display: grid;
+          }
+
           .okp4-dataverse-portal-dataverse-page-filter {
             width: fit-content;
             height: fit-content;
             margin: 0 8px 16px 0;
             display: flex;
             flex-direction: column;
+
+            @include use-breakpoints(('mobile', 'tablet')) {
+              grid-column: auto / span 2;
+              width: 100%;
+              height: 110px;
+              justify-content: center;
+
+              .okp4-dataverse-portal-chip-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                white-space: unset;
+                height: 100%;
+
+                .okp4-dataverse-portal-chip-label {
+                  @include mobile-bp {
+                    font-size: 14px;
+                  }
+                }
+
+                .okp4-dataverse-portal-chip-icon {
+                  margin-right: unset;
+                  margin-bottom: 10px;
+                }
+              }
+            }
 
             @include large-desktop-bp {
               margin-right: 16px;
@@ -109,7 +151,7 @@
       h1 {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         @include norse-font(700);
-        width: 100%;
+        width: fit-content;
         line-height: 61px;
         letter-spacing: 4px;
         font-size: 24px;
@@ -121,6 +163,7 @@
         @include use-breakpoints(('mobile', 'tablet')) {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
           text-align: center;
+          justify-self: center;
         }
       }
 

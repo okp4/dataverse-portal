@@ -162,6 +162,18 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
+const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void): JSX.Element => (
+  <div className="okp4-dataverse-portal-dataverse-page-filters-mobile">
+    <div
+      className="okp4-dataverse-portal-dataverse-page-filters-previous-icon"
+      onClick={toggleMobileFilters}
+    >
+      <Icon name="arrow-left" />
+    </div>
+    <h1>{label}</h1>
+  </div>
+)
+
 const filtersInitialState: FilterValue[] = ['all']
 
 // eslint-disable-next-line max-lines-per-function
@@ -175,16 +187,18 @@ const Dataverse = (): JSX.Element => {
     useState<DataverseItemDetails[]>(dataverseItems)
 
   const isLargeScreen = isDesktop || isLargeDesktop
+  const filtersLabel = t('filters')
 
-  const addAllFilter = useCallback((): void => {
+  const resetFilters = useCallback((): void => {
     setSelectedFilters(filtersInitialState)
   }, [])
 
   const removeFilter = useCallback(
     (filterToRemove: FilterValue): void => {
-      const isAllOnlyFilter = selectedFilters.length === 1 && selectedFilters.includes('all')
-      !isAllOnlyFilter &&
-        setSelectedFilters(selectedFilters.filter(filter => filter !== filterToRemove))
+      if (selectedFilters.length === 1 && selectedFilters[0] === 'all') {
+        return
+      }
+      setSelectedFilters(selectedFilters.filter(filter => filter !== filterToRemove))
     },
     [selectedFilters]
   )
@@ -201,9 +215,9 @@ const Dataverse = (): JSX.Element => {
 
   const addFilter = useCallback(
     (filterToAdd: FilterValue): void => {
-      filterToAdd === 'all' ? addAllFilter() : addFilterAndRemoveAllFilter(filterToAdd)
+      filterToAdd === 'all' ? resetFilters() : addFilterAndRemoveAllFilter(filterToAdd)
     },
-    [addAllFilter, addFilterAndRemoveAllFilter]
+    [resetFilters, addFilterAndRemoveAllFilter]
   )
 
   const toggleFilter = useCallback(
@@ -213,7 +227,7 @@ const Dataverse = (): JSX.Element => {
     [addFilter, removeFilter, selectedFilters]
   )
 
-  const toggleShowMobileFilters = useCallback(() => {
+  const toggleMobileFilters = useCallback(() => {
     setShowMobileFilters(!showMobileFilters)
   }, [showMobileFilters])
 
@@ -221,7 +235,11 @@ const Dataverse = (): JSX.Element => {
     useMemo(
       () => (
         <div className="okp4-dataverse-portal-dataverse-page-filters">
-          <h1>{t('filters')}</h1>
+          {!isLargeScreen ? (
+            renderMobileTitleFilters(filtersLabel, toggleMobileFilters)
+          ) : (
+            <h1>{filtersLabel}</h1>
+          )}
           <h2>{t('resources.label')}</h2>
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
             {filters.map(filter => (
@@ -244,16 +262,16 @@ const Dataverse = (): JSX.Element => {
     if (selectedFilters === filtersInitialState) {
       setDataverseResources(dataverseItems)
     } else {
-      const updatedResources = dataverseItems.filter(resource =>
+      const filteredResources = dataverseItems.filter(resource =>
         selectedFilters.includes(resource.type)
       )
-      setDataverseResources(updatedResources)
+      setDataverseResources(filteredResources)
     }
   }, [selectedFilters])
 
   useEffect(() => {
-    !selectedFilters.length && setSelectedFilters(filtersInitialState)
-  }, [selectedFilters.length])
+    !selectedFilters.length && resetFilters()
+  }, [resetFilters, selectedFilters.length])
 
   useEffect(() => {
     !isLargeScreen && setShowMobileFilters(false)
@@ -272,7 +290,7 @@ const Dataverse = (): JSX.Element => {
           <Button
             className="okp4-dataverse-portal-dataverse-page-filters-button"
             label={t('filters')}
-            onClick={toggleShowMobileFilters}
+            onClick={toggleMobileFilters}
             variant="primary"
           />
         )}
