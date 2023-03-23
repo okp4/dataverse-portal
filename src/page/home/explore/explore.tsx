@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../i18n/index'
 import './explore.scss'
@@ -11,28 +12,31 @@ import { routes } from '@/routes'
 
 export const Explore: FC = () => {
   const { t } = useTranslation('home')
-  const exploreItems: DataverseCardProps[] = [
-    {
-      type: 'dataspace',
-      label: 'Rhizome',
-      description: 'Agriculture, Food, Environment and Forestry'
-    },
-    {
-      type: 'dataset',
-      label: 'Agreste 2020',
-      description: 'Agriculture, Food, Environment and Forestry'
-    },
-    {
-      type: 'dataset',
-      label: 'Graphical Plot Registry France 2020',
-      description: 'Agriculture, Food, Environment and Forestry'
-    },
-    {
-      type: 'service',
-      label: 'Data connector',
-      description: 'Data Integration'
-    }
-  ]
+  const exploreItems: DataverseCardProps[] = useMemo(
+    () => [
+      {
+        type: 'dataspace',
+        label: 'Rhizome',
+        description: 'Agriculture, Food, Environment and Forestry'
+      },
+      {
+        type: 'dataset',
+        label: 'Agreste 2020',
+        description: 'Agriculture, Food, Environment and Forestry'
+      },
+      {
+        type: 'dataset',
+        label: 'Graphical Plot Registry France 2020',
+        description: 'Agriculture, Food, Environment and Forestry'
+      },
+      {
+        type: 'service',
+        label: 'Data connector',
+        description: 'Data Integration'
+      }
+    ],
+    []
+  )
   return (
     <>
       <h1>{t('home.blocks.explore.label')}</h1>
