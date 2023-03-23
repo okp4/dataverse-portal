@@ -104,9 +104,13 @@
       display: flex;
       align-items: center;
 
-      &.primary,
-      &.secondary {
+      &.primary {
         padding: 12px 20px;
+        gap: 12px;
+      }
+
+      &.secondary {
+        padding: 8px 16px;
         gap: 12px;
       }
 
