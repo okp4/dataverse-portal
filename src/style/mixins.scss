@@ -66,3 +66,7 @@
   position: relative;
   filter: blur($length);
 }
+
+@mixin transition-bg-color {
+  transition: background-color 200ms ease-in-out;
+}

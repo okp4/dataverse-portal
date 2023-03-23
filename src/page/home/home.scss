@@ -69,6 +69,20 @@
         row-gap: 16px;
       }
 
+      &.explore {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        grid-auto-rows: max-content max-content;
+        row-gap: 19px;
+
+        @include mobile-bp {
+          row-gap: 20px;
+        }
+
+        @include tablet-bp {
+          gap: 34px;
+        }
+      }
+
       &.interact {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         grid-auto-rows: max-content max-content;

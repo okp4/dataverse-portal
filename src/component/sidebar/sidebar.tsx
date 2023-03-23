@@ -76,6 +76,7 @@ export const Sidebar: FC = () => {
               icons={{ startIcon: <Icon name="feedback" /> }}
               label={t('sidebar.footer.feedback')}
               onClick={handleFeedbackClick}
+              variant="outlined-tertiary"
             />
           </>
         )}

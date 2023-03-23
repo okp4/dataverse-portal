@@ -40,9 +40,11 @@ import { ReactComponent as SunIcon } from '@/asset/icon/sun.svg'
 import { ReactComponent as TwitterLightIcon } from '@/asset/icon/twitter-light.svg'
 import { ReactComponent as TwitterDarkIcon } from '@/asset/icon/twitter-dark.svg'
 import { ReactComponent as WalletIcon } from '@/asset/icon/wallet.svg'
+import { ReactComponent as ArrowRightIcon } from '@/asset/icon/arrow-right.svg'
 
 export type IconName =
   | 'collapse'
+  | 'arrow-right'
   | 'expand'
   | 'documentation'
   | 'build-apps'
@@ -85,6 +87,7 @@ export type IconName =
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
+  'arrow-right': ArrowRightIcon,
   expand: ExpandIcon,
   documentation: DocumentationIcon,
   'build-apps': BuildAppsIcon,

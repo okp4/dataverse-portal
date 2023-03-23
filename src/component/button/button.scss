@@ -1,46 +1,65 @@
 @import '@/style//fonts.scss';
 @import '@/style//theme.scss';
+@import '@/style//mixins.scss';
+
+@mixin button($border-color, $content-color, $background-color, $box-shadow, $hover-color) {
+  @include transition-bg-color;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid $border-color;
+  color: $content-color;
+  border-radius: 12px;
+  background-color: $background-color;
+  box-shadow: $box-shadow;
+
+  &:hover {
+    background: $hover-color;
+    border-color: $hover-color;
+    box-shadow: none;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    cursor: unset;
+    background: themed('neutral-variant-1');
+    border-color: themed('neutral-variant-1');
+    color: themed('neutral');
+    box-shadow: none;
+  }
+}
 
 .okp4-dataverse-portal-button-main {
-  @include with-theme() {
+  @include with-theme {
     cursor: pointer;
     padding: unset;
     box-sizing: border-box;
 
     &.primary {
-      border: 1px solid themed('primary-color');
-      color: themed('primary-text');
-      border-radius: 12px;
-      background: themed('primary-color');
-
-      &:hover {
-        background: themed('primary-color-variant-5');
-        border-color: themed('primary-color-variant-5');
-      }
-
-      &.disabled {
-        cursor: unset;
-        background: themed('neutral-variant-1');
-        border-color: themed('neutral-variant-1');
-        color: themed('neutral');
-      }
+      @include button(
+        $border-color: themed('secondary-color'),
+        $content-color: themed('primary-text'),
+        $background-color: themed('secondary-color'),
+        $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
+        $hover-color: themed('secondary-color-variant-1')
+      );
     }
 
     &.secondary {
-      border: 1px solid themed('secondary-color');
-      color: themed('secondary-color');
-      height: 34px;
-      border-radius: 6px;
-      background: unset;
+      @include button(
+        $border-color: themed('primary-color'),
+        $content-color: themed('primary-text'),
+        $background-color: themed('primary-color'),
+        $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
+        $hover-color: themed('primary-color-variant-2')
+      );
 
-      &:hover {
-        color: themed('secondary-color-variant-1');
-        border-color: themed('secondary-color-variant-1');
-
-        svg {
-          path {
-            fill: themed('secondary-color-variant-1');
-          }
+      svg {
+        path {
+          fill: themed('secondary-color-variant-1');
         }
       }
     }
@@ -56,6 +75,23 @@
       }
     }
 
+    &.outlined-tertiary {
+      @include button(
+        $border-color: themed('secondary-color'),
+        $content-color: themed('secondary-color'),
+        $background-color: unset,
+        $box-shadow: none,
+        $hover-color: none
+      );
+      border-radius: 6px;
+
+      svg {
+        path {
+          fill: themed('secondary-color');
+        }
+      }
+    }
+
     &.icon-button {
       display: flex;
       flex-direction: row;
@@ -67,21 +103,30 @@
     .okp4-dataverse-portal-content-container {
       display: flex;
       align-items: center;
-      padding: 0 10px;
-      gap: 6px;
+
+      &.primary,
+      &.secondary {
+        padding: 12px 20px;
+        gap: 12px;
+      }
 
       &.tertiary {
         padding: 11px 20px;
         gap: 10px;
       }
 
+      &.outlined-tertiary {
+        padding: 7px 10px;
+        gap: 6px;
+      }
+
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
         font-size: 11px;
 
-        &.primary {
+        &.primary,
+        &.secondary {
           font-size: 16px;
-          padding: 8px 16px;
           line-height: 24px;
         }
 

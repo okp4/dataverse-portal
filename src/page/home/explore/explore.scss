@@ -1,0 +1,27 @@
+@import '@/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-explore-card-wrapper {
+  grid-column: span 3;
+
+  @include mobile-bp {
+    grid-column: 1 / -1;
+  }
+
+  @include tablet-bp {
+    grid-column: span 4;
+  }
+}
+
+.okp4-dataverse-portal-home-page-explore-catalog-button {
+  @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+  justify-self: right;
+  text-decoration: none;
+
+  @include mobile-bp {
+    width: 100%;
+  }
+
+  @include tablet-bp {
+    justify-self: center;
+  }
+}

@@ -10,6 +10,10 @@
           "communityParticipants": "Anzahl der Teilnehmer am OKP4-Ökosystem"
         }
       },
+      "explore": {
+        "label": "Erkunden Sie",
+        "catalog": "Den Katalog erforschen"
+      },
       "interact": {
         "label": "Interagieren",
         "data-services": {
