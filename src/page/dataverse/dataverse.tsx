@@ -1,6 +1,6 @@
 import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
 import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBreakpoint } from '@/hook/useBreakpoint'
 import { useAppStore } from '@/store/appStore'
@@ -168,13 +168,16 @@ const filtersInitialState: FilterValue[] = ['all']
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
   const theme = useAppStore(state => state.theme)
-  const { isMobile, isTablet, isDesktop, isLargeDesktop } = useBreakpoint()
+  const { isDesktop, isLargeDesktop } = useBreakpoint()
+  const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false)
   const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(filtersInitialState)
   const [dataverseResources, setDataverseResources] =
     useState<DataverseItemDetails[]>(dataverseItems)
 
+  const isLargeScreen = isDesktop || isLargeDesktop
+
   const addAllFilter = useCallback((): void => {
-    setSelectedFilters(['all'])
+    setSelectedFilters(filtersInitialState)
   }, [])
 
   const removeFilter = useCallback(
@@ -210,6 +213,33 @@ const Dataverse = (): JSX.Element => {
     [addFilter, removeFilter, selectedFilters]
   )
 
+  const toggleShowMobileFilters = useCallback(() => {
+    setShowMobileFilters(!showMobileFilters)
+  }, [showMobileFilters])
+
+  const FiltersChips = (): JSX.Element =>
+    useMemo(
+      () => (
+        <div className="okp4-dataverse-portal-dataverse-page-filters">
+          <h1>{t('filters')}</h1>
+          <h2>{t('resources.label')}</h2>
+          <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
+            {filters.map(filter => (
+              <Chip
+                className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
+                icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
+                isSelected={selectedFilters.includes(filter.value)}
+                key={filter.label}
+                label={t(`resources.${filter.label}`)}
+                onClick={toggleFilter(filter.value)}
+              />
+            ))}
+          </div>
+        </div>
+      ),
+      []
+    )
+
   useEffect(() => {
     if (selectedFilters === filtersInitialState) {
       setDataverseResources(dataverseItems)
@@ -225,34 +255,24 @@ const Dataverse = (): JSX.Element => {
     !selectedFilters.length && setSelectedFilters(filtersInitialState)
   }, [selectedFilters.length])
 
+  useEffect(() => {
+    !isLargeScreen && setShowMobileFilters(false)
+  }, [isLargeScreen])
+
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
-      <div className="okp4-dataverse-portal-dataverse-page-filters-container">
-        {(isDesktop || isLargeDesktop) && (
-          <div className="okp4-dataverse-portal-dataverse-page-filters">
-            <h1>{t('filters')}</h1>
-            <h2>{t('resources.label')}</h2>
-            <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
-              {filters.map(filter => (
-                <Chip
-                  className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
-                  icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
-                  isSelected={selectedFilters.includes(filter.value)}
-                  key={filter.label}
-                  label={t(`resources.${filter.label}`)}
-                  onClick={toggleFilter(filter.value)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      {(isLargeScreen || showMobileFilters) && (
+        <div className="okp4-dataverse-portal-dataverse-page-filters-container">
+          <FiltersChips />
+        </div>
+      )}
       <div className="okp4-dataverse-portal-dataverse-page-catalog">
         <h1>{t('actions.explore')}</h1>
-        {(isMobile || isTablet) && (
+        {(isLargeScreen || !showMobileFilters) && (
           <Button
             className="okp4-dataverse-portal-dataverse-page-filters-button"
             label={t('filters')}
+            onClick={toggleShowMobileFilters}
             variant="primary"
           />
         )}
