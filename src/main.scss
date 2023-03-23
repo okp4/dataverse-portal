@@ -69,6 +69,8 @@ p {
 
       &.expanded-sidebar {
         @include blurred-page(1px);
+        position: absolute;
+        left: 299px;
       }
     }
 
@@ -78,6 +80,8 @@ p {
 
       &.expanded-sidebar {
         @include blurred-page(1px);
+        position: absolute;
+        left: 376px;
       }
     }
 
