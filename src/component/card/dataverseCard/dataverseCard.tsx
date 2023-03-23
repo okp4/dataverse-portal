@@ -44,7 +44,7 @@ ${description}`,
           <div className="okp4-dataverse-portal-dataverse-description">
             <ReactMarkdown>{renderItemContent(label, description)}</ReactMarkdown>
           </div>
-          <Button disabled label={t('actions.details')} variant="primary" />
+          <Button disabled label={t('actions.details')} />
         </div>
       </div>
     </Card>

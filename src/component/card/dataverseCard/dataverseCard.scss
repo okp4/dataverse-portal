@@ -85,10 +85,6 @@
       }
 
       .okp4-dataverse-portal-button-main {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-
         @include desktop-bp {
           width: fit-content;
         }

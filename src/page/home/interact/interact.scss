@@ -2,11 +2,11 @@
 @import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-home-page-interact-card {
+  @include transition-bg-color;
   text-align: center;
   justify-content: center;
   height: 155px;
   grid-column: span 3;
-  transition: background-color 200ms ease-in-out;
 
   @include use-breakpoints(('mobile', 'tablet')) {
     height: 123px;

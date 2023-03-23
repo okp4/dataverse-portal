@@ -19,12 +19,6 @@
 
   @include mobile-bp {
     width: 100%;
-
-    .okp4-dataverse-portal-button-main {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
   }
 
   @include tablet-bp {

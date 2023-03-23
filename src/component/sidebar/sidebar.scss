@@ -109,8 +109,12 @@
         }
       }
 
-      .okp4-dataverse-portal-button-label {
-        text-transform: uppercase;
+      .okp4-dataverse-portal-button-main {
+        width: fit-content;
+
+        .okp4-dataverse-portal-button-label {
+          text-transform: uppercase;
+        }
       }
 
       .okp4-dataverse-portal-sidebar-footer-social-medias-container {
