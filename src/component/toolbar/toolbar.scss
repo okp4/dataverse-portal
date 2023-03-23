@@ -4,19 +4,21 @@
   justify-items: end;
   align-items: center;
 
-  @include mobile-bp {
+  @include use-breakpoints(('mobile')) {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
     @include grid-container($colsNb: 6, $gutter: 16px);
   }
 
-  @include tablet-bp {
+  @include use-breakpoints(('tablet')) {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
     @include grid-container($colsNb: 8, $gutter: 16px);
   }
 
-  @include desktop-bp {
+  @include use-breakpoints(('desktop')) {
     @include grid-container($gutter: 34px);
   }
 
-  @include large-desktop-bp {
+  @include use-breakpoints(('large-desktop')) {
     @include grid-container($gutter: 48px);
   }
 
@@ -27,10 +29,10 @@
 
   .okp4-dataverse-portal-toolbar-logo {
     justify-self: center;
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       @include grid-item($colStart: 3, $colEnd: 5, $rowStart: 1, $rowEnd: 1);
     }
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       @include grid-item($colStart: 4, $colEnd: 6, $rowStart: 1, $rowEnd: 1);
     }
   }

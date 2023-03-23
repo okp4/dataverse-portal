@@ -15,11 +15,11 @@
   .okp4-dataverse-portal-home-page-community-singlestat-container {
     padding: 17px 72px 24px 34px;
 
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       max-width: 189px;
     }
 
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       max-width: 284px;
     }
 
@@ -27,7 +27,7 @@
       padding: 20px 28px;
     }
 
-    @include large-desktop-bp {
+    @include use-breakpoints(('large-desktop')) {
       padding: 21px 28px 21px 34px;
     }
   }
