@@ -41,7 +41,6 @@ p {
     grid-template-rows: max-content;
     width: 100%;
     min-height: inherit;
-    max-height: 100vh;
     row-gap: 15px;
 
     @include mobile-bp {
@@ -99,7 +98,7 @@ p {
 
     .okp4-dataverse-portal-page-wrapper {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-      overflow-y: overlay;
+      overflow-y: auto;
       padding-bottom: 25px;
 
       @include use-breakpoints(('mobile', 'tablet')) {
