@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import './button.scss'
 
 type ButtonProps = {
+  className?: string
   disabled?: boolean
   label?: string
   onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void
@@ -15,6 +16,7 @@ type ButtonProps = {
 }
 
 export const Button: FC<ButtonProps> = ({
+  className,
   disabled = false,
   label,
   onClick,
@@ -24,7 +26,7 @@ export const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={classNames('okp4-dataverse-portal-button-main', variant, {
+      className={classNames('okp4-dataverse-portal-button-main', className, variant, {
         'icon-button': !!iconButtonOnly,
         disabled
       })}

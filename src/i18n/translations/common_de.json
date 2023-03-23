@@ -1,14 +1,17 @@
 {
-  "data": {
+  "resources": {
+    "label": "Ressourcen",
+    "all": "Alle",
     "dataspace": "Datenraum",
     "dataset": "Datensatz",
     "service": "Dienstleistung",
     "dataspaces": "Datenräume",
-    "datesets": "Datensätze",
+    "datasets": "Datensätze",
     "services": "Dienstleistungen"
   },
   "actions": {
     "explore": "Erkunden Sie",
     "details": "Siehe Details"
-  }
+  },
+  "filters": "Filter"
 }

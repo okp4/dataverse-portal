@@ -1,14 +1,17 @@
 {
-  "data": {
+  "resources": {
+    "label": "Resources",
+    "all": "All",
     "dataspace": "Data Space",
     "dataset": "Dataset",
     "service": "Service",
     "dataspaces": "Data Spaces",
-    "datesets": "Datasets",
+    "datasets": "Datasets",
     "services": "Services"
   },
   "actions": {
     "explore": "Explore",
     "details": "See Details"
-  }
+  },
+  "filters": "Filters"
 }
