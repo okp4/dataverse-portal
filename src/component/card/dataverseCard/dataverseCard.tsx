@@ -39,7 +39,7 @@ ${description}`,
   return (
     <Card>
       <div className="okp4-dataverse-portal-dataverse-card-main">
-        <Tag colorVariant={renderTagColor(type)} label={t(`data.${type}`)} />
+        <Tag colorVariant={renderTagColor(type)} label={t(`resources.${type}`)} />
         <div className="okp4-dataverse-portal-dataverse-card-content">
           <div className="okp4-dataverse-portal-dataverse-description">
             <ReactMarkdown>{renderItemContent(label, description)}</ReactMarkdown>

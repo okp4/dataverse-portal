@@ -287,22 +287,24 @@ const Dataverse = (): JSX.Element => {
           <FiltersChips />
         </div>
       )}
-      <div className="okp4-dataverse-portal-dataverse-page-catalog">
-        <h1>{t('actions.explore')}</h1>
-        {(isLargeScreen || !showMobileFilters) && (
-          <Button
-            className="okp4-dataverse-portal-dataverse-page-filters-button"
-            label={t('filters')}
-            onClick={toggleMobileFilters}
-            variant="primary"
-          />
-        )}
-        <div className="okp4-dataverse-portal-dataverse-page-cards-container">
-          {dataverseResources.map(({ type, label, description }) => (
-            <DataverseCard description={description} key={label} label={label} type={type} />
-          ))}
+      {(isLargeScreen || !showMobileFilters) && (
+        <div className="okp4-dataverse-portal-dataverse-page-catalog">
+          <h1>{t('actions.explore')}</h1>
+          {!isLargeScreen && (
+            <Button
+              className="okp4-dataverse-portal-dataverse-page-filters-button"
+              label={t('filters')}
+              onClick={toggleMobileFilters}
+              variant="primary"
+            />
+          )}
+          <div className="okp4-dataverse-portal-dataverse-page-cards-container">
+            {dataverseResources.map(({ type, label, description }) => (
+              <DataverseCard description={description} key={label} label={label} type={type} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
