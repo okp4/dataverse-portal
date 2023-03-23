@@ -11,7 +11,7 @@
         }
       },
       "interact": {
-        "label": "Interact",
+        "label": "Interagir",
         "data-services": {
           "action": "Partager",
           "category": "des Données et Services"
