@@ -43,10 +43,12 @@ import { ReactComponent as WalletIcon } from '@/asset/icon/wallet.svg'
 import { ReactComponent as ArrowRightIcon } from '@/asset/icon/arrow-right.svg'
 import { ReactComponent as AllLightIcon } from '@/asset/icon/all-light.svg'
 import { ReactComponent as AllDarkIcon } from '@/asset/icon/all-dark.svg'
+import { ReactComponent as ArrowLeftIcon } from '@/asset/icon/arrow-left.svg'
 
 export type IconName =
   | 'all-light'
   | 'all-dark'
+  | 'arrow-left'
   | 'collapse'
   | 'arrow-right'
   | 'expand'
@@ -132,7 +134,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'close-light': CloseLightIcon,
   'close-dark': CloseDarkIcon,
   'all-light': AllLightIcon,
-  'all-dark': AllDarkIcon
+  'all-dark': AllDarkIcon,
+  'arrow-left': ArrowLeftIcon
 }
 
 type IconProps = {
