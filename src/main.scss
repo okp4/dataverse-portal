@@ -2,6 +2,27 @@
 @import '@/style/fonts.scss';
 @import '@/style/mixins.scss';
 
+* {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: darkgrey transparent;
+
+  /* Chrome & Safari & Edge */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 5px;
+  }
+}
+
 html,
 body {
   min-height: 100vh;
@@ -28,11 +49,12 @@ p {
 .okp4-dataverse-portal-main-layout {
   @include with-theme() {
     min-height: inherit;
+    max-height: 100vh;
     display: flex;
     width: 100%;
     background-color: themed('background');
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   .okp4-dataverse-portal-page-layout {
@@ -44,7 +66,6 @@ p {
 
     @include mobile-bp {
       @include grid-container($colsNb: 6, $gutter: 16px);
-      padding: 0 4%;
 
       &.expanded-sidebar {
         @include blurred-page(1px);
@@ -53,7 +74,6 @@ p {
 
     @include tablet-bp {
       @include grid-container($colsNb: 8, $gutter: 16px);
-      padding: 0 3%;
       row-gap: 48px;
 
       &.expanded-sidebar {
@@ -63,12 +83,47 @@ p {
 
     @include desktop-bp {
       @include grid-container($gutter: 34px);
-      padding: 0 2%;
     }
 
     @include large-desktop-bp {
-      @include grid-container($gutter: 48px) {
-        padding: 0 2.5%;
+      @include grid-container($gutter: 48px);
+    }
+
+    .okp4-dataverse-portal-toolbar-wrapper,
+    .okp4-dataverse-portal-page-wrapper {
+      @include mobile-bp {
+        padding: 0 4.2%;
+      }
+
+      @include tablet-bp {
+        padding: 0 3.1%;
+      }
+
+      @include desktop-bp {
+        padding: 0 2.4%;
+      }
+
+      @include large-desktop-bp {
+        padding: 0 3.1%;
+      }
+    }
+
+    .okp4-dataverse-portal-toolbar-wrapper {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+      padding-top: 25px;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        padding-top: 44px;
+      }
+    }
+
+    .okp4-dataverse-portal-page-wrapper {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+      overflow-y: auto;
+      padding-bottom: 25px;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        padding-bottom: 44px;
       }
     }
   }

@@ -18,8 +18,12 @@ const App: FC = () => {
             'expanded-sidebar': isSidebarExpanded
           })}
         >
-          <Toolbar />
-          <AppRouter />
+          <div className="okp4-dataverse-portal-toolbar-wrapper">
+            <Toolbar />
+          </div>
+          <div className="okp4-dataverse-portal-page-wrapper">
+            <AppRouter />
+          </div>
         </div>
       </div>
     </div>

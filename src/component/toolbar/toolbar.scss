@@ -1,21 +1,15 @@
 @import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-toolbar-main {
-  @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-  padding: 25px 0 0;
   justify-items: end;
   align-items: center;
 
   @include mobile-bp {
-    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
     @include grid-container($colsNb: 6, $gutter: 16px);
-    padding: 44px 0 0;
   }
 
   @include tablet-bp {
-    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
     @include grid-container($colsNb: 8, $gutter: 16px);
-    padding: 44px 0 0;
   }
 
   @include desktop-bp {
