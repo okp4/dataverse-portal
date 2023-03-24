@@ -64,7 +64,7 @@ p {
     min-height: inherit;
     row-gap: 15px;
 
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       @include grid-container($colsNb: 6, $gutter: 16px);
 
       &.expanded-sidebar {
@@ -74,7 +74,7 @@ p {
       }
     }
 
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       @include grid-container($colsNb: 8, $gutter: 16px);
       row-gap: 48px;
 
@@ -85,29 +85,29 @@ p {
       }
     }
 
-    @include desktop-bp {
+    @include use-breakpoints(('desktop')) {
       @include grid-container($gutter: 34px);
     }
 
-    @include large-desktop-bp {
+    @include use-breakpoints(('large-desktop')) {
       @include grid-container($gutter: 48px);
     }
 
     .okp4-dataverse-portal-toolbar-wrapper,
     .okp4-dataverse-portal-page-wrapper {
-      @include mobile-bp {
+      @include use-breakpoints(('mobile')) {
         padding: 0 4.2%;
       }
 
-      @include tablet-bp {
+      @include use-breakpoints(('tablet')) {
         padding: 0 3.1%;
       }
 
-      @include desktop-bp {
+      @include use-breakpoints(('desktop')) {
         padding: 0 2.4%;
       }
 
-      @include large-desktop-bp {
+      @include use-breakpoints(('large-desktop')) {
         padding: 0 3.1%;
       }
     }

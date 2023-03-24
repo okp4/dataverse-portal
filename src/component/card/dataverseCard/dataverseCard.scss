@@ -36,7 +36,7 @@
       align-items: center;
       gap: 17px;
 
-      @include desktop-bp {
+      @include use-breakpoints(('desktop')) {
         width: 88%;
       }
 
@@ -85,7 +85,7 @@
       }
 
       .okp4-dataverse-portal-button-main {
-        @include desktop-bp {
+        @include use-breakpoints(('desktop')) {
           width: fit-content;
         }
       }

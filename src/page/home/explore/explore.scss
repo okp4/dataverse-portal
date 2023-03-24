@@ -3,11 +3,11 @@
 .okp4-dataverse-portal-home-page-explore-card-wrapper {
   grid-column: span 3;
 
-  @include mobile-bp {
+  @include use-breakpoints(('mobile')) {
     grid-column: 1 / -1;
   }
 
-  @include tablet-bp {
+  @include use-breakpoints(('tablet')) {
     grid-column: span 4;
   }
 }
@@ -17,11 +17,11 @@
   justify-self: right;
   text-decoration: none;
 
-  @include mobile-bp {
+  @include use-breakpoints(('mobile')) {
     width: 100%;
   }
 
-  @include tablet-bp {
+  @include use-breakpoints(('tablet')) {
     justify-self: center;
   }
 }

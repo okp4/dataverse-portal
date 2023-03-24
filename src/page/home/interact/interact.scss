@@ -13,7 +13,7 @@
     grid-column: 1 / -1;
   }
 
-  @include large-desktop-bp {
+  @include use-breakpoints(('large-desktop')) {
     height: 191px;
   }
 
