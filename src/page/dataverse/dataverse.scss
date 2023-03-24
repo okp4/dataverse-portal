@@ -170,7 +170,7 @@
       .okp4-dataverse-portal-dataverse-page-cards-container {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         grid-auto-rows: 220px;
         gap: 43px;
 
@@ -179,17 +179,17 @@
         }
 
         @include mobile-bp {
-          grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
           gap: 20px;
         }
 
         @include tablet-bp {
-          grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
           gap: 36px;
         }
 
         @include large-desktop-bp {
-          grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
           gap: 29px;
         }
       }
