@@ -35,73 +35,75 @@ export const Sidebar: FC = () => {
   }, [])
 
   return (
-    <div
-      className={classnames('okp4-dataverse-portal-sidebar-main', {
-        collapsed: !isSidebarExpanded
-      })}
-    >
-      <div className="okp4-dataverse-portal-sidebar-collapse-container" onClick={toggleSidebar}>
-        {isSidebarExpanded ? <Icon name="collapse" /> : <Icon name="expand" />}
-      </div>
+    <div className="okp4-dataverse-portal-sidebar-main">
       <div
-        className={classnames('okp4-dataverse-portal-sidebar-title-container', {
+        className={classnames('okp4-dataverse-portal-sidebar-container', {
           collapsed: !isSidebarExpanded
         })}
       >
-        <Okp4Logo logoOnly={!isSidebarExpanded} />
-        <Switch
-          icons={{
-            checked: <Icon name="sun" />,
-            notChecked: <Icon name="moon" />
-          }}
-          isChecked={theme === 'light'}
-          onCheckedChange={switchTheme}
-        />
-        {isMobileSidebarOpen && (
-          <div className="okp4-dataverse-portal-sidebar-close-icon" onClick={toggleSidebar}>
-            <Icon name={`close-${theme}`} />
-          </div>
-        )}
-      </div>
-      <Navigation />
-      <div
-        className={classnames('okp4-dataverse-portal-sidebar-footer-container', {
-          collapsed: !isSidebarExpanded
-        })}
-      >
-        {isSidebarExpanded && (
-          <>
-            <p className="okp4-dataverse-portal-sidebar-footer-version text">Alpha Version</p>
-            <Button
-              icons={{ startIcon: <Icon name="feedback" /> }}
-              label={t('sidebar.footer.feedback')}
-              onClick={handleFeedbackClick}
-              variant="outlined-tertiary"
-            />
-          </>
-        )}
         <div
-          className={classnames('okp4-dataverse-portal-sidebar-footer-social-medias-container', {
+          className={classnames('okp4-dataverse-portal-sidebar-title-container', {
             collapsed: !isSidebarExpanded
           })}
         >
-          {['twitter', 'linkedin', 'discord', 'medium'].map(id => (
-            <a
-              href={APP_ENV.urls[`social:${id}` as keyof typeof APP_ENV.urls]}
-              key={id}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <Icon name={`${id}-${theme}` as IconName} />
-            </a>
-          ))}
+          <Okp4Logo logoOnly={!isSidebarExpanded} />
+          <Switch
+            icons={{
+              checked: <Icon name="sun" />,
+              notChecked: <Icon name="moon" />
+            }}
+            isChecked={theme === 'light'}
+            onCheckedChange={switchTheme}
+          />
+          {isMobileSidebarOpen && (
+            <div className="okp4-dataverse-portal-sidebar-close-icon" onClick={toggleSidebar}>
+              <Icon name={`close-${theme}`} />
+            </div>
+          )}
         </div>
-        {isSidebarExpanded && (
-          <a href={APP_ENV.urls['about:okp4']} rel="noreferrer" target="_blank">
-            <p className="text">{t('sidebar.footer.about')}</p>
-          </a>
-        )}
-        <LanguageSwitcher />
+        <Navigation />
+        <div
+          className={classnames('okp4-dataverse-portal-sidebar-footer-container', {
+            collapsed: !isSidebarExpanded
+          })}
+        >
+          {isSidebarExpanded && (
+            <>
+              <p className="okp4-dataverse-portal-sidebar-footer-version text">Alpha Version</p>
+              <Button
+                icons={{ startIcon: <Icon name="feedback" /> }}
+                label={t('sidebar.footer.feedback')}
+                onClick={handleFeedbackClick}
+                variant="outlined-tertiary"
+              />
+            </>
+          )}
+          <div
+            className={classnames('okp4-dataverse-portal-sidebar-footer-social-medias-container', {
+              collapsed: !isSidebarExpanded
+            })}
+          >
+            {['twitter', 'linkedin', 'discord', 'medium'].map(id => (
+              <a
+                href={APP_ENV.urls[`social:${id}` as keyof typeof APP_ENV.urls]}
+                key={id}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <Icon name={`${id}-${theme}` as IconName} />
+              </a>
+            ))}
+          </div>
+          {isSidebarExpanded && (
+            <a href={APP_ENV.urls['about:okp4']} rel="noreferrer" target="_blank">
+              <p className="text">{t('sidebar.footer.about')}</p>
+            </a>
+          )}
+          <LanguageSwitcher />
+        </div>
+      </div>
+      <div className="okp4-dataverse-portal-sidebar-collapse-container" onClick={toggleSidebar}>
+        {isSidebarExpanded ? <Icon name="collapse" /> : <Icon name="expand" />}
       </div>
     </div>
   )

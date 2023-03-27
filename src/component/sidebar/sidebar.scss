@@ -4,35 +4,114 @@
 
 .okp4-dataverse-portal-sidebar-main {
   @include with-theme() {
-    width: 240px;
-    background-color: themed('menu');
-    box-shadow: 4px 0 18px rgba(16, 19, 49, 0.2);
-    border-radius: 0 12px 12px 0;
-    padding: 32px 21px 22px 31px;
-    display: flex;
-    flex-direction: column;
     position: relative;
-    box-sizing: border-box;
 
-    @include use-breakpoints(('mobile')) {
-      width: 299px;
-    }
+    .okp4-dataverse-portal-sidebar-container {
+      width: 240px;
+      height: 100%;
+      background-color: themed('menu');
+      box-shadow: 4px 0 18px rgba(16, 19, 49, 0.2);
+      border-radius: 0 12px 12px 0;
+      padding: 32px 21px 22px 31px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      overflow-y: auto;
 
-    @include use-breakpoints(('tablet')) {
-      width: 376px;
-    }
+      @include use-breakpoints(('mobile')) {
+        width: 299px;
+      }
 
-    @include use-breakpoints(('large-desktop')) {
-      width: 360px;
-    }
+      @include use-breakpoints(('tablet')) {
+        width: 376px;
+      }
 
-    &.collapsed {
-      min-width: unset;
-      width: 100px;
-      padding: 30px;
+      @include use-breakpoints(('large-desktop')) {
+        width: 360px;
+      }
 
-      @include use-breakpoints(('mobile', 'tablet')) {
-        display: none;
+      &.collapsed {
+        min-width: unset;
+        width: 100px;
+        padding: 30px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          display: none;
+        }
+      }
+
+      .okp4-dataverse-portal-sidebar-title-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &.collapsed {
+          flex-direction: column;
+          gap: 25px;
+        }
+
+        .okp4-dataverse-portal-sidebar-close-icon {
+          cursor: pointer;
+        }
+      }
+
+      .text {
+        @include noto-sans(700);
+        font-size: 14px;
+        color: themed('text');
+        opacity: 0.4;
+
+        &:hover {
+          color: themed('secondary-color-variant-1');
+          opacity: 1;
+        }
+      }
+
+      .okp4-dataverse-portal-sidebar-footer-container {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-left: -12px;
+        padding-top: 20px;
+
+        &.collapsed {
+          margin-left: 0;
+        }
+
+        > a:first-of-type {
+          text-decoration: unset;
+        }
+
+        .okp4-dataverse-portal-sidebar-footer-version {
+          font-weight: 200;
+          text-transform: uppercase;
+
+          &:hover {
+            color: themed('text');
+            opacity: 0.4;
+          }
+        }
+
+        .okp4-dataverse-portal-button-main {
+          width: fit-content;
+
+          .okp4-dataverse-portal-button-label {
+            text-transform: uppercase;
+          }
+        }
+
+        .okp4-dataverse-portal-sidebar-footer-social-medias-container {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          &.collapsed {
+            flex-direction: column;
+            align-self: center;
+          }
+        }
       }
     }
 
@@ -52,80 +131,6 @@
 
       @include use-breakpoints(('mobile', 'tablet')) {
         display: none;
-      }
-    }
-
-    .okp4-dataverse-portal-sidebar-title-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      &.collapsed {
-        flex-direction: column;
-        gap: 25px;
-      }
-
-      .okp4-dataverse-portal-sidebar-close-icon {
-        cursor: pointer;
-      }
-    }
-
-    .text {
-      @include noto-sans(700);
-      font-size: 14px;
-      color: themed('text');
-      opacity: 0.4;
-
-      &:hover {
-        color: themed('secondary-color-variant-1');
-        opacity: 1;
-      }
-    }
-
-    .okp4-dataverse-portal-sidebar-footer-container {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-left: -12px;
-      padding-top: 20px;
-
-      &.collapsed {
-        margin-left: 0;
-      }
-
-      > a:first-of-type {
-        text-decoration: unset;
-      }
-
-      .okp4-dataverse-portal-sidebar-footer-version {
-        font-weight: 200;
-        text-transform: uppercase;
-
-        &:hover {
-          color: themed('text');
-          opacity: 0.4;
-        }
-      }
-
-      .okp4-dataverse-portal-button-main {
-        width: fit-content;
-
-        .okp4-dataverse-portal-button-label {
-          text-transform: uppercase;
-        }
-      }
-
-      .okp4-dataverse-portal-sidebar-footer-social-medias-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        &.collapsed {
-          flex-direction: column;
-          align-self: center;
-        }
       }
     }
   }
