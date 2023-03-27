@@ -71,6 +71,7 @@ p {
         @include blurred-page(1px);
         position: absolute;
         left: 299px;
+        height: 100%;
       }
     }
 
@@ -82,6 +83,7 @@ p {
         @include blurred-page(1px);
         position: absolute;
         left: 376px;
+        height: 100%;
       }
     }
 
