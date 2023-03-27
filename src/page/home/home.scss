@@ -4,7 +4,6 @@
 
 .okp4-dataverse-portal-home-page-main {
   @include with-theme() {
-    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
     row-gap: 30px;
 
     @include use-breakpoints(('mobile', 'tablet')) {
@@ -57,7 +56,6 @@
         -webkit-text-fill-color: transparent;
 
         @include use-breakpoints(('tablet', 'mobile')) {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           justify-self: center;
           margin-bottom: 4px;
         }
