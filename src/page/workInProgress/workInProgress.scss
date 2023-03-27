@@ -13,11 +13,7 @@
     height: 100%;
     color: themed('text');
 
-    @include mobile-bp {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
-    }
-
-    @include tablet-bp {
+    @include use-breakpoints(('mobile', 'tablet')) {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
     }
 

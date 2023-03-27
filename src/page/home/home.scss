@@ -11,36 +11,36 @@
       row-gap: 40px;
     }
 
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       @include grid-container($colsNb: 8, $gutter: 16px);
     }
 
-    @include desktop-bp {
+    @include use-breakpoints(('desktop')) {
       @include grid-container($gutter: 34px);
     }
 
-    @include large-desktop-bp {
+    @include use-breakpoints(('large-desktop')) {
       @include grid-container($gutter: 48px);
     }
 
     .okp4-dataverse-portal-home-page-block-container {
-      @include desktop-bp {
+      @include use-breakpoints(('desktop')) {
         @include grid-container($gutter: 34px);
       }
 
-      @include large-desktop-bp {
+      @include use-breakpoints(('large-desktop')) {
         @include grid-container($gutter: 48px);
       }
 
-      @include mobile-bp {
+      @include use-breakpoints(('mobile')) {
         @include grid-container($colsNb: 6, $gutter: 16px);
       }
 
-      @include tablet-bp {
+      @include use-breakpoints(('tablet')) {
         @include grid-container($colsNb: 8, $gutter: 16px);
       }
 
@@ -74,11 +74,11 @@
         grid-auto-rows: max-content max-content;
         row-gap: 19px;
 
-        @include mobile-bp {
+        @include use-breakpoints(('mobile')) {
           row-gap: 20px;
         }
 
-        @include tablet-bp {
+        @include use-breakpoints(('tablet')) {
           gap: 34px;
         }
       }

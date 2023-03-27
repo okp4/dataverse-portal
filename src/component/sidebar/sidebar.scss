@@ -14,15 +14,15 @@
     position: relative;
     box-sizing: border-box;
 
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       width: 299px;
     }
 
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       width: 376px;
     }
 
-    @include large-desktop-bp() {
+    @include use-breakpoints(('large-desktop')) {
       width: 360px;
     }
 

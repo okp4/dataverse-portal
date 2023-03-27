@@ -9,16 +9,16 @@
     color: themed('text');
     grid-auto-rows: max-content;
 
-    @include desktop-bp {
+    @include use-breakpoints(('desktop')) {
       @include grid-container($colsNb: 12, $gutter: 29px);
     }
 
-    @include tablet-bp {
+    @include use-breakpoints(('tablet')) {
       @include grid-container($colsNb: 8, $gutter: 16px);
       row-gap: 30px;
     }
 
-    @include mobile-bp {
+    @include use-breakpoints(('mobile')) {
       @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
@@ -95,7 +95,7 @@
                 height: 100%;
 
                 .okp4-dataverse-portal-chip-label {
-                  @include mobile-bp {
+                  @include use-breakpoints(('mobile')) {
                     font-size: 14px;
                   }
                 }
@@ -107,7 +107,7 @@
               }
             }
 
-            @include large-desktop-bp {
+            @include use-breakpoints(('large-desktop')) {
               margin-right: 16px;
             }
           }
@@ -119,17 +119,17 @@
       @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
       @include grid-container($colsNb: 8, $gutter: 48px);
 
-      @include desktop-bp {
+      @include use-breakpoints(('desktop')) {
         column-gap: 29px;
       }
 
-      @include tablet-bp {
+      @include use-breakpoints(('tablet')) {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
         column-gap: 16px;
         row-gap: 30px;
       }
 
-      @include mobile-bp {
+      @include use-breakpoints(('mobile')) {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
         column-gap: 16px;
       }
@@ -139,11 +139,11 @@
         display: flex;
         justify-content: center;
 
-        @include mobile-bp {
+        @include use-breakpoints(('mobile')) {
           margin: 30px 0;
         }
 
-        @include tablet-bp {
+        @include use-breakpoints(('tablet')) {
           @include grid-item($colStart: 3, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
         }
       }
@@ -178,17 +178,17 @@
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: 4);
         }
 
-        @include mobile-bp {
+        @include use-breakpoints(('mobile')) {
           grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
           gap: 20px;
         }
 
-        @include tablet-bp {
+        @include use-breakpoints(('tablet')) {
           grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
           gap: 36px;
         }
 
-        @include large-desktop-bp {
+        @include use-breakpoints(('large-desktop')) {
           grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
           gap: 29px;
         }

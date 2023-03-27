@@ -10,7 +10,7 @@
     background-color: themed(tertiary-button-background);
     cursor: pointer;
 
-    @include large-desktop-bp {
+    @include use-breakpoints(('large-desktop')) {
       padding: 8px 16px;
     }
 

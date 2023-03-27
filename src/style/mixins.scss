@@ -1,46 +1,22 @@
-@mixin mobile-bp {
-  @media (max-width: 595px) {
-    @content;
-  }
-}
-
-@mixin tablet-bp {
-  @media (min-width: 596px) and (max-width: 1439px) {
-    @content;
-  }
-}
-
-@mixin desktop-bp {
-  @media (min-width: 1440px) and (max-width: 1919px) {
-    @content;
-  }
-}
-
-@mixin large-desktop-bp {
-  @media (min-width: 1920px) {
-    @content;
-  }
-}
-
 @mixin use-breakpoints($breakpoints) {
   @each $breakpoint in $breakpoints {
     @if $breakpoint == 'mobile' {
-      @include mobile-bp {
+      @media (max-width: 595px) {
         @content;
       }
     }
     @if $breakpoint == 'tablet' {
-      @include tablet-bp {
+      @media (min-width: 596px) and (max-width: 1439px) {
         @content;
       }
     }
     @if $breakpoint == 'desktop' {
-      @include desktop-bp {
+      @media (min-width: 1440px) and (max-width: 1919px) {
         @content;
       }
     }
     @if $breakpoint == 'large-desktop' {
-      @include large-desktop-bp {
+      @media (min-width: 1920px) {
         @content;
       }
     }
