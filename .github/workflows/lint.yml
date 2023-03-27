@@ -138,7 +138,7 @@ jobs:
           mkdir -p ${{ github.workspace }}/tmp/artifacts/mobile
 
       - name: Run Lighthouse
-        uses: foo-software/lighthouse-check-action@v9.1.1
+        uses: foo-software/lighthouse-check-action@v10.0.0
         with:
           prCommentEnabled: true
           maxRetries: 2
