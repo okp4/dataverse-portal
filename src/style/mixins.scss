@@ -46,3 +46,21 @@
 @mixin transition-bg-color {
   transition: background-color 200ms ease-in-out;
 }
+
+@mixin twelve-column-layout {
+  @include use-breakpoints(('mobile')) {
+    @include grid-container($colsNb: 6, $gutter: 16px);
+  }
+
+  @include use-breakpoints(('tablet')) {
+    @include grid-container($colsNb: 8, $gutter: 16px);
+  }
+
+  @include use-breakpoints(('desktop')) {
+    @include grid-container($gutter: 34px);
+  }
+
+  @include use-breakpoints(('large-desktop')) {
+    @include grid-container($gutter: 48px);
+  }
+}

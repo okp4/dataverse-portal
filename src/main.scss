@@ -58,6 +58,7 @@ p {
   }
 
   .okp4-dataverse-portal-page-layout {
+    @include twelve-column-layout;
     flex: 1;
     grid-template-rows: max-content;
     width: 100%;
@@ -65,8 +66,6 @@ p {
     row-gap: 15px;
 
     @include use-breakpoints(('mobile')) {
-      @include grid-container($colsNb: 6, $gutter: 16px);
-
       &.expanded-sidebar {
         @include blurred-page(1px);
         position: absolute;
@@ -75,7 +74,6 @@ p {
     }
 
     @include use-breakpoints(('tablet')) {
-      @include grid-container($colsNb: 8, $gutter: 16px);
       row-gap: 48px;
 
       &.expanded-sidebar {
@@ -83,14 +81,6 @@ p {
         position: absolute;
         left: 376px;
       }
-    }
-
-    @include use-breakpoints(('desktop')) {
-      @include grid-container($gutter: 34px);
-    }
-
-    @include use-breakpoints(('large-desktop')) {
-      @include grid-container($gutter: 48px);
     }
 
     .okp4-dataverse-portal-toolbar-wrapper,
