@@ -44,6 +44,11 @@ import { ReactComponent as ArrowRightIcon } from '@/ui/asset/icon/arrow-right.sv
 import { ReactComponent as AllLightIcon } from '@/ui/asset/icon/all-light.svg'
 import { ReactComponent as AllDarkIcon } from '@/ui/asset/icon/all-dark.svg'
 import { ReactComponent as ArrowLeftIcon } from '@/ui/asset/icon/arrow-left.svg'
+import { ReactComponent as DraftIcon } from '@/ui/asset/icon/draft.svg'
+import { ReactComponent as TopicIcon } from '@/ui/asset/icon/topic.svg'
+import { ReactComponent as EventIcon } from '@/ui/asset/icon/event.svg'
+import { ReactComponent as PublicIcon } from '@/ui/asset/icon/public.svg'
+import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
 
 export type IconName =
   | 'all-light'
@@ -90,6 +95,11 @@ export type IconName =
   | 'burger-menu-dark'
   | 'close-light'
   | 'close-dark'
+  | 'draft'
+  | 'topic'
+  | 'event'
+  | 'public'
+  | 'shield'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -135,7 +145,12 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'close-dark': CloseDarkIcon,
   'all-light': AllLightIcon,
   'all-dark': AllDarkIcon,
-  'arrow-left': ArrowLeftIcon
+  'arrow-left': ArrowLeftIcon,
+  draft: DraftIcon,
+  topic: TopicIcon,
+  event: EventIcon,
+  public: PublicIcon,
+  shield: ShieldIcon
 }
 
 type IconProps = {
