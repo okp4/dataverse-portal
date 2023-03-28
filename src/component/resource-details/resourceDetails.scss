@@ -1,0 +1,45 @@
+@import '@/style/theme.scss';
+@import '@/style/fonts.scss';
+@import '@/style/mixins.scss';
+
+.okp4-dataverse-portal-resource-details {
+  display: flex;
+  gap: 8px;
+}
+
+.okp4-dataverse-portal-resource-details-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  @include with-theme {
+    color: rgba(themed('text'), 0.12);
+    background-color: rgba($primary, 0.12);
+  }
+}
+
+.okp4-dataverse-portal-resource-details-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.okp4-dataverse-portal-resource-details-title {
+  @include noto-sans(700);
+  font-size: 14px;
+  line-height: 20px;
+  @include with-theme {
+    color: themed('text');
+  }
+}
+
+.okp4-dataverse-portal-resource-details-description {
+  @include noto-sans(400);
+  font-size: 12px;
+  line-height: 18px;
+  @include with-theme {
+    color: rgba(themed('text'), 0.6);
+  }
+}
