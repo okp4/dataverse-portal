@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import type { Option } from 'fp-ts/Option'
+import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '../dataverse'
 import type { DataverseItemDetails } from '../dataverse'
 
 const Dataset = (): JSX.Element => {
   const { id } = useParams<string>()
-  const [dataset, setDataset] = useState<DataverseItemDetails | undefined>()
+  const [dataset, setDataset] = useState<Option<DataverseItemDetails>>(none)
 
   useEffect(() => {
     id && setDataset(getResourceDetails(id))
   }, [id])
-  return dataset ? <p> {dataset.label}</p> : <p>Dataset not found</p>
+
+  return match(
+    () => <p>Dataset not found</p>,
+    (dataset: DataverseItemDetails) => <p>{dataset.label}</p>
+  )(dataset)
 }
 
 export default Dataset

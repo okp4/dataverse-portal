@@ -1,9 +1,11 @@
-import { DataverseItemCard } from '@/component/card/DataverseItemCard/DataverseItemCard'
-import type { DataverseItemCardProps } from '@/component/card/DataverseItemCard/DataverseItemCard'
+import * as A from 'fp-ts/Array'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/hook/useBreakpoint'
 import { useAppStore } from '@/store/appStore'
+import { DataverseItemCard } from '@/component/card/DataverseItemCard/DataverseItemCard'
+import type { DataverseItemCardProps } from '@/component/card/DataverseItemCard/DataverseItemCard'
 import { Button } from '@/component/button/button'
 import Chip from '@/component/chip/chip'
 import { Icon } from '@/component/icon/icon'
@@ -180,9 +182,11 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
-export const getResourceDetails = (id: string): DataverseItemDetails | undefined => {
-  return dataverseItems.find(item => item.id === id)
-}
+export const getResourceDetails = (id: string): Option<DataverseItemDetails> =>
+  pipe(
+    dataverseItems,
+    A.findFirst(item => item.id === id)
+  )
 
 const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void): JSX.Element => (
   <div className="okp4-dataverse-portal-dataverse-page-filters-mobile">

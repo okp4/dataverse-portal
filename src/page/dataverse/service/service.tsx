@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import type { Option } from 'fp-ts/Option'
+import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '../dataverse'
 import type { DataverseItemDetails } from '../dataverse'
 
 const Service = (): JSX.Element => {
   const { id } = useParams<string>()
-  const [service, setService] = useState<DataverseItemDetails | undefined>()
+  const [service, setService] = useState<Option<DataverseItemDetails>>(none)
 
   useEffect(() => {
     id && setService(getResourceDetails(id))
   }, [id])
-  return service ? <p>{service.label}</p> : <p>Service not found</p>
+
+  return match(
+    () => <p>Service not found</p>,
+    (service: DataverseItemDetails) => <p>{service.label}</p>
+  )(service)
 }
 
 export default Service
