@@ -4,45 +4,15 @@
 
 .okp4-dataverse-portal-home-page-main {
   @include with-theme() {
-    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    @include twelve-column-layout;
     row-gap: 30px;
 
     @include use-breakpoints(('mobile', 'tablet')) {
       row-gap: 40px;
     }
 
-    @include use-breakpoints(('mobile')) {
-      @include grid-container($colsNb: 6, $gutter: 16px);
-    }
-
-    @include use-breakpoints(('tablet')) {
-      @include grid-container($colsNb: 8, $gutter: 16px);
-    }
-
-    @include use-breakpoints(('desktop')) {
-      @include grid-container($gutter: 34px);
-    }
-
-    @include use-breakpoints(('large-desktop')) {
-      @include grid-container($gutter: 48px);
-    }
-
     .okp4-dataverse-portal-home-page-block-container {
-      @include use-breakpoints(('desktop')) {
-        @include grid-container($gutter: 34px);
-      }
-
-      @include use-breakpoints(('large-desktop')) {
-        @include grid-container($gutter: 48px);
-      }
-
-      @include use-breakpoints(('mobile')) {
-        @include grid-container($colsNb: 6, $gutter: 16px);
-      }
-
-      @include use-breakpoints(('tablet')) {
-        @include grid-container($colsNb: 8, $gutter: 16px);
-      }
+      @include twelve-column-layout;
 
       h1 {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
@@ -57,7 +27,6 @@
         -webkit-text-fill-color: transparent;
 
         @include use-breakpoints(('tablet', 'mobile')) {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           justify-self: center;
           margin-bottom: 4px;
         }

@@ -4,7 +4,6 @@
 
 .okp4-dataverse-portal-dataverse-page-main {
   @include with-theme() {
-    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
     @include grid-container($gutter: 48px);
     color: themed('text');
     grid-auto-rows: max-content;

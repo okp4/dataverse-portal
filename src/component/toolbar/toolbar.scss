@@ -1,24 +1,9 @@
 @import '@/style/mixins.scss';
 
 .okp4-dataverse-portal-toolbar-main {
+  @include twelve-column-layout;
   justify-items: end;
   align-items: center;
-
-  @include use-breakpoints(('mobile')) {
-    @include grid-container($colsNb: 6, $gutter: 16px);
-  }
-
-  @include use-breakpoints(('tablet')) {
-    @include grid-container($colsNb: 8, $gutter: 16px);
-  }
-
-  @include use-breakpoints(('desktop')) {
-    @include grid-container($gutter: 34px);
-  }
-
-  @include use-breakpoints(('large-desktop')) {
-    @include grid-container($gutter: 48px);
-  }
 
   .okp4-dataverse-portal-burger-menu {
     @include grid-item($colStart: 1, $colEnd: 2, $rowStart: 1, $rowEnd: 1);

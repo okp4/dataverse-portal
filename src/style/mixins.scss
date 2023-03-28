@@ -46,3 +46,46 @@
 @mixin transition-bg-color {
   transition: background-color 200ms ease-in-out;
 }
+
+@mixin twelve-column-layout {
+  row-gap: 40px;
+
+  @include use-breakpoints(('mobile')) {
+    @include grid-container($colsNb: 6, $gutter: 16px);
+  }
+
+  @include use-breakpoints(('tablet')) {
+    @include grid-container($colsNb: 8, $gutter: 16px);
+  }
+
+  @include use-breakpoints(('desktop')) {
+    @include grid-container($gutter: 34px);
+  }
+
+  @include use-breakpoints(('large-desktop')) {
+    @include grid-container($gutter: 48px);
+  }
+}
+
+@mixin bi-column-item($side) {
+  @if not($side == 'left' or $side == 'right') {
+    @error '#{$side} is not a valid argument, accepted arguments: left, right';
+  }
+  @if ($side == 'left') {
+    @include use-breakpoints(('mobile', 'tablet')) {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+    }
+
+    @include use-breakpoints(('desktop', 'large-desktop')) {
+      @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
+    }
+  } @else if ($side == 'right') {
+    @include use-breakpoints(('mobile', 'tablet')) {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+    }
+
+    @include use-breakpoints(('desktop', 'large-desktop')) {
+      @include grid-item($colStart: 7, $colEnd: 13, $rowStart: auto, $rowEnd: auto);
+    }
+  }
+}
