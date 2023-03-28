@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
-import { getResourceDetails } from '../dataverse'
-import type { DataverseItemDetails } from '../dataverse'
+import { getResourceDetails } from '@/page/dataverse/dataverse'
+import type { DataverseItemDetails } from '@/page/dataverse/dataverse'
 
 const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
