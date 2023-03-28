@@ -180,6 +180,10 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
+export const getResourceDetails = (id: string): DataverseItemDetails | undefined => {
+  return dataverseItems.find(item => item.id === id)
+}
+
 const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void): JSX.Element => (
   <div className="okp4-dataverse-portal-dataverse-page-filters-mobile">
     <div
