@@ -2,7 +2,7 @@ import './resourceDetails.scss'
 import type { FC } from 'react'
 
 type ResourceDetailsProps = {
-  icon: React.ReactNode
+  icon: JSX.Element
   title: string
   description: string
 }
