@@ -2,7 +2,7 @@
 @import '@/style/mixins.scss';
 @import '@/style/theme.scss';
 
-.okp4-dataverse-portal-dataverse-card-main {
+.okp4-dataverse-portal-dataverse-item-card-main {
   @include with-theme {
     width: 100%;
     height: 100%;
@@ -27,7 +27,7 @@
       -webkit-box-orient: vertical;
     }
 
-    .okp4-dataverse-portal-dataverse-card-content {
+    .okp4-dataverse-portal-dataverse-item-card-content {
       width: 84%;
       padding-top: 55px;
       padding-bottom: 24px;

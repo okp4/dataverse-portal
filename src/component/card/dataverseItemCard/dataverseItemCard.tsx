@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import './dataverseCard.scss'
+import './DataverseItemCard.scss'
 import { Card } from '@/component/card/card'
 import { Button } from '@/component/button/button'
 import { Tag } from '@/component/tag/tag'
@@ -11,14 +11,14 @@ import type { ColorVariant } from '@/component/tag/tag'
 
 type DataverseItem = 'dataspace' | 'dataset' | 'service'
 
-export type DataverseCardProps = {
+export type DataverseItemCardProps = {
   id: string
   type: DataverseItem
   label: string
   description: string
 }
 
-export const DataverseCard: FC<DataverseCardProps> = ({ id, type, label, description }) => {
+export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label, description }) => {
   const navigate = useNavigate()
   const { t } = useTranslation('common')
 
@@ -45,9 +45,9 @@ ${description}`,
 
   return (
     <Card>
-      <div className="okp4-dataverse-portal-dataverse-card-main">
+      <div className="okp4-dataverse-portal-dataverse-item-card-main">
         <Tag colorVariant={renderTagColor(type)} label={t(`resources.${type}`)} />
-        <div className="okp4-dataverse-portal-dataverse-card-content">
+        <div className="okp4-dataverse-portal-dataverse-item-card-content">
           <div className="okp4-dataverse-portal-dataverse-description">
             <ReactMarkdown>{renderItemContent(label, description)}</ReactMarkdown>
           </div>

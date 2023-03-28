@@ -2,14 +2,14 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../i18n/index'
 import './explore.scss'
-import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
-import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
+import type { DataverseItemCardProps } from '@/component/card/DataverseItemCard/DataverseItemCard'
+import { DataverseItemCard } from '@/component/card/DataverseItemCard/DataverseItemCard'
 import { Button } from '@/component/button/button'
 import { Icon } from '@/component/icon/icon'
 import { NavLink } from 'react-router-dom'
 import { routes } from '@/routes'
 
-const exploreItems: DataverseCardProps[] = [
+const exploreItems: DataverseItemCardProps[] = [
   {
     id: '1',
     type: 'dataspace',
@@ -44,7 +44,7 @@ export const Explore: FC = () => {
       <h1>{t('home.blocks.explore.label')}</h1>
       {exploreItems.map(({ id, type, description, label }) => (
         <div className="okp4-dataverse-portal-home-page-explore-card-wrapper" key={label}>
-          <DataverseCard description={description} id={id} label={label} type={type} />
+          <DataverseItemCard description={description} id={id} label={label} type={type} />
         </div>
       ))}
       <NavLink

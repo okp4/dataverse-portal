@@ -1,5 +1,5 @@
-import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
-import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
+import { DataverseItemCard } from '@/component/card/DataverseItemCard/DataverseItemCard'
+import type { DataverseItemCardProps } from '@/component/card/DataverseItemCard/DataverseItemCard'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBreakpoint } from '@/hook/useBreakpoint'
@@ -13,7 +13,7 @@ import './dataverse.scss'
 type DataverseItem = 'dataspace' | 'dataset' | 'service'
 type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
 type FilterValue = DataverseItem | 'all'
-export type DataverseItemDetails = DataverseCardProps
+export type DataverseItemDetails = DataverseItemCardProps
 
 type Filter = {
   label: FilterLabel
@@ -319,7 +319,13 @@ const Dataverse = (): JSX.Element => {
           )}
           <div className="okp4-dataverse-portal-dataverse-page-cards-container">
             {dataverseResources.map(({ id, type, label, description }) => (
-              <DataverseCard description={description} id={id} key={id} label={label} type={type} />
+              <DataverseItemCard
+                description={description}
+                id={id}
+                key={id}
+                label={label}
+                type={type}
+              />
             ))}
           </div>
         </div>
