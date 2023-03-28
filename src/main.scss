@@ -25,14 +25,14 @@
 
 html,
 body {
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
 }
 
 #root {
-  min-height: inherit;
+  height: inherit;
 }
 
 p,
@@ -48,8 +48,7 @@ p {
 
 .okp4-dataverse-portal-main-layout {
   @include with-theme() {
-    min-height: inherit;
-    max-height: 100vh;
+    height: inherit;
     display: flex;
     width: 100%;
     background-color: themed('background');
