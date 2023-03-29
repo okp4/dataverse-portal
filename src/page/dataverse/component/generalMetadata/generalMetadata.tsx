@@ -24,7 +24,7 @@ const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, title, descri
   const { t } = useTranslation('general-metadata')
 
   return (
-    <div className="okp4-dataverse-portal-general-metadata">
+    <div className="okp4-dataverse-portal-general-metadata-main">
       <div className="okp4-dataverse-portal-general-metadata-icon">
         <Icon name={iconName} />
       </div>
