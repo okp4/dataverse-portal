@@ -4,6 +4,16 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import type { GeneralMetadata } from '@/component/general-metadata/generalMetadata'
+import { GeneralMetadataList } from '@/component/general-metadata/generalMetadata'
+
+const serviceGeneralMetadata: GeneralMetadata[] = [
+  {
+    iconName: 'draft',
+    titleKey: 'category',
+    description: 'Data transformation'
+  }
+]
 
 const Service = (): JSX.Element => {
   const { id } = useParams<string>()
@@ -15,7 +25,14 @@ const Service = (): JSX.Element => {
 
   return match(
     () => <p>Service not found</p>,
-    (service: DataverseItemDetails) => <p>{service.label}</p>
+    (service: DataverseItemDetails) => {
+      return (
+        <>
+          <p>{service.label}</p>
+          <GeneralMetadataList metadata={serviceGeneralMetadata} />
+        </>
+      )
+    }
   )(service)
 }
 

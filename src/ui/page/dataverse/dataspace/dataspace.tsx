@@ -4,6 +4,16 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import type { GeneralMetadata } from '@/component/general-metadata/generalMetadata'
+import { GeneralMetadataList } from '@/component/general-metadata/generalMetadata'
+
+const dataspaceGeneralMetadata: GeneralMetadata[] = [
+  {
+    iconName: 'topic',
+    titleKey: 'topic',
+    description: 'Agriculture Environment And Forestry'
+  }
+]
 
 const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
@@ -15,7 +25,14 @@ const Dataspace = (): JSX.Element => {
 
   return match(
     () => <p>Dataspace not found</p>,
-    (dataspace: DataverseItemDetails) => <p>{dataspace.label}</p>
+    (dataspace: DataverseItemDetails) => {
+      return (
+        <>
+          <p>{dataspace.label}</p>
+          <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
+        </>
+      )
+    }
   )(dataspace)
 }
 
