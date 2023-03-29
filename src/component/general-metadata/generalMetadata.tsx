@@ -1,13 +1,13 @@
-import './resourceDetails.scss'
+import './generalMetadata.scss'
 import type { FC } from 'react'
 
-type ResourceDetailsProps = {
+type GeneralMetadataProps = {
   icon: JSX.Element
   title: string
   description: string
 }
 
-export const ResourceDetails: FC<ResourceDetailsProps> = ({ icon, title, description }) => {
+export const GeneralMetadata: FC<GeneralMetadataProps> = ({ icon, title, description }) => {
   return (
     <div className="okp4-dataverse-portal-resource-details">
       <div className="okp4-dataverse-portal-resource-details-icon">{icon}</div>
