@@ -4,6 +4,7 @@ import { memo } from 'react'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
 import { useTranslation } from 'react-i18next'
+import './i18n/index'
 
 export type GeneralMetadataTitleKey =
   | 'format'
@@ -20,7 +21,7 @@ export type GeneralMetadata = {
 }
 
 const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, titleKey, description }) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('general-metadata')
 
   return (
     <div className="okp4-dataverse-portal-general-metadata">
@@ -29,7 +30,7 @@ const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, titleKey, des
       </div>
       <div className="okp4-dataverse-portal-general-metadata-content">
         <h3 className="okp4-dataverse-portal-general-metadata-title">
-          {t(`resources.general-metadata.${titleKey}`)}
+          {t(`general-metadata.title.${titleKey}`)}
         </h3>
         <p className="okp4-dataverse-portal-general-metadata-description">{description}</p>
       </div>

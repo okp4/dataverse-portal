@@ -7,15 +7,7 @@
     "service": "Dienstleistung",
     "dataspaces": "Datenräume",
     "datasets": "Datensätze",
-    "services": "Dienstleistungen",
-    "general-metadata": {
-      "format": "Format",
-      "topic": "Thema",
-      "license": "Lizenz",
-      "geographical-coverage": "Geografischer Geltungsbereich",
-      "temporal-coverage": "Zeitlicher Geltungsbereich",
-      "category": "Kategorie"
-    }
+    "services": "Dienstleistungen"
   },
   "actions": {
     "explore": "Erkunden Sie",
