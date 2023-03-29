@@ -43,17 +43,15 @@ type GeneralMetadataListProps = {
   metadata: GeneralMetadata[]
 }
 
-export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {
-  return (
-    <div className="okp4-dataverse-portal-general-metadata-list">
-      {metadata.map(({ description, iconName, titleKey }) => (
-        <GeneralMetadataItem
-          description={description}
-          iconName={iconName}
-          key={titleKey}
-          titleKey={titleKey}
-        />
-      ))}
-    </div>
-  )
-}
+export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => (
+  <div className="okp4-dataverse-portal-general-metadata-list">
+    {metadata.map(({ description, iconName, titleKey }) => (
+      <GeneralMetadataItem
+        description={description}
+        iconName={iconName}
+        key={titleKey}
+        titleKey={titleKey}
+      />
+    ))}
+  </div>
+)
