@@ -10,7 +10,7 @@ const App: FC = () => {
   const isSidebarExpanded = useAppStore(store => store.isSidebarExpanded)
 
   return (
-    <div className={`theme--${theme}`} style={{ minHeight: 'inherit' }}>
+    <div className={`theme--${theme}`} style={{ height: 'inherit' }}>
       <div className="okp4-dataverse-portal-main-layout">
         <Sidebar />
         <div
