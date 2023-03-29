@@ -26,12 +26,12 @@ const datasetGeneralMetadata: GeneralMetadata[] = [
   },
   {
     iconName: 'earth',
-    title: 'geographical-coverage',
+    title: 'geographicalCoverage',
     description: 'World'
   },
   {
     iconName: 'calendar',
-    title: 'temporal-coverage',
+    title: 'temporalCoverage',
     description: '2020'
   }
 ]

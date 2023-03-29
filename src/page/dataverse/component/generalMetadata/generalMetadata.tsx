@@ -10,8 +10,8 @@ export type GeneralMetadataTitle =
   | 'format'
   | 'topic'
   | 'license'
-  | 'geographical-coverage'
-  | 'temporal-coverage'
+  | 'geographicalCoverage'
+  | 'temporalCoverage'
   | 'category'
 
 export type GeneralMetadata = {
@@ -21,7 +21,7 @@ export type GeneralMetadata = {
 }
 
 const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, title, description }) => {
-  const { t } = useTranslation('general-metadata')
+  const { t } = useTranslation('generalMetadata')
 
   return (
     <div className="okp4-dataverse-portal-general-metadata-main">
@@ -30,7 +30,7 @@ const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, title, descri
       </div>
       <div className="okp4-dataverse-portal-general-metadata-content">
         <h3 className="okp4-dataverse-portal-general-metadata-title">
-          {t(`general-metadata.title.${title}`)}
+          {t(`generalMetadata.${title}`)}
         </h3>
         <p className="okp4-dataverse-portal-general-metadata-description">{description}</p>
       </div>

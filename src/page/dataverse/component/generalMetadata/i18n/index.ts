@@ -5,9 +5,9 @@ import type { I18nResource } from '@/i18n/utils'
 import { loadTranslations } from '@/i18n/utils'
 
 const i18nTranslations: I18nResource[] = [
-  { lng: 'en', namespace: 'general-metadata', resource: generalMetadata_en },
-  { lng: 'fr', namespace: 'general-metadata', resource: generalMetadata_fr },
-  { lng: 'de', namespace: 'general-metadata', resource: generalMetadata_de }
+  { lng: 'en', namespace: 'generalMetadata', resource: generalMetadata_en },
+  { lng: 'fr', namespace: 'generalMetadata', resource: generalMetadata_fr },
+  { lng: 'de', namespace: 'generalMetadata', resource: generalMetadata_de }
 ]
 
 loadTranslations(i18nTranslations)

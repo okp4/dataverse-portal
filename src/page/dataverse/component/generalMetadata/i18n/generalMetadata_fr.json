@@ -1,12 +1,10 @@
 {
-  "general-metadata": {
-    "title": {
-      "format": "Format",
-      "topic": "Domaine",
-      "license": "Licence",
-      "geographical-coverage": "Couverture géographique",
-      "temporal-coverage": "Couverture temporelle",
-      "category": "Catégorie"
-    }
+  "generalMetadata": {
+    "format": "Format",
+    "topic": "Domaine",
+    "license": "Licence",
+    "geographicalCoverage": "Couverture géographique",
+    "temporalCoverage": "Couverture temporelle",
+    "category": "Catégorie"
   }
 }
