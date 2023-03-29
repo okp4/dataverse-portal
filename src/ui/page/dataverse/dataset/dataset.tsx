@@ -10,12 +10,12 @@ import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/
 
 const datasetGeneralMetadata: GeneralMetadata[] = [
   {
-    iconName: 'draft',
+    iconName: 'file',
     titleKey: 'format',
     description: 'text_csv'
   },
   {
-    iconName: 'topic',
+    iconName: 'folder',
     titleKey: 'topic',
     description: 'Agriculture Environment And Forestry'
   },
@@ -25,12 +25,12 @@ const datasetGeneralMetadata: GeneralMetadata[] = [
     description: 'licence:CC0'
   },
   {
-    iconName: 'public',
+    iconName: 'earth',
     titleKey: 'geographical-coverage',
     description: 'World'
   },
   {
-    iconName: 'event',
+    iconName: 'calendar',
     titleKey: 'temporal-coverage',
     description: '2020'
   }

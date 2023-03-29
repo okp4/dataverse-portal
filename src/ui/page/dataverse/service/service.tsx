@@ -10,7 +10,7 @@ import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/
 
 const serviceGeneralMetadata: GeneralMetadata[] = [
   {
-    iconName: 'draft',
+    iconName: 'folder',
     titleKey: 'category',
     description: 'Data transformation'
   }
