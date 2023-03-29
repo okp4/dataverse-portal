@@ -1,5 +1,6 @@
 import './generalMetadata.scss'
 import type { FC } from 'react'
+import { memo } from 'react'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +19,7 @@ export type GeneralMetadata = {
   description: string
 }
 
-const GeneralMetadataItem: FC<GeneralMetadata> = ({ iconName, titleKey, description }) => {
+const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, titleKey, description }) => {
   const { t } = useTranslation('common')
 
   return (
@@ -34,7 +35,8 @@ const GeneralMetadataItem: FC<GeneralMetadata> = ({ iconName, titleKey, descript
       </div>
     </div>
   )
-}
+})
+GeneralMetadataItem.displayName = 'GeneralMetadataItem'
 
 type GeneralMetadataListProps = {
   metadata: GeneralMetadata[]
