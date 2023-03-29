@@ -1,48 +1,50 @@
 import type { FC } from 'react'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../i18n/index'
 import './explore.scss'
-import type { DataverseCardProps } from '@/component/card/dataverseCard/dataverseCard'
-import { DataverseCard } from '@/component/card/dataverseCard/dataverseCard'
+import type { DataverseItemCardProps } from '@/component/card/DataverseItemCard/DataverseItemCard'
+import { DataverseItemCard } from '@/component/card/DataverseItemCard/DataverseItemCard'
 import { Button } from '@/component/button/button'
 import { Icon } from '@/component/icon/icon'
 import { NavLink } from 'react-router-dom'
 import { routes } from '@/routes'
 
+const exploreItems: DataverseItemCardProps[] = [
+  {
+    id: '1',
+    type: 'dataspace',
+    label: 'Rhizome',
+    description: 'Agriculture, Food, Environment and Forestry'
+  },
+  {
+    id: '13',
+    type: 'dataset',
+    label: 'Agreste 2020',
+    description: 'Agriculture, Food, Environment and Forestry'
+  },
+  {
+    id: '11',
+    type: 'dataset',
+    label: 'Graphical Plot Registry France 2020',
+    description: 'Agriculture, Food, Environment and Forestry'
+  },
+  {
+    id: '3',
+    type: 'service',
+    label: 'Data connector',
+    description: 'Data Integration'
+  }
+]
+
 export const Explore: FC = () => {
   const { t } = useTranslation('home')
-  const exploreItems: DataverseCardProps[] = useMemo(
-    () => [
-      {
-        type: 'dataspace',
-        label: 'Rhizome',
-        description: 'Agriculture, Food, Environment and Forestry'
-      },
-      {
-        type: 'dataset',
-        label: 'Agreste 2020',
-        description: 'Agriculture, Food, Environment and Forestry'
-      },
-      {
-        type: 'dataset',
-        label: 'Graphical Plot Registry France 2020',
-        description: 'Agriculture, Food, Environment and Forestry'
-      },
-      {
-        type: 'service',
-        label: 'Data connector',
-        description: 'Data Integration'
-      }
-    ],
-    []
-  )
+
   return (
     <>
       <h1>{t('home.blocks.explore.label')}</h1>
-      {exploreItems.map(({ type, description, label }) => (
+      {exploreItems.map(({ id, type, description, label }) => (
         <div className="okp4-dataverse-portal-home-page-explore-card-wrapper" key={label}>
-          <DataverseCard description={description} label={label} type={type} />
+          <DataverseItemCard description={description} id={id} label={label} type={type} />
         </div>
       ))}
       <NavLink
