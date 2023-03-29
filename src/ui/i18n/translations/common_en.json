@@ -13,7 +13,8 @@
       "topic": "Topic",
       "license": "License",
       "geographical-coverage": "Geographical Coverage",
-      "temporal-coverage": "Temporal Coverage"
+      "temporal-coverage": "Temporal Coverage",
+      "category": "Category"
     }
   },
   "actions": {

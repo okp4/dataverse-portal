@@ -13,7 +13,8 @@
       "topic": "Thema",
       "license": "Lizenz",
       "geographical-coverage": "Geografischer Geltungsbereich",
-      "temporal-coverage": "Zeitlicher Geltungsbereich"
+      "temporal-coverage": "Zeitlicher Geltungsbereich",
+      "category": "Kategorie"
     }
   },
   "actions": {

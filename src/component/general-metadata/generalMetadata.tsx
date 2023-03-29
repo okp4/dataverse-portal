@@ -10,6 +10,7 @@ export type GeneralMetadataTitleKey =
   | 'license'
   | 'geographical-coverage'
   | 'temporal-coverage'
+  | 'category'
 
 export type GeneralMetadata = {
   iconName: IconName
