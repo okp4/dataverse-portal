@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
@@ -15,6 +16,16 @@ const dataspaceGeneralMetadata: GeneralMetadata[] = [
   }
 ]
 
+type MatchedDataspaceProps = {
+  label: string
+}
+const MatchedDataspace: FC<MatchedDataspaceProps> = ({ label }) => (
+  <>
+    <p>{label}</p>
+    <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
+  </>
+)
+
 const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataspace, setDataspace] = useState<Option<DataverseItemDetails>>(none)
@@ -25,14 +36,7 @@ const Dataspace = (): JSX.Element => {
 
   return match(
     () => <p>Dataspace not found</p>,
-    (dataspace: DataverseItemDetails) => {
-      return (
-        <>
-          <p>{dataspace.label}</p>
-          <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
-        </>
-      )
-    }
+    (dataspace: DataverseItemDetails) => <MatchedDataspace label={dataspace.label} />
   )(dataspace)
 }
 
