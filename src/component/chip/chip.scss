@@ -22,7 +22,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      white-space: pre;
 
       &:not(.okp4-dataverse-portal-chip-icon) {
         justify-content: center;
@@ -50,11 +49,16 @@
         @include noto-sans(400);
         color: themed(chip);
         width: 100%;
+        max-width: 240px;
         font-size: 16px;
         line-height: 24px;
         word-wrap: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
 
         &.selected {
           @include noto-sans(700);
