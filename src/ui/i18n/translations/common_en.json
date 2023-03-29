@@ -7,7 +7,14 @@
     "service": "Service",
     "dataspaces": "Data Spaces",
     "datasets": "Datasets",
-    "services": "Services"
+    "services": "Services",
+    "general-metadata": {
+      "format": "Format",
+      "topic": "Topic",
+      "license": "License",
+      "geographical-coverage": "Geographical Coverage",
+      "temporal-coverage": "Temporal Coverage"
+    }
   },
   "actions": {
     "explore": "Explore",
