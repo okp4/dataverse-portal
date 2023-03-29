@@ -1,9 +1,9 @@
-import './generalMetadata.scss'
 import type { FC } from 'react'
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
-import { useTranslation } from 'react-i18next'
+import './generalMetadata.scss'
 import './i18n/index'
 
 export type GeneralMetadataTitle =
