@@ -11,7 +11,7 @@ import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/
 const dataspaceGeneralMetadata: GeneralMetadata[] = [
   {
     iconName: 'folder',
-    titleKey: 'topic',
+    title: 'topic',
     description: 'Agriculture Environment And Forestry'
   }
 ]
