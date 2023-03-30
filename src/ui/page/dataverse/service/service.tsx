@@ -1,4 +1,3 @@
-import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
@@ -16,16 +15,6 @@ const serviceGeneralMetadata: GeneralMetadata[] = [
   }
 ]
 
-type MatchedServiceProps = {
-  label: string
-}
-const MatchedService: FC<MatchedServiceProps> = ({ label }) => (
-  <>
-    <p>{label}</p>
-    <GeneralMetadataList metadata={serviceGeneralMetadata} />
-  </>
-)
-
 const Service = (): JSX.Element => {
   const { id } = useParams<string>()
   const [service, setService] = useState<Option<DataverseItemDetails>>(none)
@@ -36,7 +25,14 @@ const Service = (): JSX.Element => {
 
   return match(
     () => <p>Service not found</p>,
-    (service: DataverseItemDetails) => <MatchedService label={service.label} />
+    (service: DataverseItemDetails) => {
+      return (
+        <>
+          <p>{service.label}</p>
+          <GeneralMetadataList metadata={serviceGeneralMetadata} />
+        </>
+      )
+    }
   )(service)
 }
 

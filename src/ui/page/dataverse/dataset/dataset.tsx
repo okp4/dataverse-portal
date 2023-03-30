@@ -1,4 +1,3 @@
-import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
@@ -36,16 +35,6 @@ const datasetGeneralMetadata: GeneralMetadata[] = [
   }
 ]
 
-type MatchedDatasetProps = {
-  label: string
-}
-const MatchedDataset: FC<MatchedDatasetProps> = ({ label }) => (
-  <>
-    <p>{label}</p>
-    <GeneralMetadataList metadata={datasetGeneralMetadata} />
-  </>
-)
-
 const Dataset = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataset, setDataset] = useState<Option<DataverseItemDetails>>(none)
@@ -56,7 +45,14 @@ const Dataset = (): JSX.Element => {
 
   return match(
     () => <p>Dataset not found</p>,
-    (dataset: DataverseItemDetails) => <MatchedDataset label={dataset.label} />
+    (dataset: DataverseItemDetails) => {
+      return (
+        <>
+          <p>{dataset.label}</p>
+          <GeneralMetadataList metadata={datasetGeneralMetadata} />
+        </>
+      )
+    }
   )(dataset)
 }
 
