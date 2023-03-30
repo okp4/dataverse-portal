@@ -1,7 +1,3 @@
-@import '@/ui/style/theme.scss';
-@import '@/ui/style/fonts.scss';
-@import '@/ui/style/mixins.scss';
-
 .okp4-dataverse-portal-sidebar-main {
   @include with-theme() {
     position: relative;

@@ -1,7 +1,3 @@
-@import '@/ui/style/fonts.scss';
-@import '@/ui/style/theme.scss';
-@import '@/ui/style/mixins.scss';
-
 @mixin button($border-color, $content-color, $background-color, $box-shadow, $hover-color) {
   @include transition-bg-color;
   display: flex;
@@ -49,16 +45,16 @@
       @include button($border-color: themed('secondary-color'),
       $content-color: themed('primary-text'),
       $background-color: themed('secondary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
-        $hover-color: themed('secondary-color-variant-1'));
+      $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
+      $hover-color: themed('secondary-color-variant-1'));
     }
 
     &.secondary {
       @include button($border-color: themed('primary-color'),
       $content-color: themed('primary-text'),
       $background-color: themed('primary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2'));
+      $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
+      $hover-color: themed('primary-color-variant-2'));
 
       svg {
         path {
@@ -82,8 +78,8 @@
       @include button($border-color: themed('secondary-color'),
       $content-color: themed('secondary-color'),
       $background-color: unset,
-        $box-shadow: none,
-        $hover-color: none);
+      $box-shadow: none,
+      $hover-color: none);
       border-radius: 6px;
 
       svg {

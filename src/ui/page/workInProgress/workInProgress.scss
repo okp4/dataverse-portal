@@ -1,7 +1,3 @@
-@import '@/ui/style/fonts.scss';
-@import '@/ui/style/theme.scss';
-@import '@/ui/style/mixins.scss';
-
 .okp4-dataverse-portal-work-in-progress-main {
   @include with-theme() {
     @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 2, $rowEnd: auto);
