@@ -6,17 +6,34 @@ import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { useAppStore } from '@/ui/store/appStore'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
-import type { DataverseItemCardProps } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import './dataverse.scss'
 
-type DataverseItem = 'dataspace' | 'dataset' | 'service'
 type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
-type FilterValue = DataverseItem | 'all'
-export type DataverseItemDetails = DataverseItemCardProps
+type FilterValue = 'dataspace' | 'dataset' | 'service' | 'all'
+
+type DataverseItem = {
+  id: string
+  label: string
+  description: string
+}
+
+export type Service = DataverseItem & {
+  type: 'service'
+}
+
+export type Dataset = DataverseItem & {
+  type: 'dataset'
+}
+
+export type DataSpace = DataverseItem & {
+  type: 'dataspace'
+}
+
+export type DataverseItemDetails = DataSpace | Dataset | Service
 
 type Filter = {
   label: FilterLabel
