@@ -1,0 +1,43 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-data-space-governance-description-main {
+  @include with-theme {
+    justify-content: center;
+    padding: 35px 0;
+
+    @include use-breakpoints(('mobile')) {
+      padding-bottom: 20px;
+    }
+
+    .okp4-dataverse-portal-data-space-governance-description-container {
+      display: flex;
+      flex-direction: column;
+      row-gap: 14px;
+      width: 85%;
+
+      @include use-breakpoints(('mobile')) {
+        width: 82%;
+        row-gap: 20px;
+      }
+
+      .okp4-dataverse-portal-data-space-governance-description-title {
+        @include norse-font(700);
+        color: themed('text');
+        font-size: 24px;
+      }
+
+      .okp4-dataverse-portal-data-space-governance-description-description {
+        @include noto-sans(300);
+        color: themed('text');
+        font-size: 16px;
+        line-height: 22px;
+
+        @include use-breakpoints(('tablet', 'desktop', 'large-desktop')) {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}

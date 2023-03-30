@@ -7,11 +7,13 @@
     "service": "Dienstleistung",
     "dataspaces": "Datenräume",
     "datasets": "Datensätze",
-    "services": "Dienstleistungen"
+    "services": "Dienstleistungen",
+    "governance": "Führung"
   },
   "actions": {
     "explore": "Erkunden Sie",
-    "details": "Siehe Details"
+    "details": "Siehe Details",
+    "accessGovernance": "Auf Governance zugreifen"
   },
   "filters": "Filter"
 }

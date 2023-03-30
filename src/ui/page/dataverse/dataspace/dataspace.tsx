@@ -20,6 +20,9 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
+export const isDataSpace = (resource: DataverseItemDetails): resource is DataSpace =>
+  resource.type === 'dataspace'
+
 const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
