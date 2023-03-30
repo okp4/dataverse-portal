@@ -319,6 +319,7 @@ const Dataverse = (): JSX.Element => {
               className="okp4-dataverse-portal-dataverse-page-filters-button"
               label={t('filters')}
               onClick={toggleMobileFilters}
+              size="large"
               variant="primary"
             />
           )}

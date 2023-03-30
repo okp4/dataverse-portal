@@ -54,6 +54,7 @@ export const Explore: FC = () => {
         <Button
           icons={{ endIcon: <Icon name="arrow-right" /> }}
           label={t('home.blocks.explore.catalog')}
+          size="large"
           variant="primary"
         />
       </NavLink>

@@ -38,7 +38,12 @@ const WalletButton = ({ isSmallScreen, label }: WalletButtonProps): JSX.Element 
         variant="tertiary"
       />
     ) : (
-      <Button icons={{ startIcon: <Icon name="wallet" /> }} label={label} variant="tertiary" />
+      <Button
+        icons={{ startIcon: <Icon name="wallet" /> }}
+        label={label}
+        size="large"
+        variant="tertiary"
+      />
     )}
   </div>
 )

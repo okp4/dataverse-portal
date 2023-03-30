@@ -111,24 +111,21 @@
       display: flex;
       align-items: center;
 
-      &.primary {
+      &.small {
+        padding: 8px 16px;
+        gap: 8px;
+      }
+
+      &.large {
         padding: 12px 20px;
         gap: 12px;
       }
 
-      &.secondary {
-        padding: 8px 16px;
-        gap: 12px;
-      }
-
-      &.tertiary {
-        padding: 11px 20px;
-        gap: 10px;
-      }
-
       &.outlined-tertiary {
-        padding: 7px 10px;
-        gap: 6px;
+        &.small {
+          padding: 7px 10px;
+          gap: 6px;
+        }
       }
 
       .okp4-dataverse-portal-button-label {
