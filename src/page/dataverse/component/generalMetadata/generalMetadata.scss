@@ -21,7 +21,7 @@
         height: 40px;
         border-radius: 4px;
         color: rgba(themed('text'), 0.12);
-        background-color: rgba($primary, 0.12);
+        background-color: rgba(themed(primary-color), 0.12);
       }
     
       .okp4-dataverse-portal-general-metadata-item-content {
