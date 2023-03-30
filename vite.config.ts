@@ -10,7 +10,7 @@ import htmlConfigOptions from './config/html-config'
 export default defineConfig({
   plugins: [
     htmlConfig(htmlConfigOptions),
-    react(), 
+    react(),
     svgr()
   ],
   resolve: {
@@ -18,13 +18,20 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/ui/style/index.scss";`
+      }
+    }
+  },
   build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom']
-          }
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom']
         }
       }
-    },
+    }
+  },
 })
