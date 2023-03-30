@@ -2,7 +2,13 @@
 @import '@/style/mixins.scss';
 @import '@/style/theme.scss';
 
-.okp4-dataverse-portal-dataverse-item-card-main {
+$colors: (
+  'primary-color': 'background-primary-variant',
+  'primary-color-variant-3': 'background-primary-variant-3',
+  'primary-color-variant-4': 'background-primary-variant-4'
+);
+
+.okp4-dataverse-portal-dataverse-card-main {
   @include with-theme {
     width: 100%;
     height: 100%;
@@ -11,7 +17,8 @@
     position: relative;
     color: themed('text');
 
-    .okp4-dataverse-portal-tag-main {
+    .okp4-dataverse-portal-dataverse-item-type {
+      @include noto-sans(700);
       position: absolute;
       min-width: 137px;
       max-height: 40px;
@@ -25,6 +32,19 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      border-radius: 0 20px;
+      padding: 8px;
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: 2px;
+
+      @each $color-key,
+        $color-value in $colors {
+        &.#{$color-key} {
+          color: themed($color-key);
+          background-color: themed($color-value);
+        }
+      }
     }
 
     .okp4-dataverse-portal-dataverse-item-card-content {
