@@ -21,6 +21,16 @@ type DataverseItem = {
   description: string
 }
 
+export type InternationalizedDescription = {
+  en: string
+  fr: string
+  de: string
+}
+
+type Governance = {
+  description: InternationalizedDescription
+}
+
 export type Service = DataverseItem & {
   type: 'service'
 }
@@ -31,6 +41,7 @@ export type Dataset = DataverseItem & {
 
 export type DataSpace = DataverseItem & {
   type: 'dataspace'
+  governance: Governance
 }
 
 export type DataverseItemDetails = DataSpace | Dataset | Service
@@ -70,7 +81,14 @@ const dataverseItems: DataverseItemDetails[] = [
     type: 'dataspace',
     label: 'Rhizome',
     description:
-      'Rhizome is a data space operated by OKP4, currently under development based on OKP4 technology. Rhizome demonstrates the power of data processing and sharing, and the value we can achieve by effectively connecting different sources of open access agricultural data in different data formats. Rhizome aims to connect as much data as possible and provide valuable visuals and metrics in various agriculture-related areas, such as land use and land management, crop and livestock management, and forest resources and timber industry.'
+      'Rhizome is a data space operated by OKP4, currently under development based on OKP4 technology. Rhizome demonstrates the power of data processing and sharing, and the value we can achieve by effectively connecting different sources of open access agricultural data in different data formats. Rhizome aims to connect as much data as possible and provide valuable visuals and metrics in various agriculture-related areas, such as land use and land management, crop and livestock management, and forest resources and timber industry.',
+    governance: {
+      description: {
+        en: 'This first Data Space has a centralized governance: only OKP4 can modify the rules. In this first version, only OKP4 can register data and services. However, any wallet is allowed to download data.',
+        fr: "Ce premier Data Space a une gouvernance centralisée : seul OKP4 peut modifier les règles. Dans cette première version, seul OKP4 peut enregistrer des données et des services. Toutefois, n'importe quel wallet est autorisé à télécharger les données.",
+        de: 'Dieser erste Data Space hat eine zentralisierte Governance: Nur OKP4 kann die Regeln ändern. In dieser ersten Version kann nur OKP4 Daten und Dienste speichern. Allerdings ist es jeder Wallet erlaubt, Daten hochzuladen.'
+      }
+    }
   },
   {
     id: '2',
@@ -197,6 +215,20 @@ const dataverseItems: DataverseItemDetails[] = [
     label: 'SIRENE database - agriculture, forestry and fishing',
     description:
       'This dataset refers to all the agricultural, forestry and fishing companies in France in activity. Obtained through a sequence of data processing using the OKP4 protocol.'
+  },
+  {
+    id: '21',
+    type: 'dataspace',
+    label: 'DS4I',
+    description:
+      "Data Space for Investors (DS4I) is a private Data Space created and maintained by OKP4 Team. DS4I's purpose is to present a simple and user-friendly Proof of Concept to demonstrate for potential investors how OKP4 protocol works based on simple governance rules.",
+    governance: {
+      description: {
+        en: 'DS4I is a private Data Space where resources are only accessible for a group of addresses contained in a dedicated whitelist. Only OKP4 have the authority to edit the Whitelist.',
+        fr: "DS4I est un Data Space privé où les ressources ne sont accessibles que pour un groupe d'adresses de wallets contenues dans une Whitelist dédiée. Seul OKP4 a le droit de modifier cette whitelist.",
+        de: 'DS4I ist ein privater Data Space, in dem die Ressourcen nur für eine Gruppe zugänglich sind. Adressen von Wallets, die in einer dedizierten Whitelist enthalten sind. Nur OKP4 hat das Recht, diese Whitelist zu ändern.'
+      }
+    }
   }
 ]
 
