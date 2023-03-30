@@ -27,6 +27,12 @@
     background: themed('neutral-variant-1');
     color: themed('neutral');
     box-shadow: none;
+
+    svg {
+      path {
+        fill: themed('neutral');
+      }
+    }
   }
 }
 
@@ -59,12 +65,6 @@
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
         $hover-color: themed('primary-color-variant-2')
       );
-
-      svg {
-        path {
-          fill: themed('secondary-color-variant-1');
-        }
-      }
     }
 
     &.tertiary {
