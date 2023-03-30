@@ -23,6 +23,7 @@
 
     .okp4-dataverse-portal-dataverse-page-filters-container {
       @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+
       @include use-breakpoints(('mobile', 'tablet')) {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
       }

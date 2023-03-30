@@ -46,23 +46,19 @@
     box-sizing: border-box;
 
     &.primary {
-      @include button(
-        $border-color: themed('secondary-color'),
-        $content-color: themed('primary-text'),
-        $background-color: themed('secondary-color'),
+      @include button($border-color: themed('secondary-color'),
+      $content-color: themed('primary-text'),
+      $background-color: themed('secondary-color'),
         $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
-        $hover-color: themed('secondary-color-variant-1')
-      );
+        $hover-color: themed('secondary-color-variant-1'));
     }
 
     &.secondary {
-      @include button(
-        $border-color: themed('primary-color'),
-        $content-color: themed('primary-text'),
-        $background-color: themed('primary-color'),
+      @include button($border-color: themed('primary-color'),
+      $content-color: themed('primary-text'),
+      $background-color: themed('primary-color'),
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2')
-      );
+        $hover-color: themed('primary-color-variant-2'));
 
       svg {
         path {
@@ -83,13 +79,11 @@
     }
 
     &.outlined-tertiary {
-      @include button(
-        $border-color: themed('secondary-color'),
-        $content-color: themed('secondary-color'),
-        $background-color: unset,
+      @include button($border-color: themed('secondary-color'),
+      $content-color: themed('secondary-color'),
+      $background-color: unset,
         $box-shadow: none,
-        $hover-color: none
-      );
+        $hover-color: none);
       border-radius: 6px;
 
       svg {

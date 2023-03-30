@@ -16,7 +16,8 @@ $colors: (
     line-height: 24px;
     letter-spacing: 2px;
 
-    @each $color-key, $color-value in $colors {
+    @each $color-key,
+      $color-value in $colors {
       &.#{$color-key} {
         color: themed($color-key);
         background-color: themed($color-value);

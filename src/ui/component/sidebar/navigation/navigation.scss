@@ -30,6 +30,7 @@
     &.collapsed {
       align-self: center;
       gap: 88px;
+
       @media screen and (max-height: 880px) {
         gap: 62px;
       }

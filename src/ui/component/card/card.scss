@@ -13,11 +13,10 @@ $backgrounds: (
     display: flex;
     align-items: center;
 
-    @each $background-key, $background-value in $backgrounds {
+    @each $background-key,
+      $background-value in $backgrounds {
       &.#{$background-key} {
-        background: themed($background-key)
-          url('@/ui/asset/images/#{$background-value}.webp')
-          no-repeat;
+        background: themed($background-key) url('@/ui/asset/images/#{$background-value}.webp') no-repeat;
         cursor: pointer;
 
         &.disabled {
