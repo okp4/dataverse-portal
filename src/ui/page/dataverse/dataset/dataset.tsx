@@ -22,12 +22,12 @@ const datasetGeneralMetadata: GeneralMetadata[] = [
   {
     iconName: 'shield',
     title: 'license',
-    description: 'licence:CC0'
+    description: 'licence:LO-FR-2_0'
   },
   {
     iconName: 'earth',
     title: 'geographicalCoverage',
-    description: 'World'
+    description: 'France'
   },
   {
     iconName: 'calendar',
