@@ -129,17 +129,16 @@
 
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
-        font-size: 11px;
-
-        &.primary,
-        &.secondary {
-          font-size: 16px;
-          line-height: 24px;
-        }
+        font-size: 16px;
+        line-height: 24px;
 
         &.tertiary {
           @include noto-sans(400);
-          font-size: 16px;
+        }
+
+        &.outlined-tertiary {
+          font-size: 11px;
+          line-height: unset;
         }
       }
     }
