@@ -4,6 +4,7 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/page/dataverse/dataverse'
+import DataversePageTemplate from '../components/pageTemplate/pageTemplate'
 
 const Dataset = (): JSX.Element => {
   const { id } = useParams<string>()
@@ -15,8 +16,10 @@ const Dataset = (): JSX.Element => {
 
   return match(
     () => <p>Dataset not found</p>,
-    (dataset: DataverseItemDetails) => <p>{dataset.label}</p>
+    (dataset: DataverseItemDetails) =>
+      <DataversePageTemplate data={dataset} />
   )(dataset)
 }
 
 export default Dataset
+

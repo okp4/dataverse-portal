@@ -4,6 +4,7 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/page/dataverse/dataverse'
+import DataversePageTemplate from '../components/pageTemplate/pageTemplate'
 
 const Service = (): JSX.Element => {
   const { id } = useParams<string>()
@@ -15,7 +16,8 @@ const Service = (): JSX.Element => {
 
   return match(
     () => <p>Service not found</p>,
-    (service: DataverseItemDetails) => <p>{service.label}</p>
+    (service: DataverseItemDetails) =>
+      <DataversePageTemplate data={service} />
   )(service)
 }
 
