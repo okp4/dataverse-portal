@@ -2,17 +2,17 @@
 @import '@/style/fonts.scss';
 @import '@/style/mixins.scss';
 
-.okp4-dataverse-portal-general-metadata-list {
+.okp4-dataverse-portal-general-metadata-list-main {
   @include with-theme {
     display: flex;
     flex-direction: column;
     gap: 16px;
 
-    .okp4-dataverse-portal-general-metadata-main {
+    .okp4-dataverse-portal-general-metadata-item-main {
       display: flex;
       gap: 8px;
 
-      .okp4-dataverse-portal-general-metadata-icon {
+      .okp4-dataverse-portal-general-metadata-item-icon {
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -24,18 +24,18 @@
         background-color: rgba($primary, 0.12);
       }
     
-      .okp4-dataverse-portal-general-metadata-content {
+      .okp4-dataverse-portal-general-metadata-item-content {
         display: flex;
         flex-direction: column;
 
-        .okp4-dataverse-portal-general-metadata-title {
+        .okp4-dataverse-portal-general-metadata-item-title {
           @include noto-sans(700);
           font-size: 14px;
           line-height: 20px;
           color: themed('text');
         }
       
-        .okp4-dataverse-portal-general-metadata-description {
+        .okp4-dataverse-portal-general-metadata-item-description {
           @include noto-sans(400);
           font-size: 12px;
           line-height: 18px;

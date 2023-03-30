@@ -24,15 +24,15 @@ const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, title, descri
   const { t } = useTranslation('generalMetadata')
 
   return (
-    <div className="okp4-dataverse-portal-general-metadata-main">
-      <div className="okp4-dataverse-portal-general-metadata-icon">
+    <div className="okp4-dataverse-portal-general-metadata-item-main">
+      <div className="okp4-dataverse-portal-general-metadata-item-icon">
         <Icon name={iconName} />
       </div>
-      <div className="okp4-dataverse-portal-general-metadata-content">
-        <h3 className="okp4-dataverse-portal-general-metadata-title">
+      <div className="okp4-dataverse-portal-general-metadata-item-content">
+        <h3 className="okp4-dataverse-portal-general-metadata-item-title">
           {t(`generalMetadata.${title}`)}
         </h3>
-        <p className="okp4-dataverse-portal-general-metadata-description">{description}</p>
+        <p className="okp4-dataverse-portal-general-metadata-item-description">{description}</p>
       </div>
     </div>
   )
@@ -44,7 +44,7 @@ type GeneralMetadataListProps = {
 }
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => (
-  <div className="okp4-dataverse-portal-general-metadata-list">
+  <div className="okp4-dataverse-portal-general-metadata-list-main">
     {metadata.map(({ description, iconName, title }) => (
       <GeneralMetadataItem
         description={description}
