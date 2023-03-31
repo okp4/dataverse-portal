@@ -53,21 +53,24 @@ const dataverseItems: DataverseItemDetails[] = [
     type: 'dataspace',
     label: 'Rhizome',
     description:
-      'Rhizome is a data space operated by OKP4, currently under development based on OKP4 technology. Rhizome demonstrates the power of data processing and sharing, and the value we can achieve by effectively connecting different sources of open access agricultural data in different data formats. Rhizome aims to connect as much data as possible and provide valuable visuals and metrics in various agriculture-related areas, such as land use and land management, crop and livestock management, and forest resources and timber industry.'
+      'Rhizome is a data space operated by OKP4, currently under development based on OKP4 technology. Rhizome demonstrates the power of data processing and sharing, and the value we can achieve by effectively connecting different sources of open access agricultural data in different data formats. Rhizome aims to connect as much data as possible and provide valuable visuals and metrics in various agriculture-related areas, such as land use and land management, crop and livestock management, and forest resources and timber industry.',
+    tags: ['Agriculture', 'Open data', 'Dataviz']
   },
   {
     id: '2',
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2022 DEPARTMENT',
     description:
-      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '3',
     type: 'service',
     label: 'Data Connector',
     description:
-      'This service allows you to inject data files into OpenSearch so that you can consume the knowledge created through visualization.'
+      'This service allows you to inject data files into OpenSearch so that you can consume the knowledge created through visualization.',
+    tags: ['Regroupement', 'Traitement de données']
   },
   {
     type: 'dataset',
@@ -75,76 +78,87 @@ const dataverseItems: DataverseItemDetails[] = [
     label:
       'Crop and crop group reference table of the Graphic Parcel Register (Registre Parcellaire Graphique)',
     description:
-      'Table specific to the distribution of the Graphic Parcel Register (Registre Parcellaire Graphique)): The notion of crop group in this table does not correspond to the notion of crop group of the CAP regulation nor to that of the ISIS reference systems. In this table, each crop code is explained by a label and linked to a crop group code and its label.'
+      'Table specific to the distribution of the Graphic Parcel Register (Registre Parcellaire Graphique)): The notion of crop group in this table does not correspond to the notion of crop group of the CAP regulation nor to that of the ISIS reference systems. In this table, each crop code is explained by a label and linked to a crop group code and its label.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '5',
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2022 REGION',
     description:
-      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '6',
     type: 'service',
     label: 'Data Refactor',
     description:
-      'The Data Refactor tool allows you to edit and modify a data set in order to standardize it.'
+      'The Data Refactor tool allows you to edit and modify a data set in order to standardize it.',
+    tags: ['Regroupement', 'Traitement de données']
   },
   {
     id: '7',
     type: 'dataset',
     label: 'FRANCE : REGION - DEPARTMENT - CITY',
     description:
-      'This dataset is obtained by joining 3 ADMIN EXPRESS datasets containing the different layers of the French territory: Region, Department and City.'
+      'This dataset is obtained by joining 3 ADMIN EXPRESS datasets containing the different layers of the French territory: Region, Department and City.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '8',
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2020 DEPARTMENT',
     description:
-      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '9',
     type: 'service',
     label: 'Data Join Tabular',
     description:
-      'The Data Join Tabular tool allows you to join two datasets containing common values to provide new information.'
+      'The Data Join Tabular tool allows you to join two datasets containing common values to provide new information.',
+    tags: ['Regroupement', 'Traitement de données']
   },
   {
     id: '10',
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2022 CITY',
     description:
-      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '11',
     type: 'dataset',
     label: 'RPG FRANCE 2020',
     description:
-      'The graphical parcel register is a geographic database used as a reference for the instruction of Common Agricultural Policy (CAP) subsidies. The anonymized version distributed here as part of the public service for making reference data available contains the graphic data of parcels (since 2015) with their main crop. These data are produced by the Agency of Services and Payment (ASP) since 2007'
+      'The graphical parcel register is a geographic database used as a reference for the instruction of Common Agricultural Policy (CAP) subsidies. The anonymized version distributed here as part of the public service for making reference data available contains the graphic data of parcels (since 2015) with their main crop. These data are produced by the Agency of Services and Payment (ASP) since 2007',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '12',
     type: 'service',
     label: 'Data Grouping',
-    description: 'The Data Grouping tool allows you to organize identical data into groups.'
+    description: 'The Data Grouping tool allows you to organize identical data into groups.',
+    tags: ['Regroupement', 'Traitement de données']
   },
   {
     id: '13',
     type: 'dataset',
     label: 'AGRESTE 2020',
     description:
-      'Annual agricultural statistics, consisting of the areas, yields and production of the French territory.'
+      'Annual agricultural statistics, consisting of the areas, yields and production of the French territory.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '14',
     type: 'dataset',
     label: 'RPG AGRESTE 2020',
     description:
-      'Data set resulting from the join between RPG and AGRESTE data. Obtained through a sequence of data processing using the OKP4 protocol.'
+      'Data set resulting from the join between RPG and AGRESTE data. Obtained through a sequence of data processing using the OKP4 protocol.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   { id: '15', type: 'service', label: 'Storage', description: 'Data storage service' },
   {
@@ -152,34 +166,39 @@ const dataverseItems: DataverseItemDetails[] = [
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2020 REGION',
     description:
-      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '17',
     type: 'dataset',
     label: 'Reference table of NAF Rev2 codes',
     description:
-      'The French Nomenclature of Activities (NAF) is a nomenclature of productive economic activities, mainly developed to facilitate the organization of economic and social information.'
+      'The French Nomenclature of Activities (NAF) is a nomenclature of productive economic activities, mainly developed to facilitate the organization of economic and social information.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '18',
     type: 'service',
     label: 'Data Join Geospatial',
-    description: 'The Data Join Geospatial tool allows to join two georeferenced datasets.'
+    description: 'The Data Join Geospatial tool allows to join two georeferenced datasets.',
+    tags: ['Regroupement', 'Traitement de données']
   },
   {
     id: '19',
     type: 'dataset',
     label: 'BASE SIRENE - NAF',
     description:
-      'This dataset is obtained using the join between the SIRENE database and the NAF code reference table to obtain information on the activity of establishments.'
+      'This dataset is obtained using the join between the SIRENE database and the NAF code reference table to obtain information on the activity of establishments.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   },
   {
     id: '20',
     type: 'dataset',
     label: 'SIRENE database - agriculture, forestry and fishing',
     description:
-      'This dataset refers to all the agricultural, forestry and fishing companies in France in activity. Obtained through a sequence of data processing using the OKP4 protocol.'
+      'This dataset refers to all the agricultural, forestry and fishing companies in France in activity. Obtained through a sequence of data processing using the OKP4 protocol.',
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departemnet', 'Superficie', 'RPG']
   }
 ]
 
