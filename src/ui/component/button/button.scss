@@ -36,13 +36,6 @@
   }
 }
 
-@mixin disabled {
-  cursor: unset;
-  background: themed('neutral-variant-1');
-  border-color: themed('neutral-variant-1');
-  color: themed('neutral');
-}
-
 .okp4-dataverse-portal-button-main {
   @include with-theme {
     cursor: pointer;
