@@ -5,7 +5,7 @@ import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { MetadataProperty } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
 const datasetGeneralMetadata: MetadataProperty[] = [
   {
@@ -39,6 +39,10 @@ const Dataset = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataset, setDataset] = useState<Option<DataverseItemDetails>>(none)
 
+  const metadata = {
+    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departement', 'Superficie', 'RPG']
+  }
+
   useEffect(() => {
     id && setDataset(getResourceDetails(id))
   }, [id])
@@ -46,10 +50,7 @@ const Dataset = (): JSX.Element => {
   return match(
     () => <p>Dataset not found</p>,
     (dataset: DataverseItemDetails) => (
-      <>
-        <p>{dataset.label}</p>
-        <GeneralMetadataList metadata={datasetGeneralMetadata} />
-      </>
+      <PageTemplate data={dataset} metadata={datasetGeneralMetadata} tags={metadata.tags} />
     )
   )(dataset)
 }

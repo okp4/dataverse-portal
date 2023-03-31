@@ -5,7 +5,7 @@ import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { MetadataProperty } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
 const dataspaceGeneralMetadata: MetadataProperty[] = [
   {
@@ -19,6 +19,10 @@ const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataspace, setDataspace] = useState<Option<DataverseItemDetails>>(none)
 
+  const metadata = {
+    tags: ['Agriculture', 'Open data', 'Dataviz']
+  }
+
   useEffect(() => {
     id && setDataspace(getResourceDetails(id))
   }, [id])
@@ -26,10 +30,7 @@ const Dataspace = (): JSX.Element => {
   return match(
     () => <p>Dataspace not found</p>,
     (dataspace: DataverseItemDetails) => (
-      <>
-        <p>{dataspace.label}</p>
-        <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
-      </>
+      <PageTemplate data={dataspace} metadata={dataspaceGeneralMetadata} tags={metadata.tags} />
     )
   )(dataspace)
 }
