@@ -1,0 +1,33 @@
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-switch-main {
+  @include with-theme() {
+    all: unset;
+    cursor: pointer;
+    width: 40px;
+    height: 24px;
+    background: themed('switch');
+    border-radius: 100px;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    .okp4-dataverse-portal-switch-thumb {
+      display: block;
+      width: 20px;
+      height: 20px;
+      background-color: themed('switch-variant-1');
+      border-radius: 100px;
+      transition: transform 400ms;
+      transform: translateX(2px);
+      will-change: transform;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 2px rgba(33, 37, 41, 0.06), 0 0 1px rgba(33, 37, 41, 0.08);
+
+      &[data-state='checked'] {
+        transform: translateX(18px);
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-explore-card-wrapper {
+  grid-column: span 3;
+
+  @include use-breakpoints(('mobile')) {
+    grid-column: 1 / -1;
+  }
+
+  @include use-breakpoints(('tablet')) {
+    grid-column: span 4;
+  }
+}
+
+.okp4-dataverse-portal-home-page-explore-catalog-button {
+  @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+  justify-self: right;
+  text-decoration: none;
+
+  @include use-breakpoints(('mobile')) {
+    width: 100%;
+  }
+
+  @include use-breakpoints(('tablet')) {
+    justify-self: center;
+  }
+}

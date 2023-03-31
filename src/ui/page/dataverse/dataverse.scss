@@ -1,0 +1,199 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-dataverse-page-main {
+  @include with-theme() {
+    @include grid-container($gutter: 48px);
+    color: themed('text');
+    grid-auto-rows: max-content;
+
+    @include use-breakpoints(('desktop')) {
+      @include grid-container($colsNb: 12, $gutter: 29px);
+    }
+
+    @include use-breakpoints(('tablet')) {
+      @include grid-container($colsNb: 8, $gutter: 16px);
+      row-gap: 30px;
+    }
+
+    @include use-breakpoints(('mobile')) {
+      @include grid-container($colsNb: 6, $gutter: 16px);
+    }
+
+    .okp4-dataverse-portal-dataverse-page-filters-container {
+      @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+      @include use-breakpoints(('mobile', 'tablet')) {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+      }
+
+      .okp4-dataverse-portal-dataverse-page-filters {
+        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: auto);
+        grid-auto-rows: max-content;
+
+        h1 {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+          @include norse-font(700);
+          width: fit-content;
+          line-height: 61px;
+          letter-spacing: 4px;
+          font-size: 24px;
+          background: themed('gradient');
+          /* stylelint-disable-next-line property-no-vendor-prefix */
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 2);
+          @include norse-font(700);
+          width: fit-content;
+          font-size: 18px;
+          line-height: 36px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+
+        .okp4-dataverse-portal-dataverse-page-filters-mobile {
+          display: flex;
+          align-items: center;
+
+          h1 {
+            margin-left: 12px;
+          }
+        }
+
+        .okp4-dataverse-portal-dataverse-page-filters-chips {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          column-gap: 8px;
+          row-gap: 16px;
+
+          @include use-breakpoints(('mobile', 'tablet')) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, auto));
+            gap: 12px;
+          }
+
+          .okp4-dataverse-portal-dataverse-page-filter {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+
+            @include use-breakpoints(('mobile', 'tablet')) {
+              width: 100%;
+              height: 110px;
+              justify-content: center;
+
+              .okp4-dataverse-portal-chip-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                white-space: unset;
+                height: 100%;
+
+                .okp4-dataverse-portal-chip-label {
+                  @include use-breakpoints(('mobile')) {
+                    font-size: 14px;
+                  }
+                }
+
+                .okp4-dataverse-portal-chip-icon {
+                  margin-right: unset;
+                  margin-bottom: 10px;
+                }
+              }
+            }
+
+            @include use-breakpoints(('large-desktop')) {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+
+    .okp4-dataverse-portal-dataverse-page-catalog {
+      @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+      @include grid-container($colsNb: 8, $gutter: 48px);
+
+      @include use-breakpoints(('desktop')) {
+        column-gap: 29px;
+      }
+
+      @include use-breakpoints(('tablet')) {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+        column-gap: 16px;
+        row-gap: 30px;
+      }
+
+      @include use-breakpoints(('mobile')) {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+        column-gap: 16px;
+      }
+
+      .okp4-dataverse-portal-dataverse-page-filters-button {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        display: flex;
+        justify-content: center;
+
+        @include use-breakpoints(('mobile')) {
+          margin: 30px 0;
+        }
+
+        @include use-breakpoints(('tablet')) {
+          @include grid-item($colStart: 3, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
+        }
+      }
+
+      h1 {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        @include norse-font(700);
+        width: fit-content;
+        line-height: 61px;
+        letter-spacing: 4px;
+        font-size: 24px;
+        background: themed('gradient');
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+          text-align: center;
+          justify-self: center;
+        }
+      }
+
+      .okp4-dataverse-portal-dataverse-page-cards-container {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-auto-rows: 220px;
+        gap: 43px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: 4);
+        }
+
+        @include use-breakpoints(('mobile')) {
+          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
+          gap: 20px;
+        }
+
+        @include use-breakpoints(('tablet')) {
+          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
+          gap: 36px;
+        }
+
+        @include use-breakpoints(('large-desktop')) {
+          grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+          gap: 29px;
+        }
+      }
+    }
+  }
+}

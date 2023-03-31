@@ -1,0 +1,56 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-interact-card {
+  @include transition-bg-color;
+  text-align: center;
+  justify-content: center;
+  height: 155px;
+  grid-column: span 3;
+
+  @include use-breakpoints(('mobile', 'tablet')) {
+    height: 123px;
+    grid-column: 1 / -1;
+  }
+
+  @include use-breakpoints(('large-desktop')) {
+    height: 191px;
+  }
+
+  h3 {
+    @include norse-font(400);
+    font-size: 24px;
+    line-height: 22px;
+    color: white;
+    opacity: 0.8;
+  }
+
+  h2 {
+    @include noto-sans(700);
+    font-size: 22px;
+    color: white;
+  }
+
+  .okp4-dataverse-portal-home-page-interact-card-disabled-text {
+    display: none;
+    justify-content: center;
+  }
+
+  &:hover {
+    .okp4-dataverse-portal-home-page-interact-card-disabled-text {
+      display: flex;
+      font-size: 20px;
+      opacity: 1;
+    }
+
+    h2 {
+      font-size: 18px;
+      opacity: 0.28;
+    }
+
+    h3 {
+      font-size: 20px;
+      opacity: 0.28;
+    }
+  }
+}
