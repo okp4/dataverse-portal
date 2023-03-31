@@ -22,27 +22,23 @@ type DataverseItem = {
 }
 
 export type InternationalizedDescription = {
-  en: string
-  fr: string
-  de: string
+  [lang in 'en' | 'fr' | 'de']: string
 }
 
 type Governance = {
   description: InternationalizedDescription
 }
 
-export type Service = DataverseItem & {
-  type: 'service'
-}
+type Typed<T extends 'service' | 'dataspace' | 'dataset'> = { type: T }
 
-export type Dataset = DataverseItem & {
-  type: 'dataset'
-}
+export type Service = DataverseItem & Typed<'service'>
 
-export type DataSpace = DataverseItem & {
-  type: 'dataspace'
-  governance: Governance
-}
+export type Dataset = DataverseItem & Typed<'dataset'>
+
+export type DataSpace = DataverseItem &
+  Typed<'dataspace'> & {
+    governance: Governance
+  }
 
 export type DataverseItemDetails = DataSpace | Dataset | Service
 
