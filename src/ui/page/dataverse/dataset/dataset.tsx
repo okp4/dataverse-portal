@@ -4,34 +4,34 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { GeneralMetadata } from '@/page/dataverse/component/generalMetadata/generalMetadata'
+import type { MetadataProperty } from '@/page/dataverse/component/generalMetadata/generalMetadata'
 import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/generalMetadata'
 
-const datasetGeneralMetadata: GeneralMetadata[] = [
+const datasetGeneralMetadata: MetadataProperty[] = [
   {
     iconName: 'file',
-    title: 'format',
-    description: 'text_csv'
+    property: 'format',
+    value: 'text_csv'
   },
   {
     iconName: 'folder',
-    title: 'topic',
-    description: 'Agriculture Environment And Forestry'
+    property: 'topic',
+    value: 'Agriculture Environment And Forestry'
   },
   {
     iconName: 'shield',
-    title: 'license',
-    description: 'licence:LO-FR-2_0'
+    property: 'license',
+    value: 'licence:LO-FR-2_0'
   },
   {
     iconName: 'earth',
-    title: 'geographicalCoverage',
-    description: 'France'
+    property: 'geographicalCoverage',
+    value: 'France'
   },
   {
     iconName: 'calendar',
-    title: 'temporalCoverage',
-    description: '2020'
+    property: 'temporalCoverage',
+    value: '2020'
   }
 ]
 

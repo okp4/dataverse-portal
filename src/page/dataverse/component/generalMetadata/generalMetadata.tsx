@@ -6,27 +6,29 @@ import { Icon } from '@/component/icon/icon'
 import './generalMetadata.scss'
 import './i18n/index'
 
-export type GeneralMetadata = {
-  iconName: IconName
-  title: string
-  description: string
+export type MetadataProperty = {
+  property: string
+  value: string
+  iconName?: IconName
 }
 
-const GeneralMetadataItem: FC<GeneralMetadata> = memo(({ iconName, title, description }) => (
-  <div className="okp4-dataverse-portal-general-metadata-item-main">
-    <div className="okp4-dataverse-portal-general-metadata-item-icon">
-      <Icon name={iconName} />
+const GeneralMetadataItem: FC<MetadataProperty> = memo(
+  ({ iconName = 'folder', property, value }) => (
+    <div className="okp4-dataverse-portal-general-metadata-item-main">
+      <div className="okp4-dataverse-portal-general-metadata-item-icon">
+        <Icon name={iconName} />
+      </div>
+      <div className="okp4-dataverse-portal-general-metadata-item-content">
+        <h3 className="okp4-dataverse-portal-general-metadata-item-title">{property}</h3>
+        <p className="okp4-dataverse-portal-general-metadata-item-description">{value}</p>
+      </div>
     </div>
-    <div className="okp4-dataverse-portal-general-metadata-item-content">
-      <h3 className="okp4-dataverse-portal-general-metadata-item-title">{title}</h3>
-      <p className="okp4-dataverse-portal-general-metadata-item-description">{description}</p>
-    </div>
-  </div>
-))
+  )
+)
 GeneralMetadataItem.displayName = 'GeneralMetadataItem'
 
 type GeneralMetadataListProps = {
-  metadata: GeneralMetadata[]
+  metadata: MetadataProperty[]
 }
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {
@@ -34,12 +36,12 @@ export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) 
 
   return (
     <div className="okp4-dataverse-portal-general-metadata-list-main">
-      {metadata.map(({ description, iconName, title }) => (
+      {metadata.map(({ value, iconName, property }) => (
         <GeneralMetadataItem
-          description={description}
           iconName={iconName}
-          key={title}
-          title={t(`generalMetadata.${title}`)}
+          key={property}
+          property={t(`generalMetadata.${property}`)}
+          value={value}
         />
       ))}
     </div>

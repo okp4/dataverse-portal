@@ -4,14 +4,14 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { GeneralMetadata } from '@/page/dataverse/component/generalMetadata/generalMetadata'
+import type { MetadataProperty } from '@/page/dataverse/component/generalMetadata/generalMetadata'
 import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/generalMetadata'
 
-const serviceGeneralMetadata: GeneralMetadata[] = [
+const serviceGeneralMetadata: MetadataProperty[] = [
   {
     iconName: 'folder',
-    title: 'category',
-    description: 'Data transformation'
+    property: 'category',
+    value: 'Data transformation'
   }
 ]
 
