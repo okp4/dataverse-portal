@@ -28,14 +28,7 @@ const Dataspace = (): JSX.Element => {
   const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
   useEffect(() => {
-    const convertToDataSpace = (resource: Option<DataverseItemDetails>): Option<DataSpace> =>
-      pipe(
-        resource,
-        O.filterMap<DataverseItemDetails, DataSpace>(value =>
-          value.type === 'dataspace' ? O.some(value as DataSpace) : O.none
-        )
-      )
-    id && setDataspace(pipe(id, getResourceDetails, convertToDataSpace))
+    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataspace)
   }, [id])
 
   return O.match(
