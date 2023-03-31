@@ -4,6 +4,7 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
 const Dataspace = (): JSX.Element => {
   const { id } = useParams<string>()
@@ -15,7 +16,8 @@ const Dataspace = (): JSX.Element => {
 
   return match(
     () => <p>Dataspace not found</p>,
-    (dataspace: DataverseItemDetails) => <p>{dataspace.label}</p>
+    (dataspace: DataverseItemDetails) =>
+      <PageTemplate data={dataspace} />
   )(dataspace)
 }
 
