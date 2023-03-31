@@ -39,16 +39,14 @@ export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) 
 
   return (
     <div className="okp4-dataverse-portal-general-metadata-list-main">
-      {metadata.map(({ value, iconName, property }) => {
-        return (
-          <GeneralMetadataItem
-            iconName={iconName}
-            key={property}
-            property={t(`generalMetadata.${property}`)}
-            value={convertToYearIfISODateTime(value, lng)}
-          />
-        )
-      })}
+      {metadata.map(({ value, iconName, property }) => (
+        <GeneralMetadataItem
+          iconName={iconName}
+          key={property}
+          property={t(`generalMetadata.${property}`)}
+          value={convertToYearIfISODateTime(value, lng)}
+        />
+      ))}
     </div>
   )
 }
