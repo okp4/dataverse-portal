@@ -3,6 +3,8 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { IconName } from '@/component/icon/icon'
 import { Icon } from '@/component/icon/icon'
+import { activeLanguageWithDefault } from '@/languages/languages'
+import { convertToYearIfISODateTime } from '@/util/isoDateTime/isoDateTime'
 import './generalMetadata.scss'
 import './i18n/index'
 
@@ -33,17 +35,20 @@ type GeneralMetadataListProps = {
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {
   const { t } = useTranslation('generalMetadata')
+  const { lng } = activeLanguageWithDefault()
 
   return (
     <div className="okp4-dataverse-portal-general-metadata-list-main">
-      {metadata.map(({ value, iconName, property }) => (
-        <GeneralMetadataItem
-          iconName={iconName}
-          key={property}
-          property={t(`generalMetadata.${property}`)}
-          value={value}
-        />
-      ))}
+      {metadata.map(({ value, iconName, property }) => {
+        return (
+          <GeneralMetadataItem
+            iconName={iconName}
+            key={property}
+            property={t(`generalMetadata.${property}`)}
+            value={convertToYearIfISODateTime(value, lng)}
+          />
+        )
+      })}
     </div>
   )
 }

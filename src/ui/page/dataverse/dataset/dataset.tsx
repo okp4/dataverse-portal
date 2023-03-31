@@ -31,7 +31,7 @@ const datasetGeneralMetadata: MetadataProperty[] = [
   {
     iconName: 'calendar',
     property: 'temporalCoverage',
-    value: '2020'
+    value: '2022-01-01T00:00:00+00:00'
   }
 ]
 
