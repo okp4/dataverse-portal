@@ -1,6 +1,6 @@
-@import '@/style/theme.scss';
-@import '@/style/fonts.scss';
-@import '@/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-general-metadata-list-main {
   @include with-theme {

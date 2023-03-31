@@ -44,10 +44,10 @@ import { ReactComponent as ArrowRightIcon } from '@/ui/asset/icon/arrow-right.sv
 import { ReactComponent as AllLightIcon } from '@/ui/asset/icon/all-light.svg'
 import { ReactComponent as AllDarkIcon } from '@/ui/asset/icon/all-dark.svg'
 import { ReactComponent as ArrowLeftIcon } from '@/ui/asset/icon/arrow-left.svg'
-import { ReactComponent as FileIcon } from '@/asset/icon/file.svg'
-import { ReactComponent as FolderIcon } from '@/asset/icon/folder.svg'
-import { ReactComponent as CalendarIcon } from '@/asset/icon/calendar.svg'
-import { ReactComponent as EarthIcon } from '@/asset/icon/earth.svg'
+import { ReactComponent as FileIcon } from '@/ui/asset/icon/file.svg'
+import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
+import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
+import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
 import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
 
 export type IconName =

@@ -4,8 +4,8 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { MetadataProperty } from '@/page/dataverse/component/generalMetadata/generalMetadata'
-import { GeneralMetadataList } from '@/page/dataverse/component/generalMetadata/generalMetadata'
+import type { MetadataProperty } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
 
 const dataspaceGeneralMetadata: MetadataProperty[] = [
   {
