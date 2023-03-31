@@ -1,0 +1,15 @@
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-previous-button-main {
+  @include with-theme {
+    width: fit-content;
+    padding: 10px 7px;
+    cursor: pointer;
+
+    svg {
+      path {
+        fill: themed('text');
+      }
+    }
+  }
+}
