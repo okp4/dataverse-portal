@@ -25,14 +25,12 @@ const Service = (): JSX.Element => {
 
   return match(
     () => <p>Service not found</p>,
-    (service: DataverseItemDetails) => {
-      return (
-        <>
-          <p>{service.label}</p>
-          <GeneralMetadataList metadata={serviceGeneralMetadata} />
-        </>
-      )
-    }
+    (service: DataverseItemDetails) => (
+      <>
+        <p>{service.label}</p>
+        <GeneralMetadataList metadata={serviceGeneralMetadata} />
+      </>
+    )
   )(service)
 }
 

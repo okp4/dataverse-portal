@@ -25,14 +25,12 @@ const Dataspace = (): JSX.Element => {
 
   return match(
     () => <p>Dataspace not found</p>,
-    (dataspace: DataverseItemDetails) => {
-      return (
-        <>
-          <p>{dataspace.label}</p>
-          <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
-        </>
-      )
-    }
+    (dataspace: DataverseItemDetails) => (
+      <>
+        <p>{dataspace.label}</p>
+        <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
+      </>
+    )
   )(dataspace)
 }
 

@@ -45,14 +45,12 @@ const Dataset = (): JSX.Element => {
 
   return match(
     () => <p>Dataset not found</p>,
-    (dataset: DataverseItemDetails) => {
-      return (
-        <>
-          <p>{dataset.label}</p>
-          <GeneralMetadataList metadata={datasetGeneralMetadata} />
-        </>
-      )
-    }
+    (dataset: DataverseItemDetails) => (
+      <>
+        <p>{dataset.label}</p>
+        <GeneralMetadataList metadata={datasetGeneralMetadata} />
+      </>
+    )
   )(dataset)
 }
 
