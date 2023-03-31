@@ -1,4 +1,5 @@
 @import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
   @include twelve-column-layout;
@@ -8,5 +9,19 @@
     display: flex;
     flex-direction: column;
     row-gap: 40px;
+
+    .okp4-dataverse-portal-dataverse-button {
+      @include with-theme {
+        width: fit-content;
+        padding: 10px 7px;
+        cursor: pointer;
+
+        svg {
+          path {
+            fill: themed('text');
+          }
+        }
+      }
+    }
   }
 }

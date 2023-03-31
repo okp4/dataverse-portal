@@ -1,4 +1,6 @@
+import { useCallback } from 'react'
 import type { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
@@ -8,6 +10,7 @@ import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetada
 import './pageTemplate.scss'
 import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
+import { Icon } from '@/ui/component/icon/icon'
 
 type PageTemplateProps = {
   data: DataverseItemDetails
@@ -25,6 +28,8 @@ const isGeneralMetadata = (
   metadata.property !== 'tags'
 
 const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element => {
+  const navigate = useNavigate()
+  const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
   const tags = pipe(
     metadata,
     A.filter(isTagsMetadata),
@@ -36,6 +41,9 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
   return (
     <div className="okp4-dataverse-portal-dataverse-component-page-template-main">
       <div className="okp4-dataverse-portal-dataverse-page-template-left-side-wrapper">
+        <div className="okp4-dataverse-portal-dataverse-button" onClick={backToDataverse}>
+          <Icon name="arrow-left" />
+        </div>
         {data.label}
         {tags.length > 0 && <Tags tags={tags} />}
         <GeneralMetadataList metadata={generalMetadata} />
