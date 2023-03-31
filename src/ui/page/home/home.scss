@@ -1,0 +1,62 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-main {
+  @include with-theme() {
+    @include twelve-column-layout;
+    row-gap: 30px;
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      row-gap: 40px;
+    }
+
+    .okp4-dataverse-portal-home-page-block-container {
+      @include twelve-column-layout;
+
+      h1 {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+        @include norse-font(700);
+        width: fit-content;
+        line-height: 36px;
+        letter-spacing: 4px;
+        font-size: 24px;
+        background: themed('gradient');
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @include use-breakpoints(('tablet', 'mobile')) {
+          justify-self: center;
+          margin-bottom: 4px;
+        }
+      }
+
+      &.community {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+        grid-auto-rows: max-content;
+        row-gap: 16px;
+      }
+
+      &.explore {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        grid-auto-rows: max-content max-content;
+        row-gap: 19px;
+
+        @include use-breakpoints(('mobile')) {
+          row-gap: 20px;
+        }
+
+        @include use-breakpoints(('tablet')) {
+          gap: 34px;
+        }
+      }
+
+      &.interact {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        grid-auto-rows: max-content max-content;
+        row-gap: 16px;
+      }
+    }
+  }
+}

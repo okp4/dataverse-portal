@@ -1,0 +1,26 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+$colors: (
+  'primary-color': 'background-primary-variant',
+  'primary-color-variant-3': 'background-primary-variant-3',
+  'primary-color-variant-4': 'background-primary-variant-4'
+);
+
+.okp4-dataverse-portal-tag-main {
+  @include with-theme {
+    @include noto-sans(700);
+    border-radius: 0 20px;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 2px;
+
+    @each $color-key, $color-value in $colors {
+      &.#{$color-key} {
+        color: themed($color-key);
+        background-color: themed($color-value);
+      }
+    }
+  }
+}

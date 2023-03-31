@@ -1,0 +1,121 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-home-page-community-singlestat-card {
+  @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
+  position: relative;
+  overflow: hidden;
+  min-height: 129px;
+
+  @include use-breakpoints(('mobile', 'tablet')) {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+  }
+
+  .okp4-dataverse-portal-home-page-community-singlestat-container {
+    padding: 17px 72px 24px 34px;
+
+    @include use-breakpoints(('mobile')) {
+      max-width: 189px;
+    }
+
+    @include use-breakpoints(('tablet')) {
+      max-width: 284px;
+    }
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      padding: 20px 28px;
+    }
+
+    @include use-breakpoints(('large-desktop')) {
+      padding: 21px 28px 21px 34px;
+    }
+  }
+}
+
+.okp4-dataverse-portal-home-page-community-multistat-card {
+  @include grid-item($colStart: -1, $colEnd: -10, $rowStart: 2, $rowEnd: 3);
+  position: relative;
+  overflow: hidden;
+  min-height: 129px;
+
+  @include use-breakpoints(('mobile', 'tablet')) {
+    @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: 4);
+  }
+
+  .okp4-dataverse-portal-home-page-community-multistat-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 50px;
+    padding: 0 40px;
+    width: 100%;
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      flex-direction: column;
+      align-items: unset;
+      padding: 31px 28px;
+      gap: 34px;
+    }
+  }
+}
+
+.okp4-dataverse-portal-home-page-community-ellipse {
+  @include with-theme {
+    position: absolute;
+    width: 205px;
+    height: 205px;
+    right: -90px;
+    bottom: -102.5px;
+    box-sizing: border-box;
+    border: 40px solid themed('background-variant-1');
+    border-radius: 50%;
+  }
+}
+
+.okp4-dataverse-portal-home-page-stat-main {
+  @include with-theme {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    color: themed('text');
+
+    .okp4-dataverse-portal-home-page-stat-icon-container {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      background: themed('background-variant-1');
+      border-radius: 6px;
+      justify-content: center;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        width: 56px;
+        height: 56px;
+      }
+    }
+
+    .okp4-dataverse-portal-home-page-stat-content-wrapper {
+      h2 {
+        @include prompt(600);
+        line-height: 38px;
+        font-size: 28px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          font-size: 34px;
+        }
+      }
+
+      p {
+        @include noto-sans(400);
+        font-size: 14px;
+        opacity: 0.6;
+        letter-spacing: unset;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

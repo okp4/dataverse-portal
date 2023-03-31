@@ -1,0 +1,28 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-work-in-progress-main {
+  @include with-theme() {
+    @include grid-item($colStart: 1, $colEnd: 13, $rowStart: 2, $rowEnd: auto);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    color: themed('text');
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+    }
+
+    h1 {
+      @include norse-font(700);
+    }
+
+    p {
+      @include noto-sans(400);
+    }
+  }
+}
