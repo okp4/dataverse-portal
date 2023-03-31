@@ -2,12 +2,11 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-@mixin button($border-color, $content-color, $background-color, $box-shadow, $hover-color) {
+@mixin button($content-color, $background-color, $box-shadow, $hover-color) {
   @include transition-bg-color;
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 1px solid $border-color;
   color: $content-color;
   border-radius: 12px;
   background-color: $background-color;
@@ -26,28 +25,25 @@
   &.disabled {
     cursor: unset;
     background: themed('neutral-variant-1');
-    border-color: themed('neutral-variant-1');
     color: themed('neutral');
     box-shadow: none;
-  }
-}
 
-@mixin disabled {
-  cursor: unset;
-  background: themed('neutral-variant-1');
-  border-color: themed('neutral-variant-1');
-  color: themed('neutral');
+    svg {
+      path {
+        fill: themed('neutral');
+      }
+    }
+  }
 }
 
 .okp4-dataverse-portal-button-main {
   @include with-theme {
     cursor: pointer;
     padding: unset;
-    box-sizing: border-box;
+    border: unset;
 
     &.primary {
       @include button(
-        $border-color: themed('secondary-color'),
         $content-color: themed('primary-text'),
         $background-color: themed('secondary-color'),
         $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
@@ -57,22 +53,14 @@
 
     &.secondary {
       @include button(
-        $border-color: themed('primary-color'),
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
         $hover-color: themed('primary-color-variant-2')
       );
-
-      svg {
-        path {
-          fill: themed('secondary-color-variant-1');
-        }
-      }
     }
 
     &.tertiary {
-      border: unset;
       color: themed('text');
       border-radius: 12px;
       background: themed('tertiary-button-background');
@@ -84,13 +72,17 @@
 
     &.outlined-tertiary {
       @include button(
-        $border-color: themed('secondary-color'),
         $content-color: themed('secondary-color'),
         $background-color: unset,
         $box-shadow: none,
         $hover-color: none
       );
       border-radius: 6px;
+      border: 1px solid themed('secondary-color');
+
+      &.disabled {
+        border-color: themed('neutral-variant-1');
+      }
 
       svg {
         path {
@@ -111,39 +103,35 @@
       display: flex;
       align-items: center;
 
-      &.primary {
+      &.small {
+        padding: 8px 16px;
+        gap: 8px;
+      }
+
+      &.large {
         padding: 12px 20px;
         gap: 12px;
       }
 
-      &.secondary {
-        padding: 8px 16px;
-        gap: 12px;
-      }
-
-      &.tertiary {
-        padding: 11px 20px;
-        gap: 10px;
-      }
-
       &.outlined-tertiary {
-        padding: 7px 10px;
-        gap: 6px;
+        &.small {
+          padding: 7px 10px;
+          gap: 6px;
+        }
       }
 
       .okp4-dataverse-portal-button-label {
         @include noto-sans(700);
-        font-size: 11px;
-
-        &.primary,
-        &.secondary {
-          font-size: 16px;
-          line-height: 24px;
-        }
+        font-size: 16px;
+        line-height: 24px;
 
         &.tertiary {
           @include noto-sans(400);
-          font-size: 16px;
+        }
+
+        &.outlined-tertiary {
+          font-size: 11px;
+          line-height: unset;
         }
       }
     }
