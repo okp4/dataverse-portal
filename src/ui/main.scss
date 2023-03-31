@@ -114,6 +114,7 @@ p {
 
     .okp4-dataverse-portal-page-wrapper {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+      max-width: 2000px;
       overflow-y: auto;
       padding-bottom: 25px;
 
