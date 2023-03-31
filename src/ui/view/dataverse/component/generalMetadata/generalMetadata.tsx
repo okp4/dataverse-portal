@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
-import { convertToYearIfISODateTime } from '@/util/isoDateTime/isoDateTime'
+import { convertToLocalizedYearIfISODateTime } from '@/util/isoDateTime/isoDateTime'
 import './generalMetadata.scss'
 import './i18n/index'
 
@@ -44,7 +44,7 @@ export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) 
           iconName={iconName}
           key={property}
           property={t(`generalMetadata.${property}`)}
-          value={convertToYearIfISODateTime(value, lng)}
+          value={convertToLocalizedYearIfISODateTime(value, lng)}
         />
       ))}
     </div>
