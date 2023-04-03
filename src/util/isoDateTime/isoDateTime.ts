@@ -1,7 +1,10 @@
-const getLocalizedYear = (date: Date, locale: string): string => {
-  const formatter = new Intl.DateTimeFormat(locale, { year: 'numeric' })
-  return formatter.format(date)
-}
+import i18n from '@/ui/i18n'
+import * as E from 'fp-ts/Either'
+import { pipe } from 'fp-ts/function'
+import { fromPredicate } from 'fp-ts/Either'
+
+const getLocalizedYear = (date: Date, locale: string): string =>
+  pipe(new Intl.DateTimeFormat(locale, { year: 'numeric' }), formatter => formatter.format(date))
 
 export const isISODateTime = (input: string): boolean => {
   const isoDateTimeRegex: RegExp =
@@ -10,6 +13,26 @@ export const isISODateTime = (input: string): boolean => {
   return isoDateTimeRegex.test(input) && new Date(input).toString() !== 'Invalid Date'
 }
 
-export const convertToLocalizedYearIfISODateTime = (input: string, locale: string): string => {
-  return isISODateTime(input) ? getLocalizedYear(new Date(input), locale) : input
+export const isValidLocale = (locale: string): boolean => {
+  const loadedLocales = Object.keys(i18n.options.resources ?? {})
+
+  return loadedLocales.includes(locale)
 }
+
+export const parseISODateTime = (input: string): E.Either<Error, Date> =>
+  pipe(
+    input,
+    fromPredicate(isISODateTime, () => new Error('Invalid date')),
+    E.map(validISODateTime => new Date(validISODateTime))
+  )
+
+export const convertToLocalizedYearIfISODateTime = (
+  input: string,
+  locale: string
+): E.Either<Error, string> =>
+  pipe(
+    locale,
+    fromPredicate(isValidLocale, () => new Error('Invalid locale')),
+    E.chain(() => parseISODateTime(input)),
+    E.map(date => getLocalizedYear(date, locale))
+  )
