@@ -1,11 +1,35 @@
 {
   "generalMetadata": {
-    "format": "Format",
-    "topic": "Thema",
-    "license": "Lizenz",
-    "geographicalCoverage": "Geografischer Geltungsbereich",
-    "temporalCoverage": "Zeitlicher Geltungsbereich",
-    "category": "Kategorie",
+    "format": {
+      "property": "Format"
+    },
+    "topic": {
+      "property": "Thema",
+      "value": {
+        "agricultureFoodEnvironmentAndForestry": "Landwirtschaft, Ernährung, Umwelt und Forstwirtschaft",
+        "biologyGeologyAndChemistry": "Biologie, Geologie und Chemie",
+        "industryMobilityAndEngineering": "Industrie, Mobilität und Technik",
+        "logisticsRetailSupplyChainECommerce": "Logistik, Einzelhandel, Lieferkette und eCommerce",
+        "defiAndCrypto": "DeFi und Krypto",
+        "healthcare": "Gesundheitswesen",
+        "businessAndPurchase": "Wirtschaft und Einkauf",
+        "marketingAndCustomerBehavior": "Marketing und Kundenverhalten",
+        "energy": "Energie",
+        "other": "Sonstigesr"
+      }
+    },
+    "license": {
+      "property": "Lizenz"
+    },
+    "geographicalCoverage": {
+      "property": "Geografischer Geltungsbereich"
+    },
+    "temporalCoverage": {
+      "property": "Zeitlicher Geltungsbereich"
+    },
+    "category": {
+      "property": "Kategorie"
+    },
     "invalidDate": "-"
   }
 }
