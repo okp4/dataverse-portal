@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "publisher": "Éditeur :",
+    "creator": "Créateur :",
+    "registrar": "Enregistré par :",
+    "provider": "Fourni par :",
+    "belongsTo": "Appartient à :",
+    "id": "ID unique :",
+    "createdBy": "Métadonnées créées par :",
+    "createdOn": "Métadonnées créées le :",
+    "modifiedBy": "Dernière modification des métadonnées par :",
+    "modifiedOn": "Dernière modification des métadonnées le :"
+  }
+}
