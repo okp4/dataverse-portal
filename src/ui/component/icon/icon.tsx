@@ -49,6 +49,8 @@ import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
 import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
 import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
 import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
+import { ReactComponent as CopyLight } from '@/ui/asset/icon/copy-light.svg'
+import { ReactComponent as CopyDark } from '@/ui/asset/icon/copy-dark.svg'
 
 export type IconName =
   | 'all-light'
@@ -100,6 +102,8 @@ export type IconName =
   | 'calendar'
   | 'earth'
   | 'shield'
+  | 'copy-light'
+  | 'copy-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -150,7 +154,9 @@ const icons: Record<IconName, React.FunctionComponent> = {
   folder: FolderIcon,
   calendar: CalendarIcon,
   earth: EarthIcon,
-  shield: ShieldIcon
+  shield: ShieldIcon,
+  'copy-light': CopyLight,
+  'copy-dark': CopyDark
 }
 
 type IconProps = {
