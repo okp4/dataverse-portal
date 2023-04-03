@@ -5,6 +5,7 @@
     "license": "License",
     "geographicalCoverage": "Geographical Coverage",
     "temporalCoverage": "Temporal Coverage",
-    "category": "Category"
+    "category": "Category",
+    "invalidDate": "-"
   }
 }

@@ -5,6 +5,7 @@
     "license": "Lizenz",
     "geographicalCoverage": "Geografischer Geltungsbereich",
     "temporalCoverage": "Zeitlicher Geltungsbereich",
-    "category": "Kategorie"
+    "category": "Kategorie",
+    "invalidDate": "-"
   }
 }
