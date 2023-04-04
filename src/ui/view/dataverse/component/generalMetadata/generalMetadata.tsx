@@ -4,19 +4,13 @@ import { useTranslation } from 'react-i18next'
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { fromPredicate } from 'fp-ts/lib/Either'
-import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useLocalizedYearIfISODateTime } from '@/ui/hook/useLocalizedYearIfISODateTime'
+import type { GeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
 
-export type MetadataProperty = {
-  property: string
-  value: string
-  iconName?: IconName
-}
-
-const GeneralMetadataItem: FC<MetadataProperty> = memo(
+const GeneralMetadataItem: FC<GeneralMetadata> = memo(
   ({ iconName = 'folder', property, value }) => (
     <div className="okp4-dataverse-portal-general-metadata-item-main">
       <div className="okp4-dataverse-portal-general-metadata-item-icon">
@@ -32,7 +26,7 @@ const GeneralMetadataItem: FC<MetadataProperty> = memo(
 GeneralMetadataItem.displayName = 'GeneralMetadataItem'
 
 type GeneralMetadataListProps = {
-  metadata: MetadataProperty[]
+  metadata: GeneralMetadata[]
 }
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {

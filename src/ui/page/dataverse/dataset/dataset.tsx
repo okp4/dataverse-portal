@@ -4,10 +4,10 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { MetadataProperty } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import type { Metadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
-const datasetGeneralMetadata: MetadataProperty[] = [
+const datasetMetadata: Metadata[] = [
   {
     iconName: 'file',
     property: 'format',
@@ -32,6 +32,10 @@ const datasetGeneralMetadata: MetadataProperty[] = [
     iconName: 'calendar',
     property: 'temporalCoverage',
     value: '2022-01-01T00:00:00+00:00'
+  },
+  {
+    property: 'tags',
+    value: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departement', 'Superficie', 'RPG']
   }
 ]
 
@@ -39,19 +43,13 @@ const Dataset = (): JSX.Element => {
   const { id } = useParams<string>()
   const [dataset, setDataset] = useState<Option<DataverseItemDetails>>(none)
 
-  const metadata = {
-    tags: ['Agriculture', 'France', 'Open data', 'Rendement', 'Departement', 'Superficie', 'RPG']
-  }
-
   useEffect(() => {
     id && setDataset(getResourceDetails(id))
   }, [id])
 
   return match(
     () => <p>Dataset not found</p>,
-    (dataset: DataverseItemDetails) => (
-      <PageTemplate data={dataset} metadata={datasetGeneralMetadata} tags={metadata.tags} />
-    )
+    (dataset: DataverseItemDetails) => <PageTemplate data={dataset} metadata={datasetMetadata} />
   )(dataset)
 }
 
