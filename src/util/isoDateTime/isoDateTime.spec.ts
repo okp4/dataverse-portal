@@ -11,10 +11,10 @@ describe('convertToLocalizedYearIfISODateTime', () => {
     ['2023-01-01T00:00:00', 'en', E.right('2023')],
     ['2023-01-01T00:00:00.000', 'en', E.right('2023')],
     ['2023-01-01T00:00:00.000Z', 'en', E.right('2023')],
-    ['002023-01-01T00:00:00.000+01:00', 'en', E.left(new Error('Invalid date'))],
+    ['002023-01-01T00:00:00.000+01:00', 'en', E.left(new Error('Invalid Date'))],
     ['2023-01-01T00:00:00', 'fr', E.right('2023')],
     ['2023-01-01T00:00:00.000Z', 'fr', E.right('2023')],
-    ['Not an ISO DateTime', 'en', E.left(new Error('Invalid date'))]
+    ['Not an ISO DateTime', 'en', E.left(new Error('Invalid Date'))]
   ])(
     'converts input %s with locale %s to %s',
     (input: string, locale: string, expected: E.Either<Error, string>) => {
