@@ -1,0 +1,44 @@
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-skeleton {
+  @include with-theme {
+    background-color: rgba(themed('skeleton-base'), 0.11);
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+
+    &::before {
+      content: '\00a0';
+    }
+
+    &::after {
+      animation: animation-translateX 1.3s linear 0.5s infinite;
+      background: linear-gradient(90deg, transparent, rgba(themed('skeleton-animation'), 0.04), transparent);
+      content: '';
+      position: absolute;
+      transform: translateX(-100%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+    
+    &.rectangular {
+      border-radius: 0;
+    }
+
+    &.rounded {
+      border-radius: 30px;
+    }
+
+    &.circular {
+      border-radius: 50%;
+    }
+  }
+}
+
+@keyframes animation-translateX {
+  100% {
+    transform: translateX(100%);
+  }
+}

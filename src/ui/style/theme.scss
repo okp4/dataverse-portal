@@ -31,7 +31,9 @@ $themes: (
     text: $text-light,
     success: $success,
     error: $error,
-    gradient: $gradient
+    gradient: $gradient,
+    skeleton-base: $skeleton-base-light,
+    skeleton-animation: $skeleton-animation-light
   ),
   dark: (
     primary-color: $primary,
@@ -63,7 +65,9 @@ $themes: (
     text: $text-dark,
     success: $success,
     error: $error,
-    gradient: $gradient
+    gradient: $gradient,
+    skeleton-base: $skeleton-base-dark,
+    skeleton-animation: $skeleton-animation-dark
   )
 );
 
