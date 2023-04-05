@@ -1,5 +1,6 @@
-@import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
   @include twelve-column-layout;
@@ -10,16 +11,33 @@
     flex-direction: column;
     row-gap: 40px;
 
-    .okp4-dataverse-portal-dataverse-button {
+    .okp4-dataverse-portal-dataverse-back {
       @include with-theme {
-        width: fit-content;
-        padding: 10px 7px;
-        cursor: pointer;
+        display: flex;
+        align-items: center;
 
-        svg {
-          path {
-            fill: themed('text');
+        .okp4-dataverse-portal-dataverse-back-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: none;
+          border: 0;
+          width: fit-content;
+          padding: 10px 7px;
+          cursor: pointer;
+  
+          svg {
+            path {
+              fill: themed('text');
+            }
           }
+        }
+        
+        .okp4-dataverse-portal-dataverse-back-text {
+          @include noto-sans(700);
+          font-size: 14px;
+          line-height: 22px;
+          color: themed('text');
         }
       }
     }

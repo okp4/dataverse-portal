@@ -41,8 +41,11 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
   return (
     <div className="okp4-dataverse-portal-dataverse-component-page-template-main">
       <div className="okp4-dataverse-portal-dataverse-page-template-left-side-wrapper">
-        <div className="okp4-dataverse-portal-dataverse-button" onClick={backToDataverse}>
-          <Icon name="arrow-left" />
+        <div className="okp4-dataverse-portal-dataverse-back">
+          <button className="okp4-dataverse-portal-dataverse-back-button" onClick={backToDataverse}>
+            <Icon name="arrow-left" />
+          </button>
+          <span className="okp4-dataverse-portal-dataverse-back-text">Dataverse</span>
         </div>
         {data.label}
         {tags.length > 0 && <Tags tags={tags} />}
