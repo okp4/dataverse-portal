@@ -16,15 +16,7 @@
 
       h1 {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-        @include norse-font(700);
-        width: fit-content;
-        line-height: 36px;
-        letter-spacing: 4px;
-        font-size: 24px;
-        background: themed('gradient');
-        /* stylelint-disable-next-line property-no-vendor-prefix */
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        @include norse-gradient-header;
 
         @include use-breakpoints(('tablet', 'mobile')) {
           justify-self: center;
