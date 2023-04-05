@@ -7,7 +7,7 @@ import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { Tags } from '@/ui/view/dataverse/component/tags/tags'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import Description from '@/ui/view/dataverse/description/description'
+import DataverseItemDescription from '@/ui/view/dataverse/description/description'
 import './pageTemplate.scss'
 import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
@@ -50,7 +50,11 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
           </button>
           <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
         </div>
-        <Description label={data.label} text={data.description} type={data.type} />
+        <DataverseItemDescription
+          description={data.description}
+          title={data.label}
+          type={data.type}
+        />
         {tags.length > 0 && <Tags tags={tags} />}
         <GeneralMetadataList metadata={generalMetadata} />
         {isDataSpace(data) && <GovernanceDescription description={data.governance.description} />}
