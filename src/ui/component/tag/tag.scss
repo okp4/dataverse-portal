@@ -1,26 +1,28 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/theme.scss';
 
-$colors: (
-  'primary-color': 'background-primary-variant',
-  'primary-color-variant-3': 'background-primary-variant-3',
-  'primary-color-variant-4': 'background-primary-variant-4'
-);
-
 .okp4-dataverse-portal-tag-main {
   @include with-theme {
     @include noto-sans(700);
-    border-radius: 0 20px;
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: themed(primary-color-variant-3);
     font-size: 14px;
-    line-height: 24px;
-    letter-spacing: 2px;
+    min-height: 34px;
+    padding: 0 8px;
+    line-height: 18px;
+    background: rgba(themed(primary-color-variant-3), 0.12);
+    border-radius: 6px;
 
-    @each $color-key, $color-value in $colors {
-      &.#{$color-key} {
-        color: themed($color-key);
-        background-color: themed($color-value);
-      }
+    .okp4-dataverse-portal-tag-name {
+      /* stylelint-disable-next-line value-no-vendor-prefix */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 240px;
     }
   }
 }

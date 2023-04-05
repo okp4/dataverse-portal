@@ -1,13 +1,12 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '@/ui/component/card/card'
 import { Button } from '@/ui/component/button/button'
-import { Tag } from '@/ui/component/tag/tag'
-import type { ColorVariant } from '@/ui/component/tag/tag'
 import './dataverseItemCard.scss'
+import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 
 type DataverseItem = 'dataspace' | 'dataset' | 'service'
 
@@ -22,7 +21,9 @@ export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label,
   const navigate = useNavigate()
   const { t } = useTranslation('common')
 
-  const renderTagColor = useCallback((type: DataverseItem): ColorVariant => {
+  type ColorVariant = 'primary-color' | 'primary-color-variant-3' | 'primary-color-variant-4'
+
+  const renderItemTypeColor = useCallback((type: DataverseItem): ColorVariant => {
     switch (type) {
       case 'service':
         return 'primary-color'
@@ -45,8 +46,15 @@ ${description}`,
 
   return (
     <Card>
-      <div className="okp4-dataverse-portal-dataverse-item-card-main">
-        <Tag colorVariant={renderTagColor(type)} label={t(`resources.${type}`)} />
+      <div className="okp4-dataverse-portal-dataverse-card-main">
+        <div
+          className={classNames(
+            'okp4-dataverse-portal-dataverse-item-type',
+            renderItemTypeColor(type)
+          )}
+        >
+          {t(`resources.${type}`)}
+        </div>
         <div className="okp4-dataverse-portal-dataverse-item-card-content">
           <div className="okp4-dataverse-portal-dataverse-description">
             <ReactMarkdown>{renderItemContent(label, description)}</ReactMarkdown>

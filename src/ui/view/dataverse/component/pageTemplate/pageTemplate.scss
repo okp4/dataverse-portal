@@ -1,0 +1,12 @@
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-dataverse-component-page-template-main {
+  @include twelve-column-layout;
+
+  .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
+    @include bi-column-item('left');
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+}

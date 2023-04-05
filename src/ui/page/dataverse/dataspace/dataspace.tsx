@@ -4,14 +4,18 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { MetadataProperty } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
+import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
-const dataspaceGeneralMetadata: MetadataProperty[] = [
+const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
     iconName: 'folder',
     property: 'topic',
     value: 'Agriculture Environment And Forestry'
+  },
+  {
+    property: 'tags',
+    value: ['Agriculture', 'Open data', 'Dataviz']
   }
 ]
 
@@ -26,10 +30,7 @@ const Dataspace = (): JSX.Element => {
   return match(
     () => <p>Dataspace not found</p>,
     (dataspace: DataverseItemDetails) => (
-      <>
-        <p>{dataspace.label}</p>
-        <GeneralMetadataList metadata={dataspaceGeneralMetadata} />
-      </>
+      <PageTemplate data={dataspace} metadata={dataspaceMetadata} />
     )
   )(dataspace)
 }
