@@ -8,7 +8,8 @@
     "dataspaces": "Data Spaces",
     "datasets": "Datasets",
     "services": "Services",
-    "governance": "Governance"
+    "governance": "Governance",
+    "lastUpdate": "Last update"
   },
   "actions": {
     "explore": "Explore",

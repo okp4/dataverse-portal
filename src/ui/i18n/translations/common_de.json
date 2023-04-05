@@ -8,7 +8,8 @@
     "dataspaces": "Datenräume",
     "datasets": "Datensätze",
     "services": "Dienstleistungen",
-    "governance": "Führung"
+    "governance": "Führung",
+    "lastUpdate": "Letzte Aktualisierung"
   },
   "actions": {
     "explore": "Erkunden Sie",

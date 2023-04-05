@@ -6,9 +6,10 @@
     "dataset": "Données",
     "service": "Service",
     "dataspaces": "Data Spaces",
-    "datasets": "Données",
+    "datasets": "Jeux de données",
     "services": "Services",
-    "governance": "Gouvernance"
+    "governance": "Gouvernance",
+    "lastUpdate": "Dernière mise à jour"
   },
   "actions": {
     "explore": "Explorer",
