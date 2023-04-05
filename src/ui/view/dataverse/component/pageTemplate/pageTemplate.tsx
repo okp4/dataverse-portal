@@ -3,19 +3,23 @@ import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { Tags } from '@/ui/view/dataverse/component/tags/tags'
-import type { Metadata, TagsMetadata, GeneralMetadata } from '@/ui/view/dataverse/types'
+import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
 import './pageTemplate.scss'
 
 type PageTemplateProps = {
   data: DataverseItemDetails
-  metadata: Metadata[]
+  metadata: ItemGeneralMetadata[]
 }
 
-const isTagsMetadata = (metadata: Metadata): metadata is TagsMetadata =>
+const isTagsMetadata = (
+  metadata: ItemGeneralMetadata
+): metadata is Omit<ItemGeneralMetadata, 'value'> & { property: 'tags'; value: string[] } =>
   metadata.property === 'tags'
 
-const isGeneralMetadata = (metadata: Metadata): metadata is GeneralMetadata =>
+const isGeneralMetadata = (
+  metadata: ItemGeneralMetadata
+): metadata is Omit<ItemGeneralMetadata, 'value'> & { value: string } =>
   metadata.property !== 'tags'
 
 const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element => {

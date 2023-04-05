@@ -1,14 +1,7 @@
 import type { IconName } from '@/ui/component/icon/icon'
 
-export type GeneralMetadata = {
+export type ItemGeneralMetadata = {
   property: string
-  value: string
+  value: string | string[]
   iconName?: IconName
 }
-
-export type TagsMetadata = {
-  property: 'tags'
-  value: string[]
-}
-
-export type Metadata = GeneralMetadata | TagsMetadata

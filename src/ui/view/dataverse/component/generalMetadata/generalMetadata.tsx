@@ -6,11 +6,11 @@ import { pipe } from 'fp-ts/lib/function'
 import { fromPredicate } from 'fp-ts/lib/Either'
 import { Icon } from '@/ui/component/icon/icon'
 import { useLocalizedYearIfISODateTime } from '@/ui/hook/useLocalizedYearIfISODateTime'
-import type { GeneralMetadata } from '@/ui/view/dataverse/types'
+import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
 
-const GeneralMetadataItem: FC<GeneralMetadata> = memo(
+const GeneralMetadataItem: FC<ItemGeneralMetadata> = memo(
   ({ iconName = 'folder', property, value }) => (
     <div className="okp4-dataverse-portal-general-metadata-item-main">
       <div className="okp4-dataverse-portal-general-metadata-item-icon">
@@ -26,7 +26,9 @@ const GeneralMetadataItem: FC<GeneralMetadata> = memo(
 GeneralMetadataItem.displayName = 'GeneralMetadataItem'
 
 type GeneralMetadataListProps = {
-  metadata: GeneralMetadata[]
+  metadata: (Omit<ItemGeneralMetadata, 'value'> & {
+    value: string
+  })[]
 }
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {

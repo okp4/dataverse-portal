@@ -4,10 +4,10 @@ import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import type { Metadata } from '@/ui/view/dataverse/types'
+import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
-const datasetMetadata: Metadata[] = [
+const datasetMetadata: ItemGeneralMetadata[] = [
   {
     iconName: 'file',
     property: 'format',
