@@ -12,8 +12,9 @@ import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import './dataverse.scss'
 
+type DataverseItemType = 'service' | 'dataspace' | 'dataset'
 type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
-type FilterValue = 'dataspace' | 'dataset' | 'service' | 'all'
+type FilterValue = DataverseItemType | 'all'
 
 type DataverseItem = {
   id: string
@@ -29,7 +30,13 @@ type Governance = {
   description: InternationalizedDescription
 }
 
-type Typed<T extends 'service' | 'dataspace' | 'dataset'> = { type: T }
+type Typed<T extends DataverseItemType> = { type: T }
+
+type DataSpaceResource = {
+  type: Exclude<DataverseItemType, 'dataspace'>
+  amount: number
+  lastUpdated: string
+}
 
 export type Service = DataverseItem & Typed<'service'>
 
@@ -38,6 +45,7 @@ export type Dataset = DataverseItem & Typed<'dataset'>
 export type DataSpace = DataverseItem &
   Typed<'dataspace'> & {
     governance: Governance
+    resources: DataSpaceResource[]
   }
 
 export type DataverseItemDetails = DataSpace | Dataset | Service
@@ -84,7 +92,19 @@ const dataverseItems: DataverseItemDetails[] = [
         fr: "Ce premier Data Space a une gouvernance centralisée : seul OKP4 peut modifier les règles. Dans cette première version, seul OKP4 peut enregistrer des données et des services. Toutefois, n'importe quel wallet est autorisé à télécharger les données.",
         de: 'Dieser erste Data Space hat eine zentralisierte Governance: Nur OKP4 kann die Regeln ändern. In dieser ersten Version kann nur OKP4 Daten und Dienste speichern. Allerdings ist es jeder Wallet erlaubt, Daten hochzuladen.'
       }
-    }
+    },
+    resources: [
+      {
+        type: 'dataset',
+        amount: 20,
+        lastUpdated: '2023-03-28T00:00:00+00:00'
+      },
+      {
+        type: 'service',
+        amount: 7,
+        lastUpdated: '2023-03-31T00:00:00+00:00'
+      }
+    ]
   },
   {
     id: '2',
@@ -224,7 +244,19 @@ const dataverseItems: DataverseItemDetails[] = [
         fr: "DS4I est un Data Space privé où les ressources ne sont accessibles que pour un groupe d'adresses de wallets contenues dans une Whitelist dédiée. Seul OKP4 a le droit de modifier cette whitelist.",
         de: 'DS4I ist ein privater Data Space, in dem die Ressourcen nur für eine Gruppe zugänglich sind. Adressen von Wallets, die in einer dedizierten Whitelist enthalten sind. Nur OKP4 hat das Recht, diese Whitelist zu ändern.'
       }
-    }
+    },
+    resources: [
+      {
+        type: 'dataset',
+        amount: 1,
+        lastUpdated: '2023-03-25T00:00:00+00:00'
+      },
+      {
+        type: 'service',
+        amount: 1,
+        lastUpdated: '2023-04-02T00:00:00+00:00'
+      }
+    ]
   }
 ]
 
