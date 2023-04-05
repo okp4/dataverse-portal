@@ -50,12 +50,14 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
           </button>
           <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
         </div>
-        <DataverseItemDescription
-          description={data.description}
-          title={data.label}
-          type={data.type}
-        />
-        {tags.length > 0 && <Tags tags={tags} />}
+        <div className="okp4-dataverse-portal-dataverse-description-and-tags">
+          <DataverseItemDescription
+            description={data.description}
+            title={data.label}
+            type={data.type}
+          />
+          {tags.length > 0 && <Tags tags={tags} />}
+        </div>
         <GeneralMetadataList metadata={generalMetadata} />
         {isDataSpace(data) && <GovernanceDescription description={data.governance.description} />}
       </div>
