@@ -1,0 +1,46 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-general-metadata-list-main {
+  @include with-theme {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .okp4-dataverse-portal-general-metadata-item-main {
+      display: flex;
+      gap: 8px;
+
+      .okp4-dataverse-portal-general-metadata-item-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: rgba(themed(primary-color), 0.12);
+      }
+    
+      .okp4-dataverse-portal-general-metadata-item-content {
+        display: flex;
+        flex-direction: column;
+
+        .okp4-dataverse-portal-general-metadata-item-title {
+          @include noto-sans(700);
+          font-size: 14px;
+          line-height: 20px;
+          color: themed('text');
+        }
+      
+        .okp4-dataverse-portal-general-metadata-item-description {
+          @include noto-sans(400);
+          font-size: 12px;
+          line-height: 18px;
+          color: rgba(themed('text'), 0.6);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "generalMetadata": {
+    "format": {
+      "property": "Format"
+    },
+    "topic": {
+      "property": "Topic",
+      "value": {
+        "agricultureFoodEnvironmentAndForestry": "Agriculture, Food, environment and forestry.",
+        "biologyGeologyAndChemistry": "Biology, geology, and chemistry",
+        "industryMobilityAndEngineering": "Industry, mobility, and engineering",
+        "logisticsRetailSupplyChainECommerce": "Logistics, retail, supply chain, and eCommerce",
+        "defiAndCrypto": "DeFi and Crypto",
+        "healthcare": "Healthcare",
+        "businessAndPurchase": "Business and purchase",
+        "marketingAndCustomerBehavior": "Marketing and Customer Behavior",
+        "energy": "Energy",
+        "other": "Other"
+      }
+    },
+    "license": {
+      "property": "License"
+    },
+    "geographicalCoverage": {
+      "property": "Geographical Coverage"
+    },
+    "temporalCoverage": {
+      "property": "Temporal Coverage"
+    },
+    "category": {
+      "property": "Category"
+    },
+    "invalidDate": "-"
+  }
+}

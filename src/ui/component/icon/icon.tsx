@@ -44,6 +44,11 @@ import { ReactComponent as ArrowRightIcon } from '@/ui/asset/icon/arrow-right.sv
 import { ReactComponent as AllLightIcon } from '@/ui/asset/icon/all-light.svg'
 import { ReactComponent as AllDarkIcon } from '@/ui/asset/icon/all-dark.svg'
 import { ReactComponent as ArrowLeftIcon } from '@/ui/asset/icon/arrow-left.svg'
+import { ReactComponent as FileIcon } from '@/ui/asset/icon/file.svg'
+import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
+import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
+import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
+import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
 
 export type IconName =
   | 'all-light'
@@ -90,6 +95,11 @@ export type IconName =
   | 'burger-menu-dark'
   | 'close-light'
   | 'close-dark'
+  | 'file'
+  | 'folder'
+  | 'calendar'
+  | 'earth'
+  | 'shield'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -135,7 +145,12 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'close-dark': CloseDarkIcon,
   'all-light': AllLightIcon,
   'all-dark': AllDarkIcon,
-  'arrow-left': ArrowLeftIcon
+  'arrow-left': ArrowLeftIcon,
+  file: FileIcon,
+  folder: FolderIcon,
+  calendar: CalendarIcon,
+  earth: EarthIcon,
+  shield: ShieldIcon
 }
 
 type IconProps = {
