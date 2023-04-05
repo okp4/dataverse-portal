@@ -48,8 +48,6 @@
 }
 
 @mixin twelve-column-layout {
-  row-gap: 40px;
-
   @include use-breakpoints(('mobile')) {
     @include grid-container($colsNb: 6, $gutter: 16px);
   }
