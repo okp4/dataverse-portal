@@ -7,6 +7,6 @@
     @include bi-column-item('left');
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    row-gap: 40px;
   }
 }
