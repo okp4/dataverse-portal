@@ -15,5 +15,6 @@
     "details": "See Details",
     "accessGovernance": "Access governance"
   },
-  "filters": "Filters"
+  "filters": "Filters",
+  "dataverse": "Dataverse"
 }

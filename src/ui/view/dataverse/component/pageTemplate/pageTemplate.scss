@@ -1,7 +1,41 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
   @include twelve-column-layout;
+  row-gap: 19px;
+
+  .okp4-dataverse-portal-dataverse-back {
+    @include with-theme {
+      display: flex;
+      align-items: center;
+
+      .okp4-dataverse-portal-dataverse-back-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: 0;
+        width: fit-content;
+        padding: 10px 7px;
+        cursor: pointer;
+
+        svg {
+          path {
+            fill: themed('text');
+          }
+        }
+      }
+      
+      .okp4-dataverse-portal-dataverse-back-text {
+        @include noto-sans(700);
+        font-size: 14px;
+        line-height: 22px;
+        color: themed('text');
+      }
+    }
+  }
 
   .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
     @include bi-column-item('left');
