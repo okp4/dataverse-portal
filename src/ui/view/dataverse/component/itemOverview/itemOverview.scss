@@ -2,30 +2,32 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
-.okp4-dataverse-portal-dataverse-item-overview-type {
+.okp4-dataverse-portal-dataverse-item-overview-main {
   @include with-theme() {
-    @include noto-sans(700);
-    letter-spacing: 2px;
-    font-size: 14px;
-    color: themed(primary-color-variant-4);
-    text-transform: uppercase;
-  }
-}
-
-.okp4-dataverse-portal-dataverse-item-overview-title {
-  @include with-theme() {
-    @include noto-sans(700);
-    font-size: 14px;
-    color: themed('text');
-    font-size: 24px;
-  }
-}
-
-.okp4-dataverse-portal-dataverse-item-overview-description {
-  @include with-theme() {
-    @include noto-sans(300);
-    font-size: 16px;
-    color: themed('text');
-    line-height: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    .okp4-dataverse-portal-dataverse-item-overview-type {
+      @include noto-sans(700);
+      letter-spacing: 2px;
+      font-size: 14px;
+      color: themed(primary-color-variant-4);
+      text-transform: uppercase;
+    }
+    
+    .okp4-dataverse-portal-dataverse-item-overview-title {
+      @include noto-sans(700);
+      font-size: 14px;
+      color: themed('text');
+      font-size: 24px;
+    }
+    
+    .okp4-dataverse-portal-dataverse-item-overview-description {
+      @include noto-sans(300);
+      font-size: 16px;
+      color: themed('text');
+      line-height: 22px;
+    }
   }
 }
