@@ -30,14 +30,14 @@ const ItemOverview: FC<ItemOverviewProps> = ({ type, title, description, tags })
 
   return (
     <div className="okp4-dataverse-portal-dataverse-item-overview-main">
-      <div
+      <h3
         className={classNames(
           'okp4-dataverse-portal-dataverse-item-overview-type',
           renderItemTypeColor(type)
         )}
       >
         {t(`resources.${type}`)}
-      </div>
+      </h3>
       <h2 className="okp4-dataverse-portal-dataverse-item-overview-title">{title}</h2>
       <p className="okp4-dataverse-portal-dataverse-item-overview-description">{description}</p>
       {tags.length > 0 && <Tags tags={tags} />}
