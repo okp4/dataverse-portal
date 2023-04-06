@@ -2,6 +2,12 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
+$colors: (
+  'primary-color',
+  'primary-color-variant-3',
+  'primary-color-variant-4'
+);
+
 .okp4-dataverse-portal-dataverse-item-overview-main {
   @include with-theme() {
     display: flex;
@@ -13,8 +19,12 @@
       letter-spacing: 2px;
       font-size: 14px;
       line-height: 24px;
-      color: themed(primary-color-variant-4);
       text-transform: uppercase;
+      @each $color-key in $colors {
+        &.#{$color-key} {
+          color: themed($color-key);
+        }
+      }
     }
     
     .okp4-dataverse-portal-dataverse-item-overview-title {
