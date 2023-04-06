@@ -2,7 +2,7 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
-.okp4-dataverse-portal-dataverse-item-description-type {
+.okp4-dataverse-portal-dataverse-item-overview-type {
   @include with-theme() {
     @include noto-sans(700);
     letter-spacing: 2px;
@@ -12,7 +12,7 @@
   }
 }
 
-.okp4-dataverse-portal-dataverse-item-description-title {
+.okp4-dataverse-portal-dataverse-item-overview-title {
   @include with-theme() {
     @include noto-sans(700);
     font-size: 14px;
@@ -21,7 +21,7 @@
   }
 }
 
-.okp4-dataverse-portal-dataverse-item-description-description {
+.okp4-dataverse-portal-dataverse-item-overview-description {
   @include with-theme() {
     @include noto-sans(300);
     font-size: 16px;

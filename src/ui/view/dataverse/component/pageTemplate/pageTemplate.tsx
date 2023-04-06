@@ -7,7 +7,7 @@ import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { Tags } from '@/ui/view/dataverse/component/tags/tags'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import DataverseItemDescription from '@/ui/view/dataverse/description/description'
+import ItemOverview from '@/ui/view/dataverse/component/itemOverview/itemOverview'
 import './pageTemplate.scss'
 import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
@@ -43,19 +43,15 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
 
   return (
     <div className="okp4-dataverse-portal-dataverse-component-page-template-main">
+      <div className="okp4-dataverse-portal-dataverse-back">
+        <button className="okp4-dataverse-portal-dataverse-back-button" onClick={backToDataverse}>
+          <Icon name="arrow-left" />
+        </button>
+        <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
+      </div>
       <div className="okp4-dataverse-portal-dataverse-page-template-left-side-wrapper">
-        <div className="okp4-dataverse-portal-dataverse-back">
-          <button className="okp4-dataverse-portal-dataverse-back-button" onClick={backToDataverse}>
-            <Icon name="arrow-left" />
-          </button>
-          <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
-        </div>
-        <div className="okp4-dataverse-portal-dataverse-description-and-tags">
-          <DataverseItemDescription
-            description={data.description}
-            title={data.label}
-            type={data.type}
-          />
+        <div className="okp4-dataverse-portal-dataverse-item-overview-and-tags">
+          <ItemOverview description={data.description} title={data.label} type={data.type} />
           {tags.length > 0 && <Tags tags={tags} />}
         </div>
         <GeneralMetadataList metadata={generalMetadata} />
