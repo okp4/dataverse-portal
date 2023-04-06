@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import type { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { pipe } from 'fp-ts/lib/function'
@@ -33,10 +33,14 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
   const navigate = useNavigate()
   const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
 
-  const tags = pipe(
-    metadata,
-    A.filter(isTagsMetadata),
-    A.chain(metadata => metadata.value)
+  const tags = useMemo(
+    () =>
+      pipe(
+        metadata,
+        A.filter(isTagsMetadata),
+        A.chain(metadata => metadata.value)
+      ),
+    [metadata]
   )
   const generalMetadata = pipe(metadata, A.filter(isGeneralMetadata))
 
