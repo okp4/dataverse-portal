@@ -5,6 +5,9 @@
 .okp4-dataverse-portal-dataverse-component-page-template-main {
   @include twelve-column-layout;
   row-gap: 19px;
+  @include use-breakpoints(('mobile')) {
+    row-gap: 13px;
+  }
 
   .okp4-dataverse-portal-dataverse-back {
     @include with-theme {

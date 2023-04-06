@@ -1,12 +1,12 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import type { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import { Tags } from '@/ui/view/dataverse/component/tags/tags'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
+import ItemOverview from '@/ui/view/dataverse/component/itemOverview/itemOverview'
 import './pageTemplate.scss'
 import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
@@ -33,10 +33,14 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
   const navigate = useNavigate()
   const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
 
-  const tags = pipe(
-    metadata,
-    A.filter(isTagsMetadata),
-    A.chain(metadata => metadata.value)
+  const tags = useMemo(
+    () =>
+      pipe(
+        metadata,
+        A.filter(isTagsMetadata),
+        A.chain(metadata => metadata.value)
+      ),
+    [metadata]
   )
   const generalMetadata = pipe(metadata, A.filter(isGeneralMetadata))
 
@@ -49,8 +53,12 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
         <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
       </div>
       <div className="okp4-dataverse-portal-dataverse-page-template-left-side-wrapper">
-        {data.label}
-        {tags.length > 0 && <Tags tags={tags} />}
+        <ItemOverview
+          description={data.description}
+          tags={tags}
+          title={data.label}
+          type={data.type}
+        />
         <GeneralMetadataList metadata={generalMetadata} />
         {isDataSpace(data) && <GovernanceDescription description={data.governance.description} />}
       </div>
