@@ -6,6 +6,8 @@ import { Tags } from '@/ui/view/dataverse/component/tags/tags'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
 import './pageTemplate.scss'
+import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
+import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 
 type PageTemplateProps = {
   data: DataverseItemDetails
@@ -37,6 +39,7 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
         {data.label}
         {tags.length > 0 && <Tags tags={tags} />}
         <GeneralMetadataList metadata={generalMetadata} />
+        {isDataSpace(data) && <GovernanceDescription description={data.governance.description} />}
       </div>
     </div>
   )

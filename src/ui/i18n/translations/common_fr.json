@@ -7,11 +7,13 @@
     "service": "Service",
     "dataspaces": "Data Spaces",
     "datasets": "Données",
-    "services": "Services"
+    "services": "Services",
+    "governance": "Gouvernance"
   },
   "actions": {
     "explore": "Explorer",
-    "details": "Voir Détails"
+    "details": "Voir Détails",
+    "accessGovernance": "Accéder à la gouvernance"
   },
   "filters": "Filtres"
 }
