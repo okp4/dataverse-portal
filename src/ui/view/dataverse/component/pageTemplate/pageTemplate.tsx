@@ -11,6 +11,7 @@ import './pageTemplate.scss'
 import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { Icon } from '@/ui/component/icon/icon'
+import { useTranslation } from 'react-i18next'
 
 type PageTemplateProps = {
   data: DataverseItemDetails
@@ -28,14 +29,15 @@ const isGeneralMetadata = (
   metadata.property !== 'tags'
 
 const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element => {
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
+
   const tags = pipe(
     metadata,
     A.filter(isTagsMetadata),
     A.chain(metadata => metadata.value)
   )
-
   const generalMetadata = pipe(metadata, A.filter(isGeneralMetadata))
 
   return (
@@ -45,7 +47,7 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
           <button className="okp4-dataverse-portal-dataverse-back-button" onClick={backToDataverse}>
             <Icon name="arrow-left" />
           </button>
-          <span className="okp4-dataverse-portal-dataverse-back-text">Dataverse</span>
+          <span className="okp4-dataverse-portal-dataverse-back-text">{t('dataverse')}</span>
         </div>
         {data.label}
         {tags.length > 0 && <Tags tags={tags} />}
