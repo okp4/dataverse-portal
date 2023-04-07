@@ -65,9 +65,7 @@ export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) 
           E.getOrElse(() => value)
         )
         const formattedValue =
-          property === 'temporalCoverage'
-            ? convertValueToLocalizedDateIfISODateTime(value)
-            : translatedValue
+          property === 'period' ? convertValueToLocalizedDateIfISODateTime(value) : translatedValue
         return (
           <GeneralMetadataItem
             key={property}
