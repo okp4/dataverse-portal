@@ -12,23 +12,21 @@
     }
 
     &::after {
-      animation: animation-translateX 1.3s linear 0.5s infinite;
+      animation: translateX 1.3s linear 0.5s infinite;
       background: linear-gradient(90deg, transparent, rgba(themed('skeleton-animation'), 0.04), transparent);
       content: '';
       position: absolute;
       transform: translateX(-100%);
-      bottom: 0;
-      left: 0;
-      right: 0;
-      top: 0;
+      inset: 0;
     }
     
-    &.rectangular {
-      border-radius: 0;
+    &.text {
+      height: 1.2em;
+      border-radius: 4px;
     }
 
-    &.rounded {
-      border-radius: 30px;
+    &.rectangular {
+      border-radius: 0;
     }
 
     &.circular {
@@ -37,7 +35,7 @@
   }
 }
 
-@keyframes animation-translateX {
+@keyframes translateX {
   100% {
     transform: translateX(100%);
   }
