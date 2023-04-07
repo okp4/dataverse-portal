@@ -3,14 +3,15 @@
 @import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
-  @include twelve-column-layout;
-  row-gap: 19px;
-  @include use-breakpoints(('mobile')) {
-    row-gap: 13px;
-  }
+  @include with-theme {
+    @include twelve-column-layout;
+    row-gap: 19px;
 
-  .okp4-dataverse-portal-dataverse-back {
-    @include with-theme {
+    @include use-breakpoints(('mobile')) {
+      row-gap: 13px;
+    }
+
+    .okp4-dataverse-portal-dataverse-back {
       display: flex;
       align-items: center;
 
@@ -30,7 +31,7 @@
           }
         }
       }
-      
+
       .okp4-dataverse-portal-dataverse-back-text {
         @include noto-sans(700);
         font-size: 14px;
@@ -38,12 +39,34 @@
         color: themed('text');
       }
     }
-  }
 
-  .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
-    @include bi-column-item('left');
-    display: flex;
-    flex-direction: column;
-    row-gap: 40px;
+    .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
+      @include bi-column-item('left');
+      display: flex;
+      flex-direction: column;
+      row-gap: 40px;
+    }
+
+    .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
+      @include bi-column-item($side: 'right');
+
+      h2 {
+        @include norse-gradient-header;
+        margin-bottom: 30px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          margin: 27px auto 30px;
+        }
+      }
+
+      .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
+        display: grid;
+        row-gap: 22px;
+
+        @include use-breakpoints(('mobile')) {
+          row-gap: 16px;
+        }
+      }
+    }
   }
 }
