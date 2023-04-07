@@ -14,6 +14,7 @@ import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { DataverseItemStatCard } from '@/ui/view/dataverse/component/dataverseItemStatCard/dataverseItemStatCard'
 import './pageTemplate.scss'
 import './i18n/index'
+import { SummaryMetadata } from '@/ui/view/dataverse/component/summaryMetadata/summaryMetadata'
 
 type PageTemplateProps = {
   data: DataverseItemDetails
@@ -76,6 +77,7 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element =>
           type={data.type}
         />
         <GeneralMetadataList metadata={generalMetadataWithIcon} />
+        <SummaryMetadata metadata={metadata} />
         {isDataSpace(data) && <GovernanceDescription description={data.governance.description} />}
       </div>
       <div className="okp4-dataverse-portal-dataverse-page-template-right-side-wrapper">
