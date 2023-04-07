@@ -1,0 +1,33 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+
+.okp4-dataverse-portal-back-main {
+  @include with-theme {
+    display: flex;
+    align-items: center;
+
+    .okp4-dataverse-portal-back-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border: 0;
+      width: fit-content;
+      padding: 10px 7px;
+      cursor: pointer;
+
+      svg {
+        path {
+          fill: themed('text');
+        }
+      }
+    }
+
+    .okp4-dataverse-portal-back-text {
+      @include noto-sans(700);
+      font-size: 14px;
+      line-height: 22px;
+      color: themed('text');
+    }
+  }
+}

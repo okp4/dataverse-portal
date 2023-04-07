@@ -1,72 +1,39 @@
-@import '@/ui/style/theme.scss';
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
-  @include with-theme {
-    @include twelve-column-layout;
-    row-gap: 19px;
+  @include twelve-column-layout;
+  row-gap: 19px;
 
-    @include use-breakpoints(('mobile')) {
-      row-gap: 13px;
-    }
+  @include use-breakpoints(('mobile')) {
+    row-gap: 13px;
+  }
 
-    .okp4-dataverse-portal-dataverse-back {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-      display: flex;
-      align-items: center;
+  .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
+    @include bi-column-item('left');
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
 
-      .okp4-dataverse-portal-dataverse-back-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: none;
-        border: 0;
-        width: fit-content;
-        padding: 10px 7px;
-        cursor: pointer;
+  .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
+    @include bi-column-item($side: 'right');
 
-        svg {
-          path {
-            fill: themed('text');
-          }
-        }
-      }
+    h2 {
+      @include norse-gradient-header;
+      margin-bottom: 30px;
 
-      .okp4-dataverse-portal-dataverse-back-text {
-        @include noto-sans(700);
-        font-size: 14px;
-        line-height: 22px;
-        color: themed('text');
+      @include use-breakpoints(('mobile', 'tablet')) {
+        margin: 27px auto 30px;
       }
     }
 
-    .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
-      @include bi-column-item('left');
-      display: flex;
-      flex-direction: column;
-      row-gap: 40px;
-    }
+    .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
+      display: grid;
+      row-gap: 22px;
 
-    .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
-      @include bi-column-item($side: 'right');
-
-      h2 {
-        @include norse-gradient-header;
-        margin-bottom: 30px;
-
-        @include use-breakpoints(('mobile', 'tablet')) {
-          margin: 27px auto 30px;
-        }
-      }
-
-      .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
-        display: grid;
-        row-gap: 22px;
-
-        @include use-breakpoints(('mobile')) {
-          row-gap: 16px;
-        }
+      @include use-breakpoints(('mobile')) {
+        row-gap: 16px;
       }
     }
   }
