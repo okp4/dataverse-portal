@@ -5,7 +5,7 @@ $primary-variant-2: #008fad;
 $primary-variant-3: #00b6b7;
 $primary-variant-4: #50ddb7;
 $primary-variant-5: #5580a2;
-$primary-text: white;
+$primary-text: #ffffff;
 
 // secondary (orange)
 $secondary: #ff9500;
@@ -32,14 +32,14 @@ $tertiary-button-background-dark-variant-1: #121320;
 $tertiary-button-background-light-variant-1: #eaedf0;
 
 // chips
-$chip-dark: white;
+$chip-dark: #ffffff;
 $chip-light: #004073;
 
 // switches
 $switch-dark: #242433;
 $switch-light: #ffdcaa;
 $switch-dark-variant-1: rgb(255 255 255 / 20%);
-$switch-light-variant-1: white;
+$switch-light-variant-1: #ffffff;
 
 // cards
 $card-dark: #242433;
@@ -53,7 +53,7 @@ $menu-dark-variant-1: #242433;
 $menu-light-variant-1: $background-light;
 
 // texts
-$text-dark: white;
+$text-dark: #ffffff;
 $text-light: $primary-variant-1;
 
 // gradients
@@ -64,7 +64,7 @@ $success: #4ad377;
 $error: #ff3648;
 
 // skeleton
-$skeleton-base-color-light: darkgrey;
-$skeleton-base-color-dark: gainsboro;
-$skeleton-animated-color-light: dimgrey;
+$skeleton-base-color-light: #a9a9a9;
+$skeleton-base-color-dark: #dcdcdc;
+$skeleton-animated-color-light: #696969;
 $skeleton-animated-color-dark: #efefef;

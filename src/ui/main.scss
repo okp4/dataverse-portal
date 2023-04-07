@@ -5,7 +5,7 @@
 * {
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: darkgrey transparent;
+  scrollbar-color: #a9a9a9 transparent;
 
   /* Chrome & Safari & Edge */
   &::-webkit-scrollbar {
@@ -18,7 +18,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #a9a9a9;
     border-radius: 5px;
   }
 }
