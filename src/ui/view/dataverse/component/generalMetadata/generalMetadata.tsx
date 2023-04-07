@@ -6,8 +6,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { fromPredicate } from 'fp-ts/lib/Either'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-
-import { useLocalizedYearIfISODateTime } from '@/ui/hook/useLocalizedYearIfISODateTime'
+import { useLocalizedDateIfISODateTime } from '@/ui/hook/useLocalizedYearIfISODateTime'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
@@ -45,7 +44,7 @@ type GeneralMetadataListProps = {
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {
   const namespace = 'generalMetadata'
   const { t, i18n } = useTranslation(namespace)
-  const convertValueToLocalizedYearIfISODateTime = useLocalizedYearIfISODateTime(
+  const convertValueToLocalizedDateIfISODateTime = useLocalizedDateIfISODateTime(
     t('generalMetadata.invalidDate')
   )
 
@@ -67,7 +66,7 @@ export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) 
         )
         const formattedValue =
           property === 'temporalCoverage'
-            ? convertValueToLocalizedYearIfISODateTime(value)
+            ? convertValueToLocalizedDateIfISODateTime(value)
             : translatedValue
         return (
           <GeneralMetadataItem

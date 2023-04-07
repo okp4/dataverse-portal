@@ -2,9 +2,9 @@ import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
 import { fromPredicate } from 'fp-ts/Either'
 
-const getLocalizedYear = (date: Date, locale: string): E.Either<Error, string> =>
+const getLocalizedDate = (date: Date, locale: string): E.Either<Error, string> =>
   pipe(
-    new Intl.DateTimeFormat(locale, { year: 'numeric' }),
+    new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }),
     fromPredicate(
       dateTimeFormat => dateTimeFormat instanceof Intl.DateTimeFormat,
       () => new Error('Invalid Locale')
@@ -22,11 +22,11 @@ export const parseAndValidateISODateTime = (input: string): E.Either<Error, Date
     E.map(timestamp => new Date(timestamp))
   )
 
-export const convertToLocalizedYearIfISODateTime = (
+export const convertToLocalizedDateIfISODateTime = (
   input: string,
   locale: string
 ): E.Either<Error, string> =>
   pipe(
     parseAndValidateISODateTime(input),
-    E.chain(date => getLocalizedYear(date, locale))
+    E.chain(date => getLocalizedDate(date, locale))
   )
