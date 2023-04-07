@@ -10,7 +10,6 @@ import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplat
 const serviceGeneralMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
-    iconName: 'folder',
     property: 'category',
     value: 'Data transformation'
   },

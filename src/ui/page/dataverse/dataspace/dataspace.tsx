@@ -12,7 +12,6 @@ import '../i18n/index'
 const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
-    iconName: 'folder',
     property: 'topic',
     value: 'Agriculture Environment And Forestry'
   },

@@ -10,31 +10,26 @@ import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplat
 const datasetMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
-    iconName: 'file',
     property: 'format',
     value: 'text_csv'
   },
   {
     category: 'generalMetadata',
-    iconName: 'folder',
     property: 'topic',
     value: 'industryMobilityAndEngineering'
   },
   {
     category: 'generalMetadata',
-    iconName: 'shield',
     property: 'license',
     value: 'licence:LO-FR-2_0'
   },
   {
     category: 'generalMetadata',
-    iconName: 'earth',
     property: 'geographicalCoverage',
     value: 'France'
   },
   {
     category: 'generalMetadata',
-    iconName: 'calendar',
     property: 'temporalCoverage',
     value: '2022-01-01T00:00:00+00:00'
   },
