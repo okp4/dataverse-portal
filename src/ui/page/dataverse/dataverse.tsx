@@ -26,7 +26,7 @@ export type InternationalizedDescription = {
   [lang in 'en' | 'fr' | 'de']: string
 }
 
-type Governance = {
+export type Governance = {
   description: InternationalizedDescription
 }
 

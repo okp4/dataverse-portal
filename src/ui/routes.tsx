@@ -3,13 +3,15 @@ import Dataverse from '@/ui/page/dataverse/dataverse'
 import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
+import Governance from '@/ui/page/dataverse/dataspace/governance/governance'
 
 export enum routes {
   home = '/',
   dataverse = 'dataverse',
   dataspace = 'dataverse/dataspace/:id',
   dataset = 'dataverse/dataset/:id',
-  service = 'dataverse/service/:id'
+  service = 'dataverse/service/:id',
+  governance = 'dataverse/dataspace/:id/governance'
 }
 
 export type Route = {
@@ -43,5 +45,10 @@ export const appRoutes: Route[] = [
     id: 'service',
     path: routes.service,
     element: <Service />
+  },
+  {
+    id: 'governance',
+    path: routes.governance,
+    element: <Governance />
   }
 ]

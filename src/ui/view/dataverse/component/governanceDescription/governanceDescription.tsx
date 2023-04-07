@@ -7,6 +7,7 @@ import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { Card } from '@/ui/component/card/card'
 import './governanceDescription.scss'
+import { useNavigate } from 'react-router-dom'
 
 type GovernanceDescriptionProps = {
   description: InternationalizedDescription
@@ -16,11 +17,16 @@ export const GovernanceDescription: FC<GovernanceDescriptionProps> = ({
   description
 }): JSX.Element => {
   const { t } = useTranslation('common')
+  const navigate = useNavigate()
 
   const internationalizedDescription = useCallback((): string => {
     const { lng } = activeLanguageWithDefault()
     return description[lng as keyof InternationalizedDescription]
   }, [description])
+
+  const handleButtonClick = useCallback(() => {
+    navigate('governance')
+  }, [navigate])
 
   return (
     <Card mainClassName="okp4-dataverse-portal-data-space-governance-description-main">
@@ -32,9 +38,9 @@ export const GovernanceDescription: FC<GovernanceDescriptionProps> = ({
           {internationalizedDescription()}
         </p>
         <Button
-          disabled
           icons={{ endIcon: <Icon name="arrow-right" /> }}
           label={t('actions.accessGovernance')}
+          onClick={handleButtonClick}
           size="large"
         />
       </div>
