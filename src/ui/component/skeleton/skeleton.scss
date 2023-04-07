@@ -13,7 +13,7 @@
 
     &::after {
       animation: translateX 1.3s linear 0.5s infinite;
-      background: linear-gradient(90deg, transparent, rgba(themed('skeleton-animated-color'), 0.04), transparent);
+      background: themed('skeleton-gradient');
       content: '';
       position: absolute;
       transform: translateX(-100%);
