@@ -10,7 +10,9 @@ import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
 
-const GeneralMetadataItem: FC<ItemGeneralMetadata> = memo(
+type GeneralMetadataItemProps = Omit<ItemGeneralMetadata, 'category'>
+
+const GeneralMetadataItem: FC<GeneralMetadataItemProps> = memo(
   ({ iconName = 'folder', property, value }) => (
     <div className="okp4-dataverse-portal-general-metadata-item-main">
       <div className="okp4-dataverse-portal-general-metadata-item-icon">
