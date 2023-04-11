@@ -17,5 +17,6 @@
     "accessGovernance": "Auf Governance zugreifen"
   },
   "filters": "Filter",
-  "dataverse": "Dataverse"
+  "dataverse": "Dataverse",
+  "copied": "Kopiert"
 }
