@@ -31,7 +31,7 @@ const datasetMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
     property: 'period',
-    value: ['2022-01-01T00:00:00+00:00', '2022-12-31T00:00:00+00:00']
+    value: ['2022-12-31T00:00:00+00:00', '2022-01-01T00:00:00+00:00']
   },
   {
     category: 'generalMetadata',
