@@ -20,6 +20,6 @@
   "dataverse": "Dataverse",
   "copied": "Kopiert",
   "copyError": "Ein Fehler aufgetreten ist, konnte der Text nicht kopiert werden.",
-  "from": "von",
-  "to": "bis"
+  "from": "Von:",
+  "to": "Bis:"
 }
