@@ -51,6 +51,11 @@ import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
 import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
 import { ReactComponent as CopyLight } from '@/ui/asset/icon/copy-light.svg'
 import { ReactComponent as CopyDark } from '@/ui/asset/icon/copy-dark.svg'
+import { ReactComponent as ErrorIcon } from '@/ui/asset/icon/error.svg'
+import { ReactComponent as WarningIcon } from '@/ui/asset/icon/warning.svg'
+import { ReactComponent as InfoLightIcon } from '@/ui/asset/icon/info-light.svg'
+import { ReactComponent as InfoDarkIcon } from '@/ui/asset/icon/info-dark.svg'
+import { ReactComponent as CheckIcon } from '@/ui/asset/icon/check.svg'
 
 export type IconName =
   | 'all-light'
@@ -104,6 +109,11 @@ export type IconName =
   | 'shield'
   | 'copy-light'
   | 'copy-dark'
+  | 'error'
+  | 'warning'
+  | 'check'
+  | 'info-light'
+  | 'info-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -156,7 +166,12 @@ const icons: Record<IconName, React.FunctionComponent> = {
   earth: EarthIcon,
   shield: ShieldIcon,
   'copy-light': CopyLight,
-  'copy-dark': CopyDark
+  'copy-dark': CopyDark,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  check: CheckIcon,
+  'info-light': InfoLightIcon,
+  'info-dark': InfoDarkIcon
 }
 
 type IconProps = {
