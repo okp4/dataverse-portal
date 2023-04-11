@@ -1,11 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/function'
-import { fold, fromNullable } from 'fp-ts/Option'
-
-type DateFromToProps = {
-  startISODate?: string
-  endISODate?: string
-}
+import { fold, fromEither } from 'fp-ts/Option'
+import { convertToLocalizedDateIfISODateTime } from '@/util/isoDateTime/isoDateTime'
+import { activeLanguageWithDefault } from '@/ui/languages/languages'
 
 const formatDateSpan = (label: JSX.Element, date: string): JSX.Element => (
   <span>
@@ -13,32 +10,41 @@ const formatDateSpan = (label: JSX.Element, date: string): JSX.Element => (
   </span>
 )
 
-export const DateFromTo = ({ startISODate, endISODate }: DateFromToProps): JSX.Element => {
+type DateFromToProps = {
+  fromDateString: string
+  toDateString: string
+}
+
+export const DateFromTo = ({ fromDateString, toDateString }: DateFromToProps): JSX.Element => {
   const { t: generalMetadataT } = useTranslation('generalMetadata')
   const { t: commonT } = useTranslation('common')
+  const lng = activeLanguageWithDefault().lng
   const From = <b>{commonT('from')}</b>
   const To = <b>{commonT('to')}</b>
 
+  const fromDateOption = pipe(convertToLocalizedDateIfISODateTime(fromDateString, lng), fromEither)
+  const toDateOption = pipe(convertToLocalizedDateIfISODateTime(toDateString, lng), fromEither)
+
   return pipe(
-    fromNullable(startISODate),
+    fromDateOption,
     fold(
       () =>
         pipe(
-          fromNullable(endISODate),
+          toDateOption,
           fold(
             () => <span>{generalMetadataT('generalMetadata.invalidDate')}</span>,
-            endDate => formatDateSpan(To, endDate)
+            toDate => formatDateSpan(To, toDate)
           )
         ),
-      startDate =>
+      fromDate =>
         pipe(
-          fromNullable(endISODate),
+          toDateOption,
           fold(
-            () => formatDateSpan(From, startDate),
-            endDate => (
+            () => formatDateSpan(From, fromDate),
+            toDate => (
               <>
-                {formatDateSpan(From, startDate)}
-                {formatDateSpan(To, endDate)}
+                {formatDateSpan(From, fromDate)}
+                {formatDateSpan(To, toDate)}
               </>
             )
           )

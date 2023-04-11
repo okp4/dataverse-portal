@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
-import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import './generalMetadata.scss'
 import './i18n/index'
 import { GeneralMetadataValue } from './generalMetadataValue'
@@ -25,7 +24,6 @@ const propertyIcons: Record<string, IconName | undefined> = {
 const GeneralMetadataItem: FC<GeneralMetadataItemProps> = memo(({ metadata }) => {
   const { t } = useTranslation('generalMetadata')
   const { property } = metadata
-  const lng = activeLanguageWithDefault().lng
 
   return (
     <div className="okp4-dataverse-portal-general-metadata-item-main">
@@ -37,7 +35,7 @@ const GeneralMetadataItem: FC<GeneralMetadataItemProps> = memo(({ metadata }) =>
           {t(`generalMetadata.${property}.property`)}
         </h3>
         <span className="okp4-dataverse-portal-general-metadata-item-value">
-          <GeneralMetadataValue lng={lng} metadata={metadata} />
+          <GeneralMetadataValue metadata={metadata} />
         </span>
       </div>
     </div>
