@@ -28,7 +28,7 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
     property: 'registrar',
-    value: ':did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
+    value: 'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
   },
   {
     category: 'generalMetadata',
@@ -38,7 +38,7 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
     category: 'auditMetadata',
     property: 'createdBy',
-    value: ':did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
+    value: 'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
   },
   {
     category: 'auditMetadata',
@@ -48,7 +48,7 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
     category: 'auditMetadata',
     property: 'modifiedBy',
-    value: ':did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
+    value: 'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655'
   },
   {
     category: 'auditMetadata',
