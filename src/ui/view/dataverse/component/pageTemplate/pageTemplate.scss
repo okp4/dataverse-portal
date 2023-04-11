@@ -12,6 +12,7 @@
     }
 
     .okp4-dataverse-portal-dataverse-back {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
       display: flex;
       align-items: center;
 
