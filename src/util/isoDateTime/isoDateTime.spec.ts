@@ -1,4 +1,4 @@
-import { convertToLocalizedDateIfISODateTime } from './isoDateTime'
+import { convertToLocalizedDateIfISODateTime, validateISODateRange } from './isoDateTime'
 import * as E from 'fp-ts/Either'
 
 describe('convertToLocalizedDateIfISODateTime', () => {
@@ -26,4 +26,32 @@ describe('convertToLocalizedDateIfISODateTime', () => {
     // Check if the result is either '2022' or '2023', depending on the system's timezone
     expect([E.right('12/31/2022'), E.right('01/01/2023')]).toContainEqual(result)
   })
+})
+
+describe('validateISODateRange', () => {
+  test.each<[string, string, E.Either<Error, [Date, Date]>]>([
+    [
+      '2023-02-01T00:00:00',
+      '2023-02-02T00:00:00',
+      E.right([new Date('2023-02-01T00:00:00'), new Date('2023-02-02T00:00:00')])
+    ],
+    [
+      '2023-02-01T00:00:00',
+      '2023-02-01T00:00:00',
+      E.right([new Date('2023-02-01T00:00:00'), new Date('2023-02-01T00:00:00')])
+    ],
+    [
+      '2023-02-02T00:00:00',
+      '2023-02-01T00:00:00',
+      E.left(new Error('Start date must be before end date'))
+    ],
+    ['Not an ISO DateTime', '2023-02-01T00:00:00', E.left(new Error('Invalid Date'))],
+    ['2023-02-01T00:00:00', 'Not an ISO DateTime', E.left(new Error('Invalid Date'))],
+    ['Not an ISO DateTime', 'Not an ISO DateTime', E.left(new Error('Invalid Date'))]
+  ])(
+    'validates date range [%s, %s] as %s',
+    (startISODate: string, endISODate: string, expected: E.Either<Error, [Date, Date]>) => {
+      expect(validateISODateRange(startISODate, endISODate)).toEqual(expected)
+    }
+  )
 })
