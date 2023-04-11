@@ -18,5 +18,6 @@
   },
   "filters": "Filtres",
   "dataverse": "Dataverse",
-  "copied": "Copié"
+  "copied": "Copié",
+  "copyError": "Une erreur est survenue, le texte n'a pu être copié."
 }

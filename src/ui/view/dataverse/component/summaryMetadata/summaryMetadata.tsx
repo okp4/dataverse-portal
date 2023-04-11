@@ -6,6 +6,7 @@ import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import { Link } from 'react-router-dom'
 import type { ItemGeneralMetadata } from '../../types'
 import './summaryMetadata.scss'
+import './i18n/index'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
@@ -38,7 +39,7 @@ const isAuditMetadata = (
   metadata.category === 'auditMetadata'
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
-  const { t } = useTranslation('metadata')
+  const { t } = useTranslation(['metadata', 'common'])
   const hasClipboard = label === 'registrar' || label === 'createdBy' || label === 'modifiedBy'
 
   return (
@@ -47,7 +48,7 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
         'created-by': label === 'createdBy'
       })}
     >
-      <p className="okp4-dataverse-portal-metadata-label">{t(`metadata.${label}`)}</p>
+      <p className="okp4-dataverse-portal-metadata-label">{t(`${label}`)}</p>
       {label === 'belongsTo' ? (
         <Link className="okp4-dataverse-portal-metadata-link-value" to="/dataverse/dataspace/1">
           {value}

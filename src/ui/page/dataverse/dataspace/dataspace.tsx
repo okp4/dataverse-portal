@@ -7,7 +7,6 @@ import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
-import '../i18n/index'
 
 const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
