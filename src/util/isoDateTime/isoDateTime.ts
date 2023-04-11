@@ -30,3 +30,23 @@ export const convertToLocalizedDateIfISODateTime = (
     parseAndValidateISODateTime(input),
     E.chain(date => getLocalizedDate(date, locale))
   )
+
+export const validateISODateRange = (
+  startISODate: string,
+  endISODate: string
+): E.Either<Error, [Date, Date]> =>
+  pipe(
+    parseAndValidateISODateTime(startISODate),
+    E.chain(fromDate =>
+      pipe(
+        parseAndValidateISODateTime(endISODate),
+        E.map(toDate => [fromDate, toDate])
+      )
+    ),
+    E.chain(([fromDate, toDate]) =>
+      E.fromPredicate(
+        () => fromDate <= toDate,
+        () => new Error('Start date must be before end date')
+      )([fromDate, toDate])
+    )
+  )

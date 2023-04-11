@@ -1,12 +1,15 @@
 import { useTranslation } from 'react-i18next'
+import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
-import { fold, fromEither } from 'fp-ts/Option'
-import { convertToLocalizedDateIfISODateTime } from '@/util/isoDateTime/isoDateTime'
+import {
+  convertToLocalizedDateIfISODateTime,
+  validateISODateRange
+} from '@/util/isoDateTime/isoDateTime'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 
-const formatDateSpan = (label: JSX.Element, date: string): JSX.Element => (
+const formatDateSpan = (label: JSX.Element, localizedDate: string): JSX.Element => (
   <span>
-    {label}&nbsp;{date}
+    {label}&nbsp;{localizedDate}
   </span>
 )
 
@@ -21,32 +24,39 @@ export const DateFromTo = ({ fromDateString, toDateString }: DateFromToProps): J
   const lng = activeLanguageWithDefault().lng
   const From = <b>{commonT('from')}</b>
   const To = <b>{commonT('to')}</b>
-
-  const fromDateOption = pipe(convertToLocalizedDateIfISODateTime(fromDateString, lng), fromEither)
-  const toDateOption = pipe(convertToLocalizedDateIfISODateTime(toDateString, lng), fromEither)
+  const InvalidDateFallback = <span>{generalMetadataT('generalMetadata.invalidDate')}</span>
+  const fromLocalizedDateEither = convertToLocalizedDateIfISODateTime(fromDateString, lng)
+  const toLocalizedDateEither = convertToLocalizedDateIfISODateTime(toDateString, lng)
 
   return pipe(
-    fromDateOption,
-    fold(
+    fromLocalizedDateEither,
+    E.fold(
       () =>
         pipe(
-          toDateOption,
-          fold(
-            () => <span>{generalMetadataT('generalMetadata.invalidDate')}</span>,
-            toDate => formatDateSpan(To, toDate)
+          toLocalizedDateEither,
+          E.fold(
+            () => InvalidDateFallback,
+            toLocalizedDate => formatDateSpan(To, toLocalizedDate)
           )
         ),
-      fromDate =>
+      fromLocalizedDate =>
         pipe(
-          toDateOption,
-          fold(
-            () => formatDateSpan(From, fromDate),
-            toDate => (
-              <>
-                {formatDateSpan(From, fromDate)}
-                {formatDateSpan(To, toDate)}
-              </>
-            )
+          toLocalizedDateEither,
+          E.fold(
+            () => formatDateSpan(From, fromLocalizedDate),
+            toLocalizedDate =>
+              pipe(
+                validateISODateRange(fromDateString, toDateString),
+                E.fold(
+                  () => InvalidDateFallback,
+                  () => (
+                    <>
+                      {formatDateSpan(From, fromLocalizedDate)}
+                      {formatDateSpan(To, toLocalizedDate)}
+                    </>
+                  )
+                )
+              )
           )
         )
     )
