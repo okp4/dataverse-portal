@@ -5,8 +5,9 @@
   "provider": "Bereitgestellt von:",
   "belongsTo": "Zugehörig zu:",
   "id": "Einzigartige ID:",
-  "createdBy": "Metadaten erstellt von:",
-  "createdOn": "Metadaten erstellt am:",
-  "modifiedBy": "Metadaten zuletzt geändert von:",
-  "modifiedOn": "Metadaten zuletzt geändert am:"
+  "metadata": "Metadaten",
+  "createdBy": "Erstellt von:",
+  "createdOn": "Erstellt am:",
+  "modifiedBy": "Zuletzt geändert von:",
+  "modifiedOn": "Zuletzt geändert am:"
 }

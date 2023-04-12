@@ -67,11 +67,7 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
 
   return (
     <div className="okp4-dataverse-portal-metadata-clipboard-with-toast">
-      <div
-        className={classNames('okp4-dataverse-portal-metadata-clipboard-container', {
-          'created-by': label === 'createdBy'
-        })}
-      >
+      <div className="okp4-dataverse-portal-metadata-clipboard-container">
         <p className="okp4-dataverse-portal-metadata-label">{t(`${label}`)}</p>
         {renderLinkOrSimpleRow({ label, value })}
         {hasClipboard && <CopyToClipboard handleCopy={handleCopy} textToCopy={value} />}
@@ -89,6 +85,8 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
 }
 
 export const SummaryMetadata = ({ metadata }: SummaryMetadataProps): JSX.Element => {
+  const { t } = useTranslation('metadata')
+
   const originsMetadata = pipe(metadata, A.filter(isOriginsProperty))
   const auditMetadata = pipe(metadata, A.filter(isAuditMetadata))
 
@@ -100,6 +98,7 @@ export const SummaryMetadata = ({ metadata }: SummaryMetadataProps): JSX.Element
         })}
       </div>
       <div className="okp4-dataverse-portal-summary-metadata-audit">
+        <h3 className="okp4-dataverse-portal-summary-metadata-audit-title">{t('metadata')}</h3>
         {auditMetadata.map(({ property, value }) => (
           <MetadataRow key={`${property} ${value}`} label={property} value={value} />
         ))}

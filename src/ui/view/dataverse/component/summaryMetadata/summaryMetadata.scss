@@ -12,12 +12,8 @@
     .okp4-dataverse-portal-summary-metadata-audit {
       .okp4-dataverse-portal-metadata-clipboard-container {
         display: flex;
-        margin-bottom: 4px;
+        margin-top: 8px;
         white-space: pre;
-
-        &.created-by {
-          margin-top: 18px;
-        }
 
         .okp4-dataverse-portal-metadata-label {
           @include noto-sans(400);
@@ -38,6 +34,18 @@
             color: rgba(themed(text), 0.6);
           }
         }
+      }
+    }
+
+    .okp4-dataverse-portal-summary-metadata-audit {
+      margin-top: 22px;
+
+      .okp4-dataverse-portal-summary-metadata-audit-title {
+        @include noto-sans(700);
+        font-size: 14px;
+        line-height: 20px;
+        color: themed('text');
+        margin-bottom: 10px;
       }
     }
   }
