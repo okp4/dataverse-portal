@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import './toast.scss'
 import { useEffect } from 'react'
+import './toast.scss'
 
 type ToastVariants = 'success' | 'error' | 'warning' | 'info'
 
@@ -8,28 +8,28 @@ type ToastProps = {
   title: string
   autoHideDuration?: number
   description?: string
-  onClose?: () => void
   icon?: JSX.Element
+  onClose?: () => void
   open?: boolean
   variant?: ToastVariants
 }
 
 export const Toast = ({
+  title,
   autoHideDuration,
   description,
   icon,
   onClose,
   open = false,
-  title,
   variant = 'info'
 }: ToastProps): JSX.Element | null => {
   useEffect(() => {
     if (autoHideDuration) {
-      const timer1 = setTimeout(() => {
+      const autoHideDurationTimer = setTimeout(() => {
         onClose?.()
       }, autoHideDuration)
       return () => {
-        clearTimeout(timer1)
+        clearTimeout(autoHideDurationTimer)
       }
     }
   }, [autoHideDuration, onClose, open])
@@ -44,7 +44,7 @@ export const Toast = ({
           <p className={classNames(`okp4-dataverse-portal-toast-title ${variant}`)}>{title}</p>
         </div>
         {description && (
-          <p className={classNames(`okp4-dataverse-portal-toast-description `)}>{description}</p>
+          <p className={classNames(`okp4-dataverse-portal-toast-description`)}>{description}</p>
         )}
       </div>
     </div>
