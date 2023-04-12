@@ -1,0 +1,44 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-governance-page-main {
+  @include with-theme() {
+    .okp4-dataverse-portal-governance-page-back-button {
+      @include use-breakpoints(('mobile', 'tablet')) {
+        display: none;
+      }
+    }
+
+    .okp4-dataverse-portal-governance-page-section {
+      @include grid-container($gutter: 48px);
+      color: themed('text');
+      grid-auto-rows: max-content;
+      row-gap: 26px;
+    
+      @include use-breakpoints(('desktop')) {
+        @include grid-container($colsNb: 12, $gutter: 34px);
+      }
+    
+      @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 8, $gutter: 16px);
+        row-gap: 20px;
+      }
+    
+      @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 6, $gutter: 16px);
+        row-gap: 20px;
+      }
+
+      h1 {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+        @include norse-gradient-header($line-height: 36px);
+        @include use-breakpoints(('mobile', 'tablet')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+          text-align: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+}
