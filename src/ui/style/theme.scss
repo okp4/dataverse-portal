@@ -31,7 +31,10 @@ $themes: (
     text: $text-light,
     success: $success,
     error: $error,
-    gradient: $gradient
+    gradient: $gradient,
+    skeleton-base-color: $skeleton-base-color-light,
+    skeleton-animated-color: $skeleton-animated-color-light,
+    skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent)
   ),
   dark: (
     primary-color: $primary,
@@ -63,7 +66,10 @@ $themes: (
     text: $text-dark,
     success: $success,
     error: $error,
-    gradient: $gradient
+    gradient: $gradient,
+    skeleton-base-color: $skeleton-base-color-dark,
+    skeleton-animated-color: $skeleton-animated-color-dark,
+    skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent)
   )
 );
 
