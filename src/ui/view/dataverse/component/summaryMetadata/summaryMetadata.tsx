@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import classNames from 'classnames'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import { Link } from 'react-router-dom'
@@ -41,7 +40,7 @@ const isAuditMetadata = (
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { value: string } =>
   metadata.category === 'auditMetadata'
 
-const renderLinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
+const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
   label === 'belongsTo' ? (
     <Link className="okp4-dataverse-portal-metadata-link-value" to="/dataverse/dataspace/1">
       {value}
@@ -60,7 +59,6 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
     setShowToast(true)
     setHasCopyError(!isCopied)
   }, [])
-
   const handleClose = useCallback(() => {
     setShowToast(false)
   }, [])
@@ -69,8 +67,8 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
     <div className="okp4-dataverse-portal-metadata-clipboard-with-toast">
       <div className="okp4-dataverse-portal-metadata-clipboard-container">
         <p className="okp4-dataverse-portal-metadata-label">{t(`${label}`)}</p>
-        {renderLinkOrSimpleRow({ label, value })}
-        {hasClipboard && <CopyToClipboard handleCopy={handleCopy} textToCopy={value} />}
+        <LinkOrSimpleRow label={label} value={value} />
+        {hasClipboard && <CopyToClipboard onCopied={handleCopy} textToCopy={value} />}
       </div>
       <Toast
         autoHideDuration={3000}
@@ -86,16 +84,15 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
 
 export const SummaryMetadata = ({ metadata }: SummaryMetadataProps): JSX.Element => {
   const { t } = useTranslation('metadata')
-
   const originsMetadata = pipe(metadata, A.filter(isOriginsProperty))
   const auditMetadata = pipe(metadata, A.filter(isAuditMetadata))
 
   return (
     <div className="okp4-dataverse-portal-summary-metadata-main">
       <div className="okp4-dataverse-portal-summary-metadata-origins">
-        {originsMetadata.map(({ property, value }) => {
-          return <MetadataRow key={`${property} ${value}`} label={property} value={value} />
-        })}
+        {originsMetadata.map(({ property, value }) => (
+          <MetadataRow key={`${property} ${value}`} label={property} value={value} />
+        ))}
       </div>
       <div className="okp4-dataverse-portal-summary-metadata-audit">
         <h3 className="okp4-dataverse-portal-summary-metadata-audit-title">{t('metadata')}</h3>

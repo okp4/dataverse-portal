@@ -5,23 +5,23 @@ import './copyToClipboard.scss'
 
 type CopyToClipBoardProps = {
   textToCopy: string
-  handleCopy?: (isCopied: boolean) => void
+  onCopied?: (isCopied: boolean) => void
 }
 
-export const CopyToClipboard = ({ handleCopy, textToCopy }: CopyToClipBoardProps): JSX.Element => {
+export const CopyToClipboard = ({ onCopied, textToCopy }: CopyToClipBoardProps): JSX.Element => {
   const theme = useAppStore(state => state.theme)
 
   const handleClipboardCopy = useCallback(async (): Promise<void> => {
-    await navigator.clipboard
+    navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        handleCopy?.(true)
+        onCopied?.(true)
       })
       .catch((error: Error) => {
         console.error(error.message)
-        handleCopy?.(false)
+        onCopied?.(false)
       })
-  }, [handleCopy, textToCopy])
+  }, [onCopied, textToCopy])
 
   return (
     <div className="okp4-dataverse-portal-copy-paste-main">

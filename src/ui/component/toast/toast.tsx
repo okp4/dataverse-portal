@@ -24,7 +24,7 @@ export const Toast = ({
   variant = 'info'
 }: ToastProps): JSX.Element | null => {
   useEffect(() => {
-    if (autoHideDuration) {
+    if (open && autoHideDuration) {
       const autoHideDurationTimer = setTimeout(() => {
         onClose?.()
       }, autoHideDuration)
