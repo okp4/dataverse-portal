@@ -11,7 +11,7 @@ type SkeletonProps = {
 export const Skeleton: FC<SkeletonProps> = ({ width, height, variant = 'text' }) => {
   const mergedStyle: CSSProperties = {
     width: width ? (typeof width === 'number' ? `${width}px` : width) : '100%',
-    ...(height ? { height: typeof height === 'number' ? `${height}px` : height } : {})
+    ...(height && { height: typeof height === 'number' ? `${height}px` : height })
   }
 
   return (
