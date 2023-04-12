@@ -1,6 +1,6 @@
 @import '@/ui/style/theme.scss';
 
-.okp4-dataverse-portal-skeleton {
+.okp4-dataverse-portal-skeleton-main {
   @include with-theme {
     background-color: rgba(themed('skeleton-base-color'), 0.11);
     position: relative;

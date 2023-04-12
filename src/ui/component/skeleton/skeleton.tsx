@@ -16,7 +16,7 @@ export const Skeleton: FC<SkeletonProps> = ({ width, height, variant = 'text' })
 
   return (
     <div
-      className={classNames('okp4-dataverse-portal-skeleton', variant)}
+      className={classNames('okp4-dataverse-portal-skeleton-main', variant)}
       style={mergedStyle}
     ></div>
   )
