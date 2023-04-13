@@ -5,7 +5,7 @@ import { fromPredicate } from 'fp-ts/lib/Either'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
-import { DateFromTo } from './dateFromTo'
+import { DateInterval } from './dateInterval'
 
 const isPeriodGeneralMetadata = (
   metadata: ItemGeneralMetadata
@@ -43,7 +43,7 @@ export const GeneralMetadataValue = ({ metadata }: MetadataValueProps): JSX.Elem
 
   if (isPeriodGeneralMetadata(metadata)) {
     const [startDateValue, endDateValue] = metadata.value
-    return <DateFromTo fromDateString={endDateValue} toDateString={startDateValue} />
+    return <DateInterval endDate={startDateValue} startDate={endDateValue} />
   }
 
   console.warn('Metadata is not of type ItemGeneralMetadata')

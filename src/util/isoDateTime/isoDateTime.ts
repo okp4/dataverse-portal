@@ -37,16 +37,16 @@ export const validateISODateRange = (
 ): E.Either<Error, [Date, Date]> =>
   pipe(
     parseAndValidateISODateTime(startISODate),
-    E.chain(fromDate =>
+    E.chain(startDate =>
       pipe(
         parseAndValidateISODateTime(endISODate),
-        E.map(toDate => [fromDate, toDate])
+        E.map(endDate => [startDate, endDate])
       )
     ),
-    E.chain(([fromDate, toDate]) =>
+    E.chain(([startDate, endDate]) =>
       E.fromPredicate(
-        () => fromDate <= toDate,
+        () => startDate <= endDate,
         () => new Error('Start date must be before end date')
-      )([fromDate, toDate])
+      )([startDate, endDate])
     )
   )

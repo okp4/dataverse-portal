@@ -49,8 +49,8 @@ type GeneralMetadataListProps = {
 
 export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => (
   <div className="okp4-dataverse-portal-general-metadata-list-main">
-    {metadata.map(_metadata => (
-      <GeneralMetadataItem key={_metadata.property} metadata={_metadata} />
+    {metadata.map(itemMetadata => (
+      <GeneralMetadataItem key={itemMetadata.property} metadata={itemMetadata} />
     ))}
   </div>
 )

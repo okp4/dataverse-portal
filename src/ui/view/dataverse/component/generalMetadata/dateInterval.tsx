@@ -7,7 +7,7 @@ import {
 } from '@/util/isoDateTime/isoDateTime'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 
-const FormatDateSpan = ({
+const FormattedDateSpan = ({
   localizedDate,
   label
 }: {
@@ -30,41 +30,41 @@ const InvalidDateFallback = (): JSX.Element => {
   return <span>{t('generalMetadata.invalidDate')}</span>
 }
 
-type DateFromToProps = {
-  fromDateString: string
-  toDateString: string
+type DateIntervalProps = {
+  startDate: string
+  endDate: string
 }
 
-export const DateFromTo = ({ fromDateString, toDateString }: DateFromToProps): JSX.Element => {
+export const DateInterval = ({ startDate, endDate }: DateIntervalProps): JSX.Element => {
   const lng = activeLanguageWithDefault().lng
-  const fromLocalizedDateEither = convertToLocalizedDateIfISODateTime(fromDateString, lng)
-  const toLocalizedDateEither = convertToLocalizedDateIfISODateTime(toDateString, lng)
+  const localizedStartDate = convertToLocalizedDateIfISODateTime(startDate, lng)
+  const localizedEndDate = convertToLocalizedDateIfISODateTime(endDate, lng)
 
   return pipe(
-    fromLocalizedDateEither,
+    localizedStartDate,
     E.fold(
       () =>
         pipe(
-          toLocalizedDateEither,
+          localizedEndDate,
           E.fold(
             () => <InvalidDateFallback />,
-            toLocalizedDate => <FormatDateSpan label="to" localizedDate={toLocalizedDate} />
+            localizedEndDate => <FormattedDateSpan label="to" localizedDate={localizedEndDate} />
           )
         ),
-      fromLocalizedDate =>
+      localizedStartDate =>
         pipe(
-          toLocalizedDateEither,
+          localizedEndDate,
           E.fold(
-            () => <FormatDateSpan label="from" localizedDate={fromLocalizedDate} />,
-            toLocalizedDate =>
+            () => <FormattedDateSpan label="from" localizedDate={localizedStartDate} />,
+            localizedEndDate =>
               pipe(
-                validateISODateRange(fromDateString, toDateString),
+                validateISODateRange(startDate, endDate),
                 E.fold(
                   () => <InvalidDateFallback />,
                   () => (
                     <>
-                      <FormatDateSpan label="from" localizedDate={fromLocalizedDate} />
-                      <FormatDateSpan label="to" localizedDate={toLocalizedDate} />
+                      <FormattedDateSpan label="from" localizedDate={localizedStartDate} />
+                      <FormattedDateSpan label="to" localizedDate={localizedEndDate} />
                     </>
                   )
                 )
