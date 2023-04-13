@@ -25,17 +25,11 @@ const InvalidDateFallback: FC = () => {
   return <span>{t('generalMetadata.invalidDate')}</span>
 }
 
-type DateIntervalProps = {
-  startDate: string
-  endDate: string
-}
-
-export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }): JSX.Element => {
-  const lng = activeLanguageWithDefault().lng
-  const localizedStartDate = convertToLocalizedDateIfISODateTime(startDate, lng)
-  const localizedEndDate = convertToLocalizedDateIfISODateTime(endDate, lng)
-
-  return pipe(
+const handleLocalizedDates = (
+  localizedStartDate: E.Either<Error, string>,
+  localizedEndDate: E.Either<Error, string>
+): JSX.Element =>
+  pipe(
     localizedStartDate,
     E.fold(
       () =>
@@ -51,21 +45,32 @@ export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }): JSX
           localizedEndDate,
           E.fold(
             () => <FormattedDateSpan label="from" localizedDate={localizedStartDate} />,
-            localizedEndDate =>
-              pipe(
-                validateISODateRange(startDate, endDate),
-                E.fold(
-                  () => <InvalidDateFallback />,
-                  () => (
-                    <>
-                      <FormattedDateSpan label="from" localizedDate={localizedStartDate} />
-                      <FormattedDateSpan label="to" localizedDate={localizedEndDate} />
-                    </>
-                  )
-                )
-              )
+            localizedEndDate => (
+              <>
+                <FormattedDateSpan label="from" localizedDate={localizedStartDate} />
+                <FormattedDateSpan label="to" localizedDate={localizedEndDate} />
+              </>
+            )
           )
         )
+    )
+  )
+
+type DateIntervalProps = {
+  startDate: string
+  endDate: string
+}
+
+export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }): JSX.Element => {
+  const lng = activeLanguageWithDefault().lng
+  const localizedStartDate = convertToLocalizedDateIfISODateTime(startDate, lng)
+  const localizedEndDate = convertToLocalizedDateIfISODateTime(endDate, lng)
+
+  return pipe(
+    validateISODateRange(startDate, endDate),
+    E.fold(
+      () => <InvalidDateFallback />,
+      () => handleLocalizedDates(localizedStartDate, localizedEndDate)
     )
   )
 }
