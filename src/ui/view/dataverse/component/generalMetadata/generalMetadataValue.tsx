@@ -31,6 +31,6 @@ export const GeneralMetadataValue = ({ metadata }: MetadataValueProps): JSX.Elem
     return <DateInterval endDate={endDateValue} startDate={startDateValue} />
   }
 
-  console.warn('Metadata is not of type ItemGeneralMetadata')
+  console.warn('Metadata is not of type %s: %O', 'ItemGeneralMetadata', metadata)
   return null
 }
