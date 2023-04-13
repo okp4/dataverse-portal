@@ -40,12 +40,10 @@ const isTagsMetadata = (
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { property: 'tags'; value: string[] } =>
   metadata.property === 'tags'
 
-const isGeneralMetadataWithIcon = (
+export const isGeneralMetadataWithIcon = (
   metadata: ItemGeneralMetadata
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { value: string } =>
-  metadata.property !== 'tags' &&
-  metadata.category === 'generalMetadata' &&
-  isPropertyWithIcon(metadata.property)
+  metadata.category === 'generalMetadata' && isPropertyWithIcon(metadata.property)
 
 const tags = (metadata: ItemGeneralMetadata[]): string[] =>
   pipe(
