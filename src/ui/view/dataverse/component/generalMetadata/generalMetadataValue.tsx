@@ -43,7 +43,7 @@ export const GeneralMetadataValue = ({ metadata }: MetadataValueProps): JSX.Elem
 
   if (isPeriodGeneralMetadata(metadata)) {
     const [startDateValue, endDateValue] = metadata.value
-    return <DateInterval endDate={startDateValue} startDate={endDateValue} />
+    return <DateInterval endDate={endDateValue} startDate={startDateValue} />
   }
 
   console.warn('Metadata is not of type ItemGeneralMetadata')
