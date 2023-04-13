@@ -17,5 +17,7 @@
     "accessGovernance": "Auf Governance zugreifen"
   },
   "filters": "Filter",
-  "dataverse": "Dataverse"
+  "dataverse": "Dataverse",
+  "copied": "Kopiert",
+  "copyError": "Ein Fehler aufgetreten ist, konnte der Text nicht kopiert werden."
 }

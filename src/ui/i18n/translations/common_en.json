@@ -17,5 +17,7 @@
     "accessGovernance": "Access governance"
   },
   "filters": "Filters",
-  "dataverse": "Dataverse"
+  "dataverse": "Dataverse",
+  "copied": "Copied",
+  "copyError": "An error occurred, the text could not be copied."
 }

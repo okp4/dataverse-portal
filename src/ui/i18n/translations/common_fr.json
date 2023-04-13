@@ -17,5 +17,7 @@
     "accessGovernance": "Accéder à la gouvernance"
   },
   "filters": "Filtres",
-  "dataverse": "Dataverse"
+  "dataverse": "Dataverse",
+  "copied": "Copié",
+  "copyError": "Une erreur est survenue, le texte n'a pu être copié."
 }

@@ -1,0 +1,13 @@
+{
+  "publisher": "Éditeur :",
+  "creator": "Créateur :",
+  "registrar": "Enregistré par :",
+  "provider": "Fourni par :",
+  "belongsTo": "Appartient à :",
+  "id": "ID unique :",
+  "metadata": "Metadata",
+  "createdBy": "Créées par :",
+  "createdOn": "Créées le :",
+  "modifiedBy": "Dernière modification par :",
+  "modifiedOn": "Dernière modification le :"
+}
