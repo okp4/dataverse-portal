@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import { isGeneralMetadataWithIcon } from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
@@ -16,7 +17,7 @@ type MetadataValueProps = {
   metadata: ItemGeneralMetadata
 }
 
-export const GeneralMetadataValue = ({ metadata }: MetadataValueProps): JSX.Element | null => {
+export const GeneralMetadataValue: FC<MetadataValueProps> = ({ metadata }): JSX.Element | null => {
   const namespace = 'generalMetadata'
   const { t } = useTranslation(namespace)
   const { value, property } = metadata
