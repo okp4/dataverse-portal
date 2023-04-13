@@ -17,8 +17,7 @@ const FormattedDateSpan = ({
   const { t } = useTranslation('common')
   return (
     <span>
-      {t(label)}
-      {t('colon')}
+      {t(label)}&nbsp;
       {localizedDate}
     </span>
   )

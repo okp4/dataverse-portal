@@ -20,7 +20,6 @@
   "dataverse": "Dataverse",
   "copied": "Copié",
   "copyError": "Une erreur est survenue, le texte n'a pu être copié.",
-  "from": "Depuis le",
-  "to": "Jusqu'au",
-  "colon": "\u00A0:\u00A0"
+  "from": "Depuis le :",
+  "to": "Jusqu'au :"
 }
