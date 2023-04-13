@@ -27,7 +27,7 @@ const propertiesWithIcon = [
   'format',
   'license',
   'geographicalCoverage',
-  'temporalCoverage'
+  'period'
 ] as const
 
 type PropertyWithIcon = (typeof propertiesWithIcon)[number]
