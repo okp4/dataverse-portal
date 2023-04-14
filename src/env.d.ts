@@ -8,4 +8,5 @@ declare const APP_ENV: {
     | 'about:okp4',
     string
   >
+  sparql: Record<'endpoint' | 'credentials', string>
 }
