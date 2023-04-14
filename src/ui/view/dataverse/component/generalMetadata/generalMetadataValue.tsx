@@ -17,7 +17,7 @@ type MetadataValueProps = {
   metadata: ItemGeneralMetadata
 }
 
-export const GeneralMetadataValue: FC<MetadataValueProps> = ({ metadata }): JSX.Element | null => {
+export const GeneralMetadataValue: FC<MetadataValueProps> = ({ metadata }) => {
   const namespace = 'generalMetadata'
   const { t } = useTranslation(namespace)
   const { value, property } = metadata

@@ -11,7 +11,7 @@ import { activeLanguageWithDefault } from '@/ui/languages/languages'
 const FormattedDateSpan: FC<{
   label: 'from' | 'to'
   localizedDate: string
-}> = ({ localizedDate, label }): JSX.Element => {
+}> = ({ localizedDate, label }) => {
   const { t } = useTranslation('common')
   return (
     <span>
@@ -25,10 +25,10 @@ const InvalidDateFallback: FC = () => {
   return <span>{t('generalMetadata.invalidDate')}</span>
 }
 
-const handleLocalizedDates = (
-  localizedStartDate: E.Either<Error, string>,
+const LocalizedDates: FC<{
+  localizedStartDate: E.Either<Error, string>
   localizedEndDate: E.Either<Error, string>
-): JSX.Element =>
+}> = ({ localizedStartDate, localizedEndDate }) =>
   pipe(
     localizedStartDate,
     E.fold(
@@ -61,7 +61,7 @@ type DateIntervalProps = {
   endDate: string
 }
 
-export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }): JSX.Element => {
+export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }) => {
   const lng = activeLanguageWithDefault().lng
   const localizedStartDate = convertToLocalizedDateIfISODateTime(startDate, lng)
   const localizedEndDate = convertToLocalizedDateIfISODateTime(endDate, lng)
@@ -70,7 +70,12 @@ export const DateInterval: FC<DateIntervalProps> = ({ startDate, endDate }): JSX
     validateISODateRange(startDate, endDate),
     E.fold(
       () => <InvalidDateFallback />,
-      () => handleLocalizedDates(localizedStartDate, localizedEndDate)
+      () => (
+        <LocalizedDates
+          localizedEndDate={localizedEndDate}
+          localizedStartDate={localizedStartDate}
+        />
+      )
     )
   )
 }

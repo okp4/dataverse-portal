@@ -52,7 +52,7 @@ const tags = (metadata: ItemGeneralMetadata[]): string[] =>
     A.chain(metadata => metadata.value)
   )
 
-const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element => {
+const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
   const { t } = useTranslation(['pageTemplate', 'common'])
   const navigate = useNavigate()
   const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
