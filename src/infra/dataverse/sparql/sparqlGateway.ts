@@ -16,7 +16,7 @@ export const sparqlGateway: DataversePort = {
     language: string,
     limit: number,
     offset: number,
-    filters?: RetrieveDataverseQueryFilters
+    filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
@@ -37,11 +37,7 @@ export const sparqlGateway: DataversePort = {
           ?id rdf:type core:DataSpace .
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
         }
-        ${
-          filters && filters.byType !== 'all'
-            ? `FILTER ( contains(str(?type), "${filters.byType}" ))`
-            : ''
-        }
+        ${filters.byType !== 'all' ? `FILTER ( contains(str(?type), "${filters.byType}" ))` : ''}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
