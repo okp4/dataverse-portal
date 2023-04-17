@@ -2,20 +2,14 @@
 import type { FC } from 'react'
 import { useCallback, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-
-type SectionWithSubsections = {
-  title: string
-  subsectionsTitles: string[]
-}
+import type { SectionDTO } from './governance'
 
 type GovernanceWithNavigationProps = {
-  sectionsWithSubsections: SectionWithSubsections[]
+  sections: SectionDTO[]
 }
 // TODO: add translation for nav links
-export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
-  sectionsWithSubsections
-}) => {
-  const [activeLink, setActiveLink] = useState<string>(sectionsWithSubsections[0].title)
+export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({ sections }) => {
+  const [activeLink, setActiveLink] = useState<string>(sections[0].title)
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 
   const handleNavLinkClick = useCallback(
@@ -43,19 +37,19 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
         <span className="arrow"></span>
       </button>
       <ul>
-        {sectionsWithSubsections.map(({ title, subsectionsTitles }) => (
-          <li key={title}>
+        {sections.map(({ id: sectionId, title: sectionTitle, contains: subsections }) => (
+          <li key={sectionId}>
             <NavLink
-              className={navlinkClassName({ isActive: title === activeLink, isPending: false })}
-              onClick={handleNavLinkClick(title)}
+              className={navlinkClassName({ isActive: sectionId === activeLink, isPending: false })}
+              onClick={handleNavLinkClick(sectionId)}
               relative="route"
-              to={`${title}`}
+              to={`${sectionId}`}
             >
-              {title}
+              {sectionTitle}
             </NavLink>
-            {subsectionsTitles.length > 0 && (
+            {subsections.length > 0 && (
               <ul>
-                {subsectionsTitles.map(subsectionTitle => (
+                {subsections.map(({ title: subsectionTitle, id: subsectionId }) => (
                   <li key={subsectionTitle}>
                     <NavLink
                       className={navlinkClassName({
@@ -64,7 +58,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                       })}
                       onClick={handleNavLinkClick(subsectionTitle)}
                       relative="route"
-                      to={`${title}/${subsectionTitle}`}
+                      to={`${sectionId}/${subsectionId}`}
                     >
                       {subsectionTitle}
                     </NavLink>

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import { useParams, Outlet } from 'react-router-dom'
+import { useParams, Outlet, useNavigate, useOutletContext } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
@@ -29,7 +29,7 @@ type Numbered = {
 type NonEmptyArray<T> = [T, ...T[]]
 
 type Container<T> = {
-  contains: T[]
+  contains: NonEmptyArray<T>
 }
 
 type ParagraphDTOWithNumber = Omit<DescriptedDTO, 'description'> &
@@ -45,7 +45,7 @@ type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
 
 type SubSectionDTO = DescriptedDTOWithNumber & Container<ArticleDTO>
 
-type SectionDTO = DescriptedDTOWithNumber & Container<SubSectionDTO>
+export type SectionDTO = DescriptedDTOWithNumber & Container<SubSectionDTO>
 
 type Chapter = DescriptedDTO & Container<SectionDTO>
 
@@ -104,14 +104,14 @@ const governanceMetadata: GovernanceMetadata = {
             number: '2.1',
             contains: [
               {
-                id: '2.1.1',
+                id: '2-1-1',
                 title: 'Article 1',
                 description:
                   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                 number: '2.1.1',
                 contains: [
                   {
-                    id: '2.1.1.1',
+                    id: '2-1-1-1',
                     title: 'Paragraph 1',
                     description:
                       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
@@ -125,21 +125,21 @@ const governanceMetadata: GovernanceMetadata = {
             id: '2-2',
             title: 'Create metadata',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-            number: '1.2',
+            number: '2.2',
             contains: [
               {
-                id: '1.2.1',
+                id: '2-2-1',
                 title: 'Article 1',
                 description:
                   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                number: '1.2.1',
+                number: '2.2.1',
                 contains: [
                   {
-                    id: '1.2.1.1',
+                    id: '2-2-1-1',
                     title: 'Paragraph 1',
                     description:
                       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                    number: '1.2.1.1'
+                    number: '2.2.1.1'
                   }
                 ]
               }
@@ -229,17 +229,17 @@ const governanceMetadata: GovernanceMetadata = {
             id: 'dateset-retribution',
             title: 'Dateset retribution',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-            number: '3.1',
+            number: '3-1',
             contains: [
               {
-                id: '3.1.1',
+                id: '3-1-1',
                 title: 'Article 1',
                 description:
                   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                 number: '3.1.1',
                 contains: [
                   {
-                    id: '3.1.1.1',
+                    id: '3-1-1-1',
                     title: 'Paragraph 1',
                     description:
                       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
@@ -280,26 +280,29 @@ const governanceMetadata: GovernanceMetadata = {
 }
 
 export const SubSection: FC = () => {
-  const { subsectionId } = useParams<{ subsectionId: string }>()
-
+  const subSection = useOutletContext<SubSectionDTO>()
   return (
     <section>
-      <h3>{subsectionId}</h3>
+      <h3>{subSection.title}</h3>
     </section>
   )
 }
+
 export const Section: FC = () => {
-  const { sectionId } = useParams<{ sectionId: string }>()
+  const { subsectionId } = useParams<{ subsectionId: string }>()
+  const section = useOutletContext<SectionDTO>()
+  const subsection = section.contains.find(subSection => subSection.id === subsectionId)
   return (
     <section>
-      <h2>{sectionId}</h2>
-      <Outlet />
+      <h2>{section.title}</h2>
+      <Outlet context={subsection} />
     </section>
   )
 }
 
 export const Governance: FC = () => {
-  const { id } = useParams<string>()
+  const navigate = useNavigate()
+  const { id, sectionId: sectionIdParams, subsectionId: subsectionIdParams } = useParams<string>()
   const [dataverseItem, setDataverseItem] = useState<Option<DataverseItemDetails>>(O.none)
 
   useEffect(() => {
@@ -307,16 +310,24 @@ export const Governance: FC = () => {
   }, [id])
 
   const sections = governanceMetadata.chapter.contains
-  // we assume that the sections and subsections are ordered
-  // TODO: reorder the sections and subsections based on the number
-  const sectionsWithSubsections = sections.map(section => {
-    const subsections = section.contains
-    const subsectionsTitles = subsections.map(subsection => subsection.title)
-    return {
-      title: section.title,
-      subsectionsTitles
+  const firstSection = sections[0]
+  const firstSectionId = firstSection.id
+  const firstSubsection = firstSection.contains[0]
+  const firstSubsectionId = firstSubsection.id
+
+  const currentSection = sections.find(section => section.id === sectionIdParams)
+  const currentSubsection = currentSection?.contains.find(
+    subsection => subsection.id === subsectionIdParams
+  )
+
+  useEffect(() => {
+    if (!currentSection && !currentSubsection) {
+      navigate(`${firstSectionId}/${firstSubsectionId}`)
     }
-  })
+    if (currentSection && !currentSubsection) {
+      navigate(`${currentSection.id}/${currentSection.contains[0].id}`)
+    }
+  }, [navigate, firstSectionId, firstSubsectionId, currentSection, currentSubsection])
 
   return O.match(
     () => <p>dataverse item not found</p>,
@@ -331,8 +342,8 @@ export const Governance: FC = () => {
           </div>
           <section className="okp4-dataverse-portal-governance-page-section">
             <h1>{`${label} | governance`}</h1>
-            <GovernanceNavigation sectionsWithSubsections={sectionsWithSubsections} />
-            <Outlet />
+            <GovernanceNavigation sections={sections} />
+            <Outlet context={currentSection} />
           </section>
         </div>
       )
