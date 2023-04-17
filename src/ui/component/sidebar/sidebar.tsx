@@ -17,6 +17,8 @@ import './i18n/index'
 
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: FC = () => {
+  // throw new Error()
+
   const { t } = useTranslation('sidebar')
   const { isSidebarExpanded, switchTheme, toggleSidebar, theme } = useAppStore(
     state => ({
