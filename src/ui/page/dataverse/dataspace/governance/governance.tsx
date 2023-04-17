@@ -1,5 +1,6 @@
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Outlet } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
@@ -7,15 +8,315 @@ import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
+import { GovernanceNavigation } from './governanceNavigation'
 import './governance.scss'
 
-const Governance = (): JSX.Element => {
+type ID = {
+  id: string
+}
+
+type DescribableDTO = {
+  title: string
+  description?: string
+}
+
+type DescriptedDTO = ID & DescribableDTO
+
+type Numbered = {
+  number: string
+}
+
+type NonEmptyArray<T> = [T, ...T[]]
+
+type Container<T> = {
+  contains: T[]
+}
+
+type ParagraphDTOWithNumber = Omit<DescriptedDTO, 'description'> &
+  Numbered & {
+    description: string
+  }
+
+type DescriptedDTOWithNumber = DescriptedDTO & Numbered
+
+type ParagraphDTO = ParagraphDTOWithNumber
+
+type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
+
+type SubSectionDTO = DescriptedDTOWithNumber & Container<ArticleDTO>
+
+type SectionDTO = DescriptedDTOWithNumber & Container<SubSectionDTO>
+
+type Chapter = DescriptedDTO & Container<SectionDTO>
+
+type GovernanceMetadata = {
+  chapter: Chapter
+}
+
+const governanceMetadata: GovernanceMetadata = {
+  chapter: {
+    id: '1',
+    title: 'Chapter 1',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+    contains: [
+      {
+        id: 'identity-management',
+        title: 'Identity Management',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        number: '1',
+        contains: [
+          {
+            id: 'identity-management-sub-section',
+            title: 'Identity Management sub-section',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '1.1',
+            contains: [
+              {
+                id: '1-1-1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '1.1.1',
+                contains: [
+                  {
+                    id: '1-1-1-1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '1.1.1.1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'datasets-management',
+        title: 'Datasets Management',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        number: '2',
+        contains: [
+          {
+            id: 'reference-dataset',
+            title: 'Reference dataset',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '2.1',
+            contains: [
+              {
+                id: '2.1.1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '2.1.1',
+                contains: [
+                  {
+                    id: '2.1.1.1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '2.1.1.1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: '2-2',
+            title: 'Create metadata',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '1.2',
+            contains: [
+              {
+                id: '1.2.1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '1.2.1',
+                contains: [
+                  {
+                    id: '1.2.1.1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '1.2.1.1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'delete-metadata',
+            title: 'Delete metadata',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '2.3',
+            contains: [
+              {
+                id: '2-3-1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '2.3.1',
+                contains: [
+                  {
+                    id: '2-3-1-1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '2.3.1.1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'dereference-metadata',
+            title: 'Dereference metadata',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '2.4',
+            contains: [
+              {
+                id: '2-4-1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '2.4.1',
+                contains: [
+                  {
+                    id: '2-4-1-1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '2.4.1.1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'download-dataset',
+            title: 'Download dataset',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '2.5',
+            contains: [
+              {
+                id: '2-5-1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '2.5.1',
+                contains: [
+                  {
+                    id: '2-5-1-1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '2.5.1.1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: '3',
+        title: 'Business Model',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        number: '3',
+        contains: [
+          {
+            id: 'dateset-retribution',
+            title: 'Dateset retribution',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '3.1',
+            contains: [
+              {
+                id: '3.1.1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '3.1.1',
+                contains: [
+                  {
+                    id: '3.1.1.1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '3.1.1.1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'service-retribution',
+            title: 'Service retribution',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+            number: '3.2',
+            contains: [
+              {
+                id: '3-2-1',
+                title: 'Article 1',
+                description:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                number: '3.2.1',
+                contains: [
+                  {
+                    id: '3-2-1-1',
+                    title: 'Paragraph 1',
+                    description:
+                      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    number: '3.2.1.1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+export const SubSection: FC = () => {
+  const { subsectionId } = useParams<{ subsectionId: string }>()
+
+  return (
+    <section>
+      <h3>{subsectionId}</h3>
+    </section>
+  )
+}
+export const Section: FC = () => {
+  const { sectionId } = useParams<{ sectionId: string }>()
+  return (
+    <section>
+      <h2>{sectionId}</h2>
+      <Outlet />
+    </section>
+  )
+}
+
+export const Governance: FC = () => {
   const { id } = useParams<string>()
   const [dataverseItem, setDataverseItem] = useState<Option<DataverseItemDetails>>(O.none)
 
   useEffect(() => {
     pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataverseItem)
   }, [id])
+
+  const sections = governanceMetadata.chapter.contains
+  // we assume that the sections and subsections are ordered
+  // TODO: reorder the sections and subsections based on the number
+  const sectionsWithSubsections = sections.map(section => {
+    const subsections = section.contains
+    const subsectionsTitles = subsections.map(subsection => subsection.title)
+    return {
+      title: section.title,
+      subsectionsTitles
+    }
+  })
 
   return O.match(
     () => <p>dataverse item not found</p>,
@@ -30,11 +331,11 @@ const Governance = (): JSX.Element => {
           </div>
           <section className="okp4-dataverse-portal-governance-page-section">
             <h1>{`${label} | governance`}</h1>
+            <GovernanceNavigation sectionsWithSubsections={sectionsWithSubsections} />
+            <Outlet />
           </section>
         </div>
       )
     }
   )(dataverseItem)
 }
-
-export default Governance
