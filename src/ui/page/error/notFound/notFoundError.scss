@@ -6,13 +6,15 @@
 .okp4-dataverse-portal-not-found-error-page-main {
   @include with-theme() {
     &.dark {
-      background: url('../../../asset/images/error-not-found-background-dark.webp'),
+      background: url('../../../asset/images/error-not-found-gradient-dark.webp'),
+        url('../../../asset/images/error-not-found-shadow-dark.webp'),
         url('../../../asset/images/error-not-found-wood-texture-dark.webp');
       background-size: cover;
     }
 
     &.light {
-      background: url('../../../asset/images/error-not-found-background-light.webp'),
+      background: url('../../../asset/images/error-not-found-gradient-light.webp'),
+        url('../../../asset/images/error-not-found-shadow-light.webp'),
         url('../../../asset/images/error-not-found-wood-texture-light.webp');
       background-size: cover;
     }
