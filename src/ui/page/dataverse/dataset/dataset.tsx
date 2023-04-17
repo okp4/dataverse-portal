@@ -30,8 +30,8 @@ const datasetMetadata: ItemGeneralMetadata[] = [
   },
   {
     category: 'generalMetadata',
-    property: 'temporalCoverage',
-    value: '2022-01-01T00:00:00+00:00'
+    property: 'period',
+    value: ['2022-01-01T00:00:00+00:00', '2022-12-31T00:00:00+00:00']
   },
   {
     category: 'generalMetadata',

@@ -1,18 +1,16 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
-import * as E from 'fp-ts/Either'
-import { pipe } from 'fp-ts/lib/function'
-import { fromPredicate } from 'fp-ts/lib/Either'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-
-import { useLocalizedYearIfISODateTime } from '@/ui/hook/useLocalizedYearIfISODateTime'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './generalMetadata.scss'
 import './i18n/index'
+import { GeneralMetadataValue } from './generalMetadataValue'
 
-type GeneralMetadataItemProps = Omit<ItemGeneralMetadata, 'category'> & { label: string }
+type GeneralMetadataItemProps = {
+  metadata: ItemGeneralMetadata
+}
 
 const propertyIcons: Record<string, IconName | undefined> = {
   topic: 'folder',
@@ -23,61 +21,36 @@ const propertyIcons: Record<string, IconName | undefined> = {
   temporalCoverage: 'calendar'
 }
 
-const GeneralMetadataItem: FC<GeneralMetadataItemProps> = memo(({ label, property, value }) => (
-  <div className="okp4-dataverse-portal-general-metadata-item-main">
-    <div className="okp4-dataverse-portal-general-metadata-item-icon">
-      <Icon name={propertyIcons[property] ?? 'folder'} />
+const GeneralMetadataItem: FC<GeneralMetadataItemProps> = memo(({ metadata }) => {
+  const { t } = useTranslation('generalMetadata')
+  const { property } = metadata
+
+  return (
+    <div className="okp4-dataverse-portal-general-metadata-item-main">
+      <div className="okp4-dataverse-portal-general-metadata-item-icon">
+        <Icon name={propertyIcons[property] ?? 'folder'} />
+      </div>
+      <div className="okp4-dataverse-portal-general-metadata-item-content">
+        <h3 className="okp4-dataverse-portal-general-metadata-item-title">
+          {t(`generalMetadata.${property}.property`)}
+        </h3>
+        <span className="okp4-dataverse-portal-general-metadata-item-value">
+          <GeneralMetadataValue metadata={metadata} />
+        </span>
+      </div>
     </div>
-    <div className="okp4-dataverse-portal-general-metadata-item-content">
-      <h3 className="okp4-dataverse-portal-general-metadata-item-title">{label}</h3>
-      <p className="okp4-dataverse-portal-general-metadata-item-description">{value}</p>
-    </div>
-  </div>
-))
+  )
+})
 GeneralMetadataItem.displayName = 'GeneralMetadataItem'
 
 type GeneralMetadataListProps = {
-  metadata: (Omit<ItemGeneralMetadata, 'value'> & {
-    value: string
-  })[]
+  metadata: ItemGeneralMetadata[]
 }
 
-export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => {
-  const namespace = 'generalMetadata'
-  const { t, i18n } = useTranslation(namespace)
-  const convertValueToLocalizedYearIfISODateTime = useLocalizedYearIfISODateTime(
-    t('generalMetadata.invalidDate')
-  )
-
-  return (
-    <div className="okp4-dataverse-portal-general-metadata-list-main">
-      {metadata.map(({ value, property }) => {
-        const translationKeyExists = i18n.exists(`${namespace}.topic.value.${value}`, {
-          ns: namespace,
-          lng: i18n.language
-        })
-        const translatedValue = pipe(
-          value,
-          fromPredicate(
-            () => translationKeyExists,
-            () => value
-          ),
-          E.map(val => t(`${namespace}.${property}.value.${val}`)),
-          E.getOrElse(() => value)
-        )
-        const formattedValue =
-          property === 'temporalCoverage'
-            ? convertValueToLocalizedYearIfISODateTime(value)
-            : translatedValue
-        return (
-          <GeneralMetadataItem
-            key={property}
-            label={t(`${namespace}.${property}.property`)}
-            property={property}
-            value={formattedValue}
-          />
-        )
-      })}
-    </div>
-  )
-}
+export const GeneralMetadataList: FC<GeneralMetadataListProps> = ({ metadata }) => (
+  <div className="okp4-dataverse-portal-general-metadata-list-main">
+    {metadata.map(itemMetadata => (
+      <GeneralMetadataItem key={itemMetadata.property} metadata={itemMetadata} />
+    ))}
+  </div>
+)

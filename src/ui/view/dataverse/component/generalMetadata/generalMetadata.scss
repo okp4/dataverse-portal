@@ -34,8 +34,10 @@
           color: themed('text');
         }
       
-        .okp4-dataverse-portal-general-metadata-item-description {
+        .okp4-dataverse-portal-general-metadata-item-value {
           @include noto-sans(400);
+          display: flex;
+          flex-direction: column;
           font-size: 12px;
           line-height: 18px;
           color: rgba(themed('text'), 0.6);

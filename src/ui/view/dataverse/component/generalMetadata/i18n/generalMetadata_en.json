@@ -24,7 +24,7 @@
     "geographicalCoverage": {
       "property": "Geographical Coverage"
     },
-    "temporalCoverage": {
+    "period": {
       "property": "Temporal Coverage"
     },
     "category": {

@@ -27,7 +27,7 @@ const propertiesWithIcon = [
   'format',
   'license',
   'geographicalCoverage',
-  'temporalCoverage'
+  'period'
 ] as const
 
 type PropertyWithIcon = (typeof propertiesWithIcon)[number]
@@ -40,12 +40,10 @@ const isTagsMetadata = (
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { property: 'tags'; value: string[] } =>
   metadata.property === 'tags'
 
-const isGeneralMetadataWithIcon = (
+export const isGeneralMetadataWithIcon = (
   metadata: ItemGeneralMetadata
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { value: string } =>
-  metadata.property !== 'tags' &&
-  metadata.category === 'generalMetadata' &&
-  isPropertyWithIcon(metadata.property)
+  metadata.category === 'generalMetadata' && isPropertyWithIcon(metadata.property)
 
 const tags = (metadata: ItemGeneralMetadata[]): string[] =>
   pipe(
@@ -54,7 +52,7 @@ const tags = (metadata: ItemGeneralMetadata[]): string[] =>
     A.chain(metadata => metadata.value)
   )
 
-const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }): JSX.Element => {
+const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
   const { t } = useTranslation(['pageTemplate', 'common'])
   const navigate = useNavigate()
   const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])

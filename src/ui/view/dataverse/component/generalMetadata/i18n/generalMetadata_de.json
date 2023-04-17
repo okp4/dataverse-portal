@@ -24,7 +24,7 @@
     "geographicalCoverage": {
       "property": "Geografischer Geltungsbereich"
     },
-    "temporalCoverage": {
+    "period": {
       "property": "Zeitlicher Geltungsbereich"
     },
     "category": {
