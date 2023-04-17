@@ -61,7 +61,15 @@ export const sparqlGateway: DataversePort = {
 
     const fetchDataverse = (): TE.TaskEither<Error, Response> =>
       TE.tryCatch(
-        async () => fetch(APP_ENV.sparql['endpoint'], fetchHeaders),
+        async () => {
+          const resp = await fetch(APP_ENV.sparql['endpoint'], fetchHeaders)
+          if (!resp.ok) {
+            throw new Error(
+              `Oops.. A ${resp.status} HTTP error occurred with the following message: ${resp.statusText} `
+            )
+          }
+          return resp
+        },
         reason =>
           reason instanceof Error
             ? reason
