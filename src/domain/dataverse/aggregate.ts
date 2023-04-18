@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import { pipe } from 'fp-ts/function'
-import * as E from 'fp-ts/Either'
-import type * as T from 'fp-ts/Task'
+import { pipe, flow } from 'fp-ts/function'
+import * as O from 'fp-ts/Option'
+import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
@@ -15,18 +15,18 @@ type DataverseQueryFilters = {
   byType: ByTypeQueryFilter
 }
 
-type DataverseQueryError = Error | null
+type DataverseQueryError = Error
 
 type DataverseQuery = {
   limit: number
   hasNext: boolean
   isLoading: boolean
-  error: DataverseQueryError
+  error: O.Option<DataverseQueryError>
   filters: DataverseQueryFilters
   language: string
   setIsLoading: (isLoading: boolean) => void
   setHasNext: (hasNext: boolean) => void
-  setError: (error: DataverseQueryError) => void
+  setError: (error: O.Option<DataverseQueryError>) => void
   setFilters: (newFilter: DataverseQueryFilters) => void
   setLanguage: (newLng: string) => void
 }
@@ -44,13 +44,13 @@ export type DataverseStore = {
   query: {
     hasNext: boolean
     isLoading: boolean
-    error: DataverseQueryError
+    error: O.Option<DataverseQueryError>
     filters: DataverseQueryFilters
     setFilters: (newFilter: DataverseQueryFilters) => void
     setLanguage: (newLng: string) => void
   }
   dataverse: DataverseDTO
-  loadDataverse: () => T.Task<void> | void
+  loadDataverse: () => T.Task<void>
 }
 
 type ImmerSetReturnType = Partial<DataverseAggregate>
@@ -61,10 +61,10 @@ export const dataverseAggregate = (gateway: DataversePort) =>
     immer<DataverseAggregate>((set, get) => ({
       dataverse: [],
       query: {
-        limit: 21,
+        limit: 20,
         hasNext: false,
         isLoading: false,
-        error: null,
+        error: O.none,
         filters: { byType: 'all' },
         language: 'en',
         setIsLoading: (isLoading: boolean): void =>
@@ -79,7 +79,7 @@ export const dataverseAggregate = (gateway: DataversePort) =>
               query: { ...state.query, hasNext }
             })
           ),
-        setError: (error: DataverseQueryError): void =>
+        setError: (error: O.Option<DataverseQueryError>): void =>
           set(
             (state): ImmerSetReturnType => ({
               query: { ...state.query, error }
@@ -101,8 +101,10 @@ export const dataverseAggregate = (gateway: DataversePort) =>
           } = get()
           if (!newLng.length) {
             return setError(
-              new Error(
-                `Oops.. An error occurred in <setLanguage> call.. Parameter cannot be empty: <${newLng}>..`
+              O.some(
+                new Error(
+                  `Oops.. An error occurred in <setLanguage> call.. Parameter cannot be empty: <${newLng}>..`
+                )
               )
             )
           }
@@ -126,30 +128,22 @@ export const dataverseAggregate = (gateway: DataversePort) =>
             dataverse: [...state.dataverse, ...newDataverse]
           })
         ),
-      loadDataverse: (): T.Task<void> | void => {
+      loadDataverse: (): T.Task<void> => {
         const { addToDataverse, query, dataverse } = get()
         const { setIsLoading, setHasNext, setError, limit, language, filters } = query
         const offset = dataverse.length
 
         setIsLoading(true)
-        setError(null)
+        setError(O.none)
 
-        const checkLanguageInvariant = (): E.Either<Error, void> =>
-          pipe(
-            E.tryCatch(
-              () => {
-                if (!language.length) {
-                  throw new Error(
-                    'Oops.. An error occurred when trying to load Dataverse.. Language cannot be empty..'
-                  )
-                }
-              },
-              reason =>
-                reason instanceof Error
-                  ? reason
-                  : new Error('Oops.. An unspecified error occurred..')
-            )
-          )
+        const checkLanguageInvariant = (): O.Option<Error> =>
+          !language.length
+            ? O.some(
+                new Error(
+                  'Oops.. An error occurred when trying to load Dataverse.. Language cannot be empty..'
+                )
+              )
+            : O.none
 
         const fetchDataverse = (): T.Task<void> =>
           pipe(
@@ -157,7 +151,7 @@ export const dataverseAggregate = (gateway: DataversePort) =>
             TE.match(
               e => {
                 setIsLoading(false)
-                setError(e)
+                setError(O.some(e))
               },
               r => {
                 setIsLoading(false)
@@ -167,10 +161,7 @@ export const dataverseAggregate = (gateway: DataversePort) =>
             )
           )
 
-        return pipe(
-          checkLanguageInvariant(),
-          E.matchW(e => setError(e), fetchDataverse)
-        )
+        return pipe(checkLanguageInvariant(), O.match(fetchDataverse, flow(O.some, setError, T.of)))
       }
     }))
   )
