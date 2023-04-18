@@ -81,7 +81,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                     return (
                       <li
                         className={`okp4-dataverse-portal-governance-page-navigation-subsection-list-item`}
-                        key={subsectionTitle}
+                        key={subsectionId}
                       >
                         <div
                           className={`okp4-dataverse-portal-governance-page-navigation-subsection-list-style`}
