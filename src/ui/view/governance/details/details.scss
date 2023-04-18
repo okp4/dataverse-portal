@@ -1,0 +1,147 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-governance-governance-details-main {
+  @include with-theme {
+    @include noto-sans(700);
+    color: themed('text');
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .okp4-dataverse-portal-governance-details-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .okp4-dataverse-portal-governance-details-section-title {
+        font-size: 24px;
+      }
+
+      .okp4-dataverse-portal-governance-details-subsection-title {
+        font-size: 16px;
+        opacity: 0.4;
+        text-transform: uppercase;
+      }
+    }
+
+    .okp4-dataverse-portal-governance-details-subsection-container {
+      font-size: 16px;
+
+      .okp4-dataverse-portal-governance-details-subsection-content {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+
+        .okp4-dataverse-portal-governance-details-article-container {
+          display: flex;
+          flex-direction: column;
+          background: themed(article-background);
+          border-radius: 20px;
+          padding: 40px;
+          gap: 40px;
+
+          .okp4-dataverse-portal-governance-details-article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .okp4-dataverse-portal-governance-details-article-title {
+              line-height: 22px;
+            }
+
+            .okp4-dataverse-portal-governance-details-article-title-right-part {
+              display: flex;
+              align-items: center;
+              gap: 40px;
+
+              .okp4-dataverse-portal-governance-details-article-paragraphs-number {
+                padding: 12px 17px;
+                background: themed(background-variant-1);
+                border-radius: 8px;
+              }
+
+              .okp4-dataverse-portal-governance-details-article-expand-button {
+                cursor: pointer;
+
+                &.rotate-down {
+                  transform: rotate(-180deg);
+                  transition: transform 0.1s linear;
+                }
+
+                &.rotate-up {
+                  transform: rotate(0deg);
+                  transition: transform 0.1s linear;
+                }
+              }
+            }
+          }
+
+          .okp4-dataverse-portal-governance-details-paragraphs-container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            max-height: 670px;
+            gap: 14px;
+
+            .okp4-dataverse-portal-governance-details-paragraph {
+              display: flex;
+              flex-direction: column;
+              width: fit-content;
+              background: themed(paragraph-background);
+              border-radius: 10px;
+              padding: 20px;
+              width: 320px;
+              gap: 6px;
+
+              .okp4-dataverse-portal-governance-details-paragraph-title {
+                line-height: 20px;
+              }
+
+              .okp4-dataverse-portal-governance-details-paragraph-description {
+                @include noto-sans(400);
+                opacity: 0.6;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.okp4-dataverse-portal-governance-identity-main {
+  @include with-theme {
+    @include noto-sans(700);
+    font-size: 16px;
+    line-height: 28px;
+    width: 100%;
+    border-radius: 20px;
+    color: themed('text');
+    background: themed(article-background);
+
+    .okp4-dataverse-portal-governance-identity-container {
+      .okp4-dataverse-portal-governance-identity-paragraphs-container {
+        background: themed(paragraph-background);
+        width: fit-content;
+        border-radius: 10px;
+        padding: 20px;
+
+        .okp4-dataverse-portal-governance-identity-paragraph {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          line-height: 20px;
+          min-width: 216px;
+
+          .okp4-dataverse-portal-governance-identity-paragraph-description {
+            @include noto-sans(400);
+            opacity: 0.6;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
