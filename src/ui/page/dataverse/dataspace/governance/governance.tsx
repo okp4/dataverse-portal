@@ -1,16 +1,8 @@
-/* eslint-disable max-lines-per-function */
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
-import { useParams, Outlet, useNavigate, useOutletContext } from 'react-router-dom'
-import type { Option } from 'fp-ts/Option'
-import * as O from 'fp-ts/Option'
-import { pipe } from 'fp-ts/lib/function'
-import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
-import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
-import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
-import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
-import { GovernanceNavigation } from './governanceNavigation'
+import { useEffect } from 'react'
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 import './governance.scss'
+import { GovernanceContent } from './governanceContent'
 
 type ID = {
   id: string
@@ -44,7 +36,7 @@ type ParagraphDTO = ParagraphDTOWithNumber
 
 type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
 
-type SubSectionDTO = DescriptedDTOWithNumber & Container<ArticleDTO>
+export type SubSectionDTO = DescriptedDTOWithNumber & Container<ArticleDTO>
 
 export type SectionDTO = DescriptedDTOWithNumber & Container<SubSectionDTO>
 
@@ -298,54 +290,33 @@ export const Section: FC = () => {
 export const Governance: FC = () => {
   const navigate = useNavigate()
   const { id, sectionId: sectionIdParams, subsectionId: subsectionIdParams } = useParams<string>()
-  const [dataverseItem, setDataverseItem] = useState<Option<DataverseItemDetails>>(O.none)
-
-  useEffect(() => {
-    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataverseItem)
-  }, [id])
 
   const sections = governanceMetadata.chapter.contains
-  const firstSection = sections[0]
-  const firstSectionId = firstSection.id
-  const firstSubsection = firstSection.contains[0]
-  const firstSubsectionId = firstSubsection.id
-
   const currentSection = sections.find(section => section.id === sectionIdParams)
   const currentSubsection = currentSection?.contains.find(
     subsection => subsection.id === subsectionIdParams
   )
 
   useEffect(() => {
+    const firstSection = sections[0]
+    const firstSectionId = firstSection.id
+    const firstSubsection = firstSection.contains[0]
+    const firstSubsectionId = firstSubsection.id
+
     if (!currentSection && !currentSubsection) {
       navigate(`${firstSectionId}/${firstSubsectionId}`)
     }
     if (currentSection && !currentSubsection) {
       navigate(`${currentSection.id}/${currentSection.contains[0].id}`)
     }
-  }, [navigate, firstSectionId, firstSubsectionId, currentSection, currentSubsection])
+  }, [navigate, currentSection, currentSubsection, sections])
 
-  return O.match(
-    () => <p>dataverse item not found</p>,
-    (dataverseItem: DataverseItemDetails) => {
-      const { label } = dataverseItem
-      // TODO: add governance translation for title
-      return (
-        <div className="okp4-dataverse-portal-governance-page-main">
-          <div className="okp4-dataverse-portal-governance-page-back-button">
-            {/* id should be imbedded in the argument object */}
-            <BackButton to={`/dataverse/dataspace/${id}`} />
-          </div>
-          <section className="okp4-dataverse-portal-governance-page-section">
-            <h1>{`${label} | governance`}</h1>
-            <GovernanceNavigation
-              activeSectionId={currentSection?.id}
-              activeSubsectionId={currentSubsection?.id}
-              sections={sections}
-            />
-            <Outlet context={currentSection} />
-          </section>
-        </div>
-      )
-    }
-  )(dataverseItem)
+  return (
+    <GovernanceContent
+      activeSection={currentSection}
+      activeSubsection={currentSubsection}
+      id={id}
+      sections={sections}
+    />
+  )
 }
