@@ -280,23 +280,17 @@ const governanceMetadata: GovernanceMetadata = {
   }
 }
 
-export const SubSection: FC = () => {
-  const subSection = useOutletContext<SubSectionDTO>()
-  return (
-    <section>
-      <h3>{subSection.title}</h3>
-    </section>
-  )
-}
-
 export const Section: FC = () => {
   const { subsectionId } = useParams<{ subsectionId: string }>()
   const section = useOutletContext<SectionDTO>()
-  const subsection = section.contains.find(subSection => subSection.id === subsectionId)
+  const subsection =
+    section.contains.find(subSection => subSection.id === subsectionId) ?? section.contains[0]
   return (
     <section>
       <h2>{section.title}</h2>
-      <Outlet context={subsection} />
+      <section>
+        <h3>{subsection.title}</h3>
+      </section>
     </section>
   )
 }

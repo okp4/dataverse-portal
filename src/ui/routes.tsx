@@ -4,11 +4,7 @@ import Dataverse from '@/ui/page/dataverse/dataverse'
 import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
-import {
-  Governance,
-  Section,
-  SubSection
-} from '@/ui/page/dataverse/dataspace/governance/governance'
+import { Governance, Section } from '@/ui/page/dataverse/dataspace/governance/governance'
 
 export enum routes {
   home = '/',
@@ -56,10 +52,6 @@ export const appRoutes: Route[] = [
     id: 'governance',
     path: routes.governance,
     element: <Governance />,
-    nestedRoute: (
-      <Route element={<Section />} path=":sectionId">
-        <Route element={<SubSection />} path=":subsectionId" />
-      </Route>
-    )
+    nestedRoute: <Route element={<Section />} path=":sectionId/:subsectionId" />
   }
 ]

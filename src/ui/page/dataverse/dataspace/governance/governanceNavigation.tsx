@@ -65,7 +65,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                 )}
                 onClick={handleNavSectionClick(section)}
                 relative="route"
-                to={`${sectionId}`}
+                to={`${sectionId}/${subsections[0].id}`}
               >
                 {sectionTitle}
               </NavLink>
