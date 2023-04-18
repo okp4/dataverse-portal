@@ -54,7 +54,6 @@ export const sparqlGateway: DataversePort = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${APP_ENV.sparql['credentials']}`,
         accept: 'application/sparql-results+json'
       },
       body: `query=${encodeURIComponent(query)}`
