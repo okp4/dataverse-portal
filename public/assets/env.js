@@ -8,7 +8,6 @@ const APP_ENV = {
     'about:okp4': 'https://okp4.network'
   },
   sparql: {
-    endpoint: 'https://api.okp4.space/ontology/world/sparql',
-    credentials: ''
+    endpoint: 'https://api.staging.okp4.space/ontology/world/sparql'
   }
 }
