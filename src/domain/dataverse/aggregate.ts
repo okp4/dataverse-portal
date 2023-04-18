@@ -130,8 +130,12 @@ export const dataverseAggregate = (gateway: DataversePort) =>
         ),
       loadDataverse: (): T.Task<void> => {
         const { addToDataverse, query, dataverse } = get()
-        const { setIsLoading, setHasNext, setError, limit, language, filters } = query
+        const { setIsLoading, setHasNext, setError, limit, language, filters, isLoading } = query
         const offset = dataverse.length
+
+        if (isLoading) {
+          return T.of(undefined)
+        }
 
         setIsLoading(true)
         setError(O.none)
