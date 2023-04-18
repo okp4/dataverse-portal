@@ -9,7 +9,7 @@ import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceNavigation } from './governanceNavigation'
-import type { SectionDTO, SubSectionDTO } from './governance'
+import type { SectionDTO, SubSectionDTO } from './mockedData'
 import './governance.scss'
 
 export const Section: FC = () => {

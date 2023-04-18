@@ -2,11 +2,11 @@
 import type { FC } from 'react'
 import { useCallback, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import type { SectionDTO } from './governance'
 import classnames from 'classnames'
 import { useAppStore } from '@/ui/store/appStore'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
+import type { SectionDTO } from './mockedData'
 
 type GovernanceWithNavigationProps = {
   sections: SectionDTO[]
@@ -39,7 +39,6 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     },
     []
   )
-
   const navlinkClassName = useCallback(
     ({ isActive, isPending }: { isActive: boolean; isPending: boolean }): string =>
       isPending ? 'pending' : isActive ? 'active' : '',
