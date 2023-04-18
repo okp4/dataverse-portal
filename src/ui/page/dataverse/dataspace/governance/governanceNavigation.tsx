@@ -13,7 +13,7 @@ type GovernanceWithNavigationProps = {
   activeSectionId?: string
   activeSubsectionId?: string
 }
-// TODO: add translation for nav links
+
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   sections,
   activeSectionId,
