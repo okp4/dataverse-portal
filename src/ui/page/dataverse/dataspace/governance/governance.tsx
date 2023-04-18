@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams, Outlet, useNavigate, useOutletContext } from 'react-router-dom'
@@ -342,7 +343,11 @@ export const Governance: FC = () => {
           </div>
           <section className="okp4-dataverse-portal-governance-page-section">
             <h1>{`${label} | governance`}</h1>
-            <GovernanceNavigation sections={sections} />
+            <GovernanceNavigation
+              activeSectionId={currentSection?.id}
+              activeSubsectionId={currentSubsection?.id}
+              sections={sections}
+            />
             <Outlet context={currentSection} />
           </section>
         </div>
