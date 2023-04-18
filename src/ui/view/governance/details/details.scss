@@ -1,27 +1,43 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-governance-governance-details-main {
   @include with-theme {
     @include noto-sans(700);
+    @include columns-with-gap(34px);
     color: themed('text');
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 
-    .okp4-dataverse-portal-governance-details-header {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .okp4-dataverse-portal-governance-details-description {
+      @include noto-sans(400);
+      font-size: 16px;
+      line-height: 22px;
 
-      .okp4-dataverse-portal-governance-details-section-title {
-        font-size: 24px;
+      &.subsection,
+      &.article {
+        opacity: 0.4;
       }
 
-      .okp4-dataverse-portal-governance-details-subsection-title {
-        font-size: 16px;
-        opacity: 0.4;
-        text-transform: uppercase;
+      &.paragraph {
+        opacity: 0.6;
+      }
+    }
+
+    .okp4-dataverse-portal-governance-details-header {
+      @include columns-with-gap(16px);
+
+      .okp4-dataverse-portal-governance-details-header-part {
+        @include columns-with-gap(12px);
+
+        .okp4-dataverse-portal-governance-details-title {
+          font-size: 24px;
+
+          &.subsection {
+            font-size: 16px;
+            opacity: 0.4;
+            text-transform: uppercase;
+          }
+        }
       }
     }
 
@@ -29,28 +45,28 @@
       font-size: 16px;
 
       .okp4-dataverse-portal-governance-details-subsection-content {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
+        @include columns-with-gap(14px);
 
         .okp4-dataverse-portal-governance-details-article-container {
-          display: flex;
-          flex-direction: column;
+          @include columns-with-gap(40px);
           background: themed(article-background);
           border-radius: 20px;
           padding: 40px;
-          gap: 40px;
 
           .okp4-dataverse-portal-governance-details-article-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
 
-            .okp4-dataverse-portal-governance-details-article-title {
-              line-height: 22px;
+            .okp4-dataverse-portal-governance-details-article-header-left-part {
+              @include columns-with-gap(12px);
+
+              .okp4-dataverse-portal-governance-details-article-title {
+                line-height: 22px;
+              }
             }
 
-            .okp4-dataverse-portal-governance-details-article-title-right-part {
+            .okp4-dataverse-portal-governance-details-article-header-right-part {
               display: flex;
               align-items: center;
               gap: 40px;
@@ -78,30 +94,21 @@
           }
 
           .okp4-dataverse-portal-governance-details-paragraphs-container {
-            display: flex;
-            flex-direction: column;
+            @include columns-with-gap(14px);
             flex-wrap: wrap;
             max-height: 670px;
-            gap: 14px;
 
             .okp4-dataverse-portal-governance-details-paragraph {
-              display: flex;
-              flex-direction: column;
+              @include columns-with-gap(6px);
               width: fit-content;
               background: themed(paragraph-background);
               border-radius: 10px;
               padding: 20px;
               width: 320px;
-              gap: 6px;
+              line-height: 20px;
 
               .okp4-dataverse-portal-governance-details-paragraph-title {
-                line-height: 20px;
-              }
-
-              .okp4-dataverse-portal-governance-details-paragraph-description {
-                @include noto-sans(400);
-                opacity: 0.6;
-                font-size: 14px;
+                font-size: 16px;
               }
             }
           }

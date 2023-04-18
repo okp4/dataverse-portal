@@ -57,69 +57,71 @@ const fakeData: Chapter = {
     {
       id: 'section1',
       title: 'Section 1',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+      description:
+        'Section 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
       number: '1',
       contains: [
         {
           id: 'subsection1',
           title: 'Subsection 1',
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+          description:
+            'Subsection 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
           number: '1.1',
           contains: [
             {
               title: 'Article 1',
               id: 'article1',
               description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                'Article 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
               number: '1.1.1',
               contains: [
                 {
                   id: 'paragraph1',
                   title: 'Paragraph 1',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.1'
                 },
                 {
                   id: 'paragraph2',
                   title: 'Paragraph 2',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 2 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.2'
                 },
                 {
                   id: 'paragraph3',
                   title: 'Paragraph 3',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 3 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.3'
                 },
                 {
                   id: 'paragraph4',
                   title: 'Paragraph 4',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 4 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.4'
                 },
                 {
                   id: 'paragraph5',
                   title: 'Paragraph 5',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 5 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.5'
                 },
                 {
                   id: 'paragraph6',
                   title: 'Paragraph 6',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 6 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.6'
                 },
                 {
                   id: 'paragraph7',
                   title: 'Paragraph 7',
                   description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+                    'Paragraph 7 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
                   number: '1.1.1.7'
                 }
               ]
@@ -182,9 +184,9 @@ const fakeData: Chapter = {
 const Paragraph: FC<ParagraphProps> = ({ paragraph }) => (
   <div className="okp4-dataverse-portal-governance-details-paragraph">
     <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">{paragraph.title}</h3>
-    <h4 className="okp4-dataverse-portal-governance-details-paragraph-description">
+    <p className="okp4-dataverse-portal-governance-details-description paragraph">
       {paragraph.description}
-    </h4>
+    </p>
   </div>
 )
 
@@ -197,9 +199,18 @@ const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
   return (
     <div className="okp4-dataverse-portal-governance-details-article-container">
       <div className="okp4-dataverse-portal-governance-details-article-header">
-        <h3 className="okp4-dataverse-portal-governance-details-article-title">{article.title}</h3>
+        <div className="okp4-dataverse-portal-governance-details-article-header-left-part">
+          <h3 className="okp4-dataverse-portal-governance-details-article-title">
+            {article.title}
+          </h3>
+          {isOpen && article.description && (
+            <p className="okp4-dataverse-portal-governance-details-description article">
+              {article.description}
+            </p>
+          )}
+        </div>
         {!isOnlyArticle && (
-          <div className="okp4-dataverse-portal-governance-details-article-title-right-part">
+          <div className="okp4-dataverse-portal-governance-details-article-header-right-part">
             <div className="okp4-dataverse-portal-governance-details-article-paragraphs-number">
               {article.contains.length}
             </div>
@@ -241,7 +252,6 @@ const SubSection: FC<SubSectionProps> = ({ subSection }) => (
 export const GovernanceDetails: FC = () => {
   const sectionId = 'section1'
   const subSectionId = 'subsection1'
-
   const foundSection = fakeData.contains.find(data => data.id === sectionId)
   const foundSubSection = foundSection?.contains.find(data => data.id === subSectionId)
   const foundGovernance = foundSection && foundSubSection
@@ -249,12 +259,24 @@ export const GovernanceDetails: FC = () => {
   return foundGovernance ? (
     <div className="okp4-dataverse-portal-governance-governance-details-main">
       <div className="okp4-dataverse-portal-governance-details-header">
-        <h2 className="okp4-dataverse-portal-governance-details-section-title">
-          {foundSection.title}
-        </h2>
-        <h3 className="okp4-dataverse-portal-governance-details-subsection-title">
-          {foundSubSection.title}
-        </h3>
+        <div className="okp4-dataverse-portal-governance-details-header-part">
+          <h2 className="okp4-dataverse-portal-governance-details-title">{foundSection.title}</h2>
+          {foundSection.description && (
+            <p className="okp4-dataverse-portal-governance-details-description">
+              {foundSection.description}
+            </p>
+          )}
+        </div>
+        <div className="okp4-dataverse-portal-governance-details-header-part">
+          <h2 className="okp4-dataverse-portal-governance-details-title subsection">
+            {foundSubSection.title}
+          </h2>
+          {foundSection.description && (
+            <p className="okp4-dataverse-portal-governance-details-description subsection">
+              {foundSubSection.description}
+            </p>
+          )}
+        </div>
       </div>
       <div className="okp4-dataverse-portal-governance-details-subsection-container">
         <SubSection subSection={foundSubSection} />
