@@ -12,7 +12,8 @@ export enum routes {
   dataspace = 'dataverse/dataspace/:id',
   dataset = 'dataverse/dataset/:id',
   service = 'dataverse/service/:id',
-  governance = 'dataverse/dataspace/:id/governance'
+  governance = 'dataverse/dataspace/:id/governance',
+  notFoundError = '*'
 }
 
 export type Route = {
@@ -23,6 +24,12 @@ export type Route = {
 }
 
 export const appRoutes: Route[] = [
+  {
+    id: 'notFoundError',
+    path: routes.notFoundError,
+    // TODO: replace with 404 page component
+    element: <div>404</div>
+  },
   {
     id: 'home',
     path: routes.home,
