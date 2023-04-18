@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import * as A from 'fp-ts/lib/Array'
-import { flow, pipe } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import * as TE from 'fp-ts/TaskEither'
 import type { DataverseEntity } from '@/domain/dataverse/entity'
@@ -9,6 +9,7 @@ import type {
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult
 } from '@/domain/dataverse/port'
+import { getURILastElement } from '@/util/util'
 import type { SparqlBinding, SparqlResult } from './dto'
 
 export const sparqlGateway: DataversePort = {
@@ -45,7 +46,7 @@ export const sparqlGateway: DataversePort = {
         ?metadata core:hasDescription ?description .
         FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?description),'${language}') )
       }
-      LIMIT ${limit}
+      LIMIT ${limit + 1}
       OFFSET ${offset}
 `
 
@@ -89,7 +90,8 @@ export const sparqlGateway: DataversePort = {
 
     const splitBindingId = (b: SparqlBinding): O.Option<[SparqlBinding, string]> =>
       pipe(
-        O.fromNullable(b.id.value.split('/').at(-1)),
+        b.id.value,
+        getURILastElement,
         O.map(a => [b, a])
       )
 
@@ -97,21 +99,9 @@ export const sparqlGateway: DataversePort = {
       [SparqlBinding, string, string]
     > =>
       pipe(
-        O.fromNullable(b.type.value.split('/').at(-1)),
+        b.type.value,
+        getURILastElement,
         O.map(c => [b, a, c])
-      )
-
-    const getDataverseEntityLengthOption = O.fromPredicate(
-      (dataverseEntity: DataverseEntity) => dataverseEntity.length === limit
-    )
-    const filterDataverseEntity = (dataverseEntity: DataverseEntity): DataverseEntity =>
-      pipe(
-        dataverseEntity,
-        getDataverseEntityLengthOption,
-        O.match(
-          () => dataverseEntity,
-          e => A.dropRight(1)(e)
-        )
       )
 
     const mapDtoToEntity = (dto: SparqlResult): DataverseEntity =>
@@ -140,11 +130,11 @@ export const sparqlGateway: DataversePort = {
     return pipe(
       fetchDataverse(),
       TE.chain(serializeResponse),
-      TE.chain<Error, SparqlResult, { data: DataverseEntity; query: { hasNext: boolean } }>(
-        flow(mapDtoToEntity, r =>
-          TE.right({ data: filterDataverseEntity(r), query: { hasNext: r.length === limit } })
-        )
-      )
+      TE.map(mapDtoToEntity),
+      TE.map(r => ({
+        data: A.takeLeft(limit)(r),
+        query: { hasNext: r.length === limit }
+      }))
     )
   }
 }
