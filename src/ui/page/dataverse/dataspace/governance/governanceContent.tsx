@@ -29,10 +29,10 @@ export const Section: FC = () => {
 }
 
 type GovernanceContentProps = {
+  sections: SectionDTO[]
   activeSection?: SectionDTO
   activeSubsection?: SubSectionDTO
   id?: string
-  sections: SectionDTO[]
 }
 
 export const GovernanceContent: FC<GovernanceContentProps> = ({
