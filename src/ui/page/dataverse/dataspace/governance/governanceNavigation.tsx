@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import type { FC } from 'react'
-import { useCallback, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import classnames from 'classnames'
 import { useAppStore } from '@/ui/store/appStore'
@@ -11,32 +11,40 @@ import type { SectionDTO } from './mockedData'
 type GovernanceWithNavigationProps = {
   dataspaceId: string
   sections: SectionDTO[]
-  activeSectionId?: string
-  activeSubsectionId?: string
+  sectionId?: string
+  subsectionId?: string
 }
 
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   dataspaceId,
   sections,
-  activeSectionId,
-  activeSubsectionId
+  sectionId,
+  subsectionId
 }) => {
   const theme = useAppStore(state => state.theme)
-  const [activeSection, setActiveSection] = useState<string>(activeSectionId ?? sections[0].id)
-  const [activeSubsection, setActiveSubsection] = useState<string>(
-    activeSubsectionId ?? sections[0].contains[0].id
+
+  const firstSectionId = sections[0].id
+  const firstSubsectionId = sections[0].contains[0].id
+
+  const [activeSectionId, setActiveSectionId] = useState<string>(sectionId ?? firstSectionId)
+  const [activeSubsectionId, setActiveSubsectionId] = useState<string>(
+    subsectionId ?? firstSubsectionId
   )
+  useEffect(() => {
+    setActiveSectionId(sectionId ?? firstSectionId)
+    setActiveSubsectionId(subsectionId ?? firstSubsectionId)
+  }, [sectionId, subsectionId, firstSectionId, firstSubsectionId])
 
   const handleNavSectionClick = useCallback(
     (section: SectionDTO) => () => {
-      setActiveSection(section.id)
-      setActiveSubsection(section.contains[0].id)
+      setActiveSectionId(section.id)
+      setActiveSubsectionId(section.contains[0].id)
     },
     []
   )
   const handleNavSubsectionClick = useCallback(
     (sectionId: string, subsectionId: string) => () => {
-      setActiveSubsection(subsectionId)
+      setActiveSubsectionId(subsectionId)
     },
     []
   )
@@ -48,7 +56,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
       <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
         {sections.map(section => {
           const { id: sectionId, title: sectionTitle, contains: subsections } = section
-          const isSectionActive = sectionId === activeSection
+          const isSectionActive = sectionId === activeSectionId
           const hasMoreThanOneSubsection = subsections.length > 1
           return (
             <li
@@ -72,7 +80,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                 )}
               >
                 {subsections.map(({ title: subsectionTitle, id: subsectionId }) => {
-                  const isSubsectionActive = subsectionId === activeSubsection
+                  const isSubsectionActive = subsectionId === activeSubsectionId
                   return (
                     <li
                       className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"

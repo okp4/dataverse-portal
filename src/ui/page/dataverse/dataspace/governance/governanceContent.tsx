@@ -49,10 +49,10 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
       <section className="okp4-dataverse-portal-governance-page-section">
         <h1>{`${label} | ${t('resources.governance')}`}</h1>
         <GovernanceNavigation
-          activeSectionId={activeSection?.id}
-          activeSubsectionId={activeSubsection?.id}
           dataspaceId={dataspaceId}
+          sectionId={activeSection?.id}
           sections={sections}
+          subsectionId={activeSubsection?.id}
         />
         <Section section={activeSection ?? sections[0]} />
       </section>
