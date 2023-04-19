@@ -46,7 +46,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   )
 
   return (
-    <nav className={`okp4-dataverse-portal-governance-page-navigation`}>
+    <nav className="okp4-dataverse-portal-governance-page-navigation">
       <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
         {sections.map(section => {
           const { id: sectionId, title: sectionTitle, contains: subsections } = section
@@ -54,7 +54,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
           const hasMoreThanOneSubsection = subsections.length > 1
           return (
             <li
-              className={`okp4-dataverse-portal-governance-page-navigation-section-list-item`}
+              className="okp4-dataverse-portal-governance-page-navigation-section-list-item"
               key={sectionId}
             >
               <NavLink
@@ -79,12 +79,10 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                     const isSubsectionActive = subsectionId === activeSubsection
                     return (
                       <li
-                        className={`okp4-dataverse-portal-governance-page-navigation-subsection-list-item`}
+                        className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"
                         key={subsectionId}
                       >
-                        <div
-                          className={`okp4-dataverse-portal-governance-page-navigation-subsection-list-style`}
-                        >
+                        <div className="okp4-dataverse-portal-governance-page-navigation-subsection-list-style">
                           <Icon name={`hook-${theme}` as IconName} />
                         </div>
                         <NavLink
