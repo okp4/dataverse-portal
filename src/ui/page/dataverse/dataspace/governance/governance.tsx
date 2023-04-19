@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
-import './governance.scss'
 import { GovernanceContent } from './governanceContent'
 import type { SectionDTO } from './mockedData'
 import { mockedGovernanceChapter } from './mockedData'
+import './governance.scss'
 
 export const Section: FC = () => {
   const { subsectionId } = useParams<{ subsectionId: string }>()

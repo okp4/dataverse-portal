@@ -1,13 +1,13 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import type { InternationalizedDescription } from '@/ui/page/dataverse/dataverse'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { Card } from '@/ui/component/card/card'
 import './governanceDescription.scss'
-import { useNavigate } from 'react-router-dom'
 
 type GovernanceDescriptionProps = {
   description: InternationalizedDescription
