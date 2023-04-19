@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams, Outlet, useOutletContext } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import type { Option } from 'fp-ts/Option'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
@@ -40,6 +41,7 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
   activeSubsection,
   sections
 }) => {
+  const { t } = useTranslation('common')
   const [dataverseItem, setDataverseItem] = useState<Option<DataverseItemDetails>>(O.none)
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
           <BackButton to={`/dataverse/dataspace/${id}`} />
         </div>
         <section className="okp4-dataverse-portal-governance-page-section">
-          <h1>{`${label} | governance`}</h1>
+          <h1>{`${label} | ${t('resources.governance')}`}</h1>
           <GovernanceNavigation
             activeSectionId={activeSection?.id}
             activeSubsectionId={activeSubsection?.id}
