@@ -34,7 +34,6 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   )
   const handleNavSubsectionClick = useCallback(
     (sectionId: string, subsectionId: string) => () => {
-      setActiveSection(sectionId)
       setActiveSubsection(subsectionId)
     },
     []
