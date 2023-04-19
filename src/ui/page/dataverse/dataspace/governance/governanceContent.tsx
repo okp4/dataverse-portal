@@ -1,13 +1,6 @@
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import type { Option } from 'fp-ts/Option'
-import * as O from 'fp-ts/Option'
-import { pipe } from 'fp-ts/lib/function'
-import type { DataSpace } from '@/ui/page/dataverse/dataverse'
-import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
-import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceNavigation } from './governanceNavigation'
 import type { SectionDTO, SubSectionDTO } from './mockedData'
@@ -32,6 +25,7 @@ export const Section: FC<SectionProps> = ({ section }) => {
 }
 
 type GovernanceContentProps = {
+  label: string
   sections: SectionDTO[]
   dataspaceId: string
   activeSection?: SectionDTO
@@ -39,43 +33,29 @@ type GovernanceContentProps = {
 }
 
 export const GovernanceContent: FC<GovernanceContentProps> = ({
+  label,
   dataspaceId,
   activeSection,
   activeSubsection,
   sections
 }) => {
   const { t } = useTranslation('common')
-  const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
-  useEffect(() => {
-    pipe(
-      O.fromNullable(dataspaceId),
-      O.chain(getResourceDetails),
-      O.filter(isDataSpace),
-      setDataspace
-    )
-  }, [dataspaceId])
-
-  return O.match(
-    () => <p>dataverse item not found</p>,
-    ({ label }: DataSpace) => {
-      return (
-        <div className="okp4-dataverse-portal-governance-page-main">
-          <div className="okp4-dataverse-portal-governance-page-back-button">
-            <BackButton to={`/dataverse/dataspace/${dataspaceId}`} />
-          </div>
-          <section className="okp4-dataverse-portal-governance-page-section">
-            <h1>{`${label} | ${t('resources.governance')}`}</h1>
-            <GovernanceNavigation
-              activeSectionId={activeSection?.id}
-              activeSubsectionId={activeSubsection?.id}
-              dataspaceId={dataspaceId}
-              sections={sections}
-            />
-            <Section section={activeSection ?? sections[0]} />
-          </section>
-        </div>
-      )
-    }
-  )(dataspace)
+  return (
+    <div className="okp4-dataverse-portal-governance-page-main">
+      <div className="okp4-dataverse-portal-governance-page-back-button">
+        <BackButton to={`/dataverse/dataspace/${dataspaceId}`} />
+      </div>
+      <section className="okp4-dataverse-portal-governance-page-section">
+        <h1>{`${label} | ${t('resources.governance')}`}</h1>
+        <GovernanceNavigation
+          activeSectionId={activeSection?.id}
+          activeSubsectionId={activeSubsection?.id}
+          dataspaceId={dataspaceId}
+          sections={sections}
+        />
+        <Section section={activeSection ?? sections[0]} />
+      </section>
+    </div>
+  )
 }

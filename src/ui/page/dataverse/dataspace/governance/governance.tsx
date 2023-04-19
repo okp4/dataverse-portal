@@ -1,6 +1,12 @@
 import type { FC } from 'react'
-import { useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { pipe } from 'fp-ts/lib/function'
+import type { Option } from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
+import type { DataSpace } from '@/ui/page/dataverse/dataverse'
+import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
+import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { GovernanceContent } from './governanceContent'
 import { mockedGovernanceChapter } from './mockedData'
 import './governance.scss'
@@ -13,6 +19,8 @@ export const Governance: FC = () => {
     sectionId: sectionIdParams,
     subsectionId: subsectionIdParams
   } = useParams<string>()
+
+  const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
   const sections = mockedGovernanceChapter.contains
   const currentSection = sections.find(section => section.id === sectionIdParams)
@@ -56,16 +64,27 @@ export const Governance: FC = () => {
     navigate('/404')
   }, [navigate, getNavigationPath])
 
-  if (!dataspaceId) {
-    return <p>dataverse item not found</p>
-  }
+  useEffect(() => {
+    pipe(
+      O.fromNullable(dataspaceId),
+      O.chain(getResourceDetails),
+      O.filter(isDataSpace),
+      setDataspace
+    )
+  }, [dataspaceId])
 
-  return (
-    <GovernanceContent
-      activeSection={currentSection}
-      activeSubsection={currentSubsection}
-      dataspaceId={dataspaceId}
-      sections={sections}
-    />
-  )
+  if (!dataspaceId) return null
+
+  return O.match(
+    () => <p>dataspace not found</p>,
+    ({ label }: DataSpace) => (
+      <GovernanceContent
+        activeSection={currentSection}
+        activeSubsection={currentSubsection}
+        dataspaceId={dataspaceId}
+        label={label}
+        sections={sections}
+      />
+    )
+  )(dataspace)
 }
