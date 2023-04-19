@@ -4,37 +4,8 @@ import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import { useAppStore } from '@/ui/store/appStore'
 import './details.scss'
-
-type ID = {
-  id: string
-}
-
-type DescribableDTO = {
-  title: string
-  description?: string
-}
-
-type DescriptedDTO = ID & DescribableDTO
-
-type Numbered = {
-  number: string
-}
-
-type DescriptedDTOWithNumber = DescriptedDTO & Numbered
-
-type Container<T> = {
-  contains: T[]
-}
-
-type ParagraphDTO = DescriptedDTOWithNumber
-
-type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
-
-type SubSectionDTO = DescriptedDTOWithNumber & Container<ArticleDTO>
-
-type SectionDTO = DescriptedDTOWithNumber & Container<SubSectionDTO>
-
-type Chapter = DescriptedDTO & Container<SectionDTO>
+import { fakeData } from './fakeData'
+import type { ArticleDTO, SubSectionDTO, ParagraphDTO } from './types'
 
 type ArticleProps = {
   article: ArticleDTO
@@ -47,139 +18,23 @@ type SubSectionProps = {
 
 type ParagraphProps = {
   paragraph: ParagraphDTO
+  theme: string
+}
+const renderIcon = (category: string, theme: string): JSX.Element => {
+  const iconMapping: Record<string, string> = {
+    'Verification method': 'key',
+    Topic: 'shapes',
+    Size: 'computer',
+    'Geographical Coverage': 'earth',
+    Authorship: 'user',
+    Metadata: 'description',
+    Licence: 'shield',
+    Users: 'users'
+  }
+
+  return <Icon name={`${iconMapping[category]}-${theme}` as IconName} />
 }
 
-const fakeData: Chapter = {
-  id: 'chapter1',
-  title: 'Chapter 1',
-  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-  contains: [
-    {
-      id: 'section1',
-      title: 'Section 1',
-      description:
-        'Section 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-      number: '1',
-      contains: [
-        {
-          id: 'subsection1',
-          title: 'Subsection 1',
-          description:
-            'Subsection 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-          number: '1.1',
-          contains: [
-            {
-              title: 'Article 1',
-              id: 'article1',
-              description:
-                'Article 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-              number: '1.1.1',
-              contains: [
-                {
-                  id: 'paragraph1',
-                  title: 'Paragraph 1',
-                  description:
-                    'Paragraph 1 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.1'
-                },
-                {
-                  id: 'paragraph2',
-                  title: 'Paragraph 2',
-                  description:
-                    'Paragraph 2 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.2'
-                },
-                {
-                  id: 'paragraph3',
-                  title: 'Paragraph 3',
-                  description:
-                    'Paragraph 3 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.3'
-                },
-                {
-                  id: 'paragraph4',
-                  title: 'Paragraph 4',
-                  description:
-                    'Paragraph 4 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.4'
-                },
-                {
-                  id: 'paragraph5',
-                  title: 'Paragraph 5',
-                  description:
-                    'Paragraph 5 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.5'
-                },
-                {
-                  id: 'paragraph6',
-                  title: 'Paragraph 6',
-                  description:
-                    'Paragraph 6 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.6'
-                },
-                {
-                  id: 'paragraph7',
-                  title: 'Paragraph 7',
-                  description:
-                    'Paragraph 7 Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.1.7'
-                }
-              ]
-            },
-            {
-              title: 'Article 2',
-              id: 'article2',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-              number: '1.1.2',
-              contains: [
-                {
-                  id: 'paragraph1',
-                  title: 'Paragraph 1',
-                  description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '1.1.2.1'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'section2',
-      title: 'Section 2',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-      number: '2',
-      contains: [
-        {
-          id: 'subsection1',
-          title: 'Subsection 1',
-          description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-          number: '2.1',
-          contains: [
-            {
-              title: 'Article 1',
-              id: 'article1',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-              number: '2.1.1',
-              contains: [
-                {
-                  id: 'paragraph1',
-                  title: 'Paragraph 1',
-                  description:
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-                  number: '2.1.1.1'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
 
 const Paragraph: FC<ParagraphProps> = ({ paragraph }) => (
   <div className="okp4-dataverse-portal-governance-details-paragraph">

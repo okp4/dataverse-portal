@@ -1,4 +1,4 @@
-import type { Chapter } from './details'
+import type { Chapter } from './types'
 
 export const fakeData: Chapter = {
   id: '1',
