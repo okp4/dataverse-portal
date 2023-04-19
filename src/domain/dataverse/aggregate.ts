@@ -36,7 +36,7 @@ export type DataverseAggregate = {
   query: DataverseQuery
   addToDataverse: (newDataverse: DataverseEntity) => void
   clearDataverse: () => void
-  loadDataverse: () => T.Task<void> | void
+  loadDataverse: () => T.Task<void>
 }
 
 // Public contract with the controller that consumes the store
@@ -133,12 +133,13 @@ export const dataverseAggregate = (gateway: DataversePort) =>
         const { setIsLoading, setHasNext, setError, limit, language, filters, isLoading } = query
         const offset = dataverse.length
 
-        if (isLoading) {
-          return T.of(undefined)
+        const initFetching = (): void => {
+          setIsLoading(true)
+          setError(O.none)
         }
 
-        setIsLoading(true)
-        setError(O.none)
+        const checkIsLoadingInvariant = (): O.Option<T.Task<undefined>> =>
+          isLoading ? O.some(T.of(undefined)) : O.none
 
         const checkLanguageInvariant = (): O.Option<Error> =>
           !language.length
@@ -151,7 +152,8 @@ export const dataverseAggregate = (gateway: DataversePort) =>
 
         const fetchDataverse = (): T.Task<void> =>
           pipe(
-            gateway.retrieveDataverse(language, limit, offset, filters),
+            initFetching(),
+            () => gateway.retrieveDataverse(language, limit, offset, filters),
             TE.match(
               e => {
                 setIsLoading(false)
@@ -165,7 +167,14 @@ export const dataverseAggregate = (gateway: DataversePort) =>
             )
           )
 
-        return pipe(checkLanguageInvariant(), O.match(fetchDataverse, flow(O.some, setError, T.of)))
+        return pipe(
+          checkIsLoadingInvariant(),
+          O.match(
+            () =>
+              pipe(checkLanguageInvariant(), O.match(fetchDataverse, flow(O.some, setError, T.of))),
+            r => r
+          )
+        )
       }
     }))
   )
