@@ -39,11 +39,6 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     },
     []
   )
-  const navlinkClassName = useCallback(
-    ({ isActive, isPending }: { isActive: boolean; isPending: boolean }): string =>
-      isPending ? 'pending' : isActive ? 'active' : '',
-    []
-  )
 
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
@@ -60,7 +55,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
               <NavLink
                 className={classnames(
                   'okp4-dataverse-portal-governance-page-navigation-section-link',
-                  navlinkClassName({ isActive: isSectionActive, isPending: false })
+                  isSectionActive ? 'active' : ''
                 )}
                 onClick={handleNavSectionClick(section)}
                 relative="route"
@@ -88,10 +83,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                         <NavLink
                           className={classnames(
                             'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                            navlinkClassName({
-                              isActive: isSubsectionActive,
-                              isPending: false
-                            })
+                            isSubsectionActive && 'active'
                           )}
                           onClick={handleNavSubsectionClick(sectionId, subsectionId)}
                           relative="route"
