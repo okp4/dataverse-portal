@@ -1,11 +1,12 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import { useAppStore } from '@/ui/store/appStore'
-import './details.scss'
+import { Button } from '@/ui/component/button/button'
 import { fakeData } from './fakeData'
 import type { ArticleDTO, SubSectionDTO, ParagraphDTO } from './types'
+import './details.scss'
 
 type ArticleProps = {
   article: ArticleDTO
@@ -20,34 +21,54 @@ type ParagraphProps = {
   paragraph: ParagraphDTO
   theme: string
 }
-const renderIcon = (category: string, theme: string): JSX.Element => {
-  const iconMapping: Record<string, string> = {
-    'Verification method': 'key',
-    Topic: 'shapes',
-    Size: 'computer',
-    'Geographical Coverage': 'earth',
-    Authorship: 'user',
-    Metadata: 'description',
-    Licence: 'shield',
-    Users: 'users'
-  }
 
-  return <Icon name={`${iconMapping[category]}-${theme}` as IconName} />
+const iconMapping: Record<string, string> = {
+  'Verification method': 'key',
+  Topic: 'shapes',
+  Size: 'computer',
+  'Geographical Coverage': 'earth',
+  Authorship: 'user',
+  Metadata: 'description',
+  Licence: 'shield',
+  Users: 'users'
 }
 
+const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
+  const [isEllipsisActive, setIsEllipseActive] = useState<boolean>(false)
+  const paragraphRef = useRef<HTMLParagraphElement>(null)
 
-const Paragraph: FC<ParagraphProps> = ({ paragraph }) => (
-  <div className="okp4-dataverse-portal-governance-details-paragraph">
-    <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">{paragraph.title}</h3>
-    <p className="okp4-dataverse-portal-governance-details-description paragraph">
-      {paragraph.description}
-    </p>
-  </div>
-)
+  useEffect(() => {
+    if (paragraphRef.current)
+      setIsEllipseActive(paragraphRef.current.offsetHeight < paragraphRef.current.scrollHeight)
+  }, [setIsEllipseActive])
+
+  return (
+    <div className="okp4-dataverse-portal-governance-details-paragraph-container">
+      <div className="okp4-dataverse-portal-governance-details-paragraph">
+        <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
+        <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
+          {paragraph.title}
+        </h3>
+        <p
+          className="okp4-dataverse-portal-governance-details-description paragraph"
+          ref={paragraphRef}
+        >
+          {paragraph.description}
+        </p>
+        {isEllipsisActive && (
+          <div className="okp4-dataverse-portal-governance-details-button">
+            <Button disabled label="See more" variant="outlined-tertiary" />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
 const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
   const theme = useAppStore(store => store.theme)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const isFirstArticle = article.number.endsWith('1')
+  const [isOpen, setIsOpen] = useState<boolean>(isFirstArticle)
 
   const toggleArticle = useCallback(() => setIsOpen(!isOpen), [isOpen])
 
@@ -81,10 +102,10 @@ const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
         )}
       </div>
 
-      {(isOnlyArticle || isOpen) && (
+      {isOpen && article.contains.length > 0 && (
         <div className="okp4-dataverse-portal-governance-details-paragraphs-container">
           {article.contains.map(paragraph => (
-            <Paragraph key={paragraph.id} paragraph={paragraph} />
+            <Paragraph key={paragraph.id} paragraph={paragraph} theme={theme} />
           ))}
         </div>
       )}
@@ -105,12 +126,13 @@ const SubSection: FC<SubSectionProps> = ({ subSection }) => (
 )
 
 export const GovernanceDetails: FC = () => {
-  const sectionId = 'section1'
-  const subSectionId = 'subsection1'
+  const sectionId = '16'
+  const subSectionId = '17'
   const foundSection = fakeData.contains.find(data => data.id === sectionId)
   const foundSubSection = foundSection?.contains.find(data => data.id === subSectionId)
+  // to remove after Loïc PR
   const foundGovernance = foundSection && foundSubSection
-
+  // to remove after Loïc PR
   return foundGovernance ? (
     <div className="okp4-dataverse-portal-governance-governance-details-main">
       <div className="okp4-dataverse-portal-governance-details-header">
@@ -138,6 +160,7 @@ export const GovernanceDetails: FC = () => {
       </div>
     </div>
   ) : (
+    // to remove after Loïc PR
     <p>Not found</p>
   )
 }
