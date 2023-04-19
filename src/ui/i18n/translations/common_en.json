@@ -12,7 +12,7 @@
     "lastUpdate": "Last update"
   },
   "actions": {
-    "explore": "Explore",
+    "explore": "Explore dataverse",
     "details": "See Details",
     "accessGovernance": "Access governance"
   },
