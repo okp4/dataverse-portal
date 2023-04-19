@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import type { Option } from 'fp-ts/Option'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
-import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import type { DataSpace } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
@@ -42,15 +42,15 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
   sections
 }) => {
   const { t } = useTranslation('common')
-  const [dataverseItem, setDataverseItem] = useState<Option<DataverseItemDetails>>(O.none)
+  const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
   useEffect(() => {
-    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataverseItem)
+    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataspace)
   }, [id])
 
   return O.match(
     () => <p>dataverse item not found</p>,
-    ({ label }: DataverseItemDetails) => (
+    ({ label }: DataSpace) => (
       <div className="okp4-dataverse-portal-governance-page-main">
         <div className="okp4-dataverse-portal-governance-page-back-button">
           <BackButton to={`/dataverse/dataspace/${id}`} />
@@ -66,5 +66,5 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
         </section>
       </div>
     )
-  )(dataverseItem)
+  )(dataspace)
 }
