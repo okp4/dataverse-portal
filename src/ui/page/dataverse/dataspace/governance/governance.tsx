@@ -37,13 +37,24 @@ export const Governance: FC = () => {
     const firstSubsection = firstSection.contains[0]
     const firstSubsectionId = firstSubsection.id
 
-    if (!currentSection && !currentSubsection) {
-      navigate(`${firstSectionId}/${firstSubsectionId}`)
+    if (!sectionIdParams && !subsectionIdParams) {
+      return navigate(`${firstSectionId}/${firstSubsectionId}`)
     }
-    if (currentSection && !currentSubsection) {
-      navigate(`${currentSection.id}/${currentSection.contains[0].id}`)
+
+    if (sectionIdParams && subsectionIdParams) {
+      if (currentSection && currentSubsection) {
+        return navigate(`${currentSection.id}/${currentSubsection.id}`)
+      }
+      return navigate('/404')
     }
-  }, [navigate, currentSection, currentSubsection, sections])
+
+    if (sectionIdParams && !subsectionIdParams) {
+      if (currentSection) {
+        return navigate(`${currentSection.id}/${currentSection.contains[0].id}`)
+      }
+      return navigate('/404')
+    }
+  }, [navigate, currentSection, currentSubsection, sections, sectionIdParams, subsectionIdParams])
 
   return (
     <GovernanceContent

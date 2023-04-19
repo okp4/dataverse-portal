@@ -59,6 +59,10 @@ export const appRoutes: Route[] = [
     id: 'governance',
     path: routes.governance,
     element: <Governance />,
-    nestedRoute: <Route element={<Section />} path=":sectionId/:subsectionId" />
+    nestedRoute: (
+      <Route element={<Section />} path=":sectionId">
+        <Route element={<Section />} path=":subsectionId" />
+      </Route>
+    )
   }
 ]
