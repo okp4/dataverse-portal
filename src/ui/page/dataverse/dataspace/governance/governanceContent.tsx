@@ -53,7 +53,6 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
     ({ label }: DataverseItemDetails) => (
       <div className="okp4-dataverse-portal-governance-page-main">
         <div className="okp4-dataverse-portal-governance-page-back-button">
-          {/* id should be imbedded in the argument object */}
           <BackButton to={`/dataverse/dataspace/${id}`} />
         </div>
         <section className="okp4-dataverse-portal-governance-page-section">
