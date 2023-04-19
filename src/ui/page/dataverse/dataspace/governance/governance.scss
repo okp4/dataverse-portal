@@ -76,7 +76,7 @@
           &.active {
             @include noto-sans(700);
             color: themed('text');
-            background-color: themed(governance-nav-background-active);
+            background-color: themed(governance-nav-section-background);
           }
         }
 

@@ -37,7 +37,7 @@ $themes: (
     skeleton-base-color: $skeleton-base-color-light,
     skeleton-animated-color: $skeleton-animated-color-light,
     skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
-    governance-nav-background-active: $tertiary-button-background-light-variant-2
+    governance-nav-section-background: $governance-nav-section-background
 
   ),
   dark: (
@@ -76,7 +76,7 @@ $themes: (
     skeleton-base-color: $skeleton-base-color-dark,
     skeleton-animated-color: $skeleton-animated-color-dark,
     skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
-    governance-nav-background-active: $tertiary-button-background-dark
+    governance-nav-section-background: $tertiary-button-background-dark
   )
 );
 
