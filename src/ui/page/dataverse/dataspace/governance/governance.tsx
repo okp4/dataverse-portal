@@ -1,25 +1,9 @@
 import type { FC } from 'react'
 import { useEffect } from 'react'
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { GovernanceContent } from './governanceContent'
-import type { SectionDTO } from './mockedData'
 import { mockedGovernanceChapter } from './mockedData'
 import './governance.scss'
-
-export const Section: FC = () => {
-  const { subsectionId } = useParams<{ subsectionId: string }>()
-  const section = useOutletContext<SectionDTO>()
-  const subsection =
-    section.contains.find(subSection => subSection.id === subsectionId) ?? section.contains[0]
-  return (
-    <section>
-      <h2>{section.title}</h2>
-      <section>
-        <h3>{subsection.title}</h3>
-      </section>
-    </section>
-  )
-}
 
 export const Governance: FC = () => {
   const navigate = useNavigate()

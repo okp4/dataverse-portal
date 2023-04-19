@@ -4,7 +4,8 @@ import Dataverse from '@/ui/page/dataverse/dataverse'
 import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
-import { Governance, Section } from '@/ui/page/dataverse/dataspace/governance/governance'
+import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
+import { Section } from '@/ui/page/dataverse/dataspace/governance/governanceContent'
 
 export enum routes {
   home = '/',
