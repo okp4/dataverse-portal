@@ -55,7 +55,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
               <NavLink
                 className={classnames(
                   'okp4-dataverse-portal-governance-page-navigation-section-link',
-                  isSectionActive ? 'active' : ''
+                  { active: isSectionActive }
                 )}
                 onClick={handleNavSectionClick(section)}
                 relative="route"
@@ -82,7 +82,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                       <NavLink
                         className={classnames(
                           'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                          isSubsectionActive && 'active'
+                          { active: isSubsectionActive }
                         )}
                         onClick={handleNavSubsectionClick(sectionId, subsectionId)}
                         relative="route"
