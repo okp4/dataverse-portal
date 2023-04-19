@@ -63,39 +63,37 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
               >
                 {sectionTitle}
               </NavLink>
-              {subsections.length > 0 && (
-                <ul
-                  className={classnames(
-                    'okp4-dataverse-portal-governance-page-navigation-subsection-list',
-                    hasMoreThanOneSubsection && isSectionActive ? 'visible' : 'hidden'
-                  )}
-                >
-                  {subsections.map(({ title: subsectionTitle, id: subsectionId }) => {
-                    const isSubsectionActive = subsectionId === activeSubsection
-                    return (
-                      <li
-                        className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"
-                        key={subsectionId}
+              <ul
+                className={classnames(
+                  'okp4-dataverse-portal-governance-page-navigation-subsection-list',
+                  hasMoreThanOneSubsection && isSectionActive ? 'visible' : 'hidden'
+                )}
+              >
+                {subsections.map(({ title: subsectionTitle, id: subsectionId }) => {
+                  const isSubsectionActive = subsectionId === activeSubsection
+                  return (
+                    <li
+                      className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"
+                      key={subsectionId}
+                    >
+                      <div className="okp4-dataverse-portal-governance-page-navigation-subsection-list-style">
+                        <Icon name={`hook-${theme}` as IconName} />
+                      </div>
+                      <NavLink
+                        className={classnames(
+                          'okp4-dataverse-portal-governance-page-navigation-subsection-link',
+                          isSubsectionActive && 'active'
+                        )}
+                        onClick={handleNavSubsectionClick(sectionId, subsectionId)}
+                        relative="route"
+                        to={`${sectionId}/${subsectionId}`}
                       >
-                        <div className="okp4-dataverse-portal-governance-page-navigation-subsection-list-style">
-                          <Icon name={`hook-${theme}` as IconName} />
-                        </div>
-                        <NavLink
-                          className={classnames(
-                            'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                            isSubsectionActive && 'active'
-                          )}
-                          onClick={handleNavSubsectionClick(sectionId, subsectionId)}
-                          relative="route"
-                          to={`${sectionId}/${subsectionId}`}
-                        >
-                          {subsectionTitle}
-                        </NavLink>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
+                        {subsectionTitle}
+                      </NavLink>
+                    </li>
+                  )
+                })}
+              </ul>
             </li>
           )
         })}
