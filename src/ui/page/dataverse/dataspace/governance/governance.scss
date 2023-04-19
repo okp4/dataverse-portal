@@ -65,16 +65,21 @@
           @include noto-sans(700);
           position: relative;
           z-index: 1;
-          padding: 10px 16px;
+          padding: 8px 16px;
           border-radius: 16px;
-          line-height: 28px;
+          line-height: 32px;
           color: rgba(themed('text'), 0.4);
           background-color: themed('background');
           text-decoration: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          /* stylelint-disable-next-line value-no-vendor-prefix */
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
           cursor: pointer;
 
           &.active {
-            @include noto-sans(700);
             color: themed('text');
             background-color: themed(governance-nav-section-background);
           }
@@ -87,6 +92,12 @@
           background-color: themed('background');
           text-decoration: none;
           letter-spacing: 0.4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          /* stylelint-disable-next-line value-no-vendor-prefix */
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
           cursor: pointer;
 
           &.active {
