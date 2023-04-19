@@ -9,12 +9,14 @@ import { Icon } from '@/ui/component/icon/icon'
 import type { SectionDTO } from './mockedData'
 
 type GovernanceWithNavigationProps = {
+  dataspaceId: string
   sections: SectionDTO[]
   activeSectionId?: string
   activeSubsectionId?: string
 }
 
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
+  dataspaceId,
   sections,
   activeSectionId,
   activeSubsectionId
@@ -39,6 +41,8 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     []
   )
 
+  const governanceBasePath = `/dataverse/dataspace/${dataspaceId}/governance`
+
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
       <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
@@ -57,8 +61,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                   { active: isSectionActive }
                 )}
                 onClick={handleNavSectionClick(section)}
-                relative="route"
-                to={`${sectionId}/${subsections[0].id}`}
+                to={`${governanceBasePath}/${sectionId}/${subsections[0].id}`}
               >
                 {sectionTitle}
               </NavLink>
@@ -84,8 +87,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                           { active: isSubsectionActive }
                         )}
                         onClick={handleNavSubsectionClick(sectionId, subsectionId)}
-                        relative="route"
-                        to={`${sectionId}/${subsectionId}`}
+                        to={`${governanceBasePath}/${sectionId}/${subsectionId}`}
                       >
                         {subsectionTitle}
                       </NavLink>

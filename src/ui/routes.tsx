@@ -1,11 +1,9 @@
-import { Route } from 'react-router-dom'
 import { Home } from '@/ui/page/home/home'
 import Dataverse from '@/ui/page/dataverse/dataverse'
 import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
 import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
-import { Section } from '@/ui/page/dataverse/dataspace/governance/governanceContent'
 
 export enum routes {
   home = '/',
@@ -13,7 +11,7 @@ export enum routes {
   dataspace = 'dataverse/dataspace/:id',
   dataset = 'dataverse/dataset/:id',
   service = 'dataverse/service/:id',
-  governance = 'dataverse/dataspace/:id/governance',
+  governance = 'dataverse/dataspace/:id/governance/:sectionId?/:subsectionId?',
   notFoundError = '*'
 }
 
@@ -59,11 +57,6 @@ export const appRoutes: Route[] = [
   {
     id: 'governance',
     path: routes.governance,
-    element: <Governance />,
-    nestedRoute: (
-      <Route element={<Section />} path=":sectionId">
-        <Route element={<Section />} path=":subsectionId" />
-      </Route>
-    )
+    element: <Governance />
   }
 ]

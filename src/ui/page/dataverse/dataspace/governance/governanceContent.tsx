@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import { useParams, Outlet, useOutletContext } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { Option } from 'fp-ts/Option'
 import * as O from 'fp-ts/Option'
@@ -13,9 +13,12 @@ import { GovernanceNavigation } from './governanceNavigation'
 import type { SectionDTO, SubSectionDTO } from './mockedData'
 import './governance.scss'
 
-export const Section: FC = () => {
+type SectionProps = {
+  section: SectionDTO
+}
+
+export const Section: FC<SectionProps> = ({ section }) => {
   const { subsectionId } = useParams<{ subsectionId: string }>()
-  const section = useOutletContext<SectionDTO>()
   const subsection =
     section.contains.find(subSection => subSection.id === subsectionId) ?? section.contains[0]
   return (
@@ -30,13 +33,13 @@ export const Section: FC = () => {
 
 type GovernanceContentProps = {
   sections: SectionDTO[]
+  dataspaceId: string
   activeSection?: SectionDTO
   activeSubsection?: SubSectionDTO
-  id?: string
 }
 
 export const GovernanceContent: FC<GovernanceContentProps> = ({
-  id,
+  dataspaceId,
   activeSection,
   activeSubsection,
   sections
@@ -45,26 +48,34 @@ export const GovernanceContent: FC<GovernanceContentProps> = ({
   const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
   useEffect(() => {
-    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataspace)
-  }, [id])
+    pipe(
+      O.fromNullable(dataspaceId),
+      O.chain(getResourceDetails),
+      O.filter(isDataSpace),
+      setDataspace
+    )
+  }, [dataspaceId])
 
   return O.match(
     () => <p>dataverse item not found</p>,
-    ({ label }: DataSpace) => (
-      <div className="okp4-dataverse-portal-governance-page-main">
-        <div className="okp4-dataverse-portal-governance-page-back-button">
-          <BackButton to={`/dataverse/dataspace/${id}`} />
+    ({ label }: DataSpace) => {
+      return (
+        <div className="okp4-dataverse-portal-governance-page-main">
+          <div className="okp4-dataverse-portal-governance-page-back-button">
+            <BackButton to={`/dataverse/dataspace/${dataspaceId}`} />
+          </div>
+          <section className="okp4-dataverse-portal-governance-page-section">
+            <h1>{`${label} | ${t('resources.governance')}`}</h1>
+            <GovernanceNavigation
+              activeSectionId={activeSection?.id}
+              activeSubsectionId={activeSubsection?.id}
+              dataspaceId={dataspaceId}
+              sections={sections}
+            />
+            <Section section={activeSection ?? sections[0]} />
+          </section>
         </div>
-        <section className="okp4-dataverse-portal-governance-page-section">
-          <h1>{`${label} | ${t('resources.governance')}`}</h1>
-          <GovernanceNavigation
-            activeSectionId={activeSection?.id}
-            activeSubsectionId={activeSubsection?.id}
-            sections={sections}
-          />
-          <Outlet context={activeSection} />
-        </section>
-      </div>
-    )
+      )
+    }
   )(dataspace)
 }
