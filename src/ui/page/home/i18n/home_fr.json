@@ -11,8 +11,8 @@
         }
       },
       "explore": {
-        "label": "Explorer",
-        "catalog": "Explorer le catalogue"
+        "label": "Explorer le dataverse",
+        "catalog": "Naviguer sur le dataverse"
       },
       "interact": {
         "label": "Interagir",

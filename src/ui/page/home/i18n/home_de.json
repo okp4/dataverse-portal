@@ -11,8 +11,8 @@
         }
       },
       "explore": {
-        "label": "Erkunden Sie",
-        "catalog": "Den Katalog erforschen"
+        "label": "Dataverse erkunden ",
+        "catalog": "Dataverse durchsuchen"
       },
       "interact": {
         "label": "Interagieren",

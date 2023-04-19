@@ -11,8 +11,8 @@
         }
       },
       "explore": {
-        "label": "Explore",
-        "catalog": "Explore the catalog"
+        "label": "Explore dataverse",
+        "catalog": "Browse dataverse"
       },
       "interact": {
         "label": "Interact",
