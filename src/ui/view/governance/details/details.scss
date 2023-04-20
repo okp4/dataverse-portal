@@ -100,15 +100,17 @@
             column-gap: 28px;
             max-height: 670px;
 
-            .okp4-dataverse-portal-governance-details-paragraph {
-              @include columns-with-gap(6px);
-              width: fit-content;
-              max-height: 252px;
+            .okp4-dataverse-portal-governance-details-paragraph-container {
               background: themed(paragraph-background);
+              max-height: 252px;
               border-radius: 10px;
-              padding: 20px;
               width: 320px;
               line-height: 20px;
+            }
+
+            .okp4-dataverse-portal-governance-details-paragraph {
+              @include columns-with-gap(6px);
+              padding: 20px;
 
               .okp4-dataverse-portal-governance-details-paragraph-title {
                 font-size: 16px;

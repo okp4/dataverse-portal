@@ -15,16 +15,16 @@
       color: themed('text');
       grid-auto-rows: max-content;
       row-gap: 26px;
-    
+
       @include use-breakpoints(('desktop')) {
         @include grid-container($colsNb: 12, $gutter: 34px);
       }
-    
+
       @include use-breakpoints(('tablet')) {
         @include grid-container($colsNb: 8, $gutter: 16px);
         row-gap: 20px;
       }
-    
+
       @include use-breakpoints(('mobile')) {
         @include grid-container($colsNb: 6, $gutter: 16px);
         row-gap: 20px;
@@ -42,7 +42,7 @@
 
       .okp4-dataverse-portal-governance-page-navigation {
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: auto);
-        
+
         @include use-breakpoints(('tablet', 'mobile')) {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
         }
@@ -53,14 +53,14 @@
           flex-direction: column;
           padding: 0;
           margin: 0;
-          
+
           .okp4-dataverse-portal-governance-page-navigation-section-list-item {
             display: flex;
             flex-direction: column;
             gap: 16px;
           }
         }
-        
+
         .okp4-dataverse-portal-governance-page-navigation-section-link {
           @include noto-sans(700);
           position: relative;
@@ -119,7 +119,7 @@
 
           .okp4-dataverse-portal-governance-page-navigation-subsection-list-item {
             position: relative;
-            
+
             .okp4-dataverse-portal-governance-page-navigation-subsection-list-style {
               position: absolute;
               left: -22px;
@@ -127,6 +127,10 @@
             }
           }
         }
+      }
+
+      .okp4-dataverse-portal-governance-governance-details-main {
+        @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
       }
     }
   }
