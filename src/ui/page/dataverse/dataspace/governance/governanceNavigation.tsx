@@ -12,14 +12,12 @@ type GovernanceWithNavigationProps = {
   dataspaceId: string
   sections: SectionDTO[]
   activeSectionId: string
-  activeSubsectionId: string
 }
 
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   dataspaceId,
   sections,
-  activeSectionId,
-  activeSubsectionId
+  activeSectionId
 }) => {
   const theme = useAppStore(state => state.theme)
 
@@ -67,7 +65,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                     <NavLink
                       className={classnames(
                         'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                        navLinkClassName({ isActive: subsectionId === activeSubsectionId })
+                        { navLinkClassName }
                       )}
                       to={`${governanceBasePath}/${sectionId}/${subsectionId}`}
                     >

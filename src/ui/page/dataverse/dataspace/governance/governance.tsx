@@ -91,7 +91,6 @@ export const Governance: FC = () => {
         <h1>{`${dataspaceLabel} | ${t('resources.governance')}`}</h1>
         <GovernanceNavigation
           activeSectionId={currentSection.id}
-          activeSubsectionId={currentSubsection.id}
           dataspaceId={dataspaceId}
           sections={sections}
         />
