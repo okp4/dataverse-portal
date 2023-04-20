@@ -44,6 +44,11 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     []
   )
 
+  const navLinkClassName = useCallback(
+    ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : undefined),
+    []
+  )
+
   const governanceBasePath = `/dataverse/dataspace/${dataspaceId}/governance`
 
   return (
@@ -61,7 +66,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
               <NavLink
                 className={classnames(
                   'okp4-dataverse-portal-governance-page-navigation-section-link',
-                  { active: isSectionActive }
+                  navLinkClassName({ isActive: isSectionActive })
                 )}
                 onClick={handleNavSectionClick(section)}
                 to={`${governanceBasePath}/${sectionId}/${subsections[0].id}`}
@@ -87,7 +92,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                       <NavLink
                         className={classnames(
                           'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                          { active: isSubsectionActive }
+                          navLinkClassName({ isActive: isSubsectionActive })
                         )}
                         onClick={handleNavSubsectionClick(sectionId, subsectionId)}
                         to={`${governanceBasePath}/${sectionId}/${subsectionId}`}
