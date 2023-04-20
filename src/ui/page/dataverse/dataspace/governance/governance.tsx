@@ -19,10 +19,17 @@ export const Governance: FC = () => {
     subsectionId: subsectionIdParams
   } = useParams<string>()
 
-  const sections = mockedGovernanceChapter.contains
-  const currentSection = sections.find(section => section.id === sectionIdParams)
-  const currentSubsection = currentSection?.contains.find(
-    subsection => subsection.id === subsectionIdParams
+  const sections = useMemo(() => mockedGovernanceChapter.contains, [])
+  const currentSection = useMemo(
+    () => (sectionIdParams ? sections.find(section => section.id === sectionIdParams) : undefined),
+    [sectionIdParams, sections]
+  )
+  const currentSubsection = useMemo(
+    () =>
+      subsectionIdParams
+        ? currentSection?.contains.find(subsection => subsection.id === subsectionIdParams)
+        : undefined,
+    [subsectionIdParams, currentSection]
   )
 
   const navigationPath = useMemo((): string | undefined => {
@@ -73,7 +80,7 @@ export const Governance: FC = () => {
     return <p>dataspace not found</p>
   }
 
-  if (!dataspaceId) return null
+  if (!dataspaceId || !currentSection || !currentSubsection) return null
 
   return (
     <GovernanceContent
