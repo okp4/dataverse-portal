@@ -99,3 +99,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+@mixin columns-with-gap($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}

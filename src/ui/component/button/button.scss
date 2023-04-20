@@ -81,7 +81,9 @@
       border: 1px solid themed('secondary-color');
 
       &.disabled {
-        border-color: themed('neutral-variant-1');
+        background-color: unset;
+        color: themed('secondary-disabled');
+        border-color: themed('secondary-disabled');
       }
 
       svg {

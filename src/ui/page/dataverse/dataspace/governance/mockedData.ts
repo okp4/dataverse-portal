@@ -29,9 +29,9 @@ type ParagraphDTOWithNumber = Omit<DescriptedDTO, 'description'> &
 
 type DescriptedDTOWithNumber = DescriptedDTO & Numbered
 
-type ParagraphDTO = ParagraphDTOWithNumber
+export type ParagraphDTO = ParagraphDTOWithNumber
 
-type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
+export type ArticleDTO = DescriptedDTOWithNumber & Container<ParagraphDTO>
 
 export type SubSectionDTO = DescriptedDTOWithNumber & NonEmptyContainer<ArticleDTO>
 

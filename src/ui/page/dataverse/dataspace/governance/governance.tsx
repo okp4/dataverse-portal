@@ -1,35 +1,17 @@
 import type { FC } from 'react'
 import { useMemo, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
 import type { DataSpace } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
-import type { SectionDTO } from './mockedData'
 import { mockedGovernanceChapter } from './mockedData'
-import './governance.scss'
 import { GovernanceNavigation } from './governanceNavigation'
-import { useTranslation } from 'react-i18next'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
-
-type SectionProps = {
-  section: SectionDTO
-}
-
-export const Section: FC<SectionProps> = ({ section }) => {
-  const { subsectionId } = useParams<{ subsectionId: string }>()
-  const subsection =
-    section.contains.find(subSection => subSection.id === subsectionId) ?? section.contains[0]
-  return (
-    <section>
-      <h2>{section.title}</h2>
-      <section>
-        <h3>{subsection.title}</h3>
-      </section>
-    </section>
-  )
-}
+import { GovernanceDetails } from '@/ui/view/governance/details/details'
+import './governance.scss'
 
 // eslint-disable-next-line max-lines-per-function
 export const Governance: FC = () => {
@@ -113,7 +95,7 @@ export const Governance: FC = () => {
           sections={sections}
           subsectionId={currentSubsection.id}
         />
-        <Section section={currentSection} />
+        <GovernanceDetails section={currentSection} subSection={currentSubsection} />
       </section>
     </div>
   )

@@ -48,7 +48,11 @@ import { ReactComponent as FileIcon } from '@/ui/asset/icon/file.svg'
 import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
 import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
 import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
+import { ReactComponent as EarthLightIcon } from '@/ui/asset/icon/earth-light.svg'
+import { ReactComponent as EarthDarkIcon } from '@/ui/asset/icon/earth-dark.svg'
 import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
+import { ReactComponent as ShieldLightIcon } from '@/ui/asset/icon/shield-light.svg'
+import { ReactComponent as ShieldDarkIcon } from '@/ui/asset/icon/shield-dark.svg'
 import { ReactComponent as CopyLight } from '@/ui/asset/icon/copy-light.svg'
 import { ReactComponent as CopyDark } from '@/ui/asset/icon/copy-dark.svg'
 import { ReactComponent as ErrorIcon } from '@/ui/asset/icon/error.svg'
@@ -58,6 +62,20 @@ import { ReactComponent as InfoDarkIcon } from '@/ui/asset/icon/info-dark.svg'
 import { ReactComponent as CheckIcon } from '@/ui/asset/icon/check.svg'
 import { ReactComponent as HookDarkIcon } from '@/ui/asset/icon/hook-dark.svg'
 import { ReactComponent as HookLightIcon } from '@/ui/asset/icon/hook-light.svg'
+import { ReactComponent as ArrowDownDarkIcon } from '@/ui/asset/icon/arrow-down-dark.svg'
+import { ReactComponent as ArrowDownLightIcon } from '@/ui/asset/icon/arrow-down-light.svg'
+import { ReactComponent as ComputerDarkIcon } from '@/ui/asset/icon/computer-dark.svg'
+import { ReactComponent as ComputerLigtIcon } from '@/ui/asset/icon/computer-light.svg'
+import { ReactComponent as DescriptionDarkIcon } from '@/ui/asset/icon/description-dark.svg'
+import { ReactComponent as DescriptionLightIcon } from '@/ui/asset/icon/description-light.svg'
+import { ReactComponent as ShapesDarkIcon } from '@/ui/asset/icon/shapes-dark.svg'
+import { ReactComponent as ShapesLightIcon } from '@/ui/asset/icon/shapes-light.svg'
+import { ReactComponent as UserDarkIcon } from '@/ui/asset/icon/user-dark.svg'
+import { ReactComponent as UserLightIcon } from '@/ui/asset/icon/user-light.svg'
+import { ReactComponent as UsersDarkIcon } from '@/ui/asset/icon/users-dark.svg'
+import { ReactComponent as UsersLightIcon } from '@/ui/asset/icon/users-light.svg'
+import { ReactComponent as KeyDarkIcon } from '@/ui/asset/icon/key-dark.svg'
+import { ReactComponent as KeyLightIcon } from '@/ui/asset/icon/key-light.svg'
 
 export type IconName =
   | 'all-light'
@@ -108,7 +126,11 @@ export type IconName =
   | 'folder'
   | 'calendar'
   | 'earth'
+  | 'earth-light'
+  | 'earth-dark'
   | 'shield'
+  | 'shield-light'
+  | 'shield-dark'
   | 'copy-light'
   | 'copy-dark'
   | 'error'
@@ -118,6 +140,20 @@ export type IconName =
   | 'info-dark'
   | 'hook-light'
   | 'hook-dark'
+  | 'arrow-down-light'
+  | 'arrow-down-dark'
+  | 'computer-dark'
+  | 'computer-light'
+  | 'description-dark'
+  | 'description-light'
+  | 'shapes-dark'
+  | 'shapes-light'
+  | 'user-dark'
+  | 'user-light'
+  | 'users-dark'
+  | 'users-light'
+  | 'key-dark'
+  | 'key-light'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -168,7 +204,11 @@ const icons: Record<IconName, React.FunctionComponent> = {
   folder: FolderIcon,
   calendar: CalendarIcon,
   earth: EarthIcon,
+  'earth-light': EarthLightIcon,
+  'earth-dark': EarthDarkIcon,
   shield: ShieldIcon,
+  'shield-dark': ShieldDarkIcon,
+  'shield-light': ShieldLightIcon,
   'copy-light': CopyLight,
   'copy-dark': CopyDark,
   warning: WarningIcon,
@@ -177,7 +217,21 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'info-light': InfoLightIcon,
   'info-dark': InfoDarkIcon,
   'hook-light': HookLightIcon,
-  'hook-dark': HookDarkIcon
+  'hook-dark': HookDarkIcon,
+  'arrow-down-light': ArrowDownLightIcon,
+  'arrow-down-dark': ArrowDownDarkIcon,
+  'computer-dark': ComputerDarkIcon,
+  'computer-light': ComputerLigtIcon,
+  'description-dark': DescriptionDarkIcon,
+  'description-light': DescriptionLightIcon,
+  'shapes-dark': ShapesDarkIcon,
+  'shapes-light': ShapesLightIcon,
+  'user-dark': UserDarkIcon,
+  'user-light': UserLightIcon,
+  'users-dark': UsersDarkIcon,
+  'users-light': UsersLightIcon,
+  'key-dark': KeyDarkIcon,
+  'key-light': KeyLightIcon
 }
 
 type IconProps = {
