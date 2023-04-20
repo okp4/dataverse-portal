@@ -43,14 +43,11 @@ export const Governance: FC = () => {
 
   const sections = useMemo(() => mockedGovernanceChapter.contains, [])
   const currentSection = useMemo(
-    () => (sectionIdParams ? sections.find(section => section.id === sectionIdParams) : undefined),
+    () => sections.find(section => section.id === sectionIdParams),
     [sectionIdParams, sections]
   )
   const currentSubsection = useMemo(
-    () =>
-      subsectionIdParams
-        ? currentSection?.contains.find(subsection => subsection.id === subsectionIdParams)
-        : undefined,
+    () => currentSection?.contains.find(subsection => subsection.id === subsectionIdParams),
     [subsectionIdParams, currentSection]
   )
 
