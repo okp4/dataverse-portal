@@ -19,16 +19,9 @@ export type Route = {
   id: string
   path: string
   element: React.ReactNode
-  nestedRoute?: React.ReactNode
 }
 
 export const appRoutes: Route[] = [
-  {
-    id: 'notFoundError',
-    path: routes.notFoundError,
-    // TODO: replace with 404 page component
-    element: <div>404</div>
-  },
   {
     id: 'home',
     path: routes.home,
