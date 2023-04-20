@@ -11,8 +11,7 @@ export enum routes {
   dataspace = 'dataverse/dataspace/:id',
   dataset = 'dataverse/dataset/:id',
   service = 'dataverse/service/:id',
-  governance = 'dataverse/dataspace/:id/governance/:sectionId?/:subsectionId?',
-  notFoundError = '*'
+  governance = 'dataverse/dataspace/:id/governance/:sectionId?/:subsectionId?'
 }
 
 export type Route = {

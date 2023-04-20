@@ -92,10 +92,9 @@ export const Governance: FC = () => {
     if (navigationPath) {
       return navigate(navigationPath, { replace: true })
     }
-    navigate('/404')
   }, [navigate, navigationPath])
 
-  if (!dataspaceLabel) {
+  if (!dataspaceLabel || !navigationPath) {
     return <p>dataspace not found</p>
   }
 
