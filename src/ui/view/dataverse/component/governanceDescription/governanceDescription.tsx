@@ -25,7 +25,7 @@ export const GovernanceDescription: FC<GovernanceDescriptionProps> = ({
   }, [description])
 
   const handleButtonClick = useCallback(() => {
-    navigate('governance')
+    navigate('./governance')
   }, [navigate])
 
   return (
