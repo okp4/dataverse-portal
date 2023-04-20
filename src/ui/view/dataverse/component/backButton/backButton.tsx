@@ -1,7 +1,8 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
-import { Icon } from '@/ui/component/icon/icon'
 import { useNavigate } from 'react-router-dom'
+import { Icon } from '@/ui/component/icon/icon'
+import { Button } from '@/ui/component/button/button'
 import './backButton.scss'
 
 type BackButtonProps = {
@@ -18,10 +19,13 @@ export const BackButton: FC<BackButtonProps> = ({ to, label }): JSX.Element => {
 
   return (
     <div className="okp4-dataverse-portal-back-main">
-      <button className="okp4-dataverse-portal-back-button" onClick={handleRouting}>
-        <Icon name="arrow-left" />
-      </button>
-      {label && <span className="okp4-dataverse-portal-back-text">{label}</span>}
+      <Button
+        className="okp4-dataverse-portal-back-button"
+        iconButtonOnly={<Icon name="arrow-left" />}
+        onClick={handleRouting}
+        variant="outlined-tertiary"
+      />
+      {label && <p className="okp4-dataverse-portal-back-text">{label}</p>}
     </div>
   )
 }
