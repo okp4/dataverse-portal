@@ -1,0 +1,133 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-governance-page-main {
+  @include with-theme() {
+    .okp4-dataverse-portal-governance-page-back-button {
+      @include use-breakpoints(('mobile', 'tablet')) {
+        display: none;
+      }
+    }
+
+    .okp4-dataverse-portal-governance-page-section {
+      @include grid-container($gutter: 48px);
+      color: themed('text');
+      grid-auto-rows: max-content;
+      row-gap: 26px;
+    
+      @include use-breakpoints(('desktop')) {
+        @include grid-container($colsNb: 12, $gutter: 34px);
+      }
+    
+      @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 8, $gutter: 16px);
+        row-gap: 20px;
+      }
+    
+      @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 6, $gutter: 16px);
+        row-gap: 20px;
+      }
+
+      h1 {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+        @include norse-gradient-header($line-height: 36px);
+        @include use-breakpoints(('mobile', 'tablet')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+          text-align: center;
+          justify-self: center;
+        }
+      }
+
+      .okp4-dataverse-portal-governance-page-navigation {
+        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: auto);
+        
+        @include use-breakpoints(('tablet', 'mobile')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+        }
+
+        .okp4-dataverse-portal-governance-page-navigation-section-list {
+          list-style: none;
+          display: list-item;
+          flex-direction: column;
+          padding: 0;
+          margin: 0;
+          
+          .okp4-dataverse-portal-governance-page-navigation-section-list-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+        }
+        
+        .okp4-dataverse-portal-governance-page-navigation-section-link {
+          @include noto-sans(700);
+          position: relative;
+          z-index: 1;
+          padding: 8px 16px;
+          border-radius: 16px;
+          line-height: 32px;
+          color: rgba(themed('text'), 0.4);
+          background-color: themed('background');
+          text-decoration: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          /* stylelint-disable-next-line value-no-vendor-prefix */
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          cursor: pointer;
+
+          &.active {
+            color: themed('text');
+            background-color: themed(governance-nav-section-background);
+          }
+        }
+
+        .okp4-dataverse-portal-governance-page-navigation-subsection-link {
+          @include noto-sans(400);
+          line-height: 28px;
+          color: rgba(themed('text'), 0.4);
+          background-color: themed('background');
+          text-decoration: none;
+          letter-spacing: 0.4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          /* stylelint-disable-next-line value-no-vendor-prefix */
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          cursor: pointer;
+
+          &.active {
+            @include noto-sans(700);
+            color: themed('text');
+          }
+        }
+
+        .okp4-dataverse-portal-governance-page-navigation-subsection-list {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 6px;
+
+          &.hidden {
+            display: none;
+          }
+
+          .okp4-dataverse-portal-governance-page-navigation-subsection-list-item {
+            position: relative;
+            
+            .okp4-dataverse-portal-governance-page-navigation-subsection-list-style {
+              position: absolute;
+              left: -22px;
+              top: -30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

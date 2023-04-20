@@ -56,6 +56,8 @@ import { ReactComponent as WarningIcon } from '@/ui/asset/icon/warning.svg'
 import { ReactComponent as InfoLightIcon } from '@/ui/asset/icon/info-light.svg'
 import { ReactComponent as InfoDarkIcon } from '@/ui/asset/icon/info-dark.svg'
 import { ReactComponent as CheckIcon } from '@/ui/asset/icon/check.svg'
+import { ReactComponent as HookDarkIcon } from '@/ui/asset/icon/hook-dark.svg'
+import { ReactComponent as HookLightIcon } from '@/ui/asset/icon/hook-light.svg'
 
 export type IconName =
   | 'all-light'
@@ -114,6 +116,8 @@ export type IconName =
   | 'check'
   | 'info-light'
   | 'info-dark'
+  | 'hook-light'
+  | 'hook-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -171,7 +175,9 @@ const icons: Record<IconName, React.FunctionComponent> = {
   error: ErrorIcon,
   check: CheckIcon,
   'info-light': InfoLightIcon,
-  'info-dark': InfoDarkIcon
+  'info-dark': InfoDarkIcon,
+  'hook-light': HookLightIcon,
+  'hook-dark': HookDarkIcon
 }
 
 type IconProps = {
