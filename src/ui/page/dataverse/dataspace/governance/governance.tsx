@@ -6,12 +6,34 @@ import * as O from 'fp-ts/Option'
 import type { DataSpace } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
-import { GovernanceContent } from './governanceContent'
+import type { SectionDTO } from './mockedData'
 import { mockedGovernanceChapter } from './mockedData'
 import './governance.scss'
+import { GovernanceNavigation } from './governanceNavigation'
+import { useTranslation } from 'react-i18next'
+import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
+
+type SectionProps = {
+  section: SectionDTO
+}
+
+export const Section: FC<SectionProps> = ({ section }) => {
+  const { subsectionId } = useParams<{ subsectionId: string }>()
+  const subsection =
+    section.contains.find(subSection => subSection.id === subsectionId) ?? section.contains[0]
+  return (
+    <section>
+      <h2>{section.title}</h2>
+      <section>
+        <h3>{subsection.title}</h3>
+      </section>
+    </section>
+  )
+}
 
 // eslint-disable-next-line max-lines-per-function
 export const Governance: FC = () => {
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const {
     id: dataspaceId,
@@ -83,12 +105,20 @@ export const Governance: FC = () => {
   if (!dataspaceId || !currentSection || !currentSubsection) return null
 
   return (
-    <GovernanceContent
-      activeSection={currentSection}
-      activeSubsection={currentSubsection}
-      dataspaceId={dataspaceId}
-      label={dataspaceLabel}
-      sections={sections}
-    />
+    <div className="okp4-dataverse-portal-governance-page-main">
+      <div className="okp4-dataverse-portal-governance-page-back-button">
+        <BackButton to={`/dataverse/dataspace/${dataspaceId}`} />
+      </div>
+      <section className="okp4-dataverse-portal-governance-page-section">
+        <h1>{`${dataspaceLabel} | ${t('resources.governance')}`}</h1>
+        <GovernanceNavigation
+          dataspaceId={dataspaceId}
+          sectionId={currentSection.id}
+          sections={sections}
+          subsectionId={currentSubsection.id}
+        />
+        <Section section={currentSection} />
+      </section>
+    </div>
   )
 }

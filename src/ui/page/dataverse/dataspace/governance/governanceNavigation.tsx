@@ -11,8 +11,8 @@ import type { SectionDTO } from './mockedData'
 type GovernanceWithNavigationProps = {
   dataspaceId: string
   sections: SectionDTO[]
-  sectionId?: string
-  subsectionId?: string
+  sectionId: string
+  subsectionId: string
 }
 
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
@@ -23,17 +23,12 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
 }) => {
   const theme = useAppStore(state => state.theme)
 
-  const firstSectionId = sections[0].id
-  const firstSubsectionId = sections[0].contains[0].id
-
-  const [activeSectionId, setActiveSectionId] = useState<string>(sectionId ?? firstSectionId)
-  const [activeSubsectionId, setActiveSubsectionId] = useState<string>(
-    subsectionId ?? firstSubsectionId
-  )
+  const [activeSectionId, setActiveSectionId] = useState<string>(sectionId)
+  const [activeSubsectionId, setActiveSubsectionId] = useState<string>(subsectionId)
   useEffect(() => {
-    setActiveSectionId(sectionId ?? firstSectionId)
-    setActiveSubsectionId(subsectionId ?? firstSubsectionId)
-  }, [sectionId, subsectionId, firstSectionId, firstSubsectionId])
+    setActiveSectionId(sectionId)
+    setActiveSubsectionId(subsectionId)
+  }, [sectionId, subsectionId])
 
   const handleNavSectionClick = useCallback(
     (section: SectionDTO) => () => {
