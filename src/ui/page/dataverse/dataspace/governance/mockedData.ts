@@ -48,12 +48,12 @@ export const mockedGovernanceChapter: Chapter = {
       id: '2',
       title: 'Identity Management',
       description:
-        'It refers to the processes and tools used to manage and secure the access and use of data within an Data Space.',
+        'It refers to the processes and tools used to manage and secure the access and use of data within a Data Space.',
       number: '1.1',
       contains: [
         {
           id: '3',
-          title: 'Subsection title',
+          title: 'Acceptable Forms of Identification',
           number: '1.1.1',
           contains: [
             {
@@ -82,11 +82,11 @@ export const mockedGovernanceChapter: Chapter = {
       contains: [
         {
           id: '7',
-          title: 'Create the rules',
+          title: 'Create rules',
           number: '1.2.1',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Governance creation by Specific users',
               id: '8',
               number: '1.2.1.1',
               contains: [
@@ -107,7 +107,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.2.2',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Governance Amendment by Specific users',
               id: '11',
               number: '1.2.2.1',
               contains: [
@@ -130,7 +130,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.2.3',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Governance cancellation by Specific users',
               id: '14',
               description: 'Keys with the permissions to delete rules related to the Data Space.',
               number: '1.2.3.1',
@@ -159,7 +159,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.1',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Datasets referencing with specific criteria',
               id: '18',
               number: '1.3.1.1',
               contains: [
@@ -217,7 +217,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.2',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Metadata creation by specific users',
               id: '38',
               number: '1.3.2.1',
               contains: [
@@ -238,7 +238,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.3',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Metadata amendment by specific users',
               id: '41',
               number: '1.3.3.1',
               contains: [
@@ -259,7 +259,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.4',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Metadata cancellation by specific users',
               id: '44',
               number: '1.3.4.1',
               contains: [
@@ -280,7 +280,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.5',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Datasets dereferencing by specific users',
               id: '47',
               number: '1.3.5.1',
               contains: [
@@ -301,7 +301,7 @@ export const mockedGovernanceChapter: Chapter = {
           number: '1.3.6',
           contains: [
             {
-              title: 'Condition: Title',
+              title: 'Datasets download by specific users',
               id: '50',
               number: '1.3.6.1',
               contains: [
