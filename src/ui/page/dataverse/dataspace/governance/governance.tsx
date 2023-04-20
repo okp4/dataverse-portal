@@ -63,11 +63,11 @@ export const Governance: FC = () => {
       return `${governanceBasePath}/${firstSection.id}/${firstSubsection.id}`
     }
 
-    if (sectionIdParams && subsectionIdParams && currentSection && currentSubsection) {
+    if (currentSection && currentSubsection) {
       return `${governanceBasePath}/${currentSection.id}/${currentSubsection.id}`
     }
 
-    if (sectionIdParams && !subsectionIdParams && currentSection) {
+    if (!subsectionIdParams && currentSection) {
       return `${governanceBasePath}/${currentSection.id}/${currentSection.contains[0].id}`
     }
   }, [
