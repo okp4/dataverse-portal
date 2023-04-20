@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import type { FC } from 'react'
-import { useEffect, useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import classnames from 'classnames'
 import { useAppStore } from '@/ui/store/appStore'
@@ -11,38 +11,17 @@ import type { SectionDTO } from './mockedData'
 type GovernanceWithNavigationProps = {
   dataspaceId: string
   sections: SectionDTO[]
-  sectionId: string
-  subsectionId: string
+  activeSectionId: string
+  activeSubsectionId: string
 }
 
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   dataspaceId,
   sections,
-  sectionId,
-  subsectionId
+  activeSectionId,
+  activeSubsectionId
 }) => {
   const theme = useAppStore(state => state.theme)
-
-  const [activeSectionId, setActiveSectionId] = useState<string>(sectionId)
-  const [activeSubsectionId, setActiveSubsectionId] = useState<string>(subsectionId)
-  useEffect(() => {
-    setActiveSectionId(sectionId)
-    setActiveSubsectionId(subsectionId)
-  }, [sectionId, subsectionId])
-
-  const handleNavSectionClick = useCallback(
-    (section: SectionDTO) => () => {
-      setActiveSectionId(section.id)
-      setActiveSubsectionId(section.contains[0].id)
-    },
-    []
-  )
-  const handleNavSubsectionClick = useCallback(
-    (sectionId: string, subsectionId: string) => () => {
-      setActiveSubsectionId(subsectionId)
-    },
-    []
-  )
 
   const navLinkClassName = useCallback(
     ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : undefined),
@@ -54,8 +33,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
       <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
-        {sections.map(section => {
-          const { id: sectionId, title: sectionTitle, contains: subsections } = section
+        {sections.map(({ title: sectionTitle, contains: subsections, id: sectionId }) => {
           const isSectionActive = sectionId === activeSectionId
           const hasMoreThanOneSubsection = subsections.length > 1
           return (
@@ -68,7 +46,6 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                   'okp4-dataverse-portal-governance-page-navigation-section-link',
                   navLinkClassName({ isActive: isSectionActive })
                 )}
-                onClick={handleNavSectionClick(section)}
                 to={`${governanceBasePath}/${sectionId}/${subsections[0].id}`}
               >
                 {sectionTitle}
@@ -79,29 +56,25 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                   hasMoreThanOneSubsection && isSectionActive ? 'visible' : 'hidden'
                 )}
               >
-                {subsections.map(({ title: subsectionTitle, id: subsectionId }) => {
-                  const isSubsectionActive = subsectionId === activeSubsectionId
-                  return (
-                    <li
-                      className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"
-                      key={subsectionId}
+                {subsections.map(({ title: subsectionTitle, id: subsectionId }) => (
+                  <li
+                    className="okp4-dataverse-portal-governance-page-navigation-subsection-list-item"
+                    key={subsectionId}
+                  >
+                    <div className="okp4-dataverse-portal-governance-page-navigation-subsection-list-style">
+                      <Icon name={`hook-${theme}` as IconName} />
+                    </div>
+                    <NavLink
+                      className={classnames(
+                        'okp4-dataverse-portal-governance-page-navigation-subsection-link',
+                        navLinkClassName({ isActive: subsectionId === activeSubsectionId })
+                      )}
+                      to={`${governanceBasePath}/${sectionId}/${subsectionId}`}
                     >
-                      <div className="okp4-dataverse-portal-governance-page-navigation-subsection-list-style">
-                        <Icon name={`hook-${theme}` as IconName} />
-                      </div>
-                      <NavLink
-                        className={classnames(
-                          'okp4-dataverse-portal-governance-page-navigation-subsection-link',
-                          navLinkClassName({ isActive: isSubsectionActive })
-                        )}
-                        onClick={handleNavSubsectionClick(sectionId, subsectionId)}
-                        to={`${governanceBasePath}/${sectionId}/${subsectionId}`}
-                      >
-                        {subsectionTitle}
-                      </NavLink>
-                    </li>
-                  )
-                })}
+                      {subsectionTitle}
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             </li>
           )
