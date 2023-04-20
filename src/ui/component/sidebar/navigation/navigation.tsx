@@ -109,7 +109,7 @@ export const Navigation: FC = () => {
                 }
               </NavLink>
             ) : (
-              <div className="okp4-dataverse-portal-sidebar-deactivated-navitem">
+              <div className="okp4-dataverse-portal-sidebar-deactivated-navitem" key={id}>
                 {renderNavitem(isSidebarExpanded, label, id)}
               </div>
             )
