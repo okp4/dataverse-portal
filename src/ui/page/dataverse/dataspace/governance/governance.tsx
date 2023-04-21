@@ -90,10 +90,9 @@ export const Governance: FC = () => {
       <section className="okp4-dataverse-portal-governance-page-section">
         <h1>{`${dataspaceLabel} | ${t('resources.governance')}`}</h1>
         <GovernanceNavigation
+          activeSectionId={currentSection.id}
           dataspaceId={dataspaceId}
-          sectionId={currentSection.id}
           sections={sections}
-          subsectionId={currentSubsection.id}
         />
         <GovernanceDetails section={currentSection} subSection={currentSubsection} />
       </section>
