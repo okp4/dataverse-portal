@@ -7,12 +7,15 @@ import htmlConfig from 'vite-plugin-html-config'
 import htmlConfigOptions from './config/html-config'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [htmlConfig(htmlConfigOptions), react(), svgr()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : []
   },
   build: {
     rollupOptions: {
@@ -23,4 +26,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
