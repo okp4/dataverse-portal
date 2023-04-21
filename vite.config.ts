@@ -8,23 +8,19 @@ import htmlConfigOptions from './config/html-config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    htmlConfig(htmlConfigOptions),
-    react(), 
-    svgr()
-  ],
+  plugins: [htmlConfig(htmlConfigOptions), react(), svgr()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
   build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom']
-          }
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom']
         }
       }
-    },
+    }
+  }
 })
