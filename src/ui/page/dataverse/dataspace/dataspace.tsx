@@ -64,7 +64,7 @@ const Dataspace = (): JSX.Element => {
   const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
 
   useEffect(() => {
-    pipe(O.fromNullable(id), O.chain(getResourceDetails), O.filter(isDataSpace), setDataspace)
+    pipe(O.fromNullable(id), O.flatMap(getResourceDetails), O.filter(isDataSpace), setDataspace)
   }, [id])
 
   return O.match(
