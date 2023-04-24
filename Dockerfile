@@ -1,4 +1,4 @@
-FROM node:16.19-alpine as build
+FROM node:20.0-alpine as build
 
 RUN npm install -g pnpm@7.27.0
 
