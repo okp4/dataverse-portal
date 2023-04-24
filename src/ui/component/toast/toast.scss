@@ -35,7 +35,7 @@ $variants: ('success', 'error', 'warning', 'info');
     border-radius: 6px;
     color: themed(chip);
 
-    &.show {
+    &.autoclose {
       visibility: visible;
       animation: show-toast 1000ms;
     }

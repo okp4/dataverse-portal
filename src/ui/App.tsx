@@ -5,6 +5,7 @@ import { Sidebar } from '@/ui/component/sidebar/sidebar'
 import { useAppStore } from '@/ui/store/appStore'
 import { Toolbar } from '@/ui/component/toolbar/toolbar'
 import { ErrorBoundary } from '@/ui/component/errorBoundary/errorBoundary'
+import { Notifications } from './component/notifications/notifications'
 
 const App: FC = () => {
   const theme = useAppStore(store => store.theme)
@@ -29,6 +30,7 @@ const App: FC = () => {
           </div>
         </div>
       </div>
+      <Notifications />
     </div>
   )
 }

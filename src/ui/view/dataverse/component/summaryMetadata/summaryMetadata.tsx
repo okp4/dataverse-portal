@@ -1,14 +1,14 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import { Link } from 'react-router-dom'
+import { shallow } from 'zustand/shallow'
 import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
-import { Toast } from '@/ui/component/toast/toast'
-import { Icon } from '@/ui/component/icon/icon'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
 import './i18n/index'
+import { useAppStore } from '@/ui/store/appStore'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
@@ -51,17 +51,23 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation(['metadata', 'common'])
+  const { addSnackbarMessage } = useAppStore(
+    state => ({
+      addSnackbarMessage: state.addNotification
+    }),
+    shallow
+  )
   const hasClipboard = label === 'registrar' || label === 'createdBy' || label === 'modifiedBy'
-  const [showToast, setShowToast] = useState<boolean>(false)
-  const [hasCopyError, setHasCopyError] = useState<boolean>(true)
 
-  const handleCopy = useCallback((isCopied: boolean): void => {
-    setShowToast(true)
-    setHasCopyError(!isCopied)
-  }, [])
-  const handleClose = useCallback(() => {
-    setShowToast(false)
-  }, [])
+  const handleCopy = useCallback(
+    (isCopied: boolean): void => {
+      addSnackbarMessage({
+        title: isCopied ? t('copied') : t('copyError'),
+        severity: isCopied ? 'success' : 'error'
+      })
+    },
+    [addSnackbarMessage, t]
+  )
 
   return (
     <div className="okp4-dataverse-portal-metadata-clipboard-with-toast">
@@ -70,14 +76,6 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
         <LinkOrSimpleRow label={label} value={value} />
         {hasClipboard && <CopyToClipboard onCopied={handleCopy} textToCopy={value} />}
       </div>
-      <Toast
-        autoHideDuration={3000}
-        icon={<Icon name={hasCopyError ? 'error' : 'check'} />}
-        onClose={handleClose}
-        open={showToast}
-        title={hasCopyError ? t('copyError') : t('copied')}
-        variant={hasCopyError ? 'error' : 'success'}
-      />
     </div>
   )
 }

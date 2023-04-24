@@ -1,47 +1,44 @@
 import classNames from 'classnames'
 import { useEffect } from 'react'
+import type { NotificationSeverity } from '@/ui/store/slice/notifications.slice'
+import type { IconName } from '@/ui/component/icon/icon'
+import { Icon } from '@/ui/component/icon/icon'
 import './toast.scss'
 
-type ToastVariants = 'success' | 'error' | 'warning' | 'info'
-
 type ToastProps = {
+  severity: NotificationSeverity
   title: string
-  autoHideDuration?: number
+  onClose: (severity: NotificationSeverity) => void
   description?: string
-  icon?: JSX.Element
-  onClose?: () => void
-  open?: boolean
-  variant?: ToastVariants
+  iconName?: IconName
 }
 
 export const Toast = ({
+  severity,
   title,
-  autoHideDuration,
   description,
-  icon,
-  onClose,
-  open = false,
-  variant = 'info'
-}: ToastProps): JSX.Element | null => {
+  iconName,
+  onClose
+}: ToastProps): JSX.Element => {
   useEffect(() => {
-    if (open && autoHideDuration) {
-      const autoHideDurationTimer = setTimeout(() => {
-        onClose?.()
-      }, autoHideDuration)
-      return () => {
-        clearTimeout(autoHideDurationTimer)
-      }
+    const autoHideDurationTimer = setTimeout(() => {
+      onClose(severity)
+    }, 3000)
+    return () => {
+      clearTimeout(autoHideDurationTimer)
     }
-  }, [autoHideDuration, onClose, open])
-
-  if (!open) return null
+  }, [onClose, severity])
 
   return (
-    <div className={classNames('okp4-dataverse-portal-toast-main', { show: open })}>
+    <div className={classNames('okp4-dataverse-portal-toast-main', { autoclose: true })}>
       <div className="okp4-dataverse-portal-toast-container">
         <div className="okp4-dataverse-portal-toast-header-container">
-          {icon && <div className="okp4-dataverse-portal-toast-icon">{icon}</div>}
-          <p className={classNames(`okp4-dataverse-portal-toast-title ${variant}`)}>{title}</p>
+          {iconName && (
+            <div className="okp4-dataverse-portal-toast-icon">
+              <Icon name={iconName} />
+            </div>
+          )}
+          <p className={classNames(`okp4-dataverse-portal-toast-title ${severity}`)}>{title}</p>
         </div>
         {description && (
           <p className={classNames(`okp4-dataverse-portal-toast-description`)}>{description}</p>
