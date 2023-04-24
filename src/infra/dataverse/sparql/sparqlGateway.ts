@@ -6,6 +6,7 @@ import * as TE from 'fp-ts/TaskEither'
 import type { DataverseEntity } from '@/domain/dataverse/entity'
 import type {
   DataversePort,
+  RetrieveDataverseByTypeQueryFilter,
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult
 } from '@/domain/dataverse/port'
@@ -19,6 +20,15 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
+    const buildContainsExpression = (
+      filter: Omit<RetrieveDataverseByTypeQueryFilter, 'all'>
+    ): string => `contains(str(?type), "${filter}" )`
+
+    const buildQueryFilter = (index: number, acc: string, cur: string): string =>
+      index === 0 ? buildContainsExpression(cur) : `${acc} || ${buildContainsExpression(cur)}`
+
+    const byTypeFilter = pipe(filters.byType, A.reduceWithIndex('', buildQueryFilter))
+
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -38,7 +48,7 @@ export const sparqlGateway: DataversePort = {
           ?id rdf:type core:DataSpace .
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
         }
-        ${filters.byType !== 'all' ? `FILTER ( contains(str(?type), "${filters.byType}" ))` : ''}
+        ${filters.byType.includes('all') ? '' : `FILTER ( ${byTypeFilter} )`}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
@@ -46,6 +56,7 @@ export const sparqlGateway: DataversePort = {
         ?metadata core:hasDescription ?description .
         FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?description),'${language}') )
       }
+      ORDER BY ?title
       LIMIT ${limit + 1}
       OFFSET ${offset}
 `
@@ -132,7 +143,7 @@ export const sparqlGateway: DataversePort = {
       TE.map(mapDtoToEntity),
       TE.map(r => ({
         data: A.takeLeft(limit)(r),
-        query: { hasNext: r.length === limit }
+        query: { hasNext: r.length === limit + 1 }
       }))
     )
   }
