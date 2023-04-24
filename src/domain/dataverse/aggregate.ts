@@ -128,53 +128,37 @@ export const dataverseAggregate = (gateway: DataversePort) =>
             dataverse: [...state.dataverse, ...newDataverse]
           })
         ),
-      loadDataverse: (): T.Task<void> => {
-        const { addToDataverse, query, dataverse } = get()
-        const { setIsLoading, setHasNext, setError, limit, language, filters, isLoading } = query
-        const offset = dataverse.length
+      loadDataverse: (): T.Task<void> =>
+        pipe(
+          T.fromIO(() => {
+            const { addToDataverse, query, dataverse } = get()
+            const { setIsLoading, setHasNext, setError, limit, language, filters, isLoading } =
+              query
+            const offset = dataverse.length
 
-        const initFetching = (): void => {
-          setIsLoading(true)
-          setError(O.none)
-        }
+            if (isLoading) {
+              return T.of(undefined)
+            }
 
-        const checkIsLoadingInvariant = (): O.Option<T.Task<undefined>> =>
-          isLoading ? O.some(T.of(undefined)) : O.none
+            setIsLoading(true)
+            setError(O.none)
 
-        const checkLanguageInvariant = (): O.Option<Error> =>
-          !language.length
-            ? O.some(
-                new Error(
-                  'Oops.. An error occurred when trying to load Dataverse.. Language cannot be empty..'
-                )
+            return pipe(
+              gateway.retrieveDataverse(language, limit, offset, filters),
+              TE.match(
+                e => {
+                  setIsLoading(false)
+                  setError(O.some(e))
+                },
+                r => {
+                  setIsLoading(false)
+                  setHasNext(r.query.hasNext)
+                  addToDataverse(r.data)
+                }
               )
-            : O.none
-
-        const fetchDataverse = (): T.Task<void> =>
-          pipe(
-            initFetching(),
-            () => gateway.retrieveDataverse(language, limit, offset, filters),
-            TE.match(
-              e => {
-                setIsLoading(false)
-                setError(O.some(e))
-              },
-              r => {
-                setIsLoading(false)
-                setHasNext(r.query.hasNext)
-                addToDataverse(r.data)
-              }
             )
-          )
-
-        return pipe(
-          checkIsLoadingInvariant(),
-          O.match(
-            () =>
-              pipe(checkLanguageInvariant(), O.match(fetchDataverse, flow(O.some, setError, T.of))),
-            r => r
-          )
+          }),
+          T.flatten
         )
-      }
     }))
   )
