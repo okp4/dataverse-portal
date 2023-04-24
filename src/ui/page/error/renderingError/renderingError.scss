@@ -6,6 +6,45 @@
   @include with-theme() {
     height: 100%;
 
+    &.dark {
+      background: center / cover url('../../../asset/images/rendering-error-dark.webp');
+
+      @include use-breakpoints(('mobile')) {
+        background: unset;
+      }
+
+      @include use-breakpoints(('tablet')) {
+        background: center / contain url('../../../asset/images/rendering-error-dark.webp')
+          no-repeat;
+      }
+
+      .okp4-dataverse-portal-rendering-error-page-text-wrapper {
+        @include use-breakpoints(('mobile')) {
+          background: center url('../../../asset/images/rendering-error-dark-mobile.webp') no-repeat;
+        }
+      }
+    }
+
+    &.light {
+      background: center / cover url('../../../asset/images/rendering-error-light.webp');
+
+      @include use-breakpoints(('mobile')) {
+        background: unset;
+      }
+
+      @include use-breakpoints(('tablet')) {
+        background: center / contain url('../../../asset/images/rendering-error-light.webp')
+          no-repeat;
+      }
+
+      .okp4-dataverse-portal-rendering-error-page-text-wrapper {
+        @include use-breakpoints(('mobile')) {
+          background: center url('../../../asset/images/rendering-error-light-mobile.webp')
+            no-repeat;
+        }
+      }
+    }
+
     .okp4-dataverse-portal-rendering-error-page-content-wrapper {
       display: flex;
       flex-direction: column;
@@ -19,39 +58,57 @@
         gap: 24px;
       }
 
-      h1 {
-        @include norse-font(700);
-        letter-spacing: 0.0075em;
-        line-height: 88px;
-        font-size: 80px;
-        color: themed('text');
-
-        @include use-breakpoints(('mobile', 'tablet')) {
-          font-size: 40px;
-          line-height: 48px;
-        }
-      }
-
-      .okp4-dataverse-portal-rendering-error-page-message-titles {
+      .okp4-dataverse-portal-rendering-error-page-text-wrapper {
         display: flex;
         flex-direction: column;
+        gap: 28px;
         align-items: center;
-        max-width: 960px;
 
-        @include use-breakpoints(('desktop')) {
-          max-width: 750px;
+        @include use-breakpoints(('mobile', 'tablet')) {
+          gap: 24px;
         }
 
-        .okp4-dataverse-portal-rendering-error-page-message-apology {
-          opacity: 0.4;
-        }
-      }
+        h1 {
+          @include norse-font(700);
+          line-height: 88px;
+          font-size: 80px;
+          color: themed('text');
 
-      .okp4-dataverse-portal-rendering-error-page-message-suggestion {
-        @include noto-sans(300);
-        font-size: 18px;
-        color: themed('text');
-        line-height: 22px;
+          @include use-breakpoints(('mobile', 'tablet')) {
+            font-size: 40px;
+            line-height: 48px;
+          }
+        }
+
+        .okp4-dataverse-portal-rendering-error-page-message-titles {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 960px;
+
+          @include use-breakpoints(('desktop')) {
+            max-width: 750px;
+          }
+
+          .okp4-dataverse-portal-rendering-error-page-message-apology {
+            opacity: 0.4;
+          }
+        }
+
+        .okp4-dataverse-portal-rendering-error-page-message-suggestion {
+          @include noto-sans(300);
+          font-size: 16px;
+          color: themed('text');
+          line-height: 22px;
+
+          @include use-breakpoints(('desktop')) {
+            max-width: 554px;
+          }
+
+          @include use-breakpoints(('large-desktop')) {
+            font-size: 18px;
+          }
+        }
       }
 
       .okp4-dataverse-portal-rendering-error-page-button-container {

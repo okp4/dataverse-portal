@@ -1,33 +1,51 @@
-import React, { Component } from 'react'
-import type { ReactNode } from 'react'
+/* eslint-disable react/destructuring-assignment */
+import { Component, useState, useEffect } from 'react'
+import type { SetStateAction, Dispatch, ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
 import { RenderingError } from '@/ui/page/error/renderingError/renderingError'
 
-interface Props {
-  children?: ReactNode
+type ErrorBoundaryInnerProps = {
+  children: JSX.Element
+  hasError: boolean
+  setHasError: Dispatch<SetStateAction<boolean>>
 }
 
-interface State {
+type ErrorBoundaryProps = {
+  children: JSX.Element
+}
+
+type ErrorBoundaryInnerState = {
   hasError: boolean
 }
-
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false
+class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, ErrorBoundaryInnerState> {
+  constructor(props: ErrorBoundaryInnerProps) {
+    super(props)
+    this.state = { hasError: false }
   }
-
-  static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(): ErrorBoundaryInnerState {
     return { hasError: true }
   }
-
-  render(): ReactNode {
-    // eslint-disable-next-line react/destructuring-assignment
-    if (this.state.hasError) {
-      return <RenderingError />
+  componentDidUpdate(prevProps: ErrorBoundaryInnerProps): void {
+    if (!this.props.hasError && prevProps.hasError) {
+      this.setState({ hasError: false })
     }
-
-    // eslint-disable-next-line react/destructuring-assignment
-    return this.props.children
+  }
+  componentDidCatch(): void {
+    this.props.setHasError(true)
+  }
+  render(): ReactNode {
+    return this.state.hasError ? <RenderingError /> : this.props.children
   }
 }
-
-export default ErrorBoundary
+export const ErrorBoundary = ({ children }: ErrorBoundaryProps): JSX.Element => {
+  const [hasError, setHasError] = useState(false)
+  const location = useLocation()
+  useEffect(() => {
+    hasError && setHasError(false)
+  }, [location.key])
+  return (
+    <ErrorBoundaryInner hasError={hasError} setHasError={setHasError}>
+      {children}
+    </ErrorBoundaryInner>
+  )
+}

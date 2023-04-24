@@ -6,7 +6,6 @@ import './home.scss'
 import './i18n/index'
 
 export const Home: FC = () => {
-  throw new Error()
   return (
     <div className="okp4-dataverse-portal-home-page-main">
       <div className="okp4-dataverse-portal-home-page-block-container community">

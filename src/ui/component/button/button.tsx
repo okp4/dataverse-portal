@@ -12,7 +12,7 @@ type ButtonProps = {
     startIcon?: JSX.Element
     endIcon?: JSX.Element
   }
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'outlined-tertiary'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outlined-tertiary' | 'quaternary-turquoise'
   size?: 'small' | 'large'
 }
 

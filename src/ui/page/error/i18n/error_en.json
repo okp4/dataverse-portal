@@ -1,17 +1,10 @@
 {
   "error": {
-    "notFoundError": {
-      "apology": "Sorry,",
-      "message": "We can't find the page you are looking for.",
-      "suggestion": "Try checking the URL or maybe you want to:",
-      "dataverseButton": "Explore the dataverse",
-      "homeButton": "Go to the homepage"
-    },
     "renderingError": {
       "apology": "Sorry,",
-      "message": "An error occurred processing your request.",
-      "suggestion": "We now know about this mistake and are working to fix it. In the meantime, here is what you can do: ",
-      "refreshButton": "Refresh the page",
+      "message": "An error has occurred processing your request.",
+      "suggestion": "We now know about this problem and are working to fix it. In the meantime, here is what you can do: ",
+      "refreshButton": "Go to the home page",
       "contactButton": "Contact us"
     }
   }

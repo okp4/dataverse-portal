@@ -5,6 +5,7 @@ declare const APP_ENV: {
     | 'social:discord'
     | 'social:medium'
     | 'form:feedback'
+    | 'form:error'
     | 'about:okp4',
     string
   >
