@@ -62,7 +62,7 @@ export const Governance: FC = () => {
     () =>
       pipe(
         O.fromNullable(dataspaceId),
-        O.chain(getResourceDetails),
+        O.flatMap(getResourceDetails),
         O.filter(isDataSpace),
         O.map((dataspace: DataSpace) => dataspace.label),
         O.toNullable

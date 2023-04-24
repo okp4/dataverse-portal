@@ -28,7 +28,7 @@ export const convertToLocalizedDateIfISODateTime = (
 ): E.Either<Error, string> =>
   pipe(
     parseAndValidateISODateTime(input),
-    E.chain(date => getLocalizedDate(date, locale))
+    E.flatMap(date => getLocalizedDate(date, locale))
   )
 
 export const validateISODateRange = (
@@ -37,13 +37,13 @@ export const validateISODateRange = (
 ): E.Either<Error, [Date, Date]> =>
   pipe(
     parseAndValidateISODateTime(startISODate),
-    E.chain(startDate =>
+    E.flatMap(startDate =>
       pipe(
         parseAndValidateISODateTime(endISODate),
         E.map(endDate => [startDate, endDate])
       )
     ),
-    E.chain(([startDate, endDate]) =>
+    E.flatMap(([startDate, endDate]) =>
       E.fromPredicate(
         () => startDate <= endDate,
         () => new Error('Start date must be before end date')

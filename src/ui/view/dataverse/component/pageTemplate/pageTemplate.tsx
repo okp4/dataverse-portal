@@ -47,7 +47,7 @@ const tags = (metadata: ItemGeneralMetadata[]): string[] =>
   pipe(
     metadata,
     A.filter(isTagsMetadata),
-    A.chain(metadata => metadata.value)
+    A.flatMap(metadata => metadata.value)
   )
 
 const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
