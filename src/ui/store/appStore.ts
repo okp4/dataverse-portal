@@ -5,12 +5,15 @@ import type { ThemeSlice } from './slice/theme.slice'
 import { createThemeSlice } from './slice/theme.slice'
 import type { SidebarSlice } from './slice/sidebar.slice'
 import { createSidebarSlice } from './slice/sidebar.slice'
+import type { NotificationsSlice } from './slice/notifications.slice'
+import { createNotificationsSlice } from './slice/notifications.slice'
 
-export const useAppStore = create<ThemeSlice & SidebarSlice>()(
+export const useAppStore = create<ThemeSlice & SidebarSlice & NotificationsSlice>()(
   persist(
     immer((...a) => ({
       ...createThemeSlice(...a),
-      ...createSidebarSlice(...a)
+      ...createSidebarSlice(...a),
+      ...createNotificationsSlice(...a)
     })),
     {
       name: 'okp4-storage',
