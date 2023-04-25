@@ -7,12 +7,15 @@ export type NotificationsSlice = {
 }
 
 export type NotificationSeverity = 'success' | 'info' | 'warning' | 'error'
+export type NotificationAction = 'refresh'
+export type NotificationType = 'alert' | 'confirmation'
 
 export type Notification = {
-  title: string
+  type: NotificationType
   severity: NotificationSeverity
-  action?: 'refresh'
+  title: string
   description?: string
+  action?: NotificationAction
 }
 
 export const createNotificationsSlice: StateCreator<
