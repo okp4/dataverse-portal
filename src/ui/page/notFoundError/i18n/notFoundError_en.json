@@ -1,0 +1,9 @@
+{
+  "notFoundError": {
+    "apology": "Sorry,",
+    "message": "We can't find the page you are looking for.",
+    "suggestion": "Try checking the URL or maybe you want to:",
+    "backToDataverse": "Explore the dataverse",
+    "backToHome": "Go to the home page"
+  }
+}

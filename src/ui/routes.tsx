@@ -4,7 +4,7 @@ import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
 import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
-import { NotFoundError } from '@/ui/page/error/notFound/notFoundError'
+import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
 
 export enum routes {
   home = '/',
