@@ -6,74 +6,96 @@ $variants: ('success', 'error', 'warning', 'info');
 
 @keyframes show-toast {
   0% {
-    transform: translateX(130%);
-  }
-
-  40% {
-    transform: translateX(-5%);
+    transform: translateY(0%);
   }
 
   100% {
-    transform: translateX(0%);
+    transform: translateY(calc(-100% - 16px));
+  }
+}
+
+@keyframes hide-toast {
+  0% {
+    transform: translateY(calc(-100% - 16px));
+  }
+
+  100% {
+    transform: translateY(0%);
   }
 }
 
 .okp4-dataverse-portal-toast-main {
   @include with-theme {
+    box-sizing: border-box;
     position: fixed;
-    visibility: hidden;
-    bottom: 10px;
-    right: 10px;
-    margin-left: 10px;
-    max-width: 455px;
-    display: flex;
-    flex-direction: column;
+    left: 50%;
+    bottom: 0;
+    transform: translate3d(-50%, 100%, 0);
+    width: calc(100% - 32px);
     z-index: 10;
-    outline: none;
-    background: themed(tertiary-button-background);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
-    border-radius: 6px;
-    color: themed(chip);
-
-    &.autoclose {
-      visibility: visible;
-      animation: show-toast 1000ms;
+    
+    @include use-breakpoints(('tablet','desktop','large-desktop' )) {
+      max-width: 960px;
     }
-
+    
     .okp4-dataverse-portal-toast-container {
-      padding: 16px 25px;
+      @include columns-with-gap(16px);
+      justify-content: center;
+      align-items: center;
+      animation: show-toast 400ms ease-in-out forwards;
+      background: themed(tertiary-button-background);
+      border-radius: 6px;
+      padding: 21px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+      @include use-breakpoints(('tablet','desktop','large-desktop' )) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      
+      &.is-hidding {
+        animation: hide-toast 400ms ease-in-out forwards; 
+      }
 
-      .okp4-dataverse-portal-toast-header-container {
+      .okp4-dataverse-portal-toast-details-container {
         display: flex;
+        flex-direction: column;
 
-        .okp4-dataverse-portal-toast-icon {
+        .okp4-dataverse-portal-toast-header-container {
           display: flex;
+          gap: 10px;
           align-items: center;
-          margin-right: 10px;
-        }
 
-        .okp4-dataverse-portal-toast-title {
-          @include noto-sans(700);
-          text-transform: uppercase;
-          font-size: 14px;
-          line-height: 28px;
-          letter-spacing: 0.4px;
+          .okp4-dataverse-portal-toast-title {
+            @include noto-sans(700);
+            text-transform: uppercase;
+            font-size: 14px;
+            line-height: 28px;
+            letter-spacing: 0.4px;
 
-          @each $variant-key in $variants {
-            &.#{$variant-key} {
-              color: themed($variant-key);
+            @each $variant-key in $variants {
+              &.#{$variant-key} {
+                color: themed($variant-key);
+              }
             }
           }
         }
+
+        .okp4-dataverse-portal-toast-description {
+          @include noto-sans(400);
+          color: themed(chip);
+          letter-spacing: 0.4px;
+          font-size: 14px;
+          line-height: 20px;
+          padding-left: 32px;
+        }
       }
 
-      .okp4-dataverse-portal-toast-description {
-        @include noto-sans(400);
-        letter-spacing: 0.4px;
-        font-size: 14px;
-        line-height: 20px;
-        padding-left: 30px;
+      .okp4-dataverse-portal-toast-cta {
+        @include use-breakpoints(('tablet','desktop','large-desktop' )) {
+          width: auto;
+        }
       }
     }
+
   }
 }

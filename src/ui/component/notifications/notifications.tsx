@@ -1,22 +1,22 @@
 import type { FC } from 'react'
 import { useMemo, useCallback } from 'react'
 import { useAppStore } from '@/ui/store/appStore'
-import { Toast } from '@/ui/component/toast/toast'
 import type { IconName } from '@/ui/component/icon/icon'
-import { Snackbar } from '@/ui/component/snackbar/snackbar'
-import { NotificationType } from '@/domain/notification/entity'
+import { Toast } from '@/ui/component/toast/toast'
+import type { NotificationType } from '@/domain/notification/entity'
 import { toEffectfulObject } from '@/util/effect'
 import { useNotificationStore } from '@/ui/store'
+import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 
 export const Notifications: FC = () => {
-  const { notifications, removeNotification } = toEffectfulObject(
+  const { notifications, dismissNotification } = toEffectfulObject(
     useNotificationStore(state => ({
       notifications: state.notifications,
-      removeNotification: state.dismissNotification
+      dismissNotification: state.dismissNotification
     }))
   )
   const theme = useAppStore(store => store.theme)
-  const severityForIcon = useMemo(
+  const notificationTypeForIcon = useMemo(
     () =>
       new Map<NotificationType, IconName>([
         ['error', 'error'],
@@ -27,36 +27,26 @@ export const Notifications: FC = () => {
     [theme]
   )
   const handleClose = useCallback(
-    (severity: NotificationType) => {
-      // removeNotification(severity) TODO: fix me
+    (notificationInput: DismissNotificationInput) => {
+      dismissNotification(notificationInput)
     },
-    [removeNotification]
+    [dismissNotification]
   )
 
   return (
     <div className="okp4-dataverse-portal-notifications">
-      {notifications().map(({ type, title, message }, index) => {
-        return type === 'error' ? (
-          <Snackbar
-            /* action={action} TODO: add action to domain */
-            description={message}
-            iconName={severityForIcon.get(type)}
-            key={index}
-            onClose={handleClose}
-            severity={type}
-            title={title}
-          />
-        ) : (
-          <Toast
-            description={message}
-            iconName={severityForIcon.get(type)}
-            key={index}
-            onClose={handleClose}
-            severity={type}
-            title={title}
-          />
-        )
-      })}
+      {notifications().map(({ id, type, title, message, action }) => (
+        <Toast
+          action={action}
+          iconName={notificationTypeForIcon.get(type)}
+          id={id}
+          key={id}
+          message={message}
+          onClose={handleClose}
+          title={title}
+          type={type}
+        />
+      ))}
     </div>
   )
 }

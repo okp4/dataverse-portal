@@ -53,10 +53,10 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation(['metadata', 'common'])
-  const { addSnackbarMessage } = toEffectfulObject(
+  const { addNotification } = toEffectfulObject(
     useNotificationStore(
       state => ({
-        addSnackbarMessage: state.reportNotification
+        addNotification: state.reportNotification
       }),
       shallow
     )
@@ -65,13 +65,13 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
 
   const handleCopy = useCallback(
     (isCopied: boolean): void => {
-      addSnackbarMessage({
+      addNotification({
         id: uuid.generate(),
         type: isCopied ? 'success' : 'error',
         title: isCopied ? t('copied') : t('copyError')
       })
     },
-    [addSnackbarMessage, t]
+    [addNotification, t]
   )
 
   return (
