@@ -1,6 +1,6 @@
 FROM node:16.19-alpine as build
 
-RUN npm install -g pnpm@7.27.0
+RUN npm install -g pnpm@8.3.1
 
 WORKDIR /app
 
