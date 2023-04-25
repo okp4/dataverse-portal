@@ -1,13 +1,13 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
 import { useCallback, useRef } from 'react'
-import type { NotificationSeverity, NotificationAction } from '@/ui/store/slice/notifications.slice'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Button } from '@/ui/component//button/button'
 import './snackbar.scss'
+import { NotificationType } from '@/domain/notification/entity'
 
 const SnackbarCTA: FC = () => {
   const handleClick = useCallback(() => {
@@ -25,9 +25,9 @@ const SnackbarCTA: FC = () => {
 }
 
 type SnackbarProps = {
-  severity: NotificationSeverity
+  severity: NotificationType
   title: string
-  onClose: (severity: NotificationSeverity) => void
+  onClose: (severity: NotificationType) => void
   description?: string
   iconName?: IconName
   action?: NotificationAction

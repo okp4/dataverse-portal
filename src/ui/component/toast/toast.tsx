@@ -1,14 +1,14 @@
 import classNames from 'classnames'
 import { useEffect } from 'react'
-import type { NotificationSeverity } from '@/ui/store/slice/notifications.slice'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import './toast.scss'
+import { NotificationType } from '@/domain/notification/entity'
 
 type ToastProps = {
-  severity: NotificationSeverity
+  severity: NotificationType
   title: string
-  onClose: (severity: NotificationSeverity) => void
+  onClose: (severity: NotificationType) => void
   description?: string
   iconName?: IconName
 }

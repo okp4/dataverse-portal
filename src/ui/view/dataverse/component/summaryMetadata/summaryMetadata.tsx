@@ -8,7 +8,10 @@ import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
 import './i18n/index'
-import { useAppStore } from '@/ui/store/appStore'
+import { useStore } from 'zustand'
+import { notificationStore } from '@/ui/store'
+import uuid from 'short-uuid'
+import { toEffectful, toEffectfulObject } from '@/util/effect'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
@@ -51,19 +54,23 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation(['metadata', 'common'])
-  const { addSnackbarMessage } = useAppStore(
-    state => ({
-      addSnackbarMessage: state.addNotification
-    }),
-    shallow
+  const { addSnackbarMessage } = toEffectfulObject(
+    useStore(
+      notificationStore,
+      state => ({
+        addSnackbarMessage: state.reportNotification
+      }),
+      shallow
+    )
   )
   const hasClipboard = label === 'registrar' || label === 'createdBy' || label === 'modifiedBy'
 
   const handleCopy = useCallback(
     (isCopied: boolean): void => {
       addSnackbarMessage({
-        title: isCopied ? t('copied') : t('copyError'),
-        severity: isCopied ? 'success' : 'error'
+        id: uuid.generate(),
+        type: isCopied ? 'success' : 'error',
+        title: isCopied ? t('copied') : t('copyError')
       })
     },
     [addSnackbarMessage, t]

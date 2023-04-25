@@ -2,19 +2,24 @@ import type { FC } from 'react'
 import { useMemo, useCallback } from 'react'
 import { useAppStore } from '@/ui/store/appStore'
 import { Toast } from '@/ui/component/toast/toast'
-import type { NotificationSeverity } from '@/ui/store/slice/notifications.slice'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Snackbar } from '@/ui/component/snackbar/snackbar'
+import { NotificationType } from '@/domain/notification/entity'
+import { toEffectfulObject } from '@/util/effect'
+import { useStore } from 'zustand'
+import { notificationStore } from '@/ui/store'
 
 export const Notifications: FC = () => {
-  const { notifications, removeNotification } = useAppStore(state => ({
-    notifications: state.notifications,
-    removeNotification: state.removeNotification
-  }))
+  const { notifications, removeNotification } = toEffectfulObject(
+    useStore(notificationStore, state => ({
+      notifications: state.notifications,
+      removeNotification: state.dismissNotification
+    }))
+  )
   const theme = useAppStore(store => store.theme)
   const severityForIcon = useMemo(
     () =>
-      new Map<NotificationSeverity, IconName>([
+      new Map<NotificationType, IconName>([
         ['error', 'error'],
         ['info', `info-${theme}`],
         ['success', 'check'],
@@ -23,32 +28,32 @@ export const Notifications: FC = () => {
     [theme]
   )
   const handleClose = useCallback(
-    (severity: NotificationSeverity) => {
-      removeNotification(severity)
+    (severity: NotificationType) => {
+      // removeNotification(severity) TODO: fix me
     },
     [removeNotification]
   )
 
   return (
     <div className="okp4-dataverse-portal-notifications">
-      {notifications.map(({ severity, title, description, type, action }, index) => {
-        return type === 'alert' ? (
+      {notifications().map(({ type, title, message }, index) => {
+        return type === 'error' ? (
           <Snackbar
-            action={action}
-            description={description}
-            iconName={severityForIcon.get(severity)}
+            /* action={action} TODO: add action to domain */
+            description={message}
+            iconName={severityForIcon.get(type)}
             key={index}
             onClose={handleClose}
-            severity={severity}
+            severity={type}
             title={title}
           />
         ) : (
           <Toast
-            description={description}
-            iconName={severityForIcon.get(severity)}
+            description={message}
+            iconName={severityForIcon.get(type)}
             key={index}
             onClose={handleClose}
-            severity={severity}
+            severity={type}
             title={title}
           />
         )

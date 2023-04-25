@@ -18,6 +18,7 @@ export type Notification = {
   action?: NotificationAction
 }
 
+// @deprecated
 export const createNotificationsSlice: StateCreator<
   NotificationsSlice,
   [],
