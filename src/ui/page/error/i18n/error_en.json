@@ -3,7 +3,7 @@
     "renderingError": {
       "apology": "Sorry,",
       "message": "An error has occurred processing your request.",
-      "suggestion": "We now know about this problem and are working to fix it. In the meantime, here is what you can do: ",
+      "suggestion": "We now know about this problem and are working to fix it. In the meantime, here is what you can do:",
       "refreshButton": "Go to the home page",
       "contactButton": "Contact us"
     }

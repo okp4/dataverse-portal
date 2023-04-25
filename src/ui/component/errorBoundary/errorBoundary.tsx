@@ -17,32 +17,40 @@ type ErrorBoundaryProps = {
 type ErrorBoundaryInnerState = {
   hasError: boolean
 }
+
 class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, ErrorBoundaryInnerState> {
   constructor(props: ErrorBoundaryInnerProps) {
     super(props)
     this.state = { hasError: false }
   }
+
   static getDerivedStateFromError(): ErrorBoundaryInnerState {
     return { hasError: true }
   }
+
   componentDidUpdate(prevProps: ErrorBoundaryInnerProps): void {
     if (!this.props.hasError && prevProps.hasError) {
       this.setState({ hasError: false })
     }
   }
+
   componentDidCatch(): void {
     this.props.setHasError(true)
   }
+
   render(): ReactNode {
     return this.state.hasError ? <RenderingError /> : this.props.children
   }
 }
+
 export const ErrorBoundary = ({ children }: ErrorBoundaryProps): JSX.Element => {
   const [hasError, setHasError] = useState(false)
   const location = useLocation()
+
   useEffect(() => {
     hasError && setHasError(false)
   }, [location.key])
+
   return (
     <ErrorBoundaryInner hasError={hasError} setHasError={setHasError}>
       {children}

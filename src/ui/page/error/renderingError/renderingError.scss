@@ -7,40 +7,37 @@
     height: 100%;
 
     &.dark {
-      background: center / cover url('../../../asset/images/rendering-error-dark.webp');
+      background: center / cover url('@/ui/asset/images/rendering-error-dark.webp');
 
       @include use-breakpoints(('mobile')) {
         background: unset;
       }
 
       @include use-breakpoints(('tablet')) {
-        background: center / contain url('../../../asset/images/rendering-error-dark.webp')
-          no-repeat;
+        background: center / contain url('@/ui/asset/images/rendering-error-dark.webp') no-repeat;
       }
 
       .okp4-dataverse-portal-rendering-error-page-text-wrapper {
         @include use-breakpoints(('mobile')) {
-          background: center url('../../../asset/images/rendering-error-dark-mobile.webp') no-repeat;
+          background: center url('@/ui/asset/images/rendering-error-dark-mobile.webp') no-repeat;
         }
       }
     }
 
     &.light {
-      background: center / cover url('../../../asset/images/rendering-error-light.webp');
+      background: center / cover url('@/ui/asset/images/rendering-error-light.webp');
 
       @include use-breakpoints(('mobile')) {
         background: unset;
       }
 
       @include use-breakpoints(('tablet')) {
-        background: center / contain url('../../../asset/images/rendering-error-light.webp')
-          no-repeat;
+        background: center / contain url('@/ui/asset/images/rendering-error-light.webp') no-repeat;
       }
 
       .okp4-dataverse-portal-rendering-error-page-text-wrapper {
         @include use-breakpoints(('mobile')) {
-          background: center url('../../../asset/images/rendering-error-light-mobile.webp')
-            no-repeat;
+          background: center url('@/ui/asset/images/rendering-error-light-mobile.webp') no-repeat;
         }
       }
     }

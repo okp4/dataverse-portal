@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/ui/store/appStore'
-import '../i18n/index'
+import '@/ui/page/error/i18n/index'
 import './renderingError.scss'
 import { Button } from '@/ui/component/button/button'
 
@@ -13,7 +13,7 @@ export const RenderingError: FC = () => {
   const theme = useAppStore(store => store.theme)
   const navigate = useNavigate()
 
-  const backToHome = useCallback((): void => navigate('/'), [navigate])
+  const handleBackToHome = useCallback((): void => navigate('/'), [navigate])
   const handleContactClick = useCallback(() => {
     window.open(APP_ENV.urls['form:error'], '_blank')
   }, [])
@@ -36,7 +36,7 @@ export const RenderingError: FC = () => {
           <Button
             className="okp4-dataverse-portal-rendering-error-page-button"
             label={t('error.renderingError.refreshButton')}
-            onClick={backToHome}
+            onClick={handleBackToHome}
             size="small"
             variant="quaternary-turquoise"
           />

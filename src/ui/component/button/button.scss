@@ -109,7 +109,6 @@
       border: 1px solid themed('primary-color-variant-3');
 
       &.disabled {
-        background-color: unset;
         color: themed('secondary-disabled');
         border-color: themed('secondary-disabled');
       }
@@ -148,13 +147,7 @@
         gap: 12px;
       }
 
-      &.outlined-tertiary {
-        &.small {
-          padding: 7px 10px;
-          gap: 6px;
-        }
-      }
-
+      &.outlined-tertiary,
       &.quaternary-turquoise {
         &.small {
           padding: 7px 10px;
@@ -171,11 +164,7 @@
           @include noto-sans(400);
         }
 
-        &.outlined-tertiary {
-          font-size: 14px;
-          line-height: unset;
-        }
-
+        &.outlined-tertiary,
         &.quaternary-turquoise {
           font-size: 14px;
           line-height: unset;
