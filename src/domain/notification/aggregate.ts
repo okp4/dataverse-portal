@@ -52,15 +52,12 @@ export type NotificationQuery = {
 export type NotificationStore = NotificationState & NotificationAction & NotificationQuery
 
 export type NotificationOptions = {
-  initialState?: NotificationState
+  initialState: NotificationState
 }
 
 export const notificationAggregate: (
-  options?: NotificationOptions
-) => Reader<
-  void,
-  StoreApi<ForgetType<NotificationState, NotificationStore>>
-> =
+  options?: Partial<NotificationOptions>
+) => Reader<void, StoreApi<ForgetType<NotificationState, NotificationStore>>> =
   ({ initialState } = {}) =>
   () =>
     createStore(
