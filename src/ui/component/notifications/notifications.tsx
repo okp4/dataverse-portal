@@ -6,12 +6,11 @@ import type { IconName } from '@/ui/component/icon/icon'
 import { Snackbar } from '@/ui/component/snackbar/snackbar'
 import { NotificationType } from '@/domain/notification/entity'
 import { toEffectfulObject } from '@/util/effect'
-import { useStore } from 'zustand'
-import { notificationStore } from '@/ui/store'
+import { useNotificationStore } from '@/ui/store'
 
 export const Notifications: FC = () => {
   const { notifications, removeNotification } = toEffectfulObject(
-    useStore(notificationStore, state => ({
+    useNotificationStore(state => ({
       notifications: state.notifications,
       removeNotification: state.dismissNotification
     }))

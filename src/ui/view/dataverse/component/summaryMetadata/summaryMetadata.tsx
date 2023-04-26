@@ -8,10 +8,9 @@ import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
 import './i18n/index'
-import { useStore } from 'zustand'
-import { notificationStore } from '@/ui/store'
+import { useNotificationStore } from '@/ui/store'
 import uuid from 'short-uuid'
-import { toEffectful, toEffectfulObject } from '@/util/effect'
+import { toEffectfulObject } from '@/util/effect'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
@@ -55,8 +54,7 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation(['metadata', 'common'])
   const { addSnackbarMessage } = toEffectfulObject(
-    useStore(
-      notificationStore,
+    useNotificationStore(
       state => ({
         addSnackbarMessage: state.reportNotification
       }),

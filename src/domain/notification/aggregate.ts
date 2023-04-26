@@ -16,7 +16,7 @@ import { StoreApi, create } from 'zustand'
 import { pipe } from 'fp-ts/lib/function'
 import { ForgetType } from '@/util/type'
 
-export type NotificationState = {
+type NotificationState = {
   aggregate: Notifications
 }
 
@@ -31,7 +31,7 @@ export type DismissNotificationInput = {
   id: NotificationID
 }
 
-export type NotificationAction = {
+type NotificationAction = {
   reportNotification: (input: ReportNotificationInput) => IO<void>
   dismissNotification: (input: DismissNotificationInput) => IO<void>
 }
@@ -45,11 +45,12 @@ export type NotificationDTO = {
 
 export type NotificationsDTO = NotificationDTO[]
 
-export type NotificationQuery = {
+type NotificationQuery = {
   notifications: () => IO<NotificationsDTO>
 }
 
-export type NotificationStore = NotificationState & NotificationAction & NotificationQuery
+type NotificationStore = NotificationState & NotificationAction & NotificationQuery
+export type NotificationAggregate = ForgetType<NotificationState, NotificationStore>
 
 export type NotificationOptions = {
   initialState: NotificationState
@@ -57,7 +58,7 @@ export type NotificationOptions = {
 
 export const notificationAggregate: (
   options?: Partial<NotificationOptions>
-) => Reader<void, StoreApi<ForgetType<NotificationState, NotificationStore>>> =
+) => Reader<void, StoreApi<NotificationAggregate>> =
   ({ initialState } = {}) =>
   () =>
     createStore(
