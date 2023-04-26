@@ -2,7 +2,7 @@
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
 import type { Notification, NotificationID, NotificationType, Notifications } from './entity'
-import { eqNotificationID } from './entity'
+import { eqNotification } from './entity'
 import type { IO } from 'fp-ts/lib/IO'
 import type { Reader } from 'fp-ts/lib/Reader'
 import * as A from 'fp-ts/lib/Array'
@@ -85,7 +85,7 @@ export const notificationAggregate: (
             () => {
               set(state => ({
                 aggregate: A.filter<Notification>(notification =>
-                  eqNotificationID.equals(notification.id, input.id)
+                  eqNotification.equals(notification, { id: input.id })
                 )(state.aggregate)
               }))
             },
