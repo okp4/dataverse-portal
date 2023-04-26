@@ -14,6 +14,7 @@ import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { StoreApi, create } from 'zustand'
 import { pipe } from 'fp-ts/lib/function'
+import { ForgetType } from '@/util/type'
 
 export type NotificationState = {
   aggregate: Notifications
@@ -58,7 +59,7 @@ export const notificationAggregate: (
   options?: NotificationOptions
 ) => Reader<
   void,
-  StoreApi<Pick<NotificationStore, Exclude<keyof NotificationStore, keyof NotificationState>>>
+  StoreApi<ForgetType<NotificationState, NotificationStore>>
 > =
   ({ initialState } = {}) =>
   () =>
