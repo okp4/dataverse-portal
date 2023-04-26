@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
-import type { Notification, NotificationID, NotificationType, Notifications } from './entity'
+import type { NotificationID, NotificationType, Notifications } from './entity'
 import { eqNotification } from './entity'
 import type { IO } from 'fp-ts/lib/IO'
 import type { Reader } from 'fp-ts/lib/Reader'
@@ -12,61 +12,60 @@ import { pipe } from 'fp-ts/lib/function'
 import type { ForgetType } from '@/util/type'
 import { devtools } from 'zustand/middleware'
 
-type NotificationState = {
-  aggregate: Notifications
+type NotificationState<T> = {
+  aggregate: Notifications<T>
 }
 
-export type ReportNotificationInput = {
+export type ReportNotificationInput<T> = {
   id: NotificationID
   type: NotificationType
   title: string
   message?: string
+  action?: T
 }
 
 export type DismissNotificationInput = {
   id: NotificationID
 }
 
-type NotificationAction = {
-  reportNotification: (input: ReportNotificationInput) => IO<void>
+type NotificationAction<T> = {
+  reportNotification: (input: ReportNotificationInput<T>) => IO<void>
   dismissNotification: (input: DismissNotificationInput) => IO<void>
 }
 
-export type NotificationDTO = {
+export type NotificationDTO<T> = {
   id: NotificationID
   type: NotificationType
   title: string
   message?: string
+  action?: T
 }
 
-export type NotificationsDTO = NotificationDTO[]
+export type NotificationsDTO<T> = NotificationDTO<T>[]
 
-type NotificationQuery = {
-  notifications: () => IO<NotificationsDTO>
+type NotificationQuery<T> = {
+  notifications: () => IO<NotificationsDTO<T>>
 }
 
-type NotificationStore = NotificationState & NotificationAction & NotificationQuery
-export type NotificationAggregate = ForgetType<NotificationState, NotificationStore>
+type NotificationStore<T> = NotificationState<T> & NotificationAction<T> & NotificationQuery<T>
+export type NotificationAggregate<T> = ForgetType<NotificationState<T>, NotificationStore<T>>
 
-export type NotificationOptions = {
-  initialState: NotificationState
+export type NotificationOptions<T> = {
+  initialState: NotificationState<T>
 }
 
-export const notificationAggregate: (
-  options?: Partial<NotificationOptions>
-) => Reader<void, StoreApi<NotificationAggregate>> =
-  ({ initialState } = {}) =>
+export const notificationAggregate =
+  <T>({ initialState }: Partial<NotificationOptions<T>> = {}): Reader<
+    void,
+    StoreApi<NotificationAggregate<T>>
+  > =>
   () =>
     createStore(
       devtools(
-        immer<NotificationStore>((set, get) => ({
-          aggregate: pipe(
-            O.fromNullable(initialState),
-            O.map(it => it.aggregate),
-            O.getOrElse<Notifications>(() => [])
-          ),
+        immer<NotificationStore<T>>((set, get) => ({
+          aggregate: initialState?.aggregate ?? [],
           reportNotification:
-            (input: ReportNotificationInput): IO<void> =>
+            (input: ReportNotificationInput<T>): IO<void> =>
             () => {
               set(state => ({
                 aggregate: [
@@ -75,7 +74,8 @@ export const notificationAggregate: (
                     id: input.id,
                     type: input.type,
                     title: input.title,
-                    message: O.fromNullable(input.message)
+                    message: O.fromNullable(input.message),
+                    action: O.fromNullable(input.action)
                   }
                 ]
               }))
@@ -84,19 +84,20 @@ export const notificationAggregate: (
             (input: DismissNotificationInput): IO<void> =>
             () => {
               set(state => ({
-                aggregate: A.filter<Notification>(notification =>
-                  eqNotification.equals(notification, { id: input.id })
-                )(state.aggregate)
+                aggregate: state.aggregate.filter(
+                  it => !eqNotification.equals(it, { id: input.id })
+                )
               }))
             },
-          notifications: (): IO<NotificationsDTO> => () =>
+          notifications: (): IO<NotificationsDTO<T>> => () =>
             pipe(
               get().aggregate,
               A.map(it => ({
                 id: it.id,
                 type: it.type,
                 title: it.title,
-                message: O.toUndefined(it.message)
+                message: O.toUndefined(it.message),
+                action: O.toUndefined(it.action)
               }))
             )
         }))

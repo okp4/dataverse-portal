@@ -5,14 +5,15 @@ import type { Option } from 'fp-ts/lib/Option'
 export type NotificationID = string
 export type NotificationType = 'success' | 'info' | 'warning' | 'error'
 
-export type Notification = {
+export type Notification<T> = {
   id: NotificationID
   type: NotificationType
   title: string
   message: Option<string>
+  action: Option<T>
 }
 
-export type Notifications = Notification[]
+export type Notifications<T> = Notification<T>[]
 
 export const eqNotificationID: Eq<NotificationID> = {
   equals: (n1, n2) => n1 === n2

@@ -8,8 +8,9 @@ import { useStore } from 'zustand'
 
 export const dataverseStore = dataverseAggregate(sparqlGateway) as StoreApi<DataverseStore>
 
-const notificationStore = notificationAggregate()()
+export type ActionType = 'refresh' // TODO: to be completed & moved to the proper place
+const notificationStore = notificationAggregate<ActionType>()()
 export const useNotificationStore = <T>(
-  selector: (state: NotificationAggregate) => T,
+  selector: (state: NotificationAggregate<ActionType>) => T,
   equals?: (a: T, b: T) => boolean
 ): T => useStore(notificationStore, selector, equals)
