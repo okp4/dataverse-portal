@@ -84,9 +84,13 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
   return (
     <div className="okp4-dataverse-portal-toast-main">
       <div
-        className={classNames('okp4-dataverse-portal-toast-container', {
-          'is-hidding': isHidding
-        })}
+        className={classNames(
+          'okp4-dataverse-portal-toast-container',
+          {
+            'is-hidding': isHidding
+          },
+          { 'has-action': action }
+        )}
         ref={containerRef}
       >
         <div className="okp4-dataverse-portal-toast-details-container">
