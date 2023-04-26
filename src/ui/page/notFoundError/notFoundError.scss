@@ -4,18 +4,23 @@
 
 .okp4-dataverse-portal-not-found-error-page-main {
   @include with-theme() {
+    background-blend-mode: overlay;
+    height: 100%;
+
     &.dark {
       background: center / contain url('@/ui/asset/images/not-found-error-dark.webp') no-repeat;
 
       @include use-breakpoints(('mobile')) {
         background: unset;
+        display: flex;
       }
 
       .okp4-dataverse-portal-not-found-error-page-content-wrapper {
         @include use-breakpoints(('mobile')) {
           background: url('@/ui/asset/images/not-found-error-dark-mobile.webp') no-repeat;
           background-position-x: center;
-          background-position-y: 20%;
+          max-height: 500px;
+          align-self: center;
         }
       }
     }
@@ -25,19 +30,18 @@
 
       @include use-breakpoints(('mobile')) {
         background: unset;
+        display: flex;
       }
 
       .okp4-dataverse-portal-not-found-error-page-content-wrapper {
         @include use-breakpoints(('mobile')) {
           background: url('@/ui/asset/images/not-found-error-light-mobile.webp') no-repeat;
           background-position-x: center;
-          background-position-y: 20%;
+          max-height: 500px;
+          align-self: center;
         }
       }
     }
-
-    background-blend-mode: overlay;
-    height: 100%;
 
     .okp4-dataverse-portal-not-found-error-page-content-wrapper {
       display: flex;
@@ -93,6 +97,7 @@
           line-height: 22px;
         }
       }
+
       .okp4-dataverse-portal-not-found-error-page-button-container {
         display: flex;
         gap: 20px;
