@@ -50,46 +50,58 @@ export type NotificationQuery = {
 
 export type NotificationStore = NotificationState & NotificationAction & NotificationQuery
 
-export const notificationAggregate: Reader<
+export type NotificationOptions = {
+  initialState?: NotificationState
+}
+
+export const notificationAggregate: (
+  options?: NotificationOptions
+) => Reader<
   void,
   StoreApi<Pick<NotificationStore, Exclude<keyof NotificationStore, keyof NotificationState>>>
-> = () =>
-  createStore(
-    immer<NotificationStore>((set, get) => ({
-      aggregate: [],
-      reportNotification:
-        (input: ReportNotificationInput): IO<void> =>
-        () => {
-          set(state => ({
-            aggregate: [
-              ...state.aggregate,
-              {
-                id: input.id,
-                type: input.type,
-                title: input.title,
-                message: O.fromNullable(input.message)
-              }
-            ]
-          }))
-        },
-      dismissNotification:
-        (input: DismissNotificationInput): IO<void> =>
-        () => {
-          set(state => ({
-            aggregate: A.filter<Notification>(notification =>
-              eqNotificationID.equals(notification.id, input.id)
-            )(state.aggregate)
-          }))
-        },
-      notifications: (): IO<NotificationsDTO> => () =>
-        pipe(
-          get().aggregate,
-          A.map(it => ({
-            id: it.id,
-            type: it.type,
-            title: it.title,
-            message: O.toUndefined(it.message)
-          }))
-        )
-    }))
-  )
+> =
+  ({ initialState } = {}) =>
+  () =>
+    createStore(
+      immer<NotificationStore>((set, get) => ({
+        aggregate: pipe(
+          O.fromNullable(initialState),
+          O.map(it => it.aggregate),
+          O.getOrElse<Notifications>(() => [])
+        ),
+        reportNotification:
+          (input: ReportNotificationInput): IO<void> =>
+          () => {
+            set(state => ({
+              aggregate: [
+                ...state.aggregate,
+                {
+                  id: input.id,
+                  type: input.type,
+                  title: input.title,
+                  message: O.fromNullable(input.message)
+                }
+              ]
+            }))
+          },
+        dismissNotification:
+          (input: DismissNotificationInput): IO<void> =>
+          () => {
+            set(state => ({
+              aggregate: A.filter<Notification>(notification =>
+                eqNotificationID.equals(notification.id, input.id)
+              )(state.aggregate)
+            }))
+          },
+        notifications: (): IO<NotificationsDTO> => () =>
+          pipe(
+            get().aggregate,
+            A.map(it => ({
+              id: it.id,
+              type: it.type,
+              title: it.title,
+              message: O.toUndefined(it.message)
+            }))
+          )
+      }))
+    )

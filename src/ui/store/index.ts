@@ -5,5 +5,5 @@ import { sparqlGateway } from '@/infra/dataverse/sparql/sparqlGateway'
 import { StoreApi, useStore } from 'zustand'
 
 export const dataverseStore = dataverseAggregate(sparqlGateway) as StoreApi<DataverseStore>
-export const notificationStore = notificationAggregate()
+export const notificationStore = notificationAggregate()()
 
