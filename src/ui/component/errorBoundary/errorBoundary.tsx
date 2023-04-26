@@ -1,59 +1,30 @@
 /* eslint-disable react/destructuring-assignment */
-import { Component, useState, useEffect } from 'react'
-import type { SetStateAction, Dispatch, ReactNode } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Component } from 'react'
+import type { ReactNode } from 'react'
 import { InternalError } from '@/ui/page/internalError/internalError'
 
-type ErrorBoundaryInnerProps = {
-  children: JSX.Element
-  hasError: boolean
-  setHasError: Dispatch<SetStateAction<boolean>>
+interface ErrorBoundaryProps {
+  children?: ReactNode
 }
 
-type ErrorBoundaryProps = {
-  children: JSX.Element
-}
-
-type ErrorBoundaryInnerState = {
+interface ErrorBoundaryState {
   hasError: boolean
 }
 
-class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, ErrorBoundaryInnerState> {
-  constructor(props: ErrorBoundaryInnerProps) {
-    super(props)
-    this.state = { hasError: false }
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = {
+    hasError: false
   }
 
-  static getDerivedStateFromError(): ErrorBoundaryInnerState {
+  public static getDerivedStateFromError(): ErrorBoundaryState {
     return { hasError: true }
   }
 
-  componentDidUpdate(prevProps: ErrorBoundaryInnerProps): void {
-    if (!this.props.hasError && prevProps.hasError) {
-      this.setState({ hasError: false })
+  public render(): ReactNode {
+    if (this.state.hasError) {
+      return <InternalError />
     }
+
+    return this.props.children
   }
-
-  componentDidCatch(): void {
-    this.props.setHasError(true)
-  }
-
-  render(): ReactNode {
-    return this.state.hasError ? <InternalError /> : this.props.children
-  }
-}
-
-export const ErrorBoundary = ({ children }: ErrorBoundaryProps): JSX.Element => {
-  const [hasError, setHasError] = useState(false)
-  const location = useLocation()
-
-  useEffect(() => {
-    hasError && setHasError(false)
-  }, [location.key])
-
-  return (
-    <ErrorBoundaryInner hasError={hasError} setHasError={setHasError}>
-      {children}
-    </ErrorBoundaryInner>
-  )
 }
