@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import { Eq, struct } from 'fp-ts/lib/Eq'
-import { Option } from 'fp-ts/lib/Option'
+import type { Eq } from 'fp-ts/lib/Eq'
+import { struct } from 'fp-ts/lib/Eq'
+import type { Option } from 'fp-ts/lib/Option'
 
 export type NotificationID = string
 export type NotificationType = 'success' | 'info' | 'warning' | 'error'

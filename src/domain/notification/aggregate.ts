@@ -1,20 +1,15 @@
 /* eslint-disable max-lines-per-function */
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
-import {
-  Notification,
-  NotificationID,
-  NotificationType,
-  Notifications,
-  eqNotificationID
-} from './entity'
-import { IO } from 'fp-ts/lib/IO'
-import { Reader } from 'fp-ts/lib/Reader'
+import type { Notification, NotificationID, NotificationType, Notifications } from './entity'
+import { eqNotificationID } from './entity'
+import type { IO } from 'fp-ts/lib/IO'
+import type { Reader } from 'fp-ts/lib/Reader'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import { StoreApi, create } from 'zustand'
+import type { StoreApi } from 'zustand'
 import { pipe } from 'fp-ts/lib/function'
-import { ForgetType } from '@/util/type'
+import type { ForgetType } from '@/util/type'
 import { devtools } from 'zustand/middleware'
 
 type NotificationState = {
