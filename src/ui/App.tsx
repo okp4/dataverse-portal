@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import classNames from 'classnames'
+import { useLocation } from 'react-router-dom'
 import { AppRouter } from '@/ui/component/router/appRouter'
 import { Sidebar } from '@/ui/component/sidebar/sidebar'
 import { useAppStore } from '@/ui/store/appStore'
-import { Toolbar } from './component/toolbar/toolbar'
-import { ErrorBoundary } from './component/errorBoundary/errorBoundary'
-import { useLocation } from 'react-router-dom'
+import { Toolbar } from '@/ui/component/toolbar/toolbar'
+import { ErrorBoundary } from '@/ui/component/errorBoundary/errorBoundary'
 
 const App: FC = () => {
   const theme = useAppStore(store => store.theme)

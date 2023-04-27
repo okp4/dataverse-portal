@@ -2,46 +2,35 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
+@mixin background-image($theme) {
+  background: center / cover url('@/ui/asset/images/internal-error-#{$theme}.webp');
+
+  @include use-breakpoints(('mobile')) {
+    background: unset;
+  }
+
+  @include use-breakpoints(('tablet')) {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .okp4-dataverse-portal-internal-error-page-text-wrapper {
+    @include use-breakpoints(('mobile')) {
+      background: center url('@/ui/asset/images/internal-error-#{$theme}-mobile.webp') no-repeat;
+    }
+  }
+}
+
 .okp4-dataverse-portal-internal-error-page-main {
   @include with-theme() {
     height: 100%;
 
     &.dark {
-      background: center / cover url('@/ui/asset/images/internal-error-dark.webp');
-
-      @include use-breakpoints(('mobile')) {
-        background: unset;
-      }
-
-      @include use-breakpoints(('tablet')) {
-        background-size: contain;
-        background-repeat: no-repeat;
-      }
-
-      .okp4-dataverse-portal-internal-error-page-text-wrapper {
-        @include use-breakpoints(('mobile')) {
-          background: center url('@/ui/asset/images/internal-error-dark-mobile.webp') no-repeat;
-        }
-      }
+      @include background-image('dark');
     }
 
     &.light {
-      background: center / cover url('@/ui/asset/images/internal-error-light.webp');
-
-      @include use-breakpoints(('mobile')) {
-        background: unset;
-      }
-
-      @include use-breakpoints(('tablet')) {
-        background-size: contain;
-        background-repeat: no-repeat;
-      }
-
-      .okp4-dataverse-portal-internal-error-page-text-wrapper {
-        @include use-breakpoints(('mobile')) {
-          background: center url('@/ui/asset/images/internal-error-light-mobile.webp') no-repeat;
-        }
-      }
+      @include background-image('light');
     }
 
     .okp4-dataverse-portal-internal-error-page-content-wrapper {
@@ -56,10 +45,9 @@
       }
 
       .okp4-dataverse-portal-internal-error-page-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
+        @include columns-with-gap(28px);
         align-items: center;
+        color: themed('text');
 
         @include use-breakpoints(('mobile', 'tablet')) {
           gap: 24px;
@@ -69,7 +57,6 @@
           @include norse-font(700);
           line-height: 88px;
           font-size: 80px;
-          color: themed('text');
 
           @include use-breakpoints(('mobile', 'tablet')) {
             font-size: 40px;
@@ -81,10 +68,10 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          max-width: 960px;
+          max-width: 750px;
 
-          @include use-breakpoints(('desktop')) {
-            max-width: 750px;
+          @include use-breakpoints(('large-desktop')) {
+            max-width: 960px;
           }
 
           .okp4-dataverse-portal-internal-error-page-message-apology {
@@ -97,18 +84,20 @@
           font-size: 16px;
           color: themed('text');
           line-height: 22px;
+          max-width: 554px;
 
-          @include use-breakpoints(('desktop')) {
-            max-width: 554px;
+          @include use-breakpoints(('mobile', 'tablet')) {
+            max-width: unset;
           }
 
           @include use-breakpoints(('large-desktop')) {
             font-size: 18px;
+            max-width: unset;
           }
         }
       }
 
-      .okp4-dataverse-portal-internal-error-page-button-container {
+      .okp4-dataverse-portal-internal-error-page-buttons-container {
         display: flex;
         gap: 20px;
 

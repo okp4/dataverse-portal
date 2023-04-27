@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/ui/store/appStore'
+import { Button } from '@/ui/component/button/button'
 import '@/ui/page/internalError/i18n/index'
 import './internalError.scss'
-import { Button } from '@/ui/component/button/button'
 
 export const InternalError: FC = () => {
   const { t } = useTranslation('internalError')
@@ -32,7 +32,7 @@ export const InternalError: FC = () => {
             {t('internalError.suggestion')}
           </p>
         </div>
-        <div className="okp4-dataverse-portal-internal-error-page-button-container">
+        <div className="okp4-dataverse-portal-internal-error-page-buttons-container">
           <Button
             className="okp4-dataverse-portal-internal-error-page-button"
             label={t('internalError.returnToHome')}

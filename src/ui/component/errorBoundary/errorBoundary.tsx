@@ -21,10 +21,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   public render(): ReactNode {
-    if (this.state.hasError) {
-      return <InternalError />
-    }
-
-    return this.props.children
+    return this.state.hasError ? <InternalError /> : this.props.children
   }
 }
