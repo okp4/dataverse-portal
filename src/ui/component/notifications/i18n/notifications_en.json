@@ -1,0 +1,13 @@
+{
+  "error": {
+    "problem": "Sorry, a problem has occurred.",
+    "processing": "We are currently unable to process your request. Please try refreshing this page.",
+    "copy": "An error occurred, the text could not be copied."
+  },
+  "success": {
+    "copy": "Copied"
+  },
+  "action": {
+    "refresh": "Refresh"
+  }
+}

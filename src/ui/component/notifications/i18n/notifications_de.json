@@ -1,0 +1,13 @@
+{
+  "error": {
+    "problem": "Es ist leider ein Problem aufgetreten.",
+    "processing": "Wir können Ihre Anfrage derzeit nicht bearbeiten. Bitte versuchen Sie, diese Seite zu aktualisieren.",
+    "copy": "Ein Fehler aufgetreten ist, konnte der Text nicht kopiert werden."
+  },
+  "success": {
+    "copy": "Kopiert"
+  },
+  "action": {
+    "refresh": "Aktualisieren"
+  }
+}

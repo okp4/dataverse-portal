@@ -8,9 +8,16 @@ import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Button } from '@/ui/component//button/button'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
+import '@/ui/component/notifications/i18n'
 import './toast.scss'
+import { useTranslation } from 'react-i18next'
 
-const ToastCTA: FC = () => {
+type ToastCTAProps = {
+  action: string
+}
+const ToastCTA: FC<ToastCTAProps> = ({ action }) => {
+  const { t } = useTranslation('notifications')
+
   const handleClick = useCallback(() => {
     window.location.reload()
   }, [])
@@ -18,7 +25,7 @@ const ToastCTA: FC = () => {
   return (
     <Button
       className="okp4-dataverse-portal-toast-cta"
-      label="Refresh"
+      label={t(`action.${action}`)}
       onClick={handleClick}
       variant="primary"
     />
@@ -102,7 +109,7 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
             <p className={classNames(`okp4-dataverse-portal-toast-description`)}>{message}</p>
           )}
         </div>
-        {action && <ToastCTA />}
+        {action && <ToastCTA action={action} />}
       </div>
     </div>
   )

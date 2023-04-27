@@ -8,6 +8,7 @@ import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
 import './i18n/index'
+import '@/ui/component/notifications/i18n'
 import { useNotificationStore } from '@/ui/store'
 import uuid from 'short-uuid'
 import { toEffectfulObject } from '@/util/effect'
@@ -52,7 +53,7 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
   )
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
-  const { t } = useTranslation(['metadata', 'common'])
+  const { t } = useTranslation(['metadata', 'notifications'])
   const { addNotification } = toEffectfulObject(
     useNotificationStore(
       state => ({
@@ -68,7 +69,7 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
       addNotification({
         id: uuid.generate(),
         type: isCopied ? 'success' : 'error',
-        title: isCopied ? t('copied') : t('copyError')
+        title: isCopied ? t('notifications:success.copy') : t('notifications:error.copy')
       })
     },
     [addNotification, t]
