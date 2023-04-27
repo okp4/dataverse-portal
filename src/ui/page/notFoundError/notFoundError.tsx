@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/ui/store/appStore'
-import '@/ui/page/notFoundError/i18n/index'
-import './notFoundError.scss'
 import { Button } from '@/ui/component/button/button'
+import '@/ui/page/notFoundError/i18n/index'
+import '@/ui/page/home/i18n/index'
+import './notFoundError.scss'
 
 export const NotFoundError: FC = () => {
-  const { t } = useTranslation('notFoundError')
+  const { t } = useTranslation(['notFoundError', 'home'])
   const navigate = useNavigate()
   const theme = useAppStore(store => store.theme)
 
@@ -33,7 +34,7 @@ export const NotFoundError: FC = () => {
         <div className="okp4-dataverse-portal-not-found-error-page-button-container">
           <Button
             className="okp4-dataverse-portal-not-found-error-page-button"
-            label={t('notFoundError.backToDataverse')}
+            label={t('home:home.blocks.explore.label')}
             onClick={backToDataverse}
             variant="primary"
           />
@@ -41,7 +42,6 @@ export const NotFoundError: FC = () => {
             className="okp4-dataverse-portal-not-found-error-page-button"
             label={t('notFoundError.backToHome')}
             onClick={backToHome}
-            variant="secondary"
           />
         </div>
       </div>

@@ -2,54 +2,42 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
+@mixin background-image($theme) {
+  background: center / contain url('@/ui/asset/images/not-found-error-#{$theme}.webp') no-repeat;
+
+  @include use-breakpoints(('mobile')) {
+    background: unset;
+    display: flex;
+  }
+
+  .okp4-dataverse-portal-not-found-error-page-content-wrapper {
+    @include use-breakpoints(('mobile')) {
+      background: url('@/ui/asset/images/not-found-error-#{$theme}-mobile.webp') no-repeat;
+      background-position-x: center;
+      max-height: 500px;
+      align-self: center;
+    }
+  }
+}
+
 .okp4-dataverse-portal-not-found-error-page-main {
   @include with-theme() {
     background-blend-mode: overlay;
     height: 100%;
 
     &.dark {
-      background: center / contain url('@/ui/asset/images/not-found-error-dark.webp') no-repeat;
-
-      @include use-breakpoints(('mobile')) {
-        background: unset;
-        display: flex;
-      }
-
-      .okp4-dataverse-portal-not-found-error-page-content-wrapper {
-        @include use-breakpoints(('mobile')) {
-          background: url('@/ui/asset/images/not-found-error-dark-mobile.webp') no-repeat;
-          background-position-x: center;
-          max-height: 500px;
-          align-self: center;
-        }
-      }
+      @include background-image('dark');
     }
 
     &.light {
-      background: center / contain url('@/ui/asset/images/not-found-error-light.webp') no-repeat;
-
-      @include use-breakpoints(('mobile')) {
-        background: unset;
-        display: flex;
-      }
-
-      .okp4-dataverse-portal-not-found-error-page-content-wrapper {
-        @include use-breakpoints(('mobile')) {
-          background: url('@/ui/asset/images/not-found-error-light-mobile.webp') no-repeat;
-          background-position-x: center;
-          max-height: 500px;
-          align-self: center;
-        }
-      }
+      @include background-image('light');
     }
 
     .okp4-dataverse-portal-not-found-error-page-content-wrapper {
-      display: flex;
-      flex-direction: column;
+      @include columns-with-gap(28px);
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 28px;
       height: 100%;
 
       @include use-breakpoints(('mobile', 'tablet')) {
@@ -57,10 +45,9 @@
       }
 
       .okp4-dataverse-portal-not-found-error-page-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
+        @include columns-with-gap(28px);
         align-items: center;
+        color: themed('text');
 
         @include use-breakpoints(('mobile', 'tablet')) {
           gap: 24px;
@@ -71,7 +58,6 @@
           letter-spacing: 0.0075em;
           line-height: 88px;
           font-size: 80px;
-          color: themed('text');
 
           @include use-breakpoints(('mobile', 'tablet')) {
             font-size: 40px;
@@ -93,7 +79,6 @@
         .okp4-dataverse-portal-not-found-error-page-message-suggestion {
           @include noto-sans(300);
           font-size: 18px;
-          color: themed('text');
           line-height: 22px;
         }
       }
