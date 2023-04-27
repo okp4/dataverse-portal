@@ -3,15 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import { Link } from 'react-router-dom'
-import { shallow } from 'zustand/shallow'
 import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
 import './i18n/index'
 import '@/ui/component/notifications/i18n'
-import { useNotificationStore } from '@/ui/store'
-import uuid from 'short-uuid'
-import { toEffectfulObject } from '@/util/effect'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
@@ -53,26 +50,19 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
   )
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
-  const { t } = useTranslation(['metadata', 'notifications'])
-  const { reportNotification } = toEffectfulObject(
-    useNotificationStore(
-      state => ({
-        reportNotification: state.reportNotification
-      }),
-      shallow
-    )
-  )
+  const { t } = useTranslation('metadata')
+  const dispatchNotification = useDispatchNotification()
+
   const hasClipboard = label === 'registrar' || label === 'createdBy' || label === 'modifiedBy'
 
   const handleCopy = useCallback(
     (isCopied: boolean): void => {
-      reportNotification({
-        id: uuid.generate(),
+      dispatchNotification({
         type: isCopied ? 'success' : 'error',
-        title: isCopied ? t('notifications:success.copy') : t('notifications:error.copy')
+        titleKey: isCopied ? 'success.copy' : 'error.copy'
       })
     },
-    [reportNotification, t]
+    [dispatchNotification]
   )
 
   return (
