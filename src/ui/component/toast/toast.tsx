@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
 import { useCallback, useRef, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { NotificationID, NotificationType } from '@/domain/notification/entity'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
@@ -10,7 +11,6 @@ import { Button } from '@/ui/component//button/button'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 import '@/ui/component/notifications/i18n'
 import './toast.scss'
-import { useTranslation } from 'react-i18next'
 
 type ToastCTAProps = {
   action: string

@@ -1,16 +1,16 @@
 /* eslint-disable max-lines-per-function */
+import type { StoreApi } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
-import type { NotificationID, NotificationType, Notifications } from './entity'
-import { eqNotification } from './entity'
+import { devtools } from 'zustand/middleware'
 import type { IO } from 'fp-ts/lib/IO'
 import type { Reader } from 'fp-ts/lib/Reader'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import type { StoreApi } from 'zustand'
 import { pipe } from 'fp-ts/lib/function'
 import type { ForgetType } from '@/util/type'
-import { devtools } from 'zustand/middleware'
+import { eqNotification } from './entity'
+import type { NotificationID, NotificationType, Notifications } from './entity'
 
 type NotificationState<T> = {
   aggregate: Notifications<T>
