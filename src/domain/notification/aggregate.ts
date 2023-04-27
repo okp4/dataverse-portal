@@ -67,18 +67,31 @@ export const notificationAggregate =
           reportNotification:
             (input: ReportNotificationInput<T>): IO<void> =>
             () => {
-              set(state => ({
-                aggregate: [
-                  ...state.aggregate,
-                  {
-                    id: input.id,
-                    type: input.type,
-                    title: input.title,
-                    message: O.fromNullable(input.message),
-                    action: O.fromNullable(input.action)
-                  }
-                ]
-              }))
+              set(state => {
+                const containsActionNotification = pipe(
+                  state.aggregate,
+                  A.findFirst(n => O.isSome(n.action))
+                )
+
+                return pipe(
+                  containsActionNotification,
+                  O.fold(
+                    () => ({
+                      aggregate: [
+                        ...state.aggregate,
+                        {
+                          id: input.id,
+                          type: input.type,
+                          title: input.title,
+                          message: O.fromNullable(input.message),
+                          action: O.fromNullable(input.action)
+                        }
+                      ]
+                    }),
+                    () => state
+                  )
+                )
+              })
             },
           dismissNotification:
             (input: DismissNotificationInput): IO<void> =>

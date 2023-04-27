@@ -54,10 +54,10 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation(['metadata', 'notifications'])
-  const { addNotification } = toEffectfulObject(
+  const { reportNotification } = toEffectfulObject(
     useNotificationStore(
       state => ({
-        addNotification: state.reportNotification
+        reportNotification: state.reportNotification
       }),
       shallow
     )
@@ -66,13 +66,13 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
 
   const handleCopy = useCallback(
     (isCopied: boolean): void => {
-      addNotification({
+      reportNotification({
         id: uuid.generate(),
         type: isCopied ? 'success' : 'error',
         title: isCopied ? t('notifications:success.copy') : t('notifications:error.copy')
       })
     },
-    [addNotification, t]
+    [reportNotification, t]
   )
 
   return (
