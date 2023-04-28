@@ -5,10 +5,9 @@ import * as A from 'fp-ts/Array'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import './summaryMetadata.scss'
 import './i18n/index'
-import '@/ui/component/notifications/i18n'
-import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 
 type SummaryMetadataProps = {
   metadata: ItemGeneralMetadata[]
