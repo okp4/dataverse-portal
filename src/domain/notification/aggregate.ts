@@ -106,6 +106,10 @@ export const notificationAggregate =
                 action: O.toUndefined(it.action)
               }))
             )
-        }))
+        })),
+        {
+          anonymousActionType: 'notificationAggregate',
+          enabled: process.env.NODE_ENV === 'development'
+        }
       )
     )

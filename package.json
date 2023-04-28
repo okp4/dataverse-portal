@@ -36,6 +36,7 @@
     "@radix-ui/react-switch": "^1.0.1",
     "@swc/jest": "^0.2.24",
     "@types/jest": "^29.4.0",
+    "@types/node": "^18.16.2",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
