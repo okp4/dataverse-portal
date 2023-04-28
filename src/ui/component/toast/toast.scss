@@ -97,10 +97,20 @@ $variants: ('success', 'error', 'warning', 'info');
           padding-left: 32px;
         }
       }
-
+      
       .okp4-dataverse-portal-toast-cta {
         @include use-breakpoints(('tablet','desktop','large-desktop')) {
           width: auto;
+        }
+        @each $variant-key in $variants {
+          &.#{$variant-key} {
+            background-color: themed($variant-key);
+            box-shadow: 0 4px 12px rgba(themed($variant-key), 0.6);
+
+            &:hover {
+              background-color: rgba(themed($variant-key), 0.8);
+            }
+          }
         }
       }
     }
@@ -142,3 +152,8 @@ $variants: ('success', 'error', 'warning', 'info');
     }
   }
 }
+
+.okp4-dataverse-portal-toast-main.has-action {
+  max-width: 960px;
+}
+

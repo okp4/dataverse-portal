@@ -13,21 +13,20 @@ import '@/ui/component/notifications/i18n'
 import './toast.scss'
 
 type ToastCTAProps = {
+  type: NotificationType
   action: string
 }
-const ToastCTA: FC<ToastCTAProps> = ({ action }) => {
+const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
   const { t } = useTranslation('notifications')
 
   const handleClick = useCallback(() => {
     window.location.reload()
   }, [])
-
   return (
     <Button
-      className="okp4-dataverse-portal-toast-cta"
+      className={classNames('okp4-dataverse-portal-toast-cta', type)}
       label={t(`action.${action}`)}
       onClick={handleClick}
-      variant="primary"
     />
   )
 }
@@ -89,7 +88,11 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
   useOnKeyboard(handleKeydown, 'keydown')
 
   return (
-    <div className="okp4-dataverse-portal-toast-main">
+    <div
+      className={classNames('okp4-dataverse-portal-toast-main', {
+        'has-action': action
+      })}
+    >
       <div
         className={classNames(
           'okp4-dataverse-portal-toast-container',
@@ -107,13 +110,11 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
                 <Icon name={iconName} />
               </div>
             )}
-            <h3 className={classNames(`okp4-dataverse-portal-toast-title ${type}`)}>{title}</h3>
+            <h3 className={classNames('okp4-dataverse-portal-toast-title', type)}>{title}</h3>
           </div>
-          {message && (
-            <p className={classNames(`okp4-dataverse-portal-toast-description`)}>{message}</p>
-          )}
+          {message && <p className="okp4-dataverse-portal-toast-description">{message}</p>}
         </div>
-        {action && <ToastCTA action={action} />}
+        {action && <ToastCTA action={action} type={type} />}
       </div>
     </div>
   )
