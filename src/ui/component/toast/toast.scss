@@ -69,6 +69,10 @@ $variants: ('success', 'error', 'warning', 'info');
           gap: 10px;
           align-items: center;
 
+          .okp4-dataverse-portal-toast-icon {
+            flex-shrink: 0;
+          }
+
           .okp4-dataverse-portal-toast-title {
             @include noto-sans(700);
             text-transform: uppercase;

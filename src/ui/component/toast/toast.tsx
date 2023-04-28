@@ -102,7 +102,11 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
       >
         <div className="okp4-dataverse-portal-toast-details-container">
           <div className="okp4-dataverse-portal-toast-header-container">
-            {iconName && <Icon name={iconName} />}
+            {iconName && (
+              <div className="okp4-dataverse-portal-toast-icon">
+                <Icon name={iconName} />
+              </div>
+            )}
             <h3 className={classNames(`okp4-dataverse-portal-toast-title ${type}`)}>{title}</h3>
           </div>
           {message && (
