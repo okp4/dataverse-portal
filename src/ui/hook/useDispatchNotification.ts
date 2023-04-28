@@ -18,10 +18,11 @@ type DispatchNotification = (input: DispatchNotificationInput) => void
 
 export const useDispatchNotification = (): DispatchNotification => {
   const { t } = useTranslation('notifications')
-  const { reportNotification } = toEffectfulObject(
+  const { reportNotification, notificationWithActionReported } = toEffectfulObject(
     useNotificationStore(
       state => ({
-        reportNotification: state.reportNotification
+        reportNotification: state.reportNotification,
+        notificationWithActionReported: state.notificationWithActionReported
       }),
       shallow
     )
@@ -39,6 +40,8 @@ export const useDispatchNotification = (): DispatchNotification => {
       messageKey?: string
       action?: ActionType
     }) => {
+      if (notificationWithActionReported()) return
+
       reportNotification({
         id: uuid.generate(),
         type,
@@ -47,7 +50,7 @@ export const useDispatchNotification = (): DispatchNotification => {
         ...(action && { action })
       })
     },
-    [reportNotification, t]
+    [reportNotification, notificationWithActionReported, t]
   )
 
   return dispatchNotification

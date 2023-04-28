@@ -31,6 +31,7 @@ export type DismissNotificationInput = {
 type NotificationAction<T> = {
   reportNotification: (input: ReportNotificationInput<T>) => IO<void>
   dismissNotification: (input: DismissNotificationInput) => IO<void>
+  notificationWithActionReported: () => IO<boolean>
 }
 
 export type NotificationDTO<T> = {
@@ -67,31 +68,18 @@ export const notificationAggregate =
           reportNotification:
             (input: ReportNotificationInput<T>): IO<void> =>
             () => {
-              set(state => {
-                const containsActionNotification = pipe(
-                  state.aggregate,
-                  A.findFirst(n => O.isSome(n.action))
-                )
-
-                return pipe(
-                  containsActionNotification,
-                  O.fold(
-                    () => ({
-                      aggregate: [
-                        ...state.aggregate,
-                        {
-                          id: input.id,
-                          type: input.type,
-                          title: input.title,
-                          message: O.fromNullable(input.message),
-                          action: O.fromNullable(input.action)
-                        }
-                      ]
-                    }),
-                    () => state
-                  )
-                )
-              })
+              set(state => ({
+                aggregate: [
+                  ...state.aggregate,
+                  {
+                    id: input.id,
+                    type: input.type,
+                    title: input.title,
+                    message: O.fromNullable(input.message),
+                    action: O.fromNullable(input.action)
+                  }
+                ]
+              }))
             },
           dismissNotification:
             (input: DismissNotificationInput): IO<void> =>
@@ -102,6 +90,11 @@ export const notificationAggregate =
                 )
               }))
             },
+          notificationWithActionReported: (): IO<boolean> => () =>
+            pipe(
+              get().aggregate,
+              A.some(it => O.isSome(it.action))
+            ),
           notifications: (): IO<NotificationsDTO<T>> => () =>
             pipe(
               get().aggregate,
