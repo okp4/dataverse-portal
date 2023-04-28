@@ -45,8 +45,8 @@ type ToastProps = {
 export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconName, action }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [isHidding, setIsHidding] = useState(false)
-  const timeoutRef = useRef<number>()
-  const autoHideTimeoutRef = useRef<number>()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const autoHideTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
   const handleAction = useCallback(() => {
     if (isHidding) return
