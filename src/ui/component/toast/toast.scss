@@ -33,32 +33,23 @@ $variants: ('success', 'error', 'warning', 'info');
     transform: translate3d(-50%, 100%, 0);
     width: calc(100% - 32px);
     z-index: 10;
-    
-    @include use-breakpoints(('tablet','desktop','large-desktop')) {
-      max-width: 960px;
-    }
+    max-width: 960px;
  
     .okp4-dataverse-portal-toast-container {
-      @include columns-with-gap(16px);
-      justify-content: center;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      gap: 16px;
       animation: show-toast 400ms ease-in-out forwards;
       background: themed(tertiary-button-background);
       border-radius: 6px;
-      padding: 21px;
+      padding: 21px 38px 21px 21px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
 
-      @include use-breakpoints(('tablet','desktop','large-desktop')) {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      @include use-breakpoints(('tablet','desktop')) {
-        padding-right: 38px;
-      }
-
-      @include use-breakpoints(('large-desktop')) {
-        padding-right: 56px;
+      @include use-breakpoints(('mobile')) {
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 21px;
       }
       
       &.is-hidding {
@@ -68,12 +59,16 @@ $variants: ('success', 'error', 'warning', 'info');
       .okp4-dataverse-portal-toast-details-container {
         display: flex;
         flex-direction: column;
+        max-width: 370px;
+        @include use-breakpoints(('mobile','large-desktop')) {
+          max-width: fit-content;
+        }
 
         .okp4-dataverse-portal-toast-header-container {
           display: flex;
           gap: 10px;
           align-items: center;
-          
+
           .okp4-dataverse-portal-toast-title {
             @include noto-sans(700);
             text-transform: uppercase;
@@ -122,9 +117,9 @@ $variants: ('success', 'error', 'warning', 'info');
         }
       }
 
-      @include use-breakpoints(('desktop')) {
+      @include use-breakpoints(('large-desktop')) {
         &::after {
-          transform: translate3d(43px, -50%, 0);
+          transform: translate3d(28px, -50%, 0);
         }
       }
 
@@ -133,18 +128,12 @@ $variants: ('success', 'error', 'warning', 'info');
         position: absolute;
         top: 50%;
         right: 0;
-        transform: translate3d(28px, -50%, 0);
+        transform: translate3d(43px, -50%, 0);
         z-index: -1;
         width: 232px;
         height: 232px;
         border-radius: 50%;
         background-color: rgba(themed('background-variant-1'), 0.02);
-      }
-
-      .okp4-dataverse-portal-toast-details-container {
-        @include use-breakpoints(('tablet','desktop')) {
-          max-width: 370px;
-        }
       }
     }
   }
