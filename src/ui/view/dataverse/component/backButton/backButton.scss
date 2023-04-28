@@ -24,11 +24,13 @@
     }
 
     .okp4-dataverse-portal-button-main {
-      .okp4-dataverse-portal-button-label.outlined-tertiary {
-        @include noto-sans(700);
-        font-size: 14px;
-        line-height: 22px;
-        color: themed('text');
+      .okp4-dataverse-portal-button-label {
+        &.outlined-tertiary {
+          @include noto-sans(700);
+          font-size: 14px;
+          line-height: 22px;
+          color: themed('text');
+        }
       }
     }
   }
