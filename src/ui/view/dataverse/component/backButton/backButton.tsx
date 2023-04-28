@@ -21,11 +21,11 @@ export const BackButton: FC<BackButtonProps> = ({ to, label }): JSX.Element => {
     <div className="okp4-dataverse-portal-back-main">
       <Button
         className="okp4-dataverse-portal-back-button"
-        iconButtonOnly={<Icon name="arrow-left" />}
+        icons={{ startIcon: <Icon name="arrow-left" /> }}
+        label={label}
         onClick={handleRouting}
         variant="outlined-tertiary"
       />
-      {label && <p className="okp4-dataverse-portal-back-text">{label}</p>}
     </div>
   )
 }
