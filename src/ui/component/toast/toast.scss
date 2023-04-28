@@ -32,8 +32,8 @@ $variants: ('success', 'error', 'warning', 'info');
     bottom: 0;
     transform: translate3d(-50%, 100%, 0);
     width: calc(100% - 32px);
+    max-width: 455px;
     z-index: 10;
-    max-width: 960px;
  
     .okp4-dataverse-portal-toast-container {
       display: flex;
