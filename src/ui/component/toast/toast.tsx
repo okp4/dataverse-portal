@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
-import { useCallback, useRef, useEffect, useState } from 'react'
+import { useMemo, useCallback, useRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { NotificationID, NotificationType } from '@/domain/notification/entity'
 import type { IconName } from '@/ui/component/icon/icon'
@@ -60,6 +60,15 @@ export const Toast: FC<ToastProps> = ({
   const animationDurationRef = useRef<number>(500)
   const stackedPosition = useRef<number>(index + 1)
 
+  const autoHideDuration = useMemo((): number => {
+    const messagesLength = title.length + (message?.length ?? 0)
+    const minDuration = 2000
+    const maxDuration = 7000
+    const durationPerChar = 50
+    const duration = messagesLength * durationPerChar
+    return Math.min(Math.max(duration, minDuration), maxDuration)
+  }, [title, message])
+
   const handleAction = useCallback(() => {
     if (isHidding) return
     setIsHidding(true)
@@ -69,9 +78,9 @@ export const Toast: FC<ToastProps> = ({
     if (action) return
     autoHideTimeoutRef.current = setTimeout(() => {
       handleAction()
-    }, 3000)
+    }, autoHideDuration)
     return () => clearTimeout(autoHideTimeoutRef.current)
-  }, [handleAction, action])
+  }, [handleAction, action, autoHideDuration])
 
   useEffect(() => {
     if (!isHidding) return
