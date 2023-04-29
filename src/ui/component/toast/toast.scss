@@ -4,23 +4,28 @@
 
 $variants: ('success', 'error', 'warning', 'info');
 
-@keyframes show-toast {
-  0% {
-    transform: translateY(0%);
+$gap: 8px;
+$offset: 16px;
+
+@for $i from 0 through 2 {
+  @keyframes show-toast-#{$i + 1} {
+    0% {
+      transform: translateY(calc(-#{$i * 100%} - #{$offset} - #{($i - 1) * $gap}));
+    }
+
+    100% {
+      transform: translateY(calc(-#{($i + 1) * 100%} - #{$offset} - #{$i * $gap}));
+    }
   }
 
-  100% {
-    transform: translateY(calc(-100% - 16px));
-  }
-}
+  @keyframes hide-toast-#{$i + 1} {
+    0% {
+      transform: translateY(calc(-#{($i + 1) * 100%} - #{$offset} - #{$i * $gap}));
+    }
 
-@keyframes hide-toast {
-  0% {
-    transform: translateY(calc(-100% - 16px));
-  }
-
-  100% {
-    transform: translateY(0%);
+    100% {
+      transform: translateY(0);
+    }
   }
 }
 
@@ -40,7 +45,6 @@ $variants: ('success', 'error', 'warning', 'info');
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      animation: show-toast 400ms ease-in-out forwards;
       background: themed(tertiary-button-background);
       border-radius: 6px;
       padding: 21px 38px 21px 21px;
@@ -50,10 +54,6 @@ $variants: ('success', 'error', 'warning', 'info');
         flex-direction: column;
         justify-content: center;
         padding-right: 21px;
-      }
-      
-      &.is-hidding {
-        animation: hide-toast 400ms ease-in-out forwards; 
       }
 
       .okp4-dataverse-portal-toast-details-container {

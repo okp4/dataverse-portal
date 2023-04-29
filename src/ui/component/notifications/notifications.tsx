@@ -35,11 +35,12 @@ export const Notifications: FC = () => {
 
   return (
     <div className="okp4-dataverse-portal-notifications">
-      {notifications().map(({ id, type, title, message, action }) => (
+      {notifications().map(({ id, type, title, message, action }, index) => (
         <Toast
           action={action}
           iconName={notificationTypeForIcon.get(type)}
           id={id}
+          index={index}
           key={id}
           message={message}
           onClose={handleClose}

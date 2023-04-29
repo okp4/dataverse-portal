@@ -39,14 +39,26 @@ type ToastProps = {
   message?: string
   iconName?: IconName
   action?: string
+  index: number
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconName, action }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null)
+export const Toast: FC<ToastProps> = ({
+  id,
+  type,
+  title,
+  onClose,
+  message,
+  iconName,
+  action,
+  index
+}) => {
   const [isHidding, setIsHidding] = useState(false)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
   const autoHideTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const animationDurationRef = useRef<number>(500)
+  const stackedPosition = useRef<number>(index + 1)
 
   const handleAction = useCallback(() => {
     if (isHidding) return
@@ -65,7 +77,7 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
     if (!isHidding) return
     timeoutRef.current = setTimeout(() => {
       onClose({ id })
-    }, 400) // must be equal to hide-toast animation duration
+    }, animationDurationRef.current)
     return () => clearTimeout(timeoutRef.current)
   }, [onClose, type, isHidding, id])
 
@@ -94,14 +106,13 @@ export const Toast: FC<ToastProps> = ({ id, type, title, onClose, message, iconN
       })}
     >
       <div
-        className={classNames(
-          'okp4-dataverse-portal-toast-container',
-          {
-            'is-hidding': isHidding
-          },
-          { 'has-action': action }
-        )}
+        className={classNames('okp4-dataverse-portal-toast-container', { 'has-action': action })}
         ref={containerRef}
+        style={{
+          animation: `${isHidding ? 'hide' : 'show'}-toast-${stackedPosition.current} ${
+            animationDurationRef.current
+          }ms ease-in-out forwards`
+        }}
       >
         <div className="okp4-dataverse-portal-toast-details-container">
           <div className="okp4-dataverse-portal-toast-header-container">
