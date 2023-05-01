@@ -48,7 +48,7 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
   const isTextTooLong = useMemo(
     () =>
       paragraphRef.current && paragraphRef.current.offsetHeight < paragraphRef.current.scrollHeight,
-    [paragraphRef.current]
+    [paragraphRef]
   )
 
   return (
