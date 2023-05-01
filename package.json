@@ -20,7 +20,7 @@
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch --no-cache",
-    "lint": "eslint && stylelint '**/*.scss'",
+    "lint": "eslint src --max-warnings=0 && stylelint '**/*.scss'",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx} && stylelint --fix '**/*.scss'"
   },
   "dependencies": {
