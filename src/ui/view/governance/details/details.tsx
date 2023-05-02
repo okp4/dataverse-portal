@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { FC } from 'react'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
@@ -44,12 +44,12 @@ const iconMapping: Record<string, string> = {
 }
 
 const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
-  const paragraphRef = useRef<HTMLParagraphElement>(null)
-  const isTextTooLong = useMemo(
-    () =>
-      paragraphRef.current && paragraphRef.current.offsetHeight < paragraphRef.current.scrollHeight,
-    [paragraphRef]
-  )
+  const [isTextTooLong, setIsTextTooLong] = useState<boolean>(false)
+  const paragraphRef = useCallback((node: HTMLParagraphElement | null) => {
+    if (node !== null) {
+      setIsTextTooLong(node.offsetHeight < node.scrollHeight)
+    }
+  }, [])
 
   return (
     <div className="okp4-dataverse-portal-governance-details-paragraph-container">
