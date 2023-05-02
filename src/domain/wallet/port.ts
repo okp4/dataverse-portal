@@ -92,11 +92,19 @@ export type WalletDeps = {
   chainInfos: ChainInfos
 }
 
+// WalletPort is the interface that all wallet ports must implement.
+// A wallet port is a wallet implementation for a specific wallet type (e.g. Keplr, Leap, etc.) and provides
+// the necessary functions to interact with the wallet.
 export type WalletPort = {
+  // id is the unique identifier of the wallet port.
   id: () => WalletId
+  // name is the name of the wallet port (e.g. Keplr, Leap, etc.)
   name: () => string
+  // isAvailable returns true if the wallet port is available (e.g. the wallet extension is installed).  
   isAvailable: () => IO<boolean>
+  // connectChain connects the wallet port to the chain with the given chainId.
   connectChain: (chainId: ChainId) => ReaderTaskEither<WalletDeps, Error, void>
+  // chainAccounts returns the accounts of the chain with the given chainId.
   chainAccounts: (chainId: ChainId) => TaskEither<Error, Accounts>
 }
 
