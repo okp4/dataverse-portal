@@ -104,6 +104,8 @@ export type WalletPort = {
   isAvailable: () => IO<boolean>
   // connectChain connects the wallet port to the chain with the given chainId.
   connectChain: (chainId: ChainId) => ReaderTaskEither<WalletDeps, Error, void>
+  // disconnectChain disconnects the wallet port from the chain with the given chainId.
+  disconnectChain: (chainId: ChainId) => ReaderTaskEither<WalletDeps, Error, void>
   // chainAccounts returns the accounts of the chain with the given chainId.
   chainAccounts: (chainId: ChainId) => TaskEither<Error, Accounts>
 }
