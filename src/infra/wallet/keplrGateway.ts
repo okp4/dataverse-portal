@@ -42,7 +42,7 @@ export const mapAccount = (account: AccountData): E.Either<Error, Account> =>
     publicKey: account.pubkey
   })
 
-export const KeplrWalletGateway: WalletPort = {
+export const keplrWalletGateway: WalletPort = {
   id: 'keplr',
   type: 'keplr',
   isAvailable: () => () =>
