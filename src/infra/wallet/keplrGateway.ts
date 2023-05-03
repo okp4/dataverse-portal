@@ -1,23 +1,28 @@
-import type { WalletPort, ChainId, WalletPortDeps, Account, Accounts } from '@/domain/wallet/port'
-import type { TaskEither } from 'fp-ts/lib/TaskEither'
-import * as TE from 'fp-ts/TaskEither'
+import type { Account, Accounts, ChainId, WalletPort, WalletPortDeps } from '@/domain/wallet/port'
+import type { AccountData, Keplr } from '@keplr-wallet/types'
+import * as A from 'fp-ts/Array'
 import * as E from 'fp-ts/Either'
+import * as O from 'fp-ts/Option'
 import * as RTE from 'fp-ts/ReaderTaskEither'
+import * as RA from 'fp-ts/ReadonlyArray'
+import * as TE from 'fp-ts/TaskEither'
+import * as IO from 'fp-ts/lib/IO'
+import type { IOOption } from 'fp-ts/lib/IOOption'
+import * as IOO from 'fp-ts/lib/IOOption'
+import type { TaskEither } from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
 import type { ChainInfo } from '../../domain/wallet/port'
-import * as A from 'fp-ts/Array'
-import * as O from 'fp-ts/Option'
-import type { AccountData, Keplr } from '@keplr-wallet/types'
-import * as RA from 'fp-ts/ReadonlyArray'
+
+const keplr = (): IOOption<Keplr> => IOO.fromNullable(window.keplr)
 
 const withKeplr = <T>(
   keplrFunction: (keplr: Keplr) => Promise<T>,
   onError: (e: unknown) => Error = E.toError
 ): TaskEither<Error, T> =>
   pipe(
-    window.keplr,
-    O.fromNullable,
-    TE.fromOption(() => new Error('Keplr instance not found')),
+    keplr(),
+    TE.fromIO,
+    TE.flatMap(TE.fromOption(() => new Error('Keplr instance not found'))),
     TE.flatMap(keplr => TE.tryCatch(async () => keplrFunction(keplr), onError))
   )
 
@@ -45,12 +50,8 @@ export const mapAccount = (account: AccountData): E.Either<Error, Account> =>
 export const keplrWalletGateway: WalletPort = {
   id: 'keplr',
   type: 'keplr',
-  isAvailable: () => () =>
-    pipe(
-      O.fromNullable(window.keplr),
-      O.map(keplr => keplr.getOfflineSigner),
-      O.isSome
-    ),
+  isAvailable: () =>
+    pipe(keplr(), IO.map(O.chainNullableK(keplr => keplr.getOfflineSigner)), IO.map(O.isSome)),
   connectChain: (chainId: ChainId) =>
     pipe(
       RTE.ask<WalletPortDeps>(),
