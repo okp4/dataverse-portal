@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import type { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import { useAppStore } from '@/ui/store/appStore'
@@ -47,6 +48,7 @@ const iconMapping: Record<string, string> = {
 // eslint-disable-next-line max-lines-per-function
 const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
   const [isTextTooLong, setIsTextTooLong] = useState<boolean>(false)
+  const { t } = useTranslation('common')
   const paragraphRef = useCallback((node: HTMLParagraphElement | null) => {
     if (node !== null) {
       setIsTextTooLong(node.offsetHeight < node.scrollHeight)
@@ -99,7 +101,7 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
         </div>
         {isTextTooLong && (
           <div className="okp4-dataverse-portal-governance-details-button">
-            <Button disabled label="See more" variant="outlined-tertiary" />
+            <Button disabled label={t('actions.seeMore')} variant="outlined-tertiary" />
           </div>
         )}
       </div>
