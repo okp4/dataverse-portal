@@ -109,7 +109,7 @@ export const notificationAggregate =
         })),
         {
           anonymousActionType: 'notificationAggregate',
-          enabled: process.env.NODE_ENV === 'development'
+          enabled: import.meta.env.DEV
         }
       )
     )
