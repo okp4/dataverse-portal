@@ -41,9 +41,11 @@ class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, ErrorBoundar
 export const ErrorBoundary = ({ children }: ErrorBoundaryProps): JSX.Element => {
   const [hasError, setHasError] = useState(false)
   const location = useLocation()
+
   useEffect(() => {
     hasError && setHasError(false)
   }, [location.key])
+
   return (
     <ErrorBoundaryInner hasError={hasError} setHasError={setHasError}>
       {children}
