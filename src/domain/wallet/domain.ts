@@ -95,26 +95,30 @@ export const domain = ({ initialState }: Partial<Options> = {}): StoreApi<Domain
         disconnectWallet: () =>
           pipe(
             RTE.fromIO(() => get().data),
-            RTE.chain(RTE.fromOption(() => new Error(`No Wallet connected`))),
-            RTE.chain(wallet =>
-              pipe(
-                RTE.asks((deps: Deps) => deps.walletPorts),
-                RTE.chainOptionK(() => new Error(`Wallet with id "${wallet.id}" not found`))(
-                  findWalletPort(wallet.id)
-                ),
-                RTE.chain(port =>
+            RTE.chain(data =>
+              O.fold(
+                () => RTE.right(undefined),
+                (wallet: Wallet) =>
                   pipe(
-                    port.disconnectChain(wallet.chainId),
-                    RTE.local<Deps, WalletPortDeps>(identity)
+                    RTE.asks((deps: Deps) => deps.walletPorts),
+                    RTE.chainOptionK(() => new Error(`Wallet with id "${wallet.id}" not found`))(
+                      findWalletPort(wallet.id)
+                    ),
+                    RTE.chain(port =>
+                      pipe(
+                        port.disconnectChain(wallet.chainId),
+                        RTE.local<Deps, WalletPortDeps>(identity)
+                      )
+                    ),
+                    RTE.chainIOK(() => () => set({ data: O.none }))
                   )
-                )
-              )
-            ),
-            RTE.chainIOK(() => () => set({ data: O.none }))
+              )(data)
+            )
           )
       })),
       {
         anonymousActionType: 'Aggregate',
+        name: 'wallet',
         enabled: import.meta.env.DEV
       }
     )
