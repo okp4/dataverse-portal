@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { Fragment, useCallback, useMemo, useState } from 'react'
 import type { FC } from 'react'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
@@ -10,7 +10,8 @@ import type {
   ParagraphDTO,
   SectionDTO
 } from '@/ui/page/dataverse/dataspace/governance/mockedData'
-
+import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
+import { isDID } from '@/util/util'
 import './details.scss'
 
 type ArticleProps = {
@@ -43,6 +44,7 @@ const iconMapping: Record<string, string> = {
   Users: 'users'
 }
 
+// eslint-disable-next-line max-lines-per-function
 const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
   const [isTextTooLong, setIsTextTooLong] = useState<boolean>(false)
   const paragraphRef = useCallback((node: HTMLParagraphElement | null) => {
@@ -51,6 +53,40 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
     }
   }, [])
 
+  const paragraphDescription = useMemo(() => {
+    const descriptionWords = paragraph.description.slice().split(' ')
+    return (
+      <div
+        className="okp4-dataverse-portal-governance-details-description paragraph"
+        ref={paragraphRef}
+      >
+        {descriptionWords.map((word, index) =>
+          isDID(word) ? (
+            word.length > 22 ? (
+              <div
+                className="okp4-dataverse-portal-governance-details-description-paragraph-did"
+                key={index}
+              >
+                <span>{[word.slice(0, 16), '...', word.slice(-4)].join('')}</span>
+                <CopyToClipboard textToCopy={word} />
+              </div>
+            ) : (
+              <div
+                className="okp4-dataverse-portal-governance-details-description-paragraph-did"
+                key={index}
+              >
+                <span>{`${word} `}</span>
+                <CopyToClipboard textToCopy={word} />
+              </div>
+            )
+          ) : (
+            <span key={index}>{`${word} `}</span>
+          )
+        )}
+      </div>
+    )
+  }, [paragraph.description, paragraphRef])
+
   return (
     <div className="okp4-dataverse-portal-governance-details-paragraph-container">
       <div className="okp4-dataverse-portal-governance-details-paragraph">
@@ -58,12 +94,9 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
         <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
           {paragraph.title}
         </h3>
-        <p
-          className="okp4-dataverse-portal-governance-details-description paragraph"
-          ref={paragraphRef}
-        >
-          {paragraph.description}
-        </p>
+        <div className="okp4-dataverse-portal-governance-details-description-container">
+          {paragraphDescription}
+        </div>
         {isTextTooLong && (
           <div className="okp4-dataverse-portal-governance-details-button">
             <Button disabled label="See more" variant="outlined-tertiary" />

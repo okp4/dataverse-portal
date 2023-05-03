@@ -124,15 +124,28 @@
                 font-size: 16px;
               }
 
-              .okp4-dataverse-portal-governance-details-description {
-                &.paragraph {
-                  max-height: 112px;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  /* stylelint-disable-next-line value-no-vendor-prefix */
-                  display: -webkit-box;
-                  -webkit-line-clamp: 4;
-                  -webkit-box-orient: vertical;
+              .okp4-dataverse-portal-governance-details-description-container {
+                display: flex;
+                column-gap: 10px;
+                align-items: center;
+
+                .okp4-dataverse-portal-governance-details-description {
+                  &.paragraph {
+                    max-height: 112px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    letter-spacing: 0.2px;
+                    /* stylelint-disable-next-line value-no-vendor-prefix */
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+
+                    /* stylelint-disable-next-line max-nesting-depth, selector-max-compound-selectors */
+                    .okp4-dataverse-portal-governance-details-description-paragraph-did {
+                      display: flex;
+                      column-gap: 10px;
+                    }
+                  }
                 }
               }
 

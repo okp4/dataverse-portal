@@ -31,3 +31,5 @@ export const taskLogger =
         )
       )
     )
+
+export const isDID = (str: string): boolean => /did:[a-zA-Z0-9]+:[a-zA-Z0-9.\-_%]+/.test(str)
