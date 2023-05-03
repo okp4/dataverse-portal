@@ -54,7 +54,7 @@
     "sass": "^1.58.2",
     "stylelint": "^15.1.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
-    "stylelint-scss": "^4.4.0",
+    "stylelint-scss": "^5.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.1.0",
     "vite-plugin-html-config": "^1.0.11",
