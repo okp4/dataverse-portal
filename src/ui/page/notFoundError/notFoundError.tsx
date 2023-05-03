@@ -14,8 +14,7 @@ export const NotFoundError: FC = () => {
   const navigate = useNavigate()
   const theme = useAppStore(store => store.theme)
 
-  const backToDataverse = useCallback((): void => navigate('/dataverse'), [navigate])
-  const backToHome = useCallback((): void => navigate('/'), [navigate])
+  const navigateTo = useCallback((path: string) => () => navigate(path), [navigate])
 
   return (
     <div className={classNames('okp4-dataverse-portal-not-found-error-page-main', theme)}>
@@ -35,13 +34,13 @@ export const NotFoundError: FC = () => {
           <Button
             className="okp4-dataverse-portal-not-found-error-page-button"
             label={t('home:home.blocks.explore.label')}
-            onClick={backToDataverse}
+            onClick={navigateTo('/dataverse')}
             variant="primary"
           />
           <Button
             className="okp4-dataverse-portal-not-found-error-page-button"
             label={t('notFoundError.backToHome')}
-            onClick={backToHome}
+            onClick={navigateTo('/')}
           />
         </div>
       </div>
