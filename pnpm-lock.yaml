@@ -85,8 +85,8 @@ devDependencies:
     specifier: ^15.1.0
     version: 15.1.0
   stylelint-config-sass-guidelines:
-    specifier: ^9.0.1
-    version: 9.0.1(postcss@8.4.21)(stylelint@15.1.0)
+    specifier: ^10.0.0
+    version: 10.0.0(postcss@8.4.21)(stylelint@15.1.0)
   stylelint-scss:
     specifier: ^5.0.0
     version: 5.0.0(stylelint@15.1.0)
@@ -4393,14 +4393,6 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss-sorting@7.0.1(postcss@8.4.21):
-    resolution: {integrity: sha512-iLBFYz6VRYyLJEJsBJ8M3TCqNcckVzz4wFounSc5Oez35ogE/X+aoC5fFu103Ot7NyvjU3/xqIXn93Gp3kJk4g==}
-    peerDependencies:
-      postcss: ^8.3.9
-    dependencies:
-      postcss: 8.4.21
-    dev: true
-
   /postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
     dev: true
@@ -4934,28 +4926,17 @@ packages:
       inline-style-parser: 0.1.1
     dev: false
 
-  /stylelint-config-sass-guidelines@9.0.1(postcss@8.4.21)(stylelint@15.1.0):
-    resolution: {integrity: sha512-N06PsVsrgKijQ3YT5hqKA7x3NUkgELTRI1cbWMqcYiCGG6MjzvNk6Cb5YYA1PrvrksBV76BvY9P9bAswojVMqA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  /stylelint-config-sass-guidelines@10.0.0(postcss@8.4.21)(stylelint@15.1.0):
+    resolution: {integrity: sha512-+Rr2Dd4b72CWA4qoj1Kk+y449nP/WJsrD0nzQAWkmPPIuyVcy2GMIcfNr0Z8JJOLjRvtlkKxa49FCNXMePBikQ==}
+    engines: {node: ^14.13.1 || >=16.13.0 || >=18.0.0}
     peerDependencies:
-      postcss: ^8.3.3
-      stylelint: ^14.0.1
+      postcss: ^8.4.21
+      stylelint: ^15.2.0
     dependencies:
       postcss: 8.4.21
       postcss-scss: 4.0.6(postcss@8.4.21)
       stylelint: 15.1.0
-      stylelint-order: 5.0.0(stylelint@15.1.0)
       stylelint-scss: 4.4.0(stylelint@15.1.0)
-    dev: true
-
-  /stylelint-order@5.0.0(stylelint@15.1.0):
-    resolution: {integrity: sha512-OWQ7pmicXufDw5BlRqzdz3fkGKJPgLyDwD1rFY3AIEfIH/LQY38Vu/85v8/up0I+VPiuGRwbc2Hg3zLAsJaiyw==}
-    peerDependencies:
-      stylelint: ^14.0.0
-    dependencies:
-      postcss: 8.4.21
-      postcss-sorting: 7.0.1(postcss@8.4.21)
-      stylelint: 15.1.0
     dev: true
 
   /stylelint-scss@4.4.0(stylelint@15.1.0):
