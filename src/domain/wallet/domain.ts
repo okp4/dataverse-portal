@@ -46,7 +46,7 @@ export type Options = {
 }
 
 export const toAccount = (v: P.Account): Account => ({
-  id: `v.address`,
+  id: v.address,
   address: v.address,
   algorithm: v.algorithm,
   publicKey: v.publicKey
