@@ -105,3 +105,8 @@
   flex-direction: column;
   gap: $gap;
 }
+
+@mixin rows-with-gap($gap) {
+  display: flex;
+  gap: $gap;
+}
