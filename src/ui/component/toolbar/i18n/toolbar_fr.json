@@ -1,5 +1,7 @@
 {
   "toolbar": {
-    "connectWallet": "Connecter mon portefeuille"
+    "connectWallet": "Connecter mon portefeuille",
+    "disconnectWallet": "Se déconnecter",
+    "keplerInstall": "Installer Keplr"
   }
 }
