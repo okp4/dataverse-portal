@@ -62,8 +62,7 @@ const findWalletPort =
     )
 
 export const Domain =
-  ({ initialState }: Partial<Options> = {}): Reader<void, StoreApi<DomainAPI>> =>
-  () =>
+  ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
     createStore(
       devtools(
         immer<Store>((set, get) => ({
