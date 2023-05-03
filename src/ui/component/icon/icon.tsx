@@ -76,6 +76,9 @@ import { ReactComponent as UsersDarkIcon } from '@/ui/asset/icon/users-dark.svg'
 import { ReactComponent as UsersLightIcon } from '@/ui/asset/icon/users-light.svg'
 import { ReactComponent as KeyDarkIcon } from '@/ui/asset/icon/key-dark.svg'
 import { ReactComponent as KeyLightIcon } from '@/ui/asset/icon/key-light.svg'
+import { ReactComponent as LogOutIcon } from '@/ui/asset/icon/log-out.svg'
+import { ReactComponent as ExpandDownLight } from '@/ui/asset/icon/expand-down-light.svg'
+import { ReactComponent as ExpandDownDark } from '@/ui/asset/icon/expand-down-dark.svg'
 
 export type IconName =
   | 'all-light'
@@ -154,6 +157,9 @@ export type IconName =
   | 'users-light'
   | 'key-dark'
   | 'key-light'
+  | 'log-out'
+  | 'expand-down-light'
+  | 'expand-down-dark'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   collapse: CollapseIcon,
@@ -231,7 +237,10 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'users-dark': UsersDarkIcon,
   'users-light': UsersLightIcon,
   'key-dark': KeyDarkIcon,
-  'key-light': KeyLightIcon
+  'key-light': KeyLightIcon,
+  'log-out': LogOutIcon,
+  'expand-down-light': ExpandDownLight,
+  'expand-down-dark': ExpandDownDark
 }
 
 type IconProps = {
