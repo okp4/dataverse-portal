@@ -6,46 +6,31 @@ import { devtools } from 'zustand/middleware'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { identity, pipe } from 'fp-ts/lib/function'
-import type { Option } from 'fp-ts/lib/Option'
 import type { ForgetType } from '@/util/type'
-import type { Wallet, Account } from './entity'
-import type { ReaderTaskEither } from 'fp-ts/lib/ReaderTaskEither'
+import type { Account, Wallet } from './entity'
 import type { WalletPortDeps, WalletPort } from './port'
 import { eqWalletPort } from './port'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import * as TE from 'fp-ts/TaskEither'
-import type { IOOption } from 'fp-ts/lib/IOOption'
 import type * as P from './port'
 import { sequenceS } from 'fp-ts/lib/Apply'
+import type { Command } from './command'
+import type { Query } from './query'
+import type { Deps } from './dependency'
+import type { Option } from 'fp-ts/lib/Option'
 
-type Deps = WalletPortDeps & {
-  walletPorts: WalletPort[]
-}
-
-type State = {
+export type State = {
   data: Option<Wallet>
 }
 
-type Action = {
-  // Connect a wallet to a chain.
-  connectWalletForChain: (walletId: string, chainId: string) => ReaderTaskEither<Deps, Error, void>
-  // Disconnect a wallet from a chain, if it is connected.
-  disconnectWallet: () => ReaderTaskEither<Deps, Error, void>
-}
-
-type Query = {
-  // Get the wallet connected to a chain, if any.
-  wallet: () => IOOption<Wallet>
-}
-
-type Store = State & Action & Query
-export type DomainAPI = ForgetType<State, Store>
+type Domain = State & Command & Query
+export type DomainAPI = ForgetType<State, Domain>
 
 export type Options = {
   initialState: State
 }
 
-export const toAccount = (v: P.Account): Account => ({
+const fromPortAccount = (v: P.Account): Account => ({
   id: v.address,
   address: v.address,
   algorithm: v.algorithm,
@@ -60,66 +45,65 @@ const findWalletPort =
       A.findFirst(port => eqWalletPort.equals(port, { id: walletId }))
     )
 
-export const Domain =
-  ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
-    createStore(
-      devtools(
-        immer<Store>((set, get) => ({
-          data: pipe(
-            initialState,
-            O.fromNullable,
-            O.flatMap(it => it.data)
-          ),
-          wallet: () => () => get().data,
-          connectWalletForChain: (walletId, chainId) =>
-            pipe(
-              RTE.asks((deps: Deps) => deps.walletPorts),
-              RTE.chainOptionK(() => new Error(`Wallet with id "${walletId}" not found`))(
-                findWalletPort(walletId)
-              ),
-              RTE.chainFirst(port =>
-                pipe(port.connectChain(chainId), RTE.local<Deps, WalletPortDeps>(identity))
-              ),
-              RTE.chainTaskEitherK(port =>
-                sequenceS(TE.ApplyPar)({
-                  accounts: port.chainAccounts(chainId),
-                  name: port.name(chainId)
-                })
-              ),
-              RTE.map(ctx =>
-                O.some({
-                  id: walletId,
-                  name: ctx.name,
-                  chainId,
-                  accounts: ctx.accounts.map(toAccount)
-                })
-              ),
-              RTE.chainIOK(accounts => () => set({ data: accounts }))
+export const domain = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
+  createStore(
+    devtools(
+      immer<Domain>((set, get) => ({
+        data: pipe(
+          initialState,
+          O.fromNullable,
+          O.flatMap(it => it.data)
+        ),
+        wallet: () => () => get().data,
+        connectWalletForChain: (walletId, chainId) =>
+          pipe(
+            RTE.asks((deps: Deps) => deps.walletPorts),
+            RTE.chainOptionK(() => new Error(`Wallet with id "${walletId}" not found`))(
+              findWalletPort(walletId)
             ),
-          disconnectWallet: () =>
-            pipe(
-              RTE.fromIO(() => get().data),
-              RTE.chain(RTE.fromOption(() => new Error(`No Wallet connected`))),
-              RTE.chain(wallet =>
-                pipe(
-                  RTE.asks((deps: Deps) => deps.walletPorts),
-                  RTE.chainOptionK(() => new Error(`Wallet with id "${wallet.id}" not found`))(
-                    findWalletPort(wallet.id)
-                  ),
-                  RTE.chain(port =>
-                    pipe(
-                      port.disconnectChain(wallet.chainId),
-                      RTE.local<Deps, WalletPortDeps>(identity)
-                    )
+            RTE.chainFirst(port =>
+              pipe(port.connectChain(chainId), RTE.local<Deps, WalletPortDeps>(identity))
+            ),
+            RTE.chainTaskEitherK(port =>
+              sequenceS(TE.ApplyPar)({
+                accounts: port.chainAccounts(chainId),
+                name: port.name(chainId)
+              })
+            ),
+            RTE.map(ctx =>
+              O.some({
+                id: walletId,
+                name: ctx.name,
+                chainId,
+                accounts: ctx.accounts.map(fromPortAccount)
+              })
+            ),
+            RTE.chainIOK(accounts => () => set({ data: accounts }))
+          ),
+        disconnectWallet: () =>
+          pipe(
+            RTE.fromIO(() => get().data),
+            RTE.chain(RTE.fromOption(() => new Error(`No Wallet connected`))),
+            RTE.chain(wallet =>
+              pipe(
+                RTE.asks((deps: Deps) => deps.walletPorts),
+                RTE.chainOptionK(() => new Error(`Wallet with id "${wallet.id}" not found`))(
+                  findWalletPort(wallet.id)
+                ),
+                RTE.chain(port =>
+                  pipe(
+                    port.disconnectChain(wallet.chainId),
+                    RTE.local<Deps, WalletPortDeps>(identity)
                   )
                 )
-              ),
-              RTE.chainIOK(() => () => set({ data: O.none }))
-            )
-        })),
-        {
-          anonymousActionType: 'Aggregate',
-          enabled: import.meta.env.DEV
-        }
-      )
+              )
+            ),
+            RTE.chainIOK(() => () => set({ data: O.none }))
+          )
+      })),
+      {
+        anonymousActionType: 'Aggregate',
+        enabled: import.meta.env.DEV
+      }
     )
+  )
