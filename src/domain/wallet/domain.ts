@@ -47,7 +47,7 @@ const findWalletPort =
       A.findFirst(port => eqWalletPort.equals(port, { id: walletId }))
     )
 
-export const domain = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
+export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
   createStore(
     devtools(
       immer<Domain>((set, get) => ({
@@ -70,6 +70,7 @@ export const domain = ({ initialState }: Partial<Options> = {}): StoreApi<Domain
         connectWalletForChain: (walletId, chainId) =>
           pipe(
             RTE.asks((deps: Deps) => deps.walletPorts),
+            RTE.chainFirst(() => get().disconnectWallet()),
             RTE.chainOptionK(() => new Error(`Wallet with id "${walletId}" not found`))(
               findWalletPort(walletId)
             ),
