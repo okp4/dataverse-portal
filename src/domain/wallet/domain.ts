@@ -3,7 +3,6 @@ import type { StoreApi } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
 import { devtools } from 'zustand/middleware'
-import type { Reader } from 'fp-ts/lib/Reader'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { identity, pipe } from 'fp-ts/lib/function'
@@ -120,7 +119,7 @@ export const Domain =
         })),
         {
           anonymousActionType: 'Aggregate',
-          enabled: process.env.NODE_ENV === 'development'
+          enabled: import.meta.env.DEV
         }
       )
     )
