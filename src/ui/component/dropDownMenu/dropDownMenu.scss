@@ -1,0 +1,143 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-drop-down-menu-main {
+  @include with-theme {
+    .okp4-dataverse-portal-drop-down-menu-blur {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      backdrop-filter: blur(1px);
+      /* stylelint-disable-next-line property-no-vendor-prefix */
+      -webkit-backdrop-filter: blur(1px);
+      z-index: 100;
+    }
+
+    .okp4-dataverse-portal-drop-down-menu-container {
+      width: 100%;
+      position: relative;
+      z-index: 100;
+
+      .okp4-dataverse-portal-drop-down-menu-item {
+        @include noto-sans(700);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 18px;
+        color: themed('text');
+        cursor: pointer;
+        border-radius: 6px;
+        user-select: none;
+        /* stylelint-disable property-no-vendor-prefix */
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        /* stylelint-enable property-no-vendor-prefix */
+
+        &.selected {
+          @include noto-sans(400);
+          margin-bottom: 4px;
+          background-color: themed('drop-down-menu-selected-background');
+
+          border: 1px solid themed('drop-down-menu-selected-border');
+
+          svg {
+            path {
+              stroke-opacity: 1;
+            }
+          }
+
+          &.menu-opened {
+            background-color: themed('drop-down-menu-menu-background');
+
+            svg {
+              transform: rotate(180deg);
+            }
+          }
+        }
+
+        &.option {
+          svg {
+            path {
+              fill: themed('text');
+            }
+          }
+
+          &:hover {
+            background-color: themed('primary-color');
+            color: #ffffff;
+
+            svg {
+              path {
+                fill: #ffffff;
+              }
+            }
+          }
+        }
+
+        &.back-button {
+          justify-content: unset;
+          color: themed('secondary-color');
+          column-gap: 7px;
+
+          svg {
+            height: 10px;
+
+            path {
+              fill: themed('secondary-color');
+              stroke: themed('secondary-color');
+            }
+          }
+        }
+
+        svg {
+          flex-shrink: 0;
+        }
+
+        p {
+          line-height: 20px;
+          /* stylelint-disable-next-line value-no-vendor-prefix */
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+
+      .okp4-dataverse-portal-drop-down-menus-container {
+        display: flex;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 6px;
+        padding-bottom: 10px;
+
+        .okp4-dataverse-portal-drop-down-menu-options-container {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          row-gap: 2px;
+          width: 100%;
+          max-height: 412px;
+          height: fit-content;
+          overflow: auto;
+          box-sizing: border-box;
+          border-radius: 6px;
+          padding: 10px;
+          background-color: themed('drop-down-menu-menu-background');
+
+          &.focused {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

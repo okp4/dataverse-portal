@@ -45,6 +45,7 @@
 
         @include use-breakpoints(('tablet', 'mobile')) {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+          margin-bottom: 20px;
         }
 
         .okp4-dataverse-portal-governance-page-navigation-section-list {

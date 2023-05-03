@@ -14,7 +14,8 @@
   "actions": {
     "explore": "Explore dataverse",
     "details": "See Details",
-    "accessGovernance": "Access governance"
+    "accessGovernance": "Access governance",
+    "back": "Back"
   },
   "filters": "Filters",
   "dataverse": "Dataverse",

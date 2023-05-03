@@ -45,7 +45,10 @@ $themes: (
     article-background: $article-background-light,
     paragraph-background: $paragraph-background-light,
     log-out-menu: $error,
-    disabled-checkbox-background: $disabled-checkbox-background
+    disabled-checkbox-background: $disabled-checkbox-background,
+    drop-down-menu-menu-background: $text-dark,
+    drop-down-menu-selected-background: $background-light-variant-1,
+    drop-down-menu-selected-border: rgba($primary-variant-1, 0.12)
   ),
   dark: (
     primary-color: $primary,
@@ -90,7 +93,10 @@ $themes: (
     article-background: $article-background-dark,
     paragraph-background: $paragraph-background-dark,
     log-out-menu: $error,
-    disabled-checkbox-background: $disabled-checkbox-background
+    disabled-checkbox-background: $disabled-checkbox-background,
+    drop-down-menu-menu-background: $card-dark,
+    drop-down-menu-selected-background: $card-dark,
+    drop-down-menu-selected-border: transparent
   )
 );
 
