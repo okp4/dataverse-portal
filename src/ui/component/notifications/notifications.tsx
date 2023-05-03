@@ -16,6 +16,7 @@ export const Notifications: FC = () => {
     }))
   )
   const theme = useAppStore(store => store.theme)
+  const notificationData = useMemo(() => notifications(), [notifications])
   const notificationTypeForIcon = useMemo(
     () =>
       new Map<NotificationType, IconName>([
@@ -35,7 +36,7 @@ export const Notifications: FC = () => {
 
   return (
     <div className="okp4-dataverse-portal-notifications">
-      {notifications().map(({ id, type, title, message, action }) => (
+      {notificationData.map(({ id, type, title, message, action }) => (
         <Toast
           action={action}
           duration={action ? Infinity : 3000}
