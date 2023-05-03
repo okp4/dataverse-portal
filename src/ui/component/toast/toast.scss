@@ -4,43 +4,71 @@
 
 $variants: ('success', 'error', 'warning', 'info');
 
-$gap: 8px;
-$offset: 16px;
-
-@for $i from 0 through 2 {
-  @keyframes show-toast-#{$i + 1} {
-    0% {
-      transform: translateY(calc(-#{$i * 100%} - #{$offset} - #{($i - 1) * $gap}));
-    }
-
-    100% {
-      transform: translateY(calc(-#{($i + 1) * 100%} - #{$offset} - #{$i * $gap}));
-    }
+@keyframes hide {
+  from {
+    opacity: 1;
   }
 
-  @keyframes hide-toast-#{$i + 1} {
-    0% {
-      transform: translateY(calc(-#{($i + 1) * 100%} - #{$offset} - #{$i * $gap}));
-    }
+  to {
+    opacity: 0;
+  }
+}
 
-    100% {
-      transform: translateY(0);
-    }
+@keyframes slideIn {
+  from {
+    transform: translateY(calc(100% + var(--viewport-padding)));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes swipeOut {
+  from {
+    transform: translateY(var(--radix-toast-swipe-end-y));
+  }
+
+  to {
+    transform: translateY(calc(100% + var(--viewport-padding)));
   }
 }
 
 .okp4-dataverse-portal-toast-main {
   @include with-theme {
+    --viewport-padding: 16px;
     box-sizing: border-box;
     position: fixed;
     left: 50%;
     bottom: 0;
-    transform: translate3d(-50%, 100%, 0);
-    width: calc(100% - 32px);
+    transform: translateX(-50%);
+    width: calc(100% - var(--viewport-padding) - var(--viewport-padding));
+    padding: 0;
     max-width: 455px;
-    z-index: 10;
- 
-    .okp4-dataverse-portal-toast-container {
+    z-index: 2147483647; // max z-index
+
+    .okp4-dataverse-portal-toast-root[data-state='open'] {
+      animation: slideIn 300ms ease-in-out;
+    }
+
+    .okp4-dataverse-portal-toast-root[data-state='closed'] {
+      animation: hide 200ms ease-in-out;
+    }
+
+    .okp4-dataverse-portal-toast-root[data-swipe='move'] {
+      transform: translateX(var(--radix-toast-swipe-move-x));
+    }
+
+    .okp4-dataverse-portal-toast-root[data-swipe='cancel'] {
+      transform: translateX(0);
+      transition: transform 200ms ease-out;
+    }
+
+    .okp4-dataverse-portal-toast-root[data-swipe='end'] {
+      animation: swipeOut 100ms ease-out;
+    }
+    
+    .okp4-dataverse-portal-toast-root {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -99,6 +127,9 @@ $offset: 16px;
       }
       
       .okp4-dataverse-portal-toast-cta {
+        position: relative;
+        z-index: 1;
+        
         @include use-breakpoints(('tablet','desktop','large-desktop')) {
           width: auto;
         }
@@ -143,7 +174,6 @@ $offset: 16px;
         top: 50%;
         right: 0;
         transform: translate3d(43px, -50%, 0);
-        z-index: -1;
         width: 232px;
         height: 232px;
         border-radius: 50%;

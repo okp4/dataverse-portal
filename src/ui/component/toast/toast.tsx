@@ -1,7 +1,9 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
-import { useMemo, useCallback, useRef, useEffect, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import * as ToastPrimitive from '@radix-ui/react-toast'
+import type { ActionType } from '@/ui/store'
 import type { NotificationID, NotificationType } from '@/domain/notification/entity'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
@@ -32,96 +34,68 @@ const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
 }
 
 type ToastProps = {
+  action?: ActionType
   id: NotificationID
   type: NotificationType
   title: string
-  onClose: (input: DismissNotificationInput) => void
+  onDismiss: (input: DismissNotificationInput) => void
   message?: string
   iconName?: IconName
-  action?: string
-  index: number
+  duration: number
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const Toast: FC<ToastProps> = ({
+  action,
   id,
   type,
   title,
-  onClose,
+  onDismiss,
   message,
   iconName,
-  action,
-  index
+  duration
 }) => {
-  const [isHidding, setIsHidding] = useState(false)
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
-  const autoHideTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
-  const animationDurationRef = useRef<number>(500)
-  const stackedPosition = useRef<number>(index + 1)
+  const [isOpen, setIsOpen] = useState(true)
+  const toastRootRef = useRef<HTMLLIElement | null>(null)
 
-  const autoHideDuration = useMemo((): number => {
-    const messagesLength = title.length + (message?.length ?? 0)
-    const minDuration = 2000
-    const maxDuration = 7000
-    const durationPerChar = 50
-    const duration = messagesLength * durationPerChar
-    return Math.min(Math.max(duration, minDuration), maxDuration)
-  }, [title, message])
-
-  const handleAction = useCallback(() => {
-    if (isHidding) return
-    setIsHidding(true)
-  }, [isHidding])
-
-  useEffect(() => {
-    if (action) return
-    autoHideTimeoutRef.current = setTimeout(() => {
-      handleAction()
-    }, autoHideDuration)
-    return () => clearTimeout(autoHideTimeoutRef.current)
-  }, [handleAction, action, autoHideDuration])
-
-  useEffect(() => {
-    if (!isHidding) return
-    timeoutRef.current = setTimeout(() => {
-      onClose({ id })
-    }, animationDurationRef.current)
-    return () => clearTimeout(timeoutRef.current)
-  }, [onClose, type, isHidding, id])
+  const onClose = useCallback(() => {
+    if (isOpen) {
+      const timeout = setTimeout(() => {
+        clearTimeout(timeout)
+        onDismiss({ id })
+      }, 200) // close animation duration. must match the one in toast.scss
+      setIsOpen(false)
+    }
+  }, [id, onDismiss, isOpen])
 
   const clickOutsideHandler = useCallback(() => {
     if (!action) return
-    handleAction()
-  }, [handleAction, action])
+    onClose()
+  }, [onClose, action])
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
       if (!action) return
       if (event.key === 'Escape') {
-        handleAction()
+        onClose()
       }
     },
-    [handleAction, action]
+    [onClose, action]
   )
 
-  useOnClickOutside<HTMLDivElement>(containerRef, clickOutsideHandler)
+  useOnClickOutside<HTMLLIElement>(toastRootRef, clickOutsideHandler)
   useOnKeyboard(handleKeydown, 'keydown')
 
   return (
-    <div
-      className={classNames('okp4-dataverse-portal-toast-main', {
-        'has-action': action
-      })}
-    >
-      <div
-        className={classNames('okp4-dataverse-portal-toast-container', { 'has-action': action })}
-        ref={containerRef}
-        style={{
-          animation: `${isHidding ? 'hide' : 'show'}-toast-${stackedPosition.current} ${
-            animationDurationRef.current
-          }ms ease-in-out forwards`
-        }}
+    <ToastPrimitive.Provider swipeDirection="down">
+      <ToastPrimitive.Root
+        className={classNames('okp4-dataverse-portal-toast-root', {
+          'has-action': action
+        })}
+        duration={duration}
+        onOpenChange={onClose}
+        open={isOpen}
+        ref={toastRootRef}
       >
         <div className="okp4-dataverse-portal-toast-details-container">
           <div className="okp4-dataverse-portal-toast-header-container">
@@ -135,7 +109,12 @@ export const Toast: FC<ToastProps> = ({
           {message && <p className="okp4-dataverse-portal-toast-description">{message}</p>}
         </div>
         {action && <ToastCTA action={action} type={type} />}
-      </div>
-    </div>
+      </ToastPrimitive.Root>
+      <ToastPrimitive.Viewport
+        className={classNames('okp4-dataverse-portal-toast-main', {
+          'has-action': action
+        })}
+      />
+    </ToastPrimitive.Provider>
   )
 }

@@ -26,7 +26,7 @@ export const Notifications: FC = () => {
       ]),
     [theme]
   )
-  const handleClose = useCallback(
+  const handleDismiss = useCallback(
     (notificationInput: DismissNotificationInput) => {
       dismissNotification(notificationInput)
     },
@@ -35,15 +35,15 @@ export const Notifications: FC = () => {
 
   return (
     <div className="okp4-dataverse-portal-notifications">
-      {notifications().map(({ id, type, title, message, action }, index) => (
+      {notifications().map(({ id, type, title, message, action }) => (
         <Toast
           action={action}
+          duration={action ? Infinity : 3000}
           iconName={notificationTypeForIcon.get(type)}
           id={id}
-          index={index}
           key={id}
           message={message}
-          onClose={handleClose}
+          onDismiss={handleDismiss}
           title={title}
           type={type}
         />
