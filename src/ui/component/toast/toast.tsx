@@ -14,16 +14,18 @@ import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 import '@/ui/component/notifications/i18n'
 import './toast.scss'
 
+const actionsEffects: Record<ActionType, () => void> = {
+  refresh: () => window.location.reload()
+}
+
 type ToastCTAProps = {
   type: NotificationType
-  action: string
+  action: ActionType
 }
 const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
   const { t } = useTranslation('notifications')
 
-  const handleClick = useCallback(() => {
-    window.location.reload()
-  }, [])
+  const handleClick = useCallback(() => actionsEffects[action](), [action])
   return (
     <Button
       className={classNames('okp4-dataverse-portal-toast-cta', type)}
