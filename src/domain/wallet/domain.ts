@@ -13,11 +13,13 @@ import { eqWalletPort } from './port'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import * as TE from 'fp-ts/TaskEither'
 import type * as P from './port'
+import * as R from 'fp-ts/Reader'
 import { sequenceS } from 'fp-ts/lib/Apply'
 import type { Command } from './command'
-import type { Query } from './query'
+import type { Query, WalletType } from './query'
 import type { Deps } from './dependency'
 import type { Option } from 'fp-ts/lib/Option'
+import type { Reader } from 'fp-ts/lib/Reader'
 
 export type State = {
   data: Option<Wallet>
@@ -54,6 +56,16 @@ export const domain = ({ initialState }: Partial<Options> = {}): StoreApi<Domain
           O.fromNullable,
           O.flatMap(it => it.data)
         ),
+        supportedWalletTypes: (): Reader<Deps, WalletType[]> =>
+          pipe(
+            R.asks((deps: Deps) => deps.walletPorts),
+            R.map(
+              A.map(port => ({
+                id: port.id,
+                type: port.type
+              }))
+            )
+          ),
         wallet: () => () => get().data,
         connectWalletForChain: (walletId, chainId) =>
           pipe(
