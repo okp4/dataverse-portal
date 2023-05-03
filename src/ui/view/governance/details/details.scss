@@ -26,6 +26,10 @@
     .okp4-dataverse-portal-governance-details-header {
       @include columns-with-gap(16px);
 
+      @include use-breakpoints(('mobile', 'tablet')) {
+        text-align: center;
+      }
+
       .okp4-dataverse-portal-governance-details-header-part {
         @include columns-with-gap(12px);
 
@@ -53,6 +57,11 @@
           border-radius: 20px;
           padding: 40px;
 
+          @include use-breakpoints(('mobile', 'tablet')) {
+            @include columns-with-gap(20px);
+            padding: 20px;
+          }
+
           .okp4-dataverse-portal-governance-details-article-header {
             display: flex;
             justify-content: space-between;
@@ -67,6 +76,10 @@
 
               .okp4-dataverse-portal-governance-details-article-title {
                 line-height: 22px;
+
+                @include use-breakpoints(('mobile', 'tablet')) {
+                  font-size: 16px;
+                }
               }
             }
 
@@ -112,7 +125,8 @@
               background: themed(paragraph-background);
               max-height: 252px;
               border-radius: 10px;
-              width: 320px;
+              width: 100%;
+              max-width: 320px;
               line-height: 20px;
             }
 
