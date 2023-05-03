@@ -1,11 +1,11 @@
-import type { WalletPort, ChainId, WalletDeps, Account, Accounts } from '@/domain/wallet/port'
+import type { WalletPort, ChainId, WalletPortDeps, Account, Accounts } from '@/domain/wallet/port'
 import type { TaskEither } from 'fp-ts/lib/TaskEither'
 import * as TE from 'fp-ts/TaskEither'
 import * as E from 'fp-ts/Either'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
-import type { ChainInfos } from '../../domain/wallet/port'
-import * as R from 'fp-ts/Record'
+import type { ChainInfo } from '../../domain/wallet/port'
+import * as A from 'fp-ts/Array'
 import * as O from 'fp-ts/Option'
 import type { AccountData, Keplr } from '@keplr-wallet/types'
 import * as RA from 'fp-ts/ReadonlyArray'
@@ -24,9 +24,13 @@ const withKeplr = <T>(
 const enableChain = (chainId: ChainId): TaskEither<Error, void> =>
   withKeplr(async keplr => keplr.enable(chainId))
 
-const suggestChain = (chainId: ChainId, chainInfos: ChainInfos): TaskEither<Error, void> =>
+const disableChain = (chainId: ChainId): TaskEither<Error, void> =>
+  withKeplr(async keplr => keplr.disable(chainId))
+
+const suggestChain = (chainId: ChainId, chainInfos: ChainInfo[]): TaskEither<Error, void> =>
   pipe(
-    R.lookup(chainId, chainInfos),
+    chainInfos,
+    A.findFirst<ChainInfo>(chainInfo => chainInfo.chainId === chainId),
     TE.fromOption(() => new Error(`ChainId ${chainId} not found in chainInfos`)),
     TE.flatMap(chainInfo => withKeplr(async keplr => keplr.experimentalSuggestChain(chainInfo)))
   )
@@ -39,8 +43,8 @@ export const mapAccount = (account: AccountData): E.Either<Error, Account> =>
   })
 
 export const KeplrWalletGateway: WalletPort = {
-  id: () => 'keplr',
-  name: () => 'Keplr',
+  id: 'keplr',
+  type: 'keplr',
   isAvailable: () => () =>
     pipe(
       O.fromNullable(window.keplr),
@@ -49,8 +53,8 @@ export const KeplrWalletGateway: WalletPort = {
     ),
   connectChain: (chainId: ChainId) =>
     pipe(
-      RTE.ask<WalletDeps>(),
-      RTE.chainTaskEitherK((deps: WalletDeps) =>
+      RTE.ask<WalletPortDeps>(),
+      RTE.chainTaskEitherK((deps: WalletPortDeps) =>
         pipe(
           enableChain(chainId),
           TE.alt(() =>
@@ -61,6 +65,12 @@ export const KeplrWalletGateway: WalletPort = {
           )
         )
       )
+    ),
+  disconnectChain: (chainId: ChainId) => () => disableChain(chainId),
+  name: chainId =>
+    pipe(
+      withKeplr(async keplr => keplr.getKey(chainId)),
+      TE.map(key => key.name)
     ),
   chainAccounts: (chainId: ChainId): TaskEither<Error, Accounts> =>
     pipe(
