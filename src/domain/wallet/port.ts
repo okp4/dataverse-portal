@@ -62,7 +62,10 @@ export type ChainInfo = {
   beta?: boolean
 }
 
-export type ChainInfos = Record<ChainId, ChainInfo>
+export const eqChainInfo: Eq<{ id: string }> = pipe(
+  S.Eq,
+  eqContramap(it => it.id)
+)
 
 export type BIP44 = {
   coinType: number
@@ -88,34 +91,36 @@ export type Accounts = Array<Account>
 export type WalletId = string
 export const eqWalletId: Eq<WalletId> = S.Eq
 
-export type WalletDeps = {
-  chainInfos: ChainInfos
+export type WalletPortDeps = {
+  chainInfos: ChainInfo[]
 }
 
 // WalletPort is the interface that all wallet ports must implement.
 // A wallet port is a wallet implementation for a specific wallet type (e.g. Keplr, Leap, etc.) and provides
 // the necessary functions to interact with the wallet.
 export type WalletPort = {
-  // id is the unique identifier of the wallet port.
-  id: () => WalletId
-  // name is the name of the wallet port (e.g. Keplr, Leap, etc.)
-  name: () => string
-  // isAvailable returns true if the wallet port is available (e.g. the wallet extension is installed).  
+  // id returns the unique id of the wallet port implementation.
+  id: string
+  // type holds the type of the wallet port (e.g. Keplr, Leap, etc.).
+  type: string
+  // isAvailable returns true if the wallet port is available (e.g. the wallet extension is installed).
   isAvailable: () => IO<boolean>
   // connectChain connects the wallet port to the chain with the given chainId.
-  connectChain: (chainId: ChainId) => ReaderTaskEither<WalletDeps, Error, void>
+  connectChain: (chainId: ChainId) => ReaderTaskEither<WalletPortDeps, Error, void>
   // disconnectChain disconnects the wallet port from the chain with the given chainId.
-  disconnectChain: (chainId: ChainId) => ReaderTaskEither<WalletDeps, Error, void>
+  disconnectChain: (chainId: ChainId) => ReaderTaskEither<WalletPortDeps, Error, void>
+  // name returns the name of the wallet.
+  name: (chainId: ChainId) => TaskEither<Error, string>
   // chainAccounts returns the accounts of the chain with the given chainId.
   chainAccounts: (chainId: ChainId) => TaskEither<Error, Accounts>
 }
 
-export const eqWalletPort: Eq<WalletPort> = pipe(
+export const eqWalletPort: Eq<{ id: string }> = pipe(
   eqWalletId,
-  eqContramap(it => it.id())
+  eqContramap(it => it.id)
 )
 
-export const byWalletPortName: Ord<WalletPort> = pipe(
+export const byWalletPortType: Ord<WalletPort> = pipe(
   S.Ord,
-  ordContramap(it => it.name())
+  ordContramap(it => it.type)
 )
