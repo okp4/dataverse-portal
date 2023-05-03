@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import './palette.scss';
 
 $themes: (
@@ -37,7 +38,8 @@ $themes: (
     gradient: $gradient,
     skeleton-base-color: $skeleton-base-color-light,
     skeleton-animated-color: $skeleton-animated-color-light,
-    skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
+    skeleton-gradient:
+      linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
     governance-nav-section-background: $governance-nav-section-background,
     article-background: $article-background-light,
     paragraph-background: $paragraph-background-light
@@ -78,7 +80,8 @@ $themes: (
     gradient: $gradient,
     skeleton-base-color: $skeleton-base-color-dark,
     skeleton-animated-color: $skeleton-animated-color-dark,
-    skeleton-gradient: linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
+    skeleton-gradient:
+      linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
     governance-nav-section-background: $tertiary-button-background-dark,
     article-background: $article-background-dark,
     paragraph-background: $paragraph-background-dark
@@ -91,8 +94,8 @@ $themes: (
       $theme-map: () !global;
 
       @each $key, $submap in $map {
-        $value: map-get(map-get($themes, $theme), '#{$key}');
-        $theme-map: map-merge(
+        $value: map.get(map.get($themes, $theme), '#{$key}');
+        $theme-map: map.merge(
           $theme-map,
           (
             $key: $value
@@ -106,8 +109,8 @@ $themes: (
 }
 
 @function themed($key) {
-  @if (map-has-key($theme-map, $key)) {
-    @return map-get($theme-map, $key);
+  @if (map.has-key($theme-map, $key)) {
+    @return map.get($theme-map, $key);
   } @else {
     @error 'ERROR: Specified key does not exist in themes';
   }
