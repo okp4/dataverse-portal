@@ -28,11 +28,14 @@ type State = {
 }
 
 type Action = {
+  // Connect a wallet to a chain.
   connectWalletForChain: (walletId: string, chainId: string) => ReaderTaskEither<Deps, Error, void>
+  // Disconnect a wallet from a chain, if it is connected.
   disconnectWallet: () => ReaderTaskEither<Deps, Error, void>
 }
 
 type Query = {
+  // Get the wallet connected to a chain, if any.
   wallet: () => IOOption<Wallet>
 }
 
