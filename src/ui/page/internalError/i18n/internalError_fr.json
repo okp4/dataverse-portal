@@ -1,0 +1,9 @@
+{
+  "internalError": {
+    "apology": "Désolé,",
+    "message": "Une erreur s'est produite lors du traitement de votre demande.",
+    "suggestion": "Nous sommes maintenant informés de ce problème et nous nous efforçons de le résoudre. En attendant, voici ce que vous pouvez faire :",
+    "returnToHome": "Retourner à l'accueil",
+    "contactUs": "Nous contacter"
+  }
+}

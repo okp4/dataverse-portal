@@ -3,7 +3,8 @@ import classNames from 'classnames'
 import { AppRouter } from '@/ui/component/router/appRouter'
 import { Sidebar } from '@/ui/component/sidebar/sidebar'
 import { useAppStore } from '@/ui/store/appStore'
-import { Toolbar } from './component/toolbar/toolbar'
+import { Toolbar } from '@/ui/component/toolbar/toolbar'
+import { ErrorBoundary } from '@/ui/component/errorBoundary/errorBoundary'
 
 const App: FC = () => {
   const theme = useAppStore(store => store.theme)
@@ -22,7 +23,9 @@ const App: FC = () => {
             <Toolbar />
           </div>
           <div className="okp4-dataverse-portal-page-wrapper">
-            <AppRouter />
+            <ErrorBoundary>
+              <AppRouter />
+            </ErrorBoundary>
           </div>
         </div>
       </div>

@@ -75,7 +75,7 @@
         $content-color: themed('secondary-color'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: none
+        $hover-color: themed('secondary-color-variant-1')
       );
       border-radius: 6px;
       border: 1px solid themed('secondary-color');
@@ -84,6 +84,38 @@
         background-color: unset;
         color: themed('secondary-disabled');
         border-color: themed('secondary-disabled');
+      }
+
+      &:hover {
+        background-color: unset;
+        color: themed('secondary-color-variant-1');
+      }
+
+      svg {
+        path {
+          fill: themed('secondary-color');
+        }
+      }
+    }
+
+    &.quaternary-turquoise {
+      @include button(
+        $content-color: themed('primary-color-variant-3'),
+        $background-color: unset,
+        $box-shadow: none,
+        $hover-color: themed('primary-color-variant-2')
+      );
+      border-radius: 6px;
+      border: 1px solid themed('primary-color-variant-3');
+
+      &.disabled {
+        color: themed('secondary-disabled');
+        border-color: themed('secondary-disabled');
+      }
+
+      &:hover {
+        background-color: unset;
+        color: themed('primary-color-variant-2');
       }
 
       svg {
@@ -115,7 +147,8 @@
         gap: 12px;
       }
 
-      &.outlined-tertiary {
+      &.outlined-tertiary,
+      &.quaternary-turquoise {
         &.small {
           padding: 7px 10px;
           gap: 6px;
@@ -131,8 +164,9 @@
           @include noto-sans(400);
         }
 
-        &.outlined-tertiary {
-          font-size: 11px;
+        &.outlined-tertiary,
+        &.quaternary-turquoise {
+          font-size: 14px;
           line-height: unset;
         }
       }

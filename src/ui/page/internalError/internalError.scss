@@ -1,0 +1,120 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+@mixin background-image($theme) {
+  background: center / cover url('@/ui/asset/images/internal-error-#{$theme}.webp');
+
+  @include use-breakpoints(('mobile')) {
+    background: unset;
+  }
+
+  @include use-breakpoints(('tablet')) {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .okp4-dataverse-portal-internal-error-page-text-wrapper {
+    @include use-breakpoints(('mobile')) {
+      background: center url('@/ui/asset/images/internal-error-#{$theme}-mobile.webp') no-repeat;
+    }
+  }
+}
+
+.okp4-dataverse-portal-internal-error-page-main {
+  @include with-theme() {
+    height: 100%;
+
+    &.dark {
+      @include background-image('dark');
+    }
+
+    &.light {
+      @include background-image('light');
+    }
+
+    .okp4-dataverse-portal-internal-error-page-content-wrapper {
+      @include columns-with-gap(28px);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        gap: 24px;
+      }
+
+      .okp4-dataverse-portal-internal-error-page-text-wrapper {
+        @include columns-with-gap(28px);
+        align-items: center;
+        color: themed('text');
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          gap: 24px;
+        }
+
+        h1 {
+          @include norse-font(700);
+          line-height: 88px;
+          font-size: 80px;
+
+          @include use-breakpoints(('mobile', 'tablet')) {
+            font-size: 40px;
+            line-height: 48px;
+          }
+        }
+
+        .okp4-dataverse-portal-internal-error-page-message-titles {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 750px;
+
+          @include use-breakpoints(('large-desktop')) {
+            max-width: 960px;
+          }
+
+          .okp4-dataverse-portal-internal-error-page-message-apology {
+            opacity: 0.4;
+          }
+        }
+
+        .okp4-dataverse-portal-internal-error-page-message-suggestion {
+          @include noto-sans(300);
+          font-size: 16px;
+          color: themed('text');
+          line-height: 22px;
+          max-width: 554px;
+
+          @include use-breakpoints(('mobile', 'tablet')) {
+            max-width: unset;
+          }
+
+          @include use-breakpoints(('large-desktop')) {
+            font-size: 18px;
+            max-width: unset;
+          }
+        }
+      }
+
+      .okp4-dataverse-portal-internal-error-page-buttons-container {
+        display: flex;
+        gap: 20px;
+
+        @include use-breakpoints(('mobile')) {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .okp4-dataverse-portal-internal-error-page-button {
+          max-height: 40px;
+          width: fit-content;
+
+          @include use-breakpoints(('mobile')) {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
