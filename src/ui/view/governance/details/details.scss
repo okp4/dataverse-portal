@@ -81,13 +81,11 @@
                 cursor: pointer;
 
                 &.rotate-down {
-                  transform: rotate(-180deg);
-                  transition: transform 0.1s linear;
+                  @include rotation-animation(-180deg);
                 }
 
                 &.rotate-up {
-                  transform: rotate(0deg);
-                  transition: transform 0.1s linear;
+                  @include rotation-animation(0deg);
                 }
               }
             }
