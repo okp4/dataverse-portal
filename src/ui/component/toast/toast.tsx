@@ -10,7 +10,7 @@ import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Button } from '@/ui/component//button/button'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
-import '@/ui/component/notifications/i18n'
+import '@/ui/component/notification/i18n'
 import './toast.scss'
 
 const actionsEffects: Record<ActionType, () => void> = {
@@ -22,7 +22,7 @@ type ToastCTAProps = {
   action: ActionType
 }
 const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
-  const { t } = useTranslation('notifications')
+  const { t } = useTranslation('notification')
 
   const handleClick = useCallback(() => actionsEffects[action](), [action])
   return (

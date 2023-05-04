@@ -5,7 +5,7 @@ import uuid from 'short-uuid'
 import { useNotificationStore } from '@/ui/store'
 import type { ActionType, NotificationType } from '@/domain/notification/entity'
 import { toEffectfulObject } from '@/util/effect'
-import '@/ui/component/notifications/i18n'
+import '@/ui/component/notification/i18n'
 
 type DispatchNotificationInput = {
   type: NotificationType
@@ -16,7 +16,7 @@ type DispatchNotificationInput = {
 type DispatchNotification = (input: DispatchNotificationInput) => void
 
 export const useDispatchNotification = (): DispatchNotification => {
-  const { t } = useTranslation('notifications')
+  const { t } = useTranslation('notification')
   const { reportNotification, notificationWithActionReported } = toEffectfulObject(
     useNotificationStore(
       state => ({

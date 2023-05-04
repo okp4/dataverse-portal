@@ -8,7 +8,7 @@ import { toEffectfulObject } from '@/util/effect'
 import { useNotificationStore } from '@/ui/store'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 
-export const Notifications: FC = () => {
+export const Notification: FC = () => {
   const { notifications, dismissNotification } = toEffectfulObject(
     useNotificationStore(state => ({
       notifications: state.notifications,
