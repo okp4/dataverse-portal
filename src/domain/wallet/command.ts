@@ -1,5 +1,9 @@
 import type { ReaderTaskEither } from "fp-ts/lib/ReaderTaskEither"
-import type { Deps } from "./dependency"
+import type { WalletPort, WalletPortDeps } from "./port"
+
+export type Deps = WalletPortDeps & {
+  walletPorts: WalletPort[]
+}
 
 export type Command = {
     // Connect a wallet to a chain.
