@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
+import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
 import type { DataSpace, DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
@@ -68,7 +69,7 @@ const Dataspace = (): JSX.Element => {
   }, [id])
 
   return O.match(
-    () => <p>Dataspace not found</p>,
+    () => <NotFoundError />,
     (dataspace: DataSpace) => <PageTemplate data={dataspace} metadata={dataspaceMetadata} />
   )(dataspace)
 }

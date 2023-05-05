@@ -1,0 +1,8 @@
+{
+  "notFoundError": {
+    "apology": "Désolé,",
+    "message": "Nous ne trouvons pas la page que vous avez demandée.",
+    "suggestion": "Verifiez l'URL ou vous pouvez :",
+    "backToHome": "Retourner à l'accueil"
+  }
+}
