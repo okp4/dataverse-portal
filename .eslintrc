@@ -1,9 +1,56 @@
 {
-  "extends": "@okp4",
+  "extends": ["@okp4"],
+  "plugins": ["import"],
+  "settings": {
+    "import/extensions": [".ts", ".tsx"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {},
+      "alias": {
+        "map": [["@", "./src"]]
+      }
+    }
+  },
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "import/no-unresolved": ["error"],
+    "import/default": 0,
+    "import/extensions": [
+      "warn",
+      "never",
+      {
+        "svg": "always",
+        "json": "always"
+      }
+    ],
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "./src/util",
+            "from": ".",
+            "except": ["./src/util", "./node_modules"],
+            "message": "Package 'util' is not allowed to import from any path except 'util' itself."
+          },
+          {
+            "target": "./src/domain",
+            "from": ".",
+            "except": ["./src/domain", "./src/util", "./node_modules"],
+            "message": "Package 'domain' is not allowed to import from any path except 'util' or itself."
+          },
+          {
+            "target": "./src/ui",
+            "from": "./src/domain/**/entity.ts",
+            "message": "Package 'ui' is not allowed to import entities from 'domain'."
+          }
+        ]
+      }
+    ]
   }
 }
