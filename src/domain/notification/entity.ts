@@ -4,7 +4,6 @@ import type { Option } from 'fp-ts/lib/Option'
 
 export type NotificationID = string
 export type NotificationType = 'success' | 'info' | 'warning' | 'error'
-export type ActionType = 'refresh'
 
 export type Notification<T> = {
   id: NotificationID

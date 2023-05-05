@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import type { ActionType, NotificationID, NotificationType } from '@/domain/notification/entity'
+import type { NotificationID, NotificationType } from '@/domain/notification/entity'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
@@ -13,6 +13,7 @@ import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 import '@/ui/component/notification/i18n'
 import './toast.scss'
 
+export type ActionType = 'refresh'
 const actionsEffects: Record<ActionType, () => void> = {
   refresh: () => window.location.reload()
 }
