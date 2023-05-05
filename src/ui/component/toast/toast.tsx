@@ -35,31 +35,31 @@ const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
 }
 
 type ToastProps = {
-  action?: ActionType
   id: NotificationID
   type: NotificationType
   title: string
+  duration: number
   onDismiss: (input: DismissNotificationInput) => void
+  action?: ActionType
   message?: string
   iconName?: IconName
-  duration: number
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const Toast: FC<ToastProps> = ({
-  action,
   id,
   type,
   title,
+  duration,
   onDismiss,
+  action,
   message,
-  iconName,
-  duration
+  iconName
 }) => {
   const [isOpen, setIsOpen] = useState(true)
   const toastRootRef = useRef<HTMLLIElement | null>(null)
 
-  const onClose = useCallback(() => {
+  const handleClose = useCallback(() => {
     if (isOpen) {
       const timeout = setTimeout(() => {
         clearTimeout(timeout)
@@ -71,17 +71,17 @@ export const Toast: FC<ToastProps> = ({
 
   const clickOutsideHandler = useCallback(() => {
     if (!action) return
-    onClose()
-  }, [onClose, action])
+    handleClose()
+  }, [handleClose, action])
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
       if (!action) return
       if (event.key === 'Escape') {
-        onClose()
+        handleClose()
       }
     },
-    [onClose, action]
+    [handleClose, action]
   )
 
   useOnClickOutside<HTMLLIElement>(toastRootRef, clickOutsideHandler)
@@ -94,7 +94,7 @@ export const Toast: FC<ToastProps> = ({
           'has-action': action
         })}
         duration={duration}
-        onOpenChange={onClose}
+        onOpenChange={handleClose}
         open={isOpen}
         ref={toastRootRef}
       >

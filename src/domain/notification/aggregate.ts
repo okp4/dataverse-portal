@@ -31,7 +31,7 @@ export type DismissNotificationInput = {
 type NotificationAction<T> = {
   reportNotification: (input: ReportNotificationInput<T>) => IO<void>
   dismissNotification: (input: DismissNotificationInput) => IO<void>
-  notificationWithActionReported: () => IO<boolean>
+  hasReportedNotificationWithAction: () => IO<boolean>
 }
 
 export type NotificationDTO<T> = {
@@ -90,7 +90,7 @@ export const notificationAggregate =
                 )
               }))
             },
-          notificationWithActionReported: (): IO<boolean> => () =>
+          hasReportedNotificationWithAction: (): IO<boolean> => () =>
             pipe(
               get().aggregate,
               A.some(it => O.isSome(it.action))

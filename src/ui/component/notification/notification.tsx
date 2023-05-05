@@ -17,7 +17,7 @@ export const Notification: FC = () => {
   )
   const theme = useAppStore(store => store.theme)
   const notificationData = useMemo(() => notifications(), [notifications])
-  const notificationTypeForIcon = useMemo(
+  const notificationIconByType = useMemo(
     () =>
       new Map<NotificationType, IconName>([
         ['error', 'error'],
@@ -40,7 +40,7 @@ export const Notification: FC = () => {
         <Toast
           action={action}
           duration={action ? Infinity : 3000}
-          iconName={notificationTypeForIcon.get(type)}
+          iconName={notificationIconByType.get(type)}
           id={id}
           key={id}
           message={message}
