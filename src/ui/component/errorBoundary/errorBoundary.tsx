@@ -3,7 +3,7 @@
 import { Component, useState, useEffect } from 'react'
 import type { SetStateAction, Dispatch, ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
-import { InternalError } from '@/ui/page/internalError/internalError'
+import { Error } from '@/ui/page/error/error'
 
 type ErrorBoundaryInnerProps = {
   children: JSX.Element
@@ -34,7 +34,7 @@ class ErrorBoundaryInner extends Component<ErrorBoundaryInnerProps, ErrorBoundar
   }
 
   render(): ReactNode {
-    return this.state.hasError ? <InternalError /> : this.props.children
+    return this.state.hasError ? <Error type="internalError" /> : this.props.children
   }
 }
 

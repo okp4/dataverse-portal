@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Option } from 'fp-ts/Option'
 import { match, none } from 'fp-ts/Option'
-import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
+import { Error } from '@/ui/page/error/error'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
@@ -75,7 +75,7 @@ const Service = (): JSX.Element => {
   }, [id])
 
   return match(
-    () => <NotFoundError />,
+    () => <Error type="notFoundError" />,
     (service: DataverseItemDetails) => (
       <PageTemplate data={service} metadata={serviceGeneralMetadata} />
     )

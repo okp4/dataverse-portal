@@ -2,38 +2,49 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-@mixin background-image($theme) {
-  background: center / cover url('@/ui/asset/images/internal-error-#{$theme}.webp');
+@mixin background-image($theme, $type) {
+  background: center / contain url('@/ui/asset/images/#{$type}-#{$theme}.webp') no-repeat;
 
   @include use-breakpoints(('mobile')) {
     background: unset;
+    display: flex;
   }
 
-  @include use-breakpoints(('tablet')) {
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-
-  .okp4-dataverse-portal-internal-error-page-text-wrapper {
+  .okp4-dataverse-portal-error-page-content-wrapper {
     @include use-breakpoints(('mobile')) {
-      background: center url('@/ui/asset/images/internal-error-#{$theme}-mobile.webp') no-repeat;
+      background: url('@/ui/asset/images/#{$type}-#{$theme}-mobile.webp') no-repeat;
+      background-position-x: center;
+      max-height: 500px;
+      align-self: center;
     }
   }
 }
 
-.okp4-dataverse-portal-internal-error-page-main {
+.okp4-dataverse-portal-error-page-main {
   @include with-theme() {
     height: 100%;
 
     &.dark {
-      @include background-image('dark');
+      &.notFoundError {
+        @include background-image('dark', 'not-found-error');
+      }
+
+      &.internalError {
+        @include background-image('dark', 'internal-error');
+      }
     }
 
     &.light {
-      @include background-image('light');
+      &.notFoundError {
+        @include background-image('light', 'not-found-error');
+      }
+
+      &.internalError {
+        @include background-image('light', 'internal-error');
+      }
     }
 
-    .okp4-dataverse-portal-internal-error-page-content-wrapper {
+    .okp4-dataverse-portal-error-page-content-wrapper {
       @include columns-with-gap(28px);
       align-items: center;
       justify-content: center;
@@ -44,7 +55,7 @@
         gap: 24px;
       }
 
-      .okp4-dataverse-portal-internal-error-page-text-wrapper {
+      .okp4-dataverse-portal-error-page-text-wrapper {
         @include columns-with-gap(28px);
         align-items: center;
         color: themed('text');
@@ -64,7 +75,7 @@
           }
         }
 
-        .okp4-dataverse-portal-internal-error-page-message-titles {
+        .okp4-dataverse-portal-error-page-message-titles {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -74,30 +85,29 @@
             max-width: 960px;
           }
 
-          .okp4-dataverse-portal-internal-error-page-message-apology {
+          .okp4-dataverse-portal-error-page-message-apology {
             opacity: 0.4;
           }
         }
 
-        .okp4-dataverse-portal-internal-error-page-message-suggestion {
+        .okp4-dataverse-portal-error-page-message-suggestion {
           @include noto-sans(300);
-          font-size: 16px;
-          color: themed('text');
+          font-size: 18px;
           line-height: 22px;
           max-width: 554px;
 
           @include use-breakpoints(('mobile', 'tablet')) {
             max-width: unset;
+            font-size: 16px;
           }
 
           @include use-breakpoints(('large-desktop')) {
-            font-size: 18px;
             max-width: unset;
           }
         }
       }
 
-      .okp4-dataverse-portal-internal-error-page-buttons-container {
+      .okp4-dataverse-portal-error-page-buttons-container {
         display: flex;
         gap: 20px;
 
@@ -106,7 +116,7 @@
           width: 100%;
         }
 
-        .okp4-dataverse-portal-internal-error-page-button {
+        .okp4-dataverse-portal-error-page-button {
           max-height: 40px;
           width: fit-content;
 

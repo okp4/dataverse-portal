@@ -1,0 +1,16 @@
+{
+  "notFoundError": {
+    "apology": "Désolé,",
+    "message": "Nous ne trouvons pas la page que vous avez demandée.",
+    "suggestion": "Verifiez l'URL ou vous pouvez :",
+    "buttonLeft": "Explorer le dataverse",
+    "buttonRight": "Retourner à l'accueil"
+  },
+  "internalError": {
+    "apology": "Désolé,",
+    "message": "Une erreur s'est produite lors du traitement de votre demande.",
+    "suggestion": "Nous sommes maintenant informés de ce problème et nous nous efforçons de le résoudre. En attendant, voici ce que vous pouvez faire :",
+    "buttonLeft": "Retourner à l'accueil",
+    "buttonRight": "Nous contacter"
+  }
+}

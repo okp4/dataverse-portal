@@ -1,9 +1,0 @@
-{
-  "internalError": {
-    "apology": "Entschuldigung,",
-    "message": "Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten.",
-    "suggestion": "Wir wissen jetzt von diesem Problem und arbeiten daran, es zu beheben. In der Zwischenzeit können Sie folgendes tun:",
-    "returnToHome": "Zur Homepage gehen",
-    "contactUs": "Kontakt"
-  }
-}

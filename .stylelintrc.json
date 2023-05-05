@@ -14,6 +14,7 @@
         "ignore": ["class"]
       }
     ],
+    "selector-class-pattern": null,
     "selector-max-id": 1
   }
 }

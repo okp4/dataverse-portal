@@ -11,7 +11,7 @@ import { mockedGovernanceChapter } from './mockedData'
 import { GovernanceNavigation } from './governanceNavigation'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceDetails } from '@/ui/view/governance/details/details'
-import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
+import { Error } from '@/ui/page/error/error'
 import './governance.scss'
 
 // eslint-disable-next-line max-lines-per-function
@@ -78,7 +78,7 @@ export const Governance: FC = () => {
   }, [navigate, navigationPath])
 
   if (!dataspaceLabel || !navigationPath) {
-    return <NotFoundError />
+    return <Error type="notFoundError" />
   }
 
   if (!dataspaceId || !currentSection || !currentSubsection) return null
