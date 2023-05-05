@@ -10,7 +10,6 @@ import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceDetails } from '@/ui/view/governance/details/details'
 import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
-import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { mockedGovernanceChapter } from './mockedData'
 import { GovernanceNavigation } from './governanceNavigation'
 import './governance.scss'
@@ -18,7 +17,6 @@ import './governance.scss'
 // eslint-disable-next-line max-lines-per-function
 export const Governance: FC = () => {
   const { t } = useTranslation('common')
-  const dispatchNotification = useDispatchNotification()
   const navigate = useNavigate()
   const {
     id: dataspaceId,
@@ -78,17 +76,6 @@ export const Governance: FC = () => {
       return navigate(navigationPath, { replace: true })
     }
   }, [navigate, navigationPath])
-
-  useEffect(() => {
-    if (!dataspaceLabel) {
-      dispatchNotification({
-        titleKey: 'error.problem',
-        messageKey: 'error.processing',
-        type: 'warning',
-        action: 'refresh'
-      })
-    }
-  }, [dataspaceLabel, dispatchNotification])
 
   if (!dataspaceLabel || !navigationPath) {
     return <NotFoundError />
