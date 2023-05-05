@@ -7,11 +7,11 @@ import * as O from 'fp-ts/Option'
 import type { DataSpace } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
-import { mockedGovernanceChapter } from './mockedData'
-import { GovernanceNavigation } from './governanceNavigation'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceDetails } from '@/ui/view/governance/details/details'
 import { NotFoundError } from '@/ui/page/notFoundError/notFoundError'
+import { mockedGovernanceChapter } from './mockedData'
+import { GovernanceNavigation } from './governanceNavigation'
 import './governance.scss'
 
 // eslint-disable-next-line max-lines-per-function
