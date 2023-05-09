@@ -129,6 +129,12 @@
       align-items: flex-end;
       justify-content: center;
 
+      &.expanded {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
       @include use-breakpoints(('mobile', 'tablet')) {
         display: none;
       }

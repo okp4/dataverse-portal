@@ -12,14 +12,13 @@ import { ReactComponent as CreateDataspaceIcon } from '@/ui/asset/icon/create-da
 import { ReactComponent as DataspaceCreatedLightIcon } from '@/ui/asset/icon/dataspace-created-light.svg'
 import { ReactComponent as DataspaceCreatedDarkIcon } from '@/ui/asset/icon/dataspace-created-dark.svg'
 import { ReactComponent as CreateDataspaceActiveIcon } from '@/ui/asset/icon/create-dataspace-active.svg'
-import { ReactComponent as CollapseIcon } from '@/ui/asset/icon/collapse.svg'
 import { ReactComponent as DatasetFolderLightIcon } from '@/ui/asset/icon/dataset-folder-light.svg'
 import { ReactComponent as DatasetFolderDarkIcon } from '@/ui/asset/icon/dataset-folder-dark.svg'
 import { ReactComponent as DiscordLightIcon } from '@/ui/asset/icon/discord-light.svg'
 import { ReactComponent as DiscordDarkIcon } from '@/ui/asset/icon/discord-dark.svg'
 import { ReactComponent as DocumentationIcon } from '@/ui/asset/icon/documentation.svg'
 import { ReactComponent as DocumentationActiveIcon } from '@/ui/asset/icon/documentation-active.svg'
-import { ReactComponent as ExpandIcon } from '@/ui/asset/icon/expand.svg'
+import { ReactComponent as ChevronIcon } from '@/ui/asset/icon/chevron.svg'
 import { ReactComponent as ExploreIcon } from '@/ui/asset/icon/explore.svg'
 import { ReactComponent as ExploreActiveIcon } from '@/ui/asset/icon/explore-active.svg'
 import { ReactComponent as FeedbackIcon } from '@/ui/asset/icon/feedback.svg'
@@ -85,9 +84,8 @@ export type IconName =
   | 'all-light'
   | 'all-dark'
   | 'arrow-left'
-  | 'collapse'
   | 'arrow-right'
-  | 'expand'
+  | 'chevron'
   | 'documentation'
   | 'build-apps'
   | 'create-knowledge'
@@ -164,9 +162,8 @@ export type IconName =
   | 'keplr'
 
 const icons: Record<IconName, React.FunctionComponent> = {
-  collapse: CollapseIcon,
   'arrow-right': ArrowRightIcon,
-  expand: ExpandIcon,
+  chevron: ChevronIcon,
   documentation: DocumentationIcon,
   'build-apps': BuildAppsIcon,
   'create-knowledge': CreateKnowledgeIcon,
