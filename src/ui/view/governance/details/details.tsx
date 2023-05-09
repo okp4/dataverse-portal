@@ -12,6 +12,8 @@ import type {
 } from '@/ui/page/dataverse/dataspace/governance/mockedData'
 
 import './details.scss'
+import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 
 type ArticleProps = {
   article: ArticleDTO
@@ -44,6 +46,7 @@ const iconMapping: Record<string, string> = {
 }
 
 const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
+  const { t } = useTranslation('common')
   const [isTextTooLong, setIsTextTooLong] = useState<boolean>(false)
   const paragraphRef = useCallback((node: HTMLParagraphElement | null) => {
     if (node !== null) {
@@ -53,23 +56,31 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
 
   return (
     <div className="okp4-dataverse-portal-governance-details-paragraph-container">
-      <div className="okp4-dataverse-portal-governance-details-paragraph">
-        <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
-        <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
-          {paragraph.title}
-        </h3>
-        <p
-          className="okp4-dataverse-portal-governance-details-description paragraph"
-          ref={paragraphRef}
-        >
-          {paragraph.description}
-        </p>
+      <div className="okp4-dataverse-portal-governance-details-paragraph-header">
+        <div className="okp4-dataverse-portal-governance-details-paragraph-icon-and-heading">
+          <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
+          <h3
+            className={classNames('okp4-dataverse-portal-governance-details-paragraph-title', {
+              oneline: isTextTooLong
+            })}
+          >
+            {paragraph.title}
+          </h3>
+        </div>
         {isTextTooLong && (
-          <div className="okp4-dataverse-portal-governance-details-button">
-            <Button disabled label="See more" variant="outlined-tertiary" />
-          </div>
+          <Button
+            className="okp4-dataverse-portal-governance-details-button"
+            label={t('seeAll')}
+            variant="outlined-tertiary"
+          />
         )}
       </div>
+      <p
+        className="okp4-dataverse-portal-governance-details-description paragraph"
+        ref={paragraphRef}
+      >
+        {paragraph.description}
+      </p>
     </div>
   )
 }

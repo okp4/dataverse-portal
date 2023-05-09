@@ -99,40 +99,65 @@
             max-height: 670px;
 
             .okp4-dataverse-portal-governance-details-paragraph-container {
+              @include columns-with-gap(6px);
+              box-sizing: border-box;
               background: themed(paragraph-background);
-              max-height: 252px;
               border-radius: 10px;
               width: 320px;
+              height: 147px;
               line-height: 20px;
-            }
-
-            .okp4-dataverse-portal-governance-details-paragraph {
-              @include columns-with-gap(6px);
               padding: 20px;
 
-              .okp4-dataverse-portal-governance-details-paragraph-title {
-                font-size: 16px;
+              .okp4-dataverse-portal-governance-details-paragraph-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                .okp4-dataverse-portal-governance-details-paragraph-icon-and-heading {
+                  @include columns-with-gap(6px);
+
+                  .okp4-dataverse-portal-governance-details-paragraph-icon {
+                    width: 22px;
+                    height: 22px;
+                  }
+    
+                  .okp4-dataverse-portal-governance-details-paragraph-title {
+                    font-size: 16px;
+                    line-height: 20px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    /* stylelint-disable-next-line value-no-vendor-prefix */
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+
+                    &.oneline {
+                      -webkit-line-clamp: 1;
+                    }
+                  }
+
+                }
+
+                .okp4-dataverse-portal-governance-details-button {
+                  flex-shrink: 0;
+                  width: fit-content;
+                  border-radius: 12px;
+                }
               }
 
               .okp4-dataverse-portal-governance-details-description {
                 &.paragraph {
-                  max-height: 112px;
+                  font-size: 14px;
+                  line-height: 20px;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   /* stylelint-disable-next-line value-no-vendor-prefix */
                   display: -webkit-box;
-                  -webkit-line-clamp: 4;
+                  -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                 }
               }
 
-              .okp4-dataverse-portal-governance-details-button {
-                display: flex;
-
-                button {
-                  width: fit-content;
-                }
-              }
             }
           }
         }
