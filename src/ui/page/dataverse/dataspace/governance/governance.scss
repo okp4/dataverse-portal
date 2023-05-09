@@ -130,7 +130,11 @@
       }
 
       .okp4-dataverse-portal-governance-governance-details-main {
-        @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: auto);
+        @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
+
+        @include use-breakpoints(('tablet', 'mobile')) {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: auto);
+        }
       }
     }
   }

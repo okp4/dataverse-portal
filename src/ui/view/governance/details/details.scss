@@ -55,6 +55,11 @@
       background: themed(article-background);
       border-radius: 20px;
       padding: 40px;
+      
+      @include use-breakpoints(('tablet', 'mobile')) {
+        align-items: center;
+        padding: 20px;
+      }
 
       .okp4-dataverse-portal-governance-details-article-header {
         display: flex;
@@ -97,23 +102,51 @@
       }
 
     }
-    
+
     .okp4-dataverse-portal-governance-details-paragraphs-container {
-      @include columns-with-gap(14px);
-      flex-wrap: wrap;
-      align-content: flex-start;
+      --paragraphs-row-gap: 14px;
+      --paragraph-height: 147px;
       column-gap: 28px;
-      max-height: 670px;
+      @include grid-container($colsNb: 3,$colsSize: 320px,$gutter: 28px);
+      row-gap: 14px;
+      max-height: calc((var(--paragraph-height) + var(--paragraphs-row-gap)) * 3);
+      max-width: fit-content;
+      padding-right: 28px;
+      overflow-y: auto;      
+      
+      @include use-breakpoints(('desktop')) {
+        @include grid-container($colsNb: 2,$colsSize: 320px,$gutter: 28px);
+        max-height: calc((var(--paragraph-height) + var(--paragraphs-row-gap)) * 4)
+      }
+      @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 2,$colsSize: minmax(0, 1fr),$gutter: 28px);
+        padding: 0;
+        max-height: none;
+      }
+      @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 1,$colsSize: minmax(0, 1fr),$gutter: 28px);
+        padding: 0;
+        max-height: none;
+      }
 
       .okp4-dataverse-portal-governance-details-paragraph-container {
         @include columns-with-gap(6px);
         box-sizing: border-box;
         background: themed(paragraph-background);
         border-radius: 10px;
-        width: 320px;
-        height: 147px;
         line-height: 20px;
         padding: 20px;
+        
+        @include use-breakpoints(('mobile')) {
+          max-width: 302px;
+        }
+        @include use-breakpoints(('tablet')) {
+          max-width: 302px;
+        }
+        @include use-breakpoints(('desktop', 'large-desktop')) {
+          width: 320px;
+          height: var(--paragraph-height);
+        }
 
         .okp4-dataverse-portal-governance-details-paragraph-header {
           display: flex;
