@@ -139,6 +139,8 @@
           flex-direction: column;
           gap: 8px;
           margin-bottom: 6px;
+          max-height: 350px;
+          overflow-y: auto;
 
           &.hidden {
             display: none;
