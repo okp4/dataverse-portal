@@ -194,6 +194,13 @@ export const mockedGovernanceChapter: Chapter = {
                   number: '1.3.1.1.5'
                 },
                 {
+                  id: '25',
+                  title: 'Users',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575656 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575659 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575660 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575662',
+                  number: '1.3.1.1.6'
+                },
+                {
                   id: '24',
                   title: 'Licence',
                   description:
@@ -201,11 +208,40 @@ export const mockedGovernanceChapter: Chapter = {
                   number: '1.3.1.1.7'
                 },
                 {
-                  id: '25',
+                  id: '26',
                   title: 'Users',
                   description:
                     'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575656 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575659 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575660 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575662',
-                  number: '1.3.1.1.6'
+                  number: '1.3.1.1.8'
+                },
+                {
+                  id: '27',
+                  title:
+                    'A very large name for a very large dataset, so large that it is not possible to display it on a single line',
+                  description: 'a short description of the dataset',
+                  number: '1.3.1.1.9'
+                },
+                {
+                  id: '28',
+                  title:
+                    'A very large name for a very large dataset, so large that it is not possible to display it on a single line',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575656 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575659 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575660 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575662',
+                  number: '1.3.1.1.10'
+                },
+                {
+                  id: '29',
+                  title: 'Users',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575656 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575659 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575660 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575662',
+                  number: '1.3.1.1.11'
+                },
+                {
+                  id: '30',
+                  title: 'Users',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575656 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575659 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575660 did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575662',
+                  number: '1.3.1.1.12'
                 }
               ]
             }
