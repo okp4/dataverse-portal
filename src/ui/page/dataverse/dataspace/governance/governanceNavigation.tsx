@@ -46,7 +46,10 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
                 )}
                 to={`${governanceBasePath}/${sectionId}/${subsections[0].id}`}
               >
-                {sectionTitle}
+                <p className="okp4-dataverse-portal-governance-page-navigation-section-link-title">
+                  {sectionTitle}
+                </p>
+                {hasMoreThanOneSubsection && <Icon name="chevron" />}
               </NavLink>
               <ul
                 className={classnames(

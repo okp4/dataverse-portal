@@ -63,25 +63,52 @@
 
         .okp4-dataverse-portal-governance-page-navigation-section-link {
           @include noto-sans(700);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           position: relative;
           z-index: 1;
           padding: 8px 16px;
           border-radius: 16px;
-          line-height: 32px;
-          color: rgba(themed('text'), 0.4);
           background-color: themed('background');
           text-decoration: none;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          /* stylelint-disable-next-line value-no-vendor-prefix */
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
           cursor: pointer;
 
+          .okp4-dataverse-portal-governance-page-navigation-section-link-title {
+            color: rgba(themed('text'), 0.4);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            /* stylelint-disable-next-line value-no-vendor-prefix */
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            line-height: 32px;
+          }
+
+          svg {
+            flex-shrink: 0;
+            transform: rotate(90deg);
+
+            path {
+              fill: rgba(themed('text'), 0.4);
+            }
+          }
+
           &.active {
-            color: themed('text');
             background-color: themed(governance-nav-section-background);
+
+            .okp4-dataverse-portal-governance-page-navigation-section-link-title,
+            svg path {
+              color: themed('text');
+            }
+
+            svg {
+              transform: rotate(270deg);
+
+              path {
+                fill: themed('text');
+              }
+            }
           }
         }
 
