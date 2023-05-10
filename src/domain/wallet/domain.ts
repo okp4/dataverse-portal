@@ -53,6 +53,32 @@ const findWalletPort =
       A.findFirst(port => eqWalletPort.equals(port, { id: walletId }))
     )
 
+const mapError = <
+  From extends
+    | P.WalletNotAvailableError
+    | P.UserRejectedError
+    | P.ChainNotFoundError
+    | P.UnknownError,
+  To extends WalletNotAvailableError | UserRejectedError | ChainNotFoundError | UnknownError
+>(
+  from: From
+): Extract<To, { _tag: From['_tag'] }> => {
+  const extract = <U>(v: U): Extract<To, { _tag: From['_tag'] }> =>
+    v as Extract<To, { _tag: From['_tag'] }>
+
+  switch (from._tag) {
+    case 'wallet-not-available':
+      return extract(WalletNotAvailableError(from.type))
+    case 'user-rejected':
+      return extract(UserRejectedError())
+    case 'chain-not-found':
+      return extract(ChainNotFoundError(from.chainId))
+    case 'unknown':
+    default:
+      return extract(UnknownError(from.message))
+  }
+}
+
 export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
   createStore(
     devtools(
@@ -78,37 +104,14 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
             RTE.asks((deps: Deps) => deps.walletPorts),
             RTE.chainFirst(() => get().disconnectWallet()),
             RTE.chainOptionKW(() => WalletNotFoundError(walletId))(findWalletPort(walletId)),
-            RTE.chainFirstW(port =>
-              pipe(
-                port.connectChain(chainId),
-                RTE.mapLeft(error => {
-                  switch (error._tag) {
-                    case 'wallet-not-available':
-                      return WalletNotAvailableError(error.type)
-                    case 'chain-not-found':
-                      return ChainNotFoundError(chainId)
-                    case 'user-rejected':
-                      return UserRejectedError()
-                    case 'unknown':
-                      return UnknownError(error.message)
-                  }
-                })
-              )
-            ),
+            RTE.chainFirstW(port => pipe(port.connectChain(chainId), RTE.mapLeft(mapError))),
             RTE.chainTaskEitherKW(port =>
               pipe(
                 sequenceS(TE.ApplyPar)({
                   accounts: port.chainAccounts(chainId),
                   name: port.name(chainId)
                 }),
-                TE.mapLeft(error => {
-                  switch (error._tag) {
-                    case 'wallet-not-available':
-                      return WalletNotAvailableError(error.type)
-                    case 'unknown':
-                      return UnknownError(error.message)
-                  }
-                })
+                TE.mapLeft(mapError)
               )
             ),
             RTE.map(ctx =>
@@ -134,17 +137,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                       findWalletPort(wallet.id)
                     ),
                     RTE.chainW(port =>
-                      pipe(
-                        port.disconnectChain(wallet.chainId),
-                        RTE.mapLeft(error => {
-                          switch (error._tag) {
-                            case 'wallet-not-available':
-                              return WalletNotAvailableError(error.type)
-                            case 'unknown':
-                              return UnknownError(error.message)
-                          }
-                        })
-                      )
+                      pipe(port.disconnectChain(wallet.chainId), RTE.mapLeft(mapError))
                     ),
                     RTE.chainIOK(() => () => set({ data: O.none }))
                   )
