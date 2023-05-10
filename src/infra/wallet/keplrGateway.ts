@@ -1,4 +1,7 @@
-import type { Account, Accounts, ChainId, WalletPort, WalletPortDeps } from '@/domain/wallet/port'
+import type { Account, ChainId, ChainInfo, WalletPort, WalletPortDeps } from '@/domain/wallet/port'
+import { UnknownError, WalletNotAvailableError } from '@/domain/wallet/port'
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { ChainIdNotFoundError } from '@/domain/wallet/port'
 import type { AccountData, Keplr } from '@keplr-wallet/types'
 import * as A from 'fp-ts/Array'
 import * as E from 'fp-ts/Either'
@@ -11,36 +14,43 @@ import type { IOOption } from 'fp-ts/lib/IOOption'
 import * as IOO from 'fp-ts/lib/IOOption'
 import type { TaskEither } from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
-import type { ChainInfo } from '../../domain/wallet/port'
 
 const keplr = (): IOOption<Keplr> => IOO.fromNullable(window.keplr)
 
-const withKeplr = <T>(
+const asUnknownError = (e: unknown): UnknownError =>
+  UnknownError(e instanceof Error ? e.message : String(e))
+
+const withKeplr = <E, T>(
   keplrFunction: (keplr: Keplr) => Promise<T>,
-  onError: (e: unknown) => Error = E.toError
-): TaskEither<Error, T> =>
+  onError: (e: unknown) => E
+): TaskEither<E | WalletNotAvailableError, T> =>
   pipe(
     keplr(),
     TE.fromIO,
-    TE.flatMap(TE.fromOption(() => new Error('Keplr instance not found'))),
+    TE.flatMap(TE.fromOption(() => WalletNotAvailableError())),
     TE.flatMap(keplr => TE.tryCatch(async () => keplrFunction(keplr), onError))
   )
 
-const enableChain = (chainId: ChainId): TaskEither<Error, void> =>
-  withKeplr(async keplr => keplr.enable(chainId))
+const enableChain = (chainId: ChainId): TaskEither<WalletNotAvailableError | UnknownError, void> =>
+  withKeplr(async keplr => keplr.enable(chainId), asUnknownError)
 
-const disableChain = (chainId: ChainId): TaskEither<Error, void> =>
-  withKeplr(async keplr => keplr.disable(chainId))
+const disableChain = (chainId: ChainId): TaskEither<WalletNotAvailableError | UnknownError, void> =>
+  withKeplr(async keplr => keplr.disable(chainId), asUnknownError)
 
-const suggestChain = (chainId: ChainId, chainInfos: ChainInfo[]): TaskEither<Error, void> =>
+const suggestChain = (
+  chainId: ChainId,
+  chainInfos: ChainInfo[]
+): TaskEither<WalletNotAvailableError | ChainIdNotFoundError | UnknownError, void> =>
   pipe(
     chainInfos,
     A.findFirst<ChainInfo>(chainInfo => chainInfo.chainId === chainId),
-    TE.fromOption(() => new Error(`ChainId ${chainId} not found in chainInfos`)),
-    TE.flatMap(chainInfo => withKeplr(async keplr => keplr.experimentalSuggestChain(chainInfo)))
+    TE.fromOption(() => ChainIdNotFoundError(chainId)),
+    TE.flatMap(chainInfo =>
+      withKeplr(async keplr => keplr.experimentalSuggestChain(chainInfo), asUnknownError)
+    )
   )
 
-export const mapAccount = (account: AccountData): E.Either<Error, Account> =>
+export const mapAccount = (account: AccountData): E.Either<never, Account> =>
   E.of({
     address: account.address,
     algorithm: account.algo,
@@ -70,12 +80,12 @@ export const keplrWalletGateway: WalletPort = {
   disconnectChain: (chainId: ChainId) => () => disableChain(chainId),
   name: chainId =>
     pipe(
-      withKeplr(async keplr => keplr.getKey(chainId)),
+      withKeplr(async keplr => keplr.getKey(chainId), asUnknownError),
       TE.map(key => key.name)
     ),
-  chainAccounts: (chainId: ChainId): TaskEither<Error, Accounts> =>
+  chainAccounts: (chainId: string) =>
     pipe(
-      withKeplr(async keplr => keplr.getOfflineSigner(chainId).getAccounts()),
+      withKeplr(async keplr => keplr.getOfflineSigner(chainId).getAccounts(), asUnknownError),
       TE.flatMap(TE.traverseArray(flow(mapAccount, TE.fromEither))),
       TE.map(RA.toArray)
     )

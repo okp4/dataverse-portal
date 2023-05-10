@@ -86,7 +86,7 @@ export type Account = {
   algorithm: Algorithm
   publicKey: Uint8Array
 }
-export type Accounts = Array<Account>
+export type Accounts = Account[]
 
 export type WalletId = string
 export const eqWalletId: Eq<WalletId> = S.Eq
@@ -94,6 +94,30 @@ export const eqWalletId: Eq<WalletId> = S.Eq
 export type WalletPortDeps = {
   chainInfos: ChainInfo[]
 }
+
+export const WalletNotAvailableError = () => ({ _tag: 'not-available' } as const)
+
+export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
+
+export const UserRejectedError = () => ({ _tag: 'user-rejected' } as const)
+
+export type UserRejectedError = ReturnType<typeof UserRejectedError>
+
+export const ChainIdNotFoundError = (chainId: ChainId) =>
+  ({
+    _tag: 'chain-id-not-found',
+    chainId
+  } as const)
+
+export type ChainIdNotFoundError = ReturnType<typeof ChainIdNotFoundError>
+
+export const UnknownError = (message: string) =>
+  ({
+    _tag: 'unknown',
+    message
+  } as const)
+
+export type UnknownError = ReturnType<typeof UnknownError>
 
 // WalletPort is the interface that all wallet ports must implement.
 // A wallet port is a wallet implementation for a specific wallet type (e.g. Keplr, Leap, etc.) and provides
@@ -106,13 +130,21 @@ export type WalletPort = {
   // isAvailable returns true if the wallet port is available (e.g. the wallet extension is installed).
   isAvailable: () => IO<boolean>
   // connectChain connects the wallet port to the chain with the given chainId.
-  connectChain: (chainId: ChainId) => ReaderTaskEither<WalletPortDeps, Error, void>
+  connectChain: (
+    chainId: ChainId
+  ) => ReaderTaskEither<
+    WalletPortDeps,
+    WalletNotAvailableError | ChainIdNotFoundError | UserRejectedError | UnknownError,
+    void
+  >
   // disconnectChain disconnects the wallet port from the chain with the given chainId.
-  disconnectChain: (chainId: ChainId) => ReaderTaskEither<WalletPortDeps, Error, void>
+  disconnectChain: (
+    chainId: ChainId
+  ) => ReaderTaskEither<WalletPortDeps, WalletNotAvailableError | UnknownError, void>
   // name returns the name of the wallet.
-  name: (chainId: ChainId) => TaskEither<Error, string>
+  name: (chainId: ChainId) => TaskEither<WalletNotAvailableError | UnknownError, string>
   // chainAccounts returns the accounts of the chain with the given chainId.
-  chainAccounts: (chainId: ChainId) => TaskEither<Error, Accounts>
+  chainAccounts: (chainId: ChainId) => TaskEither<WalletNotAvailableError | UnknownError, Accounts>
 }
 
 export const eqWalletPort: Eq<{ id: string }> = pipe(
