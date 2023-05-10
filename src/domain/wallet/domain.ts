@@ -5,10 +5,10 @@ import { createStore } from 'zustand/vanilla'
 import { devtools } from 'zustand/middleware'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import { identity, pipe } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/function'
 import type { ForgetType } from '@/util/type'
 import type { Account, Wallet } from './entity'
-import type { WalletPortDeps, WalletPort } from './port'
+import type { WalletPort } from './port'
 import { eqWalletPort } from './port'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import * as TE from 'fp-ts/TaskEither'
@@ -16,6 +16,13 @@ import type * as P from './port'
 import * as R from 'fp-ts/Reader'
 import { sequenceS } from 'fp-ts/lib/Apply'
 import type { Command, Deps } from './command'
+import {
+  UserRejectedError,
+  WalletNotFoundError,
+  ChainNotFoundError,
+  UnknownError,
+  WalletNotAvailableError
+} from './command'
 import type { Query, WalletType } from './query'
 import type { Option } from 'fp-ts/lib/Option'
 import type { Reader } from 'fp-ts/lib/Reader'
@@ -70,17 +77,39 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
           pipe(
             RTE.asks((deps: Deps) => deps.walletPorts),
             RTE.chainFirst(() => get().disconnectWallet()),
-            RTE.chainOptionK(() => new Error(`Wallet with id "${walletId}" not found`))(
-              findWalletPort(walletId)
+            RTE.chainOptionKW(() => WalletNotFoundError(walletId))(findWalletPort(walletId)),
+            RTE.chainFirstW(port =>
+              pipe(
+                port.connectChain(chainId),
+                RTE.mapLeft(error => {
+                  switch (error._tag) {
+                    case 'not-available':
+                      return WalletNotAvailableError(walletId)
+                    case 'chain-id-not-found':
+                      return ChainNotFoundError(chainId)
+                    case 'user-rejected':
+                      return UserRejectedError()
+                    case 'unknown':
+                      return UnknownError(error.message)
+                  }
+                })
+              )
             ),
-            RTE.chainFirst(port =>
-              pipe(port.connectChain(chainId), RTE.local<Deps, WalletPortDeps>(identity))
-            ),
-            RTE.chainTaskEitherK(port =>
-              sequenceS(TE.ApplyPar)({
-                accounts: port.chainAccounts(chainId),
-                name: port.name(chainId)
-              })
+            RTE.chainTaskEitherKW(port =>
+              pipe(
+                sequenceS(TE.ApplyPar)({
+                  accounts: port.chainAccounts(chainId),
+                  name: port.name(chainId)
+                }),
+                TE.mapLeft(error => {
+                  switch (error._tag) {
+                    case 'not-available':
+                      return WalletNotAvailableError(walletId)
+                    case 'unknown':
+                      return UnknownError(error.message)
+                  }
+                })
+              )
             ),
             RTE.map(ctx =>
               O.some({
@@ -101,13 +130,20 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                 (wallet: Wallet) =>
                   pipe(
                     RTE.asks((deps: Deps) => deps.walletPorts),
-                    RTE.chainOptionK(() => new Error(`Wallet with id "${wallet.id}" not found`))(
+                    RTE.chainOptionKW(() => WalletNotFoundError(wallet.id))(
                       findWalletPort(wallet.id)
                     ),
-                    RTE.chain(port =>
+                    RTE.chainW(port =>
                       pipe(
-                        port.disconnectChain(wallet.chainId),
-                        RTE.local<Deps, WalletPortDeps>(identity)
+                        port.connectChain(wallet.chainId),
+                        RTE.mapLeft(error => {
+                          switch (error._tag) {
+                            case 'unknown':
+                              return UnknownError(error.message)
+                            default:
+                              return UnknownError('x')
+                          }
+                        })
                       )
                     ),
                     RTE.chainIOK(() => () => set({ data: O.none }))
