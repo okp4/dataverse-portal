@@ -95,7 +95,8 @@ export type WalletPortDeps = {
   chainInfos: ChainInfo[]
 }
 
-export const WalletNotAvailableError = (type: string) => ({ _tag: 'not-available', type } as const)
+export const WalletNotAvailableError = (type: string) =>
+  ({ _tag: 'wallet-not-available', type } as const)
 
 // Error for when wallet extension is available (i.e. the extension is not installed in the browser).
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
@@ -107,7 +108,7 @@ export type UserRejectedError = ReturnType<typeof UserRejectedError>
 
 export const ChainNotFoundError = (chainId: ChainId) =>
   ({
-    _tag: 'chain-id-not-found',
+    _tag: 'chain-not-found',
     chainId
   } as const)
 

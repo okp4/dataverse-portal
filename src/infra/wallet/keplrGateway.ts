@@ -93,7 +93,7 @@ export const keplrWalletGateway: WalletPort = {
                   TE.flatMap(() => enableChain(chainId))
                 ),
               () => TE.left(error)
-            )(error._tag === 'user-rejected' || error._tag === 'not-available')
+            )(error._tag === 'user-rejected' || error._tag === 'wallet-not-available')
           )
         )
       )
