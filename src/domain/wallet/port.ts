@@ -97,10 +97,12 @@ export type WalletPortDeps = {
 
 export const WalletNotAvailableError = () => ({ _tag: 'not-available' } as const)
 
+// Error for when wallet extension is not found (i.e. the extension is not installed in the browser).
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
 
 export const UserRejectedError = () => ({ _tag: 'user-rejected' } as const)
 
+// Error for when the user rejects the connection request to a chain.
 export type UserRejectedError = ReturnType<typeof UserRejectedError>
 
 export const ChainIdNotFoundError = (chainId: ChainId) =>
@@ -109,6 +111,7 @@ export const ChainIdNotFoundError = (chainId: ChainId) =>
     chainId
   } as const)
 
+// Error for when the chain with the given chainId is not found in the chainInfos list (provided as dependency).
 export type ChainIdNotFoundError = ReturnType<typeof ChainIdNotFoundError>
 
 export const UnknownError = (message: string) =>
@@ -117,6 +120,7 @@ export const UnknownError = (message: string) =>
     message
   } as const)
 
+// Error for when an unknown error occurs.
 export type UnknownError = ReturnType<typeof UnknownError>
 
 // WalletPort is the interface that all wallet ports must implement.
