@@ -97,7 +97,7 @@ export type WalletPortDeps = {
 
 export const WalletNotAvailableError = (type: string) => ({ _tag: 'not-available', type } as const)
 
-// Error for when wallet extension is not found (i.e. the extension is not installed in the browser).
+// Error for when wallet extension is available (i.e. the extension is not installed in the browser).
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
 
 export const UserRejectedError = () => ({ _tag: 'user-rejected' } as const)
