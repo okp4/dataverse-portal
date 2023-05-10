@@ -1,0 +1,80 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-collapsible-main {
+  @include with-theme {
+    .okp4-dataverse-portal-collapsible-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background-color: themed('background');
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+
+      .okp4-dataverse-portal-collapsible-trigger-text {
+        @include norse-font(700);
+        color: themed("text");
+        font-size: 18px;
+        line-height: 36px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .okp4-dataverse-portal-collapsible-trigger-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 200ms ease-out;
+        transform: rotate(90deg);
+        
+        &.flipped {
+          transform: rotate(-90deg);
+        }
+
+        svg {
+          path {
+            fill: themed("text");
+          }
+        }
+      }
+    }
+
+    .okp4-dataverse-portal-collapsible-content {
+      background-color: themed('background');
+      
+      &.is-changing {
+        overflow: hidden;
+      }
+    }
+    
+    .okp4-dataverse-portal-collapsible-content[data-state='open'] {
+      animation: slideDown 300ms ease-out;
+    }
+    
+    .okp4-dataverse-portal-collapsible-content[data-state='closed'] {
+      animation: slideUp 300ms ease-out;
+    }
+    
+    @keyframes slideDown {
+      from {
+        height: 0;
+      }
+
+      to {
+        height: var(--radix-collapsible-content-height);
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        height: var(--radix-collapsible-content-height);
+      }
+
+      to {
+        height: 0;
+      }
+    }
+  }
+}
