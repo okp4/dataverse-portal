@@ -95,7 +95,7 @@ export type WalletPortDeps = {
   chainInfos: ChainInfo[]
 }
 
-export const WalletNotAvailableError = () => ({ _tag: 'not-available' } as const)
+export const WalletNotAvailableError = (type: string) => ({ _tag: 'not-available', type } as const)
 
 // Error for when wallet extension is not found (i.e. the extension is not installed in the browser).
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
@@ -105,14 +105,14 @@ export const UserRejectedError = () => ({ _tag: 'user-rejected' } as const)
 // Error for when the user rejects the connection request to a chain.
 export type UserRejectedError = ReturnType<typeof UserRejectedError>
 
-export const ChainIdNotFoundError = (chainId: ChainId) =>
+export const ChainNotFoundError = (chainId: ChainId) =>
   ({
     _tag: 'chain-id-not-found',
     chainId
   } as const)
 
 // Error for when the chain with the given chainId is not found in the chainInfos list (provided as dependency).
-export type ChainIdNotFoundError = ReturnType<typeof ChainIdNotFoundError>
+export type ChainNotFoundError = ReturnType<typeof ChainNotFoundError>
 
 export const UnknownError = (message: string) =>
   ({
@@ -138,7 +138,7 @@ export type WalletPort = {
     chainId: ChainId
   ) => ReaderTaskEither<
     WalletPortDeps,
-    WalletNotAvailableError | ChainIdNotFoundError | UserRejectedError | UnknownError,
+    WalletNotAvailableError | ChainNotFoundError | UserRejectedError | UnknownError,
     void
   >
   // disconnectChain disconnects the wallet port from the chain with the given chainId.

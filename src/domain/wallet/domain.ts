@@ -84,7 +84,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                 RTE.mapLeft(error => {
                   switch (error._tag) {
                     case 'not-available':
-                      return WalletNotAvailableError(walletId)
+                      return WalletNotAvailableError(error.type)
                     case 'chain-id-not-found':
                       return ChainNotFoundError(chainId)
                     case 'user-rejected':
@@ -104,7 +104,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                 TE.mapLeft(error => {
                   switch (error._tag) {
                     case 'not-available':
-                      return WalletNotAvailableError(walletId)
+                      return WalletNotAvailableError(error.type)
                     case 'unknown':
                       return UnknownError(error.message)
                   }
@@ -135,13 +135,13 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                     ),
                     RTE.chainW(port =>
                       pipe(
-                        port.connectChain(wallet.chainId),
+                        port.disconnectChain(wallet.chainId),
                         RTE.mapLeft(error => {
                           switch (error._tag) {
+                            case 'not-available':
+                              return WalletNotAvailableError(error.type)
                             case 'unknown':
                               return UnknownError(error.message)
-                            default:
-                              return UnknownError('x')
                           }
                         })
                       )

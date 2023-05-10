@@ -18,10 +18,10 @@ export const ChainNotFoundError = (chainId: string) =>
 
 export type ChainNotFoundError = ReturnType<typeof ChainNotFoundError>
 
-export const WalletNotAvailableError = (walletId: string) =>
+export const WalletNotAvailableError = (type: string) =>
   ({
-    _tag: 'chain-not-found',
-    walletId
+    _tag: 'wallet-not-available',
+    type
   } as const)
 
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
@@ -53,5 +53,9 @@ export type Command = {
     void
   >
   // Disconnect a wallet from a chain, if it is connected.
-  disconnectWallet: () => ReaderTaskEither<Deps, WalletNotFoundError | UnknownError, void>
+  disconnectWallet: () => ReaderTaskEither<
+    Deps,
+    WalletNotAvailableError | WalletNotFoundError | UnknownError,
+    void
+  >
 }
