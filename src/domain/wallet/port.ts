@@ -42,7 +42,6 @@ export type ChainInfo = {
   id: ChainId
   rpc: string
   rest: string
-  chainId: string
   chainName: string
   stakeCurrency: Currency
   walletUrl?: string

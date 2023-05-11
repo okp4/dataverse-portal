@@ -1,6 +1,8 @@
 import type { ReaderTaskEither } from 'fp-ts/lib/ReaderTaskEither'
 import type { WalletPort, WalletPortDeps } from './port'
 
+export type ChainId = string
+
 export type Deps = WalletPortDeps & {
   walletPorts: WalletPort[]
 }
@@ -11,7 +13,7 @@ export const WalletNotFoundError = (walletId: string) =>
 // Error for when the wallet with the given walletId is not found in the walletPorts list (provided as dependency).
 export type WalletNotFoundError = ReturnType<typeof WalletNotFoundError>
 
-export const ChainNotFoundError = (chainId: string) =>
+export const ChainNotFoundError = (chainId: ChainId) =>
   ({
     _tag: 'chain-not-found',
     chainId
@@ -47,7 +49,7 @@ export type Command = {
   // Connect a wallet to a chain.
   connectWalletForChain: (
     walletId: string,
-    chainId: string
+    chainId: ChainId
   ) => ReaderTaskEither<
     Deps,
     | WalletNotFoundError

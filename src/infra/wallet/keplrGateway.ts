@@ -22,6 +22,13 @@ import { flow, pipe } from 'fp-ts/lib/function'
 const type = 'keplr'
 const keplr = (): IOOption<Keplr> => IOO.fromNullable(window.keplr)
 
+type KeplrChainInfo = ChainInfo & { chainId: string }
+
+const mapChainInfoToKeplrChainInfo = (chainInfo: ChainInfo): KeplrChainInfo => ({
+  ...chainInfo,
+  chainId: chainInfo.id
+})
+
 const asUnknownError = (e: unknown): UnknownError =>
   UnknownError(e instanceof Error ? e.message : String(e))
 
@@ -60,8 +67,9 @@ const suggestChain = (
 ): TaskEither<WalletNotAvailableError | ChainNotFoundError | UnknownError, void> =>
   pipe(
     chainInfos,
-    A.findFirst<ChainInfo>(chainInfo => chainInfo.chainId === chainId),
+    A.findFirst<ChainInfo>(chainInfo => chainInfo.id === chainId),
     TE.fromOption(() => ChainNotFoundError(chainId)),
+    TE.map(mapChainInfoToKeplrChainInfo),
     TE.flatMap(chainInfo =>
       withKeplr(async keplr => keplr.experimentalSuggestChain(chainInfo), asUnknownError)
     )
