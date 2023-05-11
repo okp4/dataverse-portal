@@ -77,7 +77,6 @@ const mapError = <
     case 'chain-not-found':
       return extract(ChainNotFoundError(from.chainId))
     case 'unknown':
-    default:
       return extract(UnknownError(from.message))
   }
 }
@@ -130,8 +129,8 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
         disconnectWallet: () =>
           pipe(
             RTE.fromIO(() => get().data),
-            RTE.chain(data =>
-              O.fold(
+            RTE.flatMap(data =>
+              O.match(
                 () => RTE.right(undefined),
                 (wallet: Wallet) =>
                   pipe(
