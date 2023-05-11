@@ -1,31 +1,34 @@
 /* eslint-disable max-lines-per-function */
-import type { StoreApi } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
-import { createStore } from 'zustand/vanilla'
-import { devtools } from 'zustand/middleware'
-import * as A from 'fp-ts/lib/Array'
-import * as O from 'fp-ts/lib/Option'
-import { pipe } from 'fp-ts/lib/function'
 import type { ForgetType } from '@/util/type'
-import type { Account, Wallet } from './entity'
-import type { WalletPort } from './port'
-import { eqWalletPort } from './port'
+import * as IO from 'fp-ts/IO'
+import * as R from 'fp-ts/Reader'
+import * as RT from 'fp-ts/ReaderTask'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import * as TE from 'fp-ts/TaskEither'
-import type * as P from './port'
-import * as R from 'fp-ts/Reader'
 import { sequenceS } from 'fp-ts/lib/Apply'
+import * as A from 'fp-ts/lib/Array'
+import type { Option } from 'fp-ts/lib/Option'
+import * as O from 'fp-ts/lib/Option'
+import type { Reader } from 'fp-ts/lib/Reader'
+import * as RA from 'fp-ts/lib/ReadonlyArray'
+import { pipe } from 'fp-ts/lib/function'
+import type { StoreApi } from 'zustand'
+import { devtools } from 'zustand/middleware'
+import { immer } from 'zustand/middleware/immer'
+import { createStore } from 'zustand/vanilla'
 import type { Command, Deps } from './command'
 import {
-  UserRejectedError,
-  WalletNotFoundError,
   ChainNotFoundError,
   UnknownError,
-  WalletNotAvailableError
+  UserRejectedError,
+  WalletNotAvailableError,
+  WalletNotFoundError
 } from './command'
+import type { Account, Wallet } from './entity'
+import type * as P from './port'
+import type { WalletPort } from './port'
+import { eqWalletPort } from './port'
 import type { Query, WalletType } from './query'
-import type { Option } from 'fp-ts/lib/Option'
-import type { Reader } from 'fp-ts/lib/Reader'
 
 export type State = {
   data: Option<Wallet>
@@ -143,6 +146,25 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                   )
               )(data)
             )
+          ),
+        availableWalletTypes: () =>
+          pipe(
+            RT.asks((deps: Deps) => deps.walletPorts),
+            RT.flatMap(
+              pipe(
+                RT.traverseArray(port =>
+                  pipe(
+                    port.isAvailable(),
+                    IO.map(available => ({
+                      ...port,
+                      available
+                    })),
+                    RT.fromIO
+                  )
+                )
+              )
+            ),
+            RT.map(RA.toArray)
           )
       })),
       {
