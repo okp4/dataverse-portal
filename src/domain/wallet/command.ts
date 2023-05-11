@@ -45,11 +45,15 @@ export const UnknownError = (message: string) =>
 // Error for when an unknown error occurs.
 export type UnknownError = ReturnType<typeof UnknownError>
 
+export type ConnectWalletForChain = {
+  walletId: string
+  chainId: ChainId
+}
+
 export type Command = {
   // Connect a wallet to a chain.
   connectWalletForChain: (
-    walletId: string,
-    chainId: ChainId
+    input: ConnectWalletForChain
   ) => ReaderTaskEither<
     Deps,
     | WalletNotFoundError

@@ -101,7 +101,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
             )
           ),
         wallet: () => () => get().data,
-        connectWalletForChain: (walletId, chainId) =>
+        connectWalletForChain: ({ walletId, chainId }) =>
           pipe(
             RTE.asks((deps: Deps) => deps.walletPorts),
             RTE.chainFirst(() => get().disconnectWallet()),
