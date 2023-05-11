@@ -1,0 +1,57 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-searchbar-main {
+  @include with-theme {
+    @include noto-sans(700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(themed('text'), 0.12);
+    border-radius: 100px;
+    padding: 7px 12px;
+    background-color: transparent;
+
+    svg {
+      flex-shrink: 0;
+      fill-opacity: 0.4;
+      fill: themed('text');
+    }
+      
+    &.focused {
+      border: 1px solid rgba(themed('text'), 0.4);
+    }
+      
+    .okp4-dataverse-portal-searchbar-input {
+      flex-grow: 1;
+      overflow: hidden;
+      background-color: transparent;
+      border: 0;
+      font-size: 14px;
+      @include use-breakpoints('mobile') {
+        /* prevent mobile browsers from zooming in on focus */
+        font-size: 16px;
+      }
+
+      line-height: 20px;
+      color: themed('text');
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: rgba(themed('text'), 0.4);
+      }
+
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-decoration,
+      &::-webkit-search-results-button,
+      &::-webkit-search-results-decoration {
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-appearance:none;
+      }
+    }
+  }
+}
