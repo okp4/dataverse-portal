@@ -2,7 +2,11 @@
   "error": {
     "problem": "Es ist leider ein Problem aufgetreten.",
     "processing": "Wir können Ihre Anfrage derzeit nicht bearbeiten. Bitte versuchen Sie, diese Seite zu aktualisieren.",
-    "copy": "Ein Fehler aufgetreten ist, konnte der Text nicht kopiert werden."
+    "copy": "Ein Fehler aufgetreten ist, konnte der Text nicht kopiert werden.",
+    "walletConnectionFailed": "Wallet-Verbindung fehlgeschlagen",
+    "walletConnectionRejected": "Die Anfrage zur Verbindung mit der Wallet wurde abgelehnt.",
+    "walletConnectionError": "Fehler bei der Verbindung zur Brieftasche",
+    "walletNetworkError": "Aufgrund von Netzwerkproblemen konnten wir Ihre Brieftasche nicht verbinden. Bitte versuchen Sie es später noch einmal."
   },
   "warning": {
     "extensionMissing": "Sie haben die Erweiterung leider nicht.",
@@ -13,6 +17,6 @@
   },
   "action": {
     "refresh": "Aktualisieren",
-    "keplerInstall": "Keplr installieren"
+    "keplrInstall": "Keplr installieren"
   }
 }
