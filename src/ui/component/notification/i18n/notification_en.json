@@ -4,10 +4,15 @@
     "processing": "We are currently unable to process your request. Please try refreshing this page.",
     "copy": "An error occurred, the text could not be copied."
   },
+  "warning": {
+    "extensionMissing": "Sorry, you don't have the extension.",
+    "extensionRequired": "You must have the Keplr extension in order to be able to connect your wallet."
+  },
   "success": {
     "copy": "Copied"
   },
   "action": {
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "keplerInstall": "Install Keplr"
   }
 }

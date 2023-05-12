@@ -1,7 +1,6 @@
 {
   "toolbar": {
     "connectWallet": "Meine Brieftasche verbinden",
-    "disconnectWallet": "Abmelden",
-    "keplerInstall": "Keplr installieren"
+    "disconnectWallet": "Abmelden"
   }
 }

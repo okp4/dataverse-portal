@@ -4,10 +4,15 @@
     "processing": "Nous sommes actuellement incapable de traiter votre demande. Essayez de rafraîchir cette page.",
     "copy": "Une erreur est survenue, le texte n'a pu être copié."
   },
+  "warning": {
+    "extensionMissing": "Désolé, vous n'avez pas l'extension.",
+    "extensionRequired": "Vous devez disposer de l'extension Keplr pour pouvoir connecter votre portefeuille."
+  },
   "success": {
     "copy": "Copié"
   },
   "action": {
-    "refresh": "Actualiser"
+    "refresh": "Actualiser",
+    "keplerInstall": "Installer Keplr"
   }
 }
