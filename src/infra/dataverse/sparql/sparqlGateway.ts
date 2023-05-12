@@ -6,9 +6,9 @@ import * as TE from 'fp-ts/TaskEither'
 import type { DataverseEntity } from '@/domain/dataverse/entity'
 import type {
   DataversePort,
-  RetrieveDataverseByTypeQueryFilter,
   RetrieveDataverseQueryFilters,
-  RetrieveDataverseResult
+  RetrieveDataverseResult,
+  DataverseElementTypeFilter
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import type { SparqlBinding, SparqlResult } from './dto'
@@ -20,14 +20,18 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
-    const buildContainsExpression = (
-      filter: Omit<RetrieveDataverseByTypeQueryFilter, 'all'>
-    ): string => `contains(str(?type), "${filter}" )`
+    const buildContainsExpression = (filter: DataverseElementTypeFilter): string =>
+      `contains(str(?type), "${filter}" )`
 
-    const buildQueryFilter = (index: number, acc: string, cur: string): string =>
+    const buildQueryFilter = (
+      index: number,
+      acc: string,
+      cur: DataverseElementTypeFilter
+    ): string =>
       index === 0 ? buildContainsExpression(cur) : `${acc} || ${buildContainsExpression(cur)}`
 
-    const byTypeFilter = pipe(filters.byType, A.reduceWithIndex('', buildQueryFilter))
+    const byTypeFilter = (f: DataverseElementTypeFilter[]): string =>
+      A.reduceWithIndex('', buildQueryFilter)(f)
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
@@ -48,7 +52,7 @@ export const sparqlGateway: DataversePort = {
           ?id rdf:type core:DataSpace .
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
         }
-        ${filters.byType.includes('all') ? '' : `FILTER ( ${byTypeFilter} )`}
+        ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
