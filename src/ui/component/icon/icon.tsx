@@ -53,8 +53,12 @@ import { ReactComponent as EarthDarkIcon } from '@/ui/asset/icon/earth-dark.svg'
 import { ReactComponent as ShieldIcon } from '@/ui/asset/icon/shield.svg'
 import { ReactComponent as ShieldLightIcon } from '@/ui/asset/icon/shield-light.svg'
 import { ReactComponent as ShieldDarkIcon } from '@/ui/asset/icon/shield-dark.svg'
-import { ReactComponent as CopyLight } from '@/ui/asset/icon/copy-light.svg'
-import { ReactComponent as CopyDark } from '@/ui/asset/icon/copy-dark.svg'
+import { ReactComponent as CopyLightIcon } from '@/ui/asset/icon/copy-light.svg'
+import { ReactComponent as CopyDarkIcon } from '@/ui/asset/icon/copy-dark.svg'
+import { ReactComponent as CopySuccessLightIcon } from '@/ui/asset/icon/copy-success-light.svg'
+import { ReactComponent as CopySuccessDarkIcon } from '@/ui/asset/icon/copy-success-dark.svg'
+import { ReactComponent as CopyFailureLightIcon } from '@/ui/asset/icon/copy-failure-light.svg'
+import { ReactComponent as CopyFailureDarkIcon } from '@/ui/asset/icon/copy-failure-dark.svg'
 import { ReactComponent as ErrorIcon } from '@/ui/asset/icon/error.svg'
 import { ReactComponent as WarningIcon } from '@/ui/asset/icon/warning.svg'
 import { ReactComponent as InfoLightIcon } from '@/ui/asset/icon/info-light.svg'
@@ -133,6 +137,10 @@ export type IconName =
   | 'shield-dark'
   | 'copy-light'
   | 'copy-dark'
+  | 'copy-success-light'
+  | 'copy-success-dark'
+  | 'copy-failure-light'
+  | 'copy-failure-dark'
   | 'error'
   | 'warning'
   | 'check'
@@ -209,8 +217,12 @@ const icons: Record<IconName, React.FunctionComponent> = {
   shield: ShieldIcon,
   'shield-dark': ShieldDarkIcon,
   'shield-light': ShieldLightIcon,
-  'copy-light': CopyLight,
-  'copy-dark': CopyDark,
+  'copy-light': CopyLightIcon,
+  'copy-dark': CopyDarkIcon,
+  'copy-success-light': CopySuccessLightIcon,
+  'copy-success-dark': CopySuccessDarkIcon,
+  'copy-failure-light': CopyFailureLightIcon,
+  'copy-failure-dark': CopyFailureDarkIcon,
   warning: WarningIcon,
   error: ErrorIcon,
   check: CheckIcon,
