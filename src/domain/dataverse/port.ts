@@ -1,11 +1,12 @@
 import type * as TE from 'fp-ts/TaskEither'
 import type { DataverseEntity } from '@/domain/dataverse/entity'
+import type { ByTypeQueryFilter, DataverseElementType } from './aggregate'
 
-const retrieveDataverseByTypeQueryFilter = ['all', 'DataSpace', 'Dataset', 'Service'] as const
-export type RetrieveDataverseByTypeQueryFilter = (typeof retrieveDataverseByTypeQueryFilter)[number]
+export type RetrieveDataverseByTypeQueryFilter = ByTypeQueryFilter
+export type DataverseElementTypeFilter = DataverseElementType
 
 export type RetrieveDataverseQueryFilters = {
-  byType: RetrieveDataverseByTypeQueryFilter[]
+  byType: RetrieveDataverseByTypeQueryFilter
 }
 
 export type RetrieveDataverseResult = { data: DataverseEntity; query: { hasNext: boolean } }
