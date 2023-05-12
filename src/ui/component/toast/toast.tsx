@@ -8,12 +8,15 @@ import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
-import { Button } from '@/ui/component//button/button'
+import { Button } from '@/ui/component/button/button'
+import type { ActionType } from '@/ui/store'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
-import '@/ui/component/notification/i18n'
 import './toast.scss'
 
-export type ActionType = 'refresh'
+
+
+
+
 const actionsEffects: Record<ActionType, () => void> = {
   refresh: () => window.location.reload()
 }
