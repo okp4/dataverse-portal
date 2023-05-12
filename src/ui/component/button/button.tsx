@@ -2,16 +2,18 @@ import classNames from 'classnames'
 import type { FC } from 'react'
 import './button.scss'
 
+export type Icons = {
+  startIcon?: JSX.Element
+  endIcon?: JSX.Element
+}
+
 type ButtonProps = {
   className?: string
   disabled?: boolean
   label?: string
   onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void
   iconButtonOnly?: JSX.Element
-  icons?: {
-    startIcon?: JSX.Element
-    endIcon?: JSX.Element
-  }
+  icons?: Icons
   variant?: 'primary' | 'secondary' | 'tertiary' | 'outlined-tertiary' | 'quaternary-turquoise'
   size?: 'small' | 'large'
 }

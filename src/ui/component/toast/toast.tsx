@@ -9,28 +9,41 @@ import { Icon } from '@/ui/component/icon/icon'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Button } from '@/ui/component/button/button'
+import type { Icons } from '@/ui/component/button/button'
 import type { ActionType } from '@/ui/store'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
 import './toast.scss'
 
+type ButtonIcons = {
+  icons: Icons
+}
 
-
-
+const renderIconsIfNeeded = (action: ActionType): ButtonIcons | undefined => {
+  switch (action) {
+    case 'keplrInstall':
+      return { icons: { startIcon: <Icon name="keplr" /> } }
+    default:
+      return
+  }
+}
 
 const actionsEffects: Record<ActionType, () => void> = {
-  refresh: () => window.location.reload()
+  refresh: () => window.location.reload(),
+  keplrInstall: () => window.open(APP_ENV.urls['extension:keplr'], '_blank')
 }
 
 type ToastCTAProps = {
   type: NotificationType
   action: ActionType
 }
+
 const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
   const { t } = useTranslation('notification')
 
   const handleClick = useCallback(() => actionsEffects[action](), [action])
   return (
     <Button
+      {...renderIconsIfNeeded(action)}
       className={classNames('okp4-dataverse-portal-toast-cta', type)}
       label={t(`action.${action}`)}
       onClick={handleClick}

@@ -6,7 +6,7 @@ import { sparqlGateway } from '@/infra/dataverse/sparql/sparqlGateway'
 import type { StoreApi } from 'zustand'
 import { useStore } from 'zustand'
 
-export type ActionType = 'refresh'
+export type ActionType = 'refresh' | 'keplrInstall'
 
 const createStoreHook =
   <T extends object>(store: StoreApi<T>) =>
