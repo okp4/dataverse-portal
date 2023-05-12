@@ -45,6 +45,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.0.10
     version: 18.0.11
+  '@types/react-infinite-scroll-component':
+    specifier: ^5.0.0
+    version: 5.0.0(react@18.2.0)
   '@types/react-lottie':
     specifier: ^1.2.6
     version: 1.2.6
@@ -1700,6 +1703,15 @@ packages:
     resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
     dependencies:
       '@types/react': 18.0.28
+    dev: true
+
+  /@types/react-infinite-scroll-component@5.0.0(react@18.2.0):
+    resolution: {integrity: sha512-1DrmAOFfiy6nchA/KiXCAEzXxG4VHsEGJGlRyMZYy8A9WGfr0fAVe+MXep+VkjIPnNPf06qDbJGSNiPzt67wJg==}
+    deprecated: This is a stub types definition. react-infinite-scroll-component provides its own type definitions, so you do not need this installed.
+    dependencies:
+      react-infinite-scroll-component: 6.1.0(react@18.2.0)
+    transitivePeerDependencies:
+      - react
     dev: true
 
   /@types/react-lottie@1.2.6:
