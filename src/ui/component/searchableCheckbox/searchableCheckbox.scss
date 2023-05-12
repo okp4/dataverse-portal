@@ -1,0 +1,94 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-searchable-checkbox-main {
+  @include with-theme {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    gap: 12px;
+    
+    &.checked {
+      background-color: rgba(themed('background-variant-2'), 0.4);
+
+      &.disabled {
+        background-color: transparent
+      }
+    }
+    
+    .okp4-dataverse-portal-searchable-checkbox-checkmark {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 24px;
+      background-color: transparent;
+      padding: 8px 0;
+      margin-left: 8px;
+      border: 0;
+      cursor: pointer;
+      
+      svg {
+        rect {
+          fill: themed('background');
+          stroke: themed('background-variant-2');
+        }
+      }
+      
+      &.checked {
+        svg {
+          rect {
+            fill: themed('background-variant-2');
+          }
+        }
+      }
+      
+      &.disabled {
+        cursor: not-allowed;
+
+        svg {
+          path {
+            fill: themed('secondary-disabled');
+          }
+
+          rect {
+            fill: themed('disabled-checkbox-background');
+            stroke: themed('disabled-checkbox-background');
+          }
+        }
+      }
+    }
+    
+    .okp4-dataverse-portal-searchable-checkbox-label {
+      @include noto-sans(400);
+      flex-grow: 1;
+      font-size: 14px;
+      line-height: 20px;
+      padding:8px 0;
+      color:rgba(themed('text'), 0.8);
+      cursor: pointer;
+
+      .okp4-dataverse-portal-searchable-checkbox-label-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+
+        .highlight {
+          @include noto-sans(600);
+        }
+      }
+      
+      &.checked {
+        @include noto-sans(700);
+        letter-spacing: -0.4px;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        color: themed('color-text-disabled')
+      }
+    }
+  }
+}

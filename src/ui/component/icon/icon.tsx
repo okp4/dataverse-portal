@@ -79,6 +79,8 @@ import { ReactComponent as LogOutIcon } from '@/ui/asset/icon/log-out.svg'
 import { ReactComponent as ExpandDownLight } from '@/ui/asset/icon/expand-down-light.svg'
 import { ReactComponent as ExpandDownDark } from '@/ui/asset/icon/expand-down-dark.svg'
 import { ReactComponent as KeplerIcon } from '@/ui/asset/icon/keplr.svg'
+import { ReactComponent as CheckboxEmptyIcon } from '@/ui/asset/icon/checkbox-empty.svg'
+import { ReactComponent as CheckboxCheckedIcon } from '@/ui/asset/icon/checkbox-checked.svg'
 
 export type IconName =
   | 'all-light'
@@ -160,6 +162,8 @@ export type IconName =
   | 'expand-down-light'
   | 'expand-down-dark'
   | 'keplr'
+  | 'checkbox-empty'
+  | 'checkbox-checked'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -240,7 +244,9 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'log-out': LogOutIcon,
   'expand-down-light': ExpandDownLight,
   'expand-down-dark': ExpandDownDark,
-  keplr: KeplerIcon
+  keplr: KeplerIcon,
+  'checkbox-empty': CheckboxEmptyIcon,
+  'checkbox-checked': CheckboxCheckedIcon
 }
 
 type IconProps = {

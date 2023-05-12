@@ -18,11 +18,16 @@ $secondary-disabled-dark: #74747a;
 $neutral: #babec2;
 $neutral-variant-1: #dfe4e9;
 
+// disabled
+$color-text-disabled: #ccd9e3;
+
 // backgrounds
 $background-dark: #171821;
 $background-light: #dfe4e9;
 $background-dark-variant-1: rgba(255, 255, 255, 0.06);
 $background-light-variant-1: rgba(0, 64, 115, 0.06);
+$background-dark-variant-2: #004073;
+$background-light-variant-2: #006796;
 $background-primary-variant: rgba(0, 103, 150, 0.08);
 $background-primary-variant-3: rgba(0, 182, 183, 0.08);
 $background-primary-variant-4: rgba(80, 221, 183, 0.08);
@@ -84,3 +89,8 @@ $article-background-light: #f2f6f9;
 // paragraph
 $paragraph-background-dark: #171821;
 $paragraph-background-light: #dfe4e9;
+
+// checkbox
+$searchable-checkbox-background-dark: #242433;
+$searchable-checkbox-background-light: #f2f6f9;
+$disabled-checkbox-background: #e5ebf0;
