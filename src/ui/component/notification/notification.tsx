@@ -3,10 +3,11 @@ import { useMemo, useCallback } from 'react'
 import { useAppStore } from '@/ui/store/appStore'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Toast } from '@/ui/component/toast/toast'
-import type { NotificationType } from '@/domain/notification/entity'
 import { toEffectfulObject } from '@/util/effect'
 import { useNotificationStore } from '@/ui/store'
 import type { DismissNotificationInput } from '@/domain/notification/aggregate'
+
+export type NotificationType = 'success' | 'info' | 'warning' | 'error'
 
 export const Notification: FC = () => {
   const { notifications, dismissNotification } = toEffectfulObject(
