@@ -12,21 +12,14 @@ import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Okp4Logo } from '@/ui/component/logo/okp4Logo'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
-import type { NotificationType } from '@/ui/component/notification/notification'
 import { useWalletStore } from '@/ui/store'
-import type { ActionType } from '@/ui/store'
 import type { Wallet } from '@/domain/wallet/query'
 import { keplrWalletGateway } from '@/infra/wallet/keplrGateway'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
+import { walletErrorData } from './walletConnectionError'
+import type { WalletConnectionError } from './walletConnectionError'
 import './i18n/index'
 import './toolbar.scss'
-
-type WalletConnectionError =
-  | 'wallet-not-found'
-  | 'chain-not-found'
-  | 'wallet-not-available'
-  | 'user-rejected'
-  | 'unknown'
 
 type BurgerProps = {
   expandSidebar: () => void
@@ -44,49 +37,6 @@ type WalletButtonProps = {
 type WalletMenuProps = {
   balance: string
   onLogOut: () => void
-}
-
-type NotificationData = {
-  message: string
-  title: string
-  type: NotificationType
-  action?: ActionType
-}
-
-const walletErrorData = (error: WalletConnectionError): NotificationData => {
-  switch (error) {
-    case 'wallet-not-available':
-      return {
-        action: 'keplrInstall',
-        message: 'notification:warning.extensionRequired',
-        title: 'notification:warning.extensionMissing',
-        type: 'warning'
-      }
-    case 'chain-not-found':
-      return {
-        message: 'notification:error.walletNetworkError',
-        title: 'notification:error.walletConnectionError',
-        type: 'error'
-      }
-    case 'user-rejected':
-      return {
-        message: 'notification:error.walletConnectionRejected',
-        title: 'notification:error.walletConnectionFailed',
-        type: 'error'
-      }
-    case 'wallet-not-found':
-      return {
-        message: 'notification:error.walletNetworkError',
-        title: 'notification:error.walletConnectionError',
-        type: 'error'
-      }
-    case 'unknown':
-      return {
-        message: 'notification:error.walletNetworkError',
-        title: 'notification:error.walletConnectionError',
-        type: 'error'
-      }
-  }
 }
 
 const WalletMenu: FC<WalletMenuProps> = ({ balance, onLogOut }) => {
