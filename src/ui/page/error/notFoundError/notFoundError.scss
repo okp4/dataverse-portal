@@ -1,0 +1,35 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+@mixin background-image($theme) {
+  background: center / contain url('@/ui/asset/images/not-found-error-#{$theme}.webp') no-repeat;
+
+  @include use-breakpoints(('mobile')) {
+    background: unset;
+    display: flex;
+  }
+
+  .okp4-dataverse-portal-error-page-content-wrapper {
+    @include use-breakpoints(('mobile')) {
+      background: top / contain url('@/ui/asset/images/not-found-error-#{$theme}-mobile.webp')
+        no-repeat;
+      max-height: 500px;
+      align-self: center;
+    }
+  }
+}
+
+.okp4-dataverse-portal-error-page-not-found-main {
+  @include with-theme() {
+    background-blend-mode: overlay;
+    height: 100%;
+
+    &.dark {
+      @include background-image('dark');
+    }
+
+    &.light {
+      @include background-image('light');
+    }
+  }
+}

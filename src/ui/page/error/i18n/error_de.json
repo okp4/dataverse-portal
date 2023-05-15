@@ -1,0 +1,13 @@
+{
+  "sorry": "Entschuldigung,",
+  "returnToHome": "Zur Homepage gehen",
+  "notFoundError": {
+    "title": "wir können die Seite, die Sie suchen, nicht finden.",
+    "message": "Versuchen Sie, die URL zu überprüfen, oder vielleicht möchten Sie:"
+  },
+  "internalError": {
+    "title": "Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten.",
+    "message": "Wir wissen jetzt von diesem Problem und arbeiten daran, es zu beheben. In der Zwischenzeit können Sie folgendes tun:",
+    "contactUs": "Kontakt"
+  }
+}

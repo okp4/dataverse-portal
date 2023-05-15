@@ -1,0 +1,13 @@
+{
+  "sorry": "Désolé,",
+  "returnToHome": "Retourner à l'accueil",
+  "notFoundError": {
+    "title": "Nous ne trouvons pas la page que vous avez demandée.",
+    "message": "Verifiez l'URL ou vous pouvez :"
+  },
+  "internalError": {
+    "title": "Une erreur s'est produite lors du traitement de votre demande.",
+    "message": "Nous sommes maintenant informés de ce problème et nous nous efforçons de le résoudre. En attendant, voici ce que vous pouvez faire :",
+    "contactUs": "Nous contacter"
+  }
+}
