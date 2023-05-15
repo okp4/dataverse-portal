@@ -1,7 +1,7 @@
-import classNames from 'classnames'
+import { useMemo, useCallback, useRef, useState } from 'react'
 import type { FC } from 'react'
-import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import type { NotificationID, NotificationType } from '@/domain/notification/entity'
 import type { IconName } from '@/ui/component/icon/icon'
@@ -27,20 +27,26 @@ const renderIconsIfNeeded = (action: ActionType): ButtonIcons | undefined => {
   }
 }
 
-const actionsEffects: Record<ActionType, () => void> = {
-  refresh: () => window.location.reload(),
-  keplrInstall: () => window.open(APP_ENV.urls['extension:keplr'], '_blank')
-}
-
 type ToastCTAProps = {
   type: NotificationType
   action: ActionType
+  onTriggeredAction: () => void
 }
 
-const ToastCTA: FC<ToastCTAProps> = ({ action, type }) => {
+const ToastCTA: FC<ToastCTAProps> = ({ action, onTriggeredAction, type }) => {
   const { t } = useTranslation('notification')
 
-  const handleClick = useCallback(() => actionsEffects[action](), [action])
+  const actionsEffects: Record<ActionType, () => void> = useMemo(
+    () => ({
+      refresh: () => window.location.reload(),
+      keplrInstall: (): void => {
+        window.open(APP_ENV.urls['extension:keplr'], '_blank')
+        onTriggeredAction()
+      }
+    }),
+    [onTriggeredAction]
+  )
+  const handleClick = useCallback(() => actionsEffects[action](), [action, actionsEffects])
   return (
     <Button
       {...renderIconsIfNeeded(action)}
@@ -86,6 +92,8 @@ export const Toast: FC<ToastProps> = ({
     }
   }, [id, onDismiss, isOpen])
 
+  const handleTriggeredAction = useCallback(() => onDismiss({ id }), [id, onDismiss])
+
   const clickOutsideHandler = useCallback(() => {
     if (!action) return
     handleClose()
@@ -126,7 +134,9 @@ export const Toast: FC<ToastProps> = ({
           </div>
           {message && <p className="okp4-dataverse-portal-toast-description">{message}</p>}
         </div>
-        {action && <ToastCTA action={action} type={type} />}
+        {action && (
+          <ToastCTA action={action} onTriggeredAction={handleTriggeredAction} type={type} />
+        )}
       </ToastPrimitive.Root>
       <ToastPrimitive.Viewport
         className={classNames('okp4-dataverse-portal-toast-main', {
