@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
+import * as O from 'fp-ts/Option'
 import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 import classNames from 'classnames'
@@ -11,8 +12,21 @@ import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { Okp4Logo } from '@/ui/component/logo/okp4Logo'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
+import type { NotificationType } from '@/ui/component/notification/notification'
+import { useWalletStore } from '@/ui/store'
+import type { ActionType } from '@/ui/store'
+import type { Wallet } from '@/domain/wallet/query'
+import { keplrWalletGateway } from '@/infra/wallet/keplrGateway'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import './i18n/index'
 import './toolbar.scss'
+
+type WalletConnectionError =
+  | 'wallet-not-found'
+  | 'chain-not-found'
+  | 'wallet-not-available'
+  | 'user-rejected'
+  | 'unknown'
 
 type BurgerProps = {
   expandSidebar: () => void
@@ -20,7 +34,7 @@ type BurgerProps = {
 }
 
 type WalletButtonProps = {
-  isConnected: boolean
+  isWalletConnected: boolean
   isSmallScreen: boolean
   isWalletMenuOpen: boolean
   label: string
@@ -30,6 +44,49 @@ type WalletButtonProps = {
 type WalletMenuProps = {
   balance: string
   onLogOut: () => void
+}
+
+type NotificationData = {
+  message: string
+  title: string
+  type: NotificationType
+  action?: ActionType
+}
+
+const walletErrorData = (error: WalletConnectionError): NotificationData => {
+  switch (error) {
+    case 'wallet-not-available':
+      return {
+        action: 'keplrInstall',
+        message: 'notification:warning.extensionRequired',
+        title: 'notification:warning.extensionMissing',
+        type: 'warning'
+      }
+    case 'chain-not-found':
+      return {
+        message: 'notification:error.walletNetworkError',
+        title: 'notification:error.walletConnectionError',
+        type: 'error'
+      }
+    case 'user-rejected':
+      return {
+        message: 'notification:error.walletConnectionRejected',
+        title: 'notification:error.walletConnectionFailed',
+        type: 'error'
+      }
+    case 'wallet-not-found':
+      return {
+        message: 'notification:error.walletNetworkError',
+        title: 'notification:error.walletConnectionError',
+        type: 'error'
+      }
+    case 'unknown':
+      return {
+        message: 'notification:error.walletNetworkError',
+        title: 'notification:error.walletConnectionError',
+        type: 'error'
+      }
+  }
 }
 
 const WalletMenu: FC<WalletMenuProps> = ({ balance, onLogOut }) => {
@@ -60,7 +117,7 @@ const BurgerMenu = ({ expandSidebar, theme }: BurgerProps): JSX.Element => (
 )
 
 const WalletButton = ({
-  isConnected,
+  isWalletConnected,
   isSmallScreen,
   isWalletMenuOpen,
   label,
@@ -71,7 +128,7 @@ const WalletButton = ({
   const walletIcons = useMemo(
     () => ({
       startIcon: <Icon name="wallet" />,
-      endIcon: isConnected ? (
+      endIcon: isWalletConnected ? (
         <div
           className={classNames(
             `okp4-dataverse-portal-wallet-expand ${isWalletMenuOpen ? 'rotate-down' : 'rotate-up'}`
@@ -81,7 +138,7 @@ const WalletButton = ({
         </div>
       ) : undefined
     }),
-    [isConnected, isWalletMenuOpen, theme]
+    [isWalletConnected, isWalletMenuOpen, theme]
   )
 
   return (
@@ -108,24 +165,20 @@ const WalletButton = ({
   )
 }
 
+const deps = {
+  walletPorts: [keplrWalletGateway],
+  chainInfos: APP_ENV.chains
+}
+
 // eslint-disable-next-line max-lines-per-function
 export const Toolbar: FC = () => {
-  const { t } = useTranslation(['toolbar', 'common'])
+  const { t } = useTranslation(['toolbar', 'common', 'notification'])
   const [isWalletMenuOpen, setIsWalletMenuOpen] = useState<boolean>(false)
-  const [isConnected, setIsConnected] = useState<boolean>(true)
-  const menuRef = useRef<HTMLDivElement | null>(null)
-
-  const handleLogOut = useCallback(() => {
-    setIsConnected(!isConnected)
-    setIsWalletMenuOpen(false)
-  }, [isConnected])
-
-  const handleWalletMenuClick = useCallback(() => {
-    isConnected ? setIsWalletMenuOpen(!isWalletMenuOpen) : setIsConnected(true)
-  }, [isConnected, isWalletMenuOpen])
-
   const { isMobile, isTablet } = useBreakpoint()
   const isSmallScreen = isMobile || isTablet
+  const menuRef = useRef<HTMLDivElement | null>(null)
+  const dispatchNotification = useDispatchNotification()
+
   const { expandSidebar, isSidebarExpanded, theme } = useAppStore(
     state => ({
       expandSidebar: state.expandSidebar,
@@ -134,6 +187,45 @@ export const Toolbar: FC = () => {
     }),
     shallow
   )
+
+  const { connectWalletForChain, disconnectWallet, wallet } = useWalletStore(state => ({
+    disconnectWallet: state.disconnectWallet,
+    connectWalletForChain: state.connectWalletForChain,
+    wallet: state.wallet
+  }))
+
+  const handleWalletError = useCallback(
+    (error: WalletConnectionError) => {
+      const { action, message, title, type } = walletErrorData(error)
+      dispatchNotification({
+        type: type,
+        titleKey: title,
+        messageKey: message,
+        action: action
+      })
+    },
+    [dispatchNotification]
+  )
+
+  const handleWalletConnection = useCallback((): void => {
+    connectWalletForChain({
+      walletId: keplrWalletGateway.id,
+      chainId: APP_ENV.chains[0].id
+    })(deps)().then(it => it._tag === 'Left' && handleWalletError(it.left._tag))
+  }, [connectWalletForChain, handleWalletError])
+
+  const handleWalletDisconnection = useCallback((): void => {
+    disconnectWallet()(deps)().then(it => it._tag === 'Left' && handleWalletError(it.left._tag))
+    setIsWalletMenuOpen(false)
+  }, [disconnectWallet, handleWalletError])
+
+  const handleWalletMenuClick = useCallback(() => {
+    O.match(
+      () => handleWalletConnection(),
+      () => setIsWalletMenuOpen(!isWalletMenuOpen)
+    )(wallet()())
+  }, [handleWalletConnection, isWalletMenuOpen, wallet])
+
   const balance = `831 ${t('common:know')}`
 
   const clickOutsideHandler = useCallback(() => {
@@ -150,6 +242,9 @@ export const Toolbar: FC = () => {
   useOnClickOutside<HTMLDivElement>(menuRef, clickOutsideHandler)
   useOnKeyboard(handleWalletMenuEscape)
 
+  const formatWalletAddress = (address: string): string =>
+    `${address.slice(0, 8)}...${address.slice(-4)}`
+
   return (
     <div className="okp4-dataverse-portal-toolbar-main">
       {isSmallScreen && (
@@ -160,16 +255,20 @@ export const Toolbar: FC = () => {
           </div>
         </>
       )}
+
       <div className="okp4-dataverse-portal-wallet-container" ref={menuRef}>
         <WalletButton
-          isConnected={isConnected}
           isSmallScreen={isSmallScreen}
+          isWalletConnected={O.isSome(wallet()())}
           isWalletMenuOpen={isWalletMenuOpen}
-          label={isConnected ? '3J98t1Wp...EZ73' : t('toolbar:toolbar.connectWallet')}
+          label={O.match(
+            () => t('toolbar:toolbar.connectWallet'),
+            (w: Wallet) => formatWalletAddress(w.accounts[0].address)
+          )(wallet()())}
           onWalletMenuClick={handleWalletMenuClick}
         />
         {isWalletMenuOpen && !isSmallScreen && (
-          <WalletMenu balance={balance} onLogOut={handleLogOut} />
+          <WalletMenu balance={balance} onLogOut={handleWalletDisconnection} />
         )}
       </div>
     </div>
