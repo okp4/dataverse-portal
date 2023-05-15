@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { useAppStore } from '@/ui/store/appStore'
 import { useCallback, useEffect, useState } from 'react'
 import type { IconName } from '@/ui/component/icon/icon'
@@ -12,17 +13,20 @@ type CopyToClipBoardProps = {
 export const CopyToClipboard = ({ onCopied, textToCopy }: CopyToClipBoardProps): JSX.Element => {
   const theme = useAppStore(state => state.theme)
   const [iconName, setIconName] = useState<IconName>(`copy-${theme}`)
+  const [showAnimation, setShowAnimation] = useState<boolean>(false)
 
   const handleClipboardCopy = useCallback(async (): Promise<void> => {
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
         setIconName(`copy-success-${theme}`)
+        setShowAnimation(true)
         onCopied?.(true)
       })
       .catch((error: Error) => {
         console.error(error.message)
         setIconName(`copy-failure-${theme}`)
+        setShowAnimation(true)
         onCopied?.(false)
       })
   }, [onCopied, textToCopy, theme])
@@ -40,7 +44,12 @@ export const CopyToClipboard = ({ onCopied, textToCopy }: CopyToClipBoardProps):
 
   return (
     <div className="okp4-dataverse-portal-copy-paste-main">
-      <div className="okp4-dataverse-portal-copy-paste-icon" onClick={handleClipboardCopy}>
+      <div
+        className={classNames('okp4-dataverse-portal-copy-paste-icon', {
+          'show-icon': showAnimation
+        })}
+        onClick={handleClipboardCopy}
+      >
         <Icon name={iconName} />
       </div>
     </div>
