@@ -97,7 +97,7 @@ export type WalletPortDeps = {
 export const WalletNotAvailableError = (type: string) =>
   ({ _tag: 'wallet-not-available', type } as const)
 
-// Error for when wallet extension is available (i.e. the extension is not installed in the browser).
+// Error for when wallet extension is unavailable (i.e. the extension is not installed in the browser).
 export type WalletNotAvailableError = ReturnType<typeof WalletNotAvailableError>
 
 export const UserRejectedError = () => ({ _tag: 'user-rejected' } as const)
@@ -131,7 +131,7 @@ export type WalletPort = {
   id: string
   // type holds the type of the wallet port (e.g. Keplr, Leap, etc.).
   type: string
-  // isAvailable returns true if the wallet port is available (e.g. the wallet extension is installed).
+  // isAvailable returns true if the wallet port is unavailable (e.g. the wallet extension is installed).
   isAvailable: () => IO<boolean>
   // connectChain connects the wallet port to the chain with the given chainId.
   connectChain: (
