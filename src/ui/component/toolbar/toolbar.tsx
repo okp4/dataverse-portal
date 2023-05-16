@@ -1,9 +1,11 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
-import * as O from 'fp-ts/Option'
 import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 import classNames from 'classnames'
+import * as O from 'fp-ts/Option'
+import * as TE from 'fp-ts/TaskEither'
+import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { useAppStore } from '@/ui/store/appStore'
 import type { Theme } from '@/ui/store/slice/theme.slice'
@@ -13,11 +15,18 @@ import { Okp4Logo } from '@/ui/component/logo/okp4Logo'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { useWalletStore } from '@/ui/store'
+import type { ActionType } from '@/ui/store'
 import type { Wallet } from '@/domain/wallet/query'
 import { keplrWalletGateway } from '@/infra/wallet/keplrGateway'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
-import { walletErrorData } from './walletConnectionError'
-import type { WalletConnectionError } from './walletConnectionError'
+import type { NotificationType } from '@/ui/component/notification/notification'
+import type {
+  ChainNotFoundError,
+  UnknownError,
+  WalletNotAvailableError,
+  WalletNotFoundError,
+  UserRejectedError
+} from '@/domain/wallet/command'
 import './i18n/index'
 import './toolbar.scss'
 
@@ -198,15 +207,23 @@ export const Toolbar: FC = () => {
   )
 
   const handleWalletConnection = useCallback((): void => {
-    connectWalletForChain({
-      walletId: keplrWalletGateway.id,
-      chainId: APP_ENV.chains[0].id
-    })(deps)().then(it => it._tag === 'Left' && handleWalletError(it.left._tag))
+    pipe(
+      deps,
+      connectWalletForChain({
+        walletId: keplrWalletGateway.id,
+        chainId: APP_ENV.chains[0].id
+      }),
+      TE.mapLeft(handleWalletError)
+    )()
   }, [connectWalletForChain, handleWalletError])
 
   const handleWalletDisconnection = useCallback((): void => {
-    disconnectWallet()(deps)().then(it => it._tag === 'Left' && handleWalletError(it.left._tag))
-    setIsWalletMenuOpen(false)
+    pipe(
+      deps,
+      disconnectWallet(),
+      TE.mapLeft(handleWalletError),
+      TE.chainIOK(() => () => setIsWalletMenuOpen(false))
+    )()
   }, [disconnectWallet, handleWalletError])
 
   const handleWalletMenuClick = useCallback(() => {
