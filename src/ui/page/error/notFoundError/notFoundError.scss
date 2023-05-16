@@ -7,10 +7,8 @@
   @include use-breakpoints(('mobile')) {
     background: unset;
     display: flex;
-  }
 
-  .okp4-dataverse-portal-error-page-content-wrapper {
-    @include use-breakpoints(('mobile')) {
+    .okp4-dataverse-portal-error-page-content-wrapper {
       background: top / contain url('@/ui/asset/images/not-found-error-#{$theme}-mobile.webp')
         no-repeat;
       max-height: 500px;
@@ -21,7 +19,6 @@
 
 .okp4-dataverse-portal-error-page-not-found-main {
   @include with-theme() {
-    background-blend-mode: overlay;
     height: 100%;
 
     &.dark {

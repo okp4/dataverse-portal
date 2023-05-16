@@ -2,7 +2,7 @@
 @import '@/ui/style/mixins.scss';
 
 @mixin background-image($theme) {
-  background: center / contain url('@/ui/asset/images/internal-error-#{$theme}.webp');
+  background: center / contain url('@/ui/asset/images/internal-error-#{$theme}.webp') no-repeat;
 
   @include use-breakpoints(('mobile')) {
     background: unset;
