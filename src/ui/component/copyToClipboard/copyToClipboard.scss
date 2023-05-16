@@ -1,9 +1,53 @@
+$copy-icons: ('copy', 'success', 'error');
+
+@mixin hide-icons($icons...) {
+  .okp4-dataverse-portal-copy-paste-icon {
+    @each $icon in $icons {
+      @if index($copy-icons, $icon) {
+        &.#{$icon} {
+          opacity: 0;
+        }
+      } @else {
+        @error "#{$icon} is not a CopyToClipboard icon";
+      }
+    }
+  }
+}
+
 .okp4-dataverse-portal-copy-paste-main {
   display: flex;
   cursor: pointer;
 
-  .okp4-dataverse-portal-copy-paste-icon {
-    display: flex;
-    align-items: center;
+  .okp4-dataverse-portal-copy-paste-icons-container {
+    position: relative;
+    width: 20px;
+
+    &.success {
+      @include hide-icons('error', 'copy');
+    }
+
+    &.error {
+      @include hide-icons('success', 'copy');
+    }
+
+    &.copy {
+      @include hide-icons('error', 'success');
+    }
+
+    .okp4-dataverse-portal-copy-paste-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.success,
+      &.error {
+        position: absolute;
+        top: 0;
+      }
+
+      &.copy {
+        height: 20px;
+      }
+    }
   }
 }
