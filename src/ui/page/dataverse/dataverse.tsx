@@ -380,32 +380,32 @@ const Dataverse = (): JSX.Element => {
   ))
 
   return (
-    <InfiniteScroll
-      dataLength={dataverse.length}
-      hasMore={hasNext}
-      loader={!showMobileFilters ? <LottieLoader animationData={threeDots} /> : null}
-      next={loadDataverse}
-      scrollThreshold={0.91}
-      scrollableTarget="page-wrapper"
-    >
-      <div className="okp4-dataverse-portal-dataverse-page-main">
-        {(isLargeScreen || showMobileFilters) && (
-          <div className="okp4-dataverse-portal-dataverse-page-filters-container">
-            <FiltersChips />
-          </div>
-        )}
-        {(isLargeScreen || !showMobileFilters) && (
-          <div className="okp4-dataverse-portal-dataverse-page-catalog">
-            <h1>{t('actions.explore')}</h1>
-            {!isLargeScreen && (
-              <Button
-                className="okp4-dataverse-portal-dataverse-page-filters-button"
-                label={t('filters')}
-                onClick={toggleMobileFilters}
-                size="large"
-                variant="primary"
-              />
-            )}
+    <div className="okp4-dataverse-portal-dataverse-page-main">
+      {(isLargeScreen || showMobileFilters) && (
+        <div className="okp4-dataverse-portal-dataverse-page-filters-container">
+          <FiltersChips />
+        </div>
+      )}
+      {(isLargeScreen || !showMobileFilters) && (
+        <div className="okp4-dataverse-portal-dataverse-page-catalog">
+          <h1>{t('actions.explore')}</h1>
+          {!isLargeScreen && (
+            <Button
+              className="okp4-dataverse-portal-dataverse-page-filters-button"
+              label={t('filters')}
+              onClick={toggleMobileFilters}
+              size="large"
+              variant="primary"
+            />
+          )}
+          <InfiniteScroll
+            dataLength={dataverse.length}
+            hasMore={hasNext}
+            loader={!showMobileFilters && <LottieLoader animationData={threeDots} />}
+            next={loadDataverse}
+            scrollThreshold={0.91}
+            scrollableTarget="page-wrapper"
+          >
             <div className="okp4-dataverse-portal-dataverse-page-cards-container">
               {!dataverse.length && isLoading
                 ? loadingDataverseCards
@@ -423,10 +423,10 @@ const Dataverse = (): JSX.Element => {
                     />
                   ))}
             </div>
-          </div>
-        )}
-      </div>
-    </InfiniteScroll>
+          </InfiniteScroll>
+        </div>
+      )}
+    </div>
   )
 }
 
