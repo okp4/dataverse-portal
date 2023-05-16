@@ -1,0 +1,31 @@
+{
+    "filters": "Filtres",
+    "data-spaces": {
+        "name": "Espaces de données",
+        "search": "Rechercher dans un espace de données"
+    },
+    "topics": {
+        "name": "Sujets",
+        "search": "Rechercher des sujets"
+    },
+    "services": {
+        "name": "Catégories de services",
+        "search": "Rechercher des catégories"
+    },
+    "data-geo-cov": {
+        "name": "Couverture géographique des données",
+        "search": "Rechercher un pays, des régions ..."
+    },
+    "data-temp-cov": {
+        "name": "Couverture temporelle des données",
+        "search": "Rechercher une couverture temporelle"
+    },
+    "data-format": {
+        "name": "Format des données",
+        "search": "Rechercher un format"
+    },
+    "data-licence": {
+        "name": "Licence des données",
+        "search": "Rechercher une licence"
+    }
+}
