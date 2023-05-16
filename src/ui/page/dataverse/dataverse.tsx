@@ -1,5 +1,6 @@
 import * as A from 'fp-ts/Array'
 import type { Option } from 'fp-ts/Option'
+import type { FC } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
@@ -10,6 +11,8 @@ import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
+import { DynamicCheckboxFilter } from '@/ui/view/dataverse/component/filters/dynamicCheckboxFilter/dynamicCheckboxFilter'
+import '@/ui/view/dataverse/component/filters/i18n'
 import './dataverse.scss'
 
 type DataverseItemType = 'service' | 'dataspace' | 'dataset'
@@ -259,6 +262,12 @@ const dataverseItems: DataverseItemDetails[] = [
     ]
   }
 ]
+type FilterTextProps = {
+  text: string
+}
+const FilterText: FC<FilterTextProps> = ({ text }) => (
+  <span className="okp4-dataverse-portal-dataverse-filter-text">{text}</span>
+)
 
 export const getResourceDetails = (id: string): Option<DataverseItemDetails> =>
   pipe(
@@ -282,7 +291,7 @@ const filtersInitialState: FilterValue[] = ['all']
 
 // eslint-disable-next-line max-lines-per-function
 const Dataverse = (): JSX.Element => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'filters'])
   const theme = useAppStore(state => state.theme)
   const { isDesktop, isLargeDesktop } = useBreakpoint()
   const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false)
@@ -344,7 +353,7 @@ const Dataverse = (): JSX.Element => {
           ) : (
             <h1>{filtersLabel}</h1>
           )}
-          <h2>{t('resources.label')}</h2>
+          <FilterText text={t('resources.label')} />
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
             {filters.map(filter => (
               <Chip
@@ -386,6 +395,122 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
+          <DynamicCheckboxFilter
+            filterOptions={[
+              'Agriculture environment and forestry',
+              'Marketing and customer behaviour'
+            ]}
+            name={<FilterText text={t('filters:topics')} />}
+            searchPlaceholder="Search topics"
+          />
+
+          <DynamicCheckboxFilter
+            filterOptions={[
+              'Afghanistan',
+              'Albania',
+              'Algeria',
+              'American Samoa',
+              'Andorra',
+              'Angola',
+              'Anguilla',
+              'Antarctica',
+              'Antigua and Barbuda',
+              'Argentina',
+              'Armenia',
+              'Aruba',
+              'Australia',
+              'Austria',
+              'Azerbaijan',
+              'Bahamas (the)',
+              'Bahrain',
+              'Bangladesh',
+              'Barbados',
+              'Belarus',
+              'Belgium',
+              'Belize',
+              'Benin',
+              'Bermuda',
+              'Bhutan',
+              'Bolivia (Plurinational State of)',
+              'Bonaire, Sint Eustatius and Saba',
+              'Bosnia and Herzegovina',
+              'Botswana',
+              'Bouvet Island',
+              'Brazil',
+              'British Indian Ocean Territory (the)',
+              'Brunei Darussalam',
+              'Bulgaria',
+              'Burkina Faso',
+              'Burundi',
+              'Cabo Verde',
+              'Cambodia',
+              'Cameroon',
+              'Canada',
+              'Cayman Islands (the)',
+              'Central African Republic (the)',
+              'Chad',
+              'Chile',
+              'China',
+              'Christmas Island',
+              'Cocos (Keeling) Islands (the)',
+              'Colombia',
+              'Comoros (the)',
+              'Congo (the Democratic Republic of the)',
+              'Congo (the)',
+              'Cook Islands (the)',
+              'Costa Rica',
+              "Côte d'Ivoire",
+              'Croatia',
+              'Cuba',
+              'Curaçao',
+              'Cyprus',
+              'Czechia',
+              'Denmark',
+              'Djibouti',
+              'Dominica',
+              'Dominican Republic (the)',
+              'Ecuador',
+              'Egypt',
+              'El Salvador',
+              'Equatorial Guinea',
+              'Eritrea',
+              'Estonia',
+              'Eswatini',
+              'Ethiopia',
+              'Falkland Islands (the) [Malvinas]',
+              'Faroe Islands (the)',
+              'Fiji',
+              'Finland',
+              'France',
+              'French Guiana',
+              'French Polynesia'
+            ]}
+            name={<FilterText text={t('filters:data-geo-cov')} />}
+            searchPlaceholder="Search countries, regions, cities"
+          />
+          <DynamicCheckboxFilter
+            filterOptions={[
+              'Data cleaning',
+              'Computer vision',
+              'Machine learning',
+              'Data mining',
+              'Data visualization',
+              'Data analysis',
+              'Data management'
+            ]}
+            name={<FilterText text={t('filters:services')} />}
+            searchPlaceholder="Search categories"
+          />
+          <DynamicCheckboxFilter
+            filterOptions={['CSV', 'JSON', 'XML']}
+            name={<FilterText text={t('filters:data-format')} />}
+            searchPlaceholder="Search format" //TODO: add missing translations for placeholders
+          />
+          <DynamicCheckboxFilter
+            filterOptions={['ETALAB', 'LO-FR-2_0', 'Licence 3']}
+            name={<FilterText text={t('filters:data-licence')} />}
+            searchPlaceholder="Search license"
+          />
         </div>
       )}
       {(isLargeScreen || !showMobileFilters) && (
