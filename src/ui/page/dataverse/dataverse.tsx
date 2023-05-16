@@ -2,17 +2,26 @@ import * as A from 'fp-ts/Array'
 import type { Option } from 'fp-ts/Option'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { useAppStore } from '@/ui/store/appStore'
+import { useDataverseStore } from '@/ui/store/index'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import './dataverse.scss'
+import { toEffectfulObject } from '@/util/effect'
+import { activeLanguageWithDefault } from '@/ui/languages/languages'
+import { Card } from '@/ui/component/card/card'
+import { Skeleton } from '@/ui/component/skeleton/skeleton'
+import { LottieLoader } from '@/ui/component/loader/lottieLoader'
+import threeDots from '@/ui/asset/loader/threeDots.json'
+import { shallow } from 'zustand/shallow'
 
-type DataverseItemType = 'service' | 'dataspace' | 'dataset'
+type DataverseItemType = 'DataSpace' | 'Dataset' | 'Service'
 type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
 type FilterValue = DataverseItemType | 'all'
 
@@ -56,7 +65,7 @@ type Filter = {
   icon: string
 }
 
-const filters: Filter[] = [
+const uifilters: Filter[] = [
   {
     label: 'all',
     value: 'all',
@@ -64,17 +73,17 @@ const filters: Filter[] = [
   },
   {
     label: 'dataspaces',
-    value: 'dataspace',
+    value: 'DataSpace',
     icon: 'dataspace-created'
   },
   {
     label: 'datasets',
-    value: 'dataset',
+    value: 'Dataset',
     icon: 'dataset-folder'
   },
   {
     label: 'services',
-    value: 'service',
+    value: 'Service',
     icon: 'service-folder'
   }
 ]
@@ -278,57 +287,40 @@ const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void
   </div>
 )
 
-const filtersInitialState: FilterValue[] = ['all']
+// const filtersInitialState: FilterValue[] = ['all']
 
 // eslint-disable-next-line max-lines-per-function
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
   const theme = useAppStore(state => state.theme)
+  const { loadDataverse, dataverse, setByTypeFilter, isLoading, hasNext, filters, setLanguage } =
+    toEffectfulObject(
+      useDataverseStore(
+        state => ({
+          loadDataverse: state.loadDataverse,
+          dataverse: state.dataverse,
+          isLoading: state.query.isLoading,
+          hasNext: state.query.hasNext,
+          setLanguage: state.query.setLanguage,
+          setByTypeFilter: state.query.setByTypeFilter,
+          filters: state.query.filters
+        }),
+        shallow
+      )
+    )
   const { isDesktop, isLargeDesktop } = useBreakpoint()
   const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false)
-  const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(filtersInitialState)
-  const [dataverseResources, setDataverseResources] =
-    useState<DataverseItemDetails[]>(dataverseItems)
+  const currentLng = activeLanguageWithDefault().lng
 
   const isLargeScreen = isDesktop || isLargeDesktop
   const filtersLabel = t('filters')
 
-  const resetFilters = useCallback((): void => {
-    setSelectedFilters(filtersInitialState)
-  }, [])
-
-  const removeFilter = useCallback(
-    (filterToRemove: FilterValue): void => {
-      if (selectedFilters.length === 1 && selectedFilters[0] === 'all') {
-        return
-      }
-      setSelectedFilters(selectedFilters.filter(filter => filter !== filterToRemove))
-    },
-    [selectedFilters]
-  )
-
-  const addFilterAndRemoveAllFilter = useCallback(
-    (filterToAdd: FilterValue): void => {
-      const updatedFiltersWithoutAll = [...selectedFilters, filterToAdd].filter(
-        filter => filter !== 'all'
-      )
-      setSelectedFilters(updatedFiltersWithoutAll)
-    },
-    [selectedFilters]
-  )
-
-  const addFilter = useCallback(
-    (filterToAdd: FilterValue): void => {
-      filterToAdd === 'all' ? resetFilters() : addFilterAndRemoveAllFilter(filterToAdd)
-    },
-    [resetFilters, addFilterAndRemoveAllFilter]
-  )
-
   const toggleFilter = useCallback(
-    (filter: FilterValue) => () => {
-      selectedFilters.includes(filter) ? removeFilter(filter) : addFilter(filter)
+    (filter: DataverseItemType | 'all') => () => {
+      setByTypeFilter(filter)
+      loadDataverse()
     },
-    [addFilter, removeFilter, selectedFilters]
+    [loadDataverse, setByTypeFilter]
   )
 
   const toggleMobileFilters = useCallback(() => {
@@ -346,11 +338,14 @@ const Dataverse = (): JSX.Element => {
           )}
           <h2>{t('resources.label')}</h2>
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
-            {filters.map(filter => (
+            {uifilters.map(filter => (
               <Chip
                 className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
                 icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
-                isSelected={selectedFilters.includes(filter.value)}
+                isSelected={
+                  filters.byType === filter.value ||
+                  filters.byType.includes(filter.value as DataverseItemType)
+                }
                 key={filter.label}
                 label={t(`resources.${filter.label}`)}
                 onClick={toggleFilter(filter.value)}
@@ -363,57 +358,75 @@ const Dataverse = (): JSX.Element => {
     )
 
   useEffect(() => {
-    if (selectedFilters === filtersInitialState) {
-      setDataverseResources(dataverseItems)
-    } else {
-      const filteredResources = dataverseItems.filter(resource =>
-        selectedFilters.includes(resource.type)
-      )
-      setDataverseResources(filteredResources)
-    }
-  }, [selectedFilters])
-
-  useEffect(() => {
-    !selectedFilters.length && resetFilters()
-  }, [resetFilters, selectedFilters.length])
+    setLanguage(currentLng)
+    loadDataverse()
+  }, [currentLng])
 
   useEffect(() => {
     !isLargeScreen && setShowMobileFilters(false)
   }, [isLargeScreen])
 
+  const loadingDataverseCards = [...Array(12)].map((_, i) => (
+    <Card key={i}>
+      <div className="okp4-dataverse-portal-dataverse-page-card-loader-container">
+        <Skeleton height={30} variant="text" width={80} />
+        <div className="okp4-dataverse-portal-dataverse-page-card-loader-text-wrapper">
+          <Skeleton height={25} variant="text" width={'84%'} />
+          <Skeleton height={25} variant="text" width={'84%'} />
+        </div>
+        <Skeleton height={40} variant="rounded" width={150} />
+      </div>
+    </Card>
+  ))
+
   return (
-    <div className="okp4-dataverse-portal-dataverse-page-main">
-      {(isLargeScreen || showMobileFilters) && (
-        <div className="okp4-dataverse-portal-dataverse-page-filters-container">
-          <FiltersChips />
-        </div>
-      )}
-      {(isLargeScreen || !showMobileFilters) && (
-        <div className="okp4-dataverse-portal-dataverse-page-catalog">
-          <h1>{t('actions.explore')}</h1>
-          {!isLargeScreen && (
-            <Button
-              className="okp4-dataverse-portal-dataverse-page-filters-button"
-              label={t('filters')}
-              onClick={toggleMobileFilters}
-              size="large"
-              variant="primary"
-            />
-          )}
-          <div className="okp4-dataverse-portal-dataverse-page-cards-container">
-            {dataverseResources.map(({ id, type, label, description }) => (
-              <DataverseItemCard
-                description={description}
-                id={id}
-                key={id}
-                label={label}
-                type={type}
-              />
-            ))}
+    <InfiniteScroll
+      dataLength={dataverse.length}
+      hasMore={hasNext}
+      loader={!showMobileFilters ? <LottieLoader animationData={threeDots} /> : null}
+      next={loadDataverse}
+      scrollThreshold={0.91}
+      scrollableTarget="page-wrapper"
+    >
+      <div className="okp4-dataverse-portal-dataverse-page-main">
+        {(isLargeScreen || showMobileFilters) && (
+          <div className="okp4-dataverse-portal-dataverse-page-filters-container">
+            <FiltersChips />
           </div>
-        </div>
-      )}
-    </div>
+        )}
+        {(isLargeScreen || !showMobileFilters) && (
+          <div className="okp4-dataverse-portal-dataverse-page-catalog">
+            <h1>{t('actions.explore')}</h1>
+            {!isLargeScreen && (
+              <Button
+                className="okp4-dataverse-portal-dataverse-page-filters-button"
+                label={t('filters')}
+                onClick={toggleMobileFilters}
+                size="large"
+                variant="primary"
+              />
+            )}
+            <div className="okp4-dataverse-portal-dataverse-page-cards-container">
+              {!dataverse.length && isLoading
+                ? loadingDataverseCards
+                : dataverse.map(({ id, properties }) => (
+                    <DataverseItemCard
+                      description={properties.find(p => p.property === 'description')?.value ?? ''}
+                      id={id}
+                      key={id}
+                      label={properties.find(p => p.property === 'title')?.value ?? ''}
+                      type={
+                        properties
+                          .find(p => p.property === 'type')
+                          ?.value.toLowerCase() as DataverseItemType
+                      }
+                    />
+                  ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </InfiniteScroll>
   )
 }
 

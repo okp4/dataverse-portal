@@ -181,3 +181,19 @@
     }
   }
 }
+
+.okp4-dataverse-portal-dataverse-page-card-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+
+  .okp4-dataverse-portal-dataverse-page-card-loader-text-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}
