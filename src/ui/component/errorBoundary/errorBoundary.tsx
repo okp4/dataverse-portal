@@ -3,7 +3,7 @@
 import { Component, useState, useEffect } from 'react'
 import type { SetStateAction, Dispatch, ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
-import { InternalError } from '@/ui/page/internalError/internalError'
+import { InternalError } from '@/ui/page/error/internalError/internalError'
 
 type ErrorBoundaryInnerProps = {
   children: JSX.Element

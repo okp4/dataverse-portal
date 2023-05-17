@@ -1,0 +1,13 @@
+{
+  "sorry": "Sorry,",
+  "returnToHome": "Go to the home page",
+  "notFoundError": {
+    "title": "We can't find the page you are looking for.",
+    "message": "Try checking the URL or maybe you want to:"
+  },
+  "internalError": {
+    "title": "An error has occurred processing your request.",
+    "message": "We now know about this problem and are working to fix it. In the meantime, here is what you can do:",
+    "contactUs": "Contact us"
+  }
+}

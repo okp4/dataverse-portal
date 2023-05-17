@@ -1,0 +1,88 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-error-page-content-wrapper {
+  @include with-theme {
+    @include columns-with-gap(28px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+
+    @include use-breakpoints(('mobile', 'tablet')) {
+      gap: 24px;
+    }
+
+    .okp4-dataverse-portal-error-page-text-container {
+      @include columns-with-gap(28px);
+      align-items: center;
+      color: themed('text');
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        gap: 24px;
+      }
+
+      h1 {
+        @include norse-font(700);
+        line-height: 88px;
+        font-size: 80px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          font-size: 40px;
+          line-height: 48px;
+        }
+      }
+
+      .okp4-dataverse-portal-error-page-titles {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 750px;
+
+        @include use-breakpoints(('large-desktop')) {
+          max-width: 960px;
+        }
+
+        .okp4-dataverse-portal-error-page-title {
+          opacity: 0.4;
+        }
+      }
+
+      .okp4-dataverse-portal-error-page-message {
+        @include noto-sans(300);
+        font-size: 18px;
+        line-height: 22px;
+        max-width: 554px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          max-width: unset;
+          font-size: 16px;
+        }
+
+        @include use-breakpoints(('large-desktop')) {
+          max-width: unset;
+        }
+      }
+    }
+
+    .okp4-dataverse-portal-error-page-buttons-container {
+      display: flex;
+      gap: 20px;
+
+      @include use-breakpoints(('mobile')) {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .okp4-dataverse-portal-error-page-button {
+        max-height: 40px;
+        width: fit-content;
+
+        @include use-breakpoints(('mobile')) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
