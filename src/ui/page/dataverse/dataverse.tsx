@@ -1,23 +1,18 @@
 import * as A from 'fp-ts/Array'
 import type { Option } from 'fp-ts/Option'
 import type { FC } from 'react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
-import { useAppStore } from '@/ui/store/appStore'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
-import Chip from '@/ui/component/chip/chip'
-import { Icon } from '@/ui/component/icon/icon'
-import type { IconName } from '@/ui/component/icon/icon'
-import { DynamicCheckboxFilter } from '@/ui/view/dataverse/component/filters/dynamicCheckboxFilter/dynamicCheckboxFilter'
 import '@/ui/view/dataverse/component/filters/i18n'
+import type { Filter, FilterValue } from '@/ui/view/dataverse/component/filters/filters'
+import { Filters } from '@/ui/view/dataverse/component/filters/filters'
 import './dataverse.scss'
 
-type DataverseItemType = 'service' | 'dataspace' | 'dataset'
-type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
-type FilterValue = DataverseItemType | 'all'
+export type DataverseItemType = 'service' | 'dataspace' | 'dataset'
 
 type DataverseItem = {
   id: string
@@ -52,12 +47,6 @@ export type DataSpace = DataverseItem &
   }
 
 export type DataverseItemDetails = DataSpace | Dataset | Service
-
-type Filter = {
-  label: FilterLabel
-  value: FilterValue
-  icon: string
-}
 
 const filters: Filter[] = [
   {
@@ -262,12 +251,6 @@ const dataverseItems: DataverseItemDetails[] = [
     ]
   }
 ]
-type FilterTextProps = {
-  text: string
-}
-const FilterText: FC<FilterTextProps> = ({ text }) => (
-  <span className="okp4-dataverse-portal-dataverse-filter-text">{text}</span>
-)
 
 export const getResourceDetails = (id: string): Option<DataverseItemDetails> =>
   pipe(
@@ -275,24 +258,11 @@ export const getResourceDetails = (id: string): Option<DataverseItemDetails> =>
     A.findFirst(item => item.id === id)
   )
 
-const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void): JSX.Element => (
-  <div className="okp4-dataverse-portal-dataverse-page-filters-mobile">
-    <div
-      className="okp4-dataverse-portal-dataverse-page-filters-previous-icon"
-      onClick={toggleMobileFilters}
-    >
-      <Icon name="arrow-left" />
-    </div>
-    <h1>{label}</h1>
-  </div>
-)
-
 const filtersInitialState: FilterValue[] = ['all']
 
 // eslint-disable-next-line max-lines-per-function
-const Dataverse = (): JSX.Element => {
+const Dataverse: FC = () => {
   const { t } = useTranslation(['common', 'filters'])
-  const theme = useAppStore(state => state.theme)
   const { isDesktop, isLargeDesktop } = useBreakpoint()
   const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false)
   const [selectedFilters, setSelectedFilters] = useState<FilterValue[]>(filtersInitialState)
@@ -300,7 +270,6 @@ const Dataverse = (): JSX.Element => {
     useState<DataverseItemDetails[]>(dataverseItems)
 
   const isLargeScreen = isDesktop || isLargeDesktop
-  const filtersLabel = t('filters')
 
   const resetFilters = useCallback((): void => {
     setSelectedFilters(filtersInitialState)
@@ -334,7 +303,7 @@ const Dataverse = (): JSX.Element => {
   )
 
   const toggleFilter = useCallback(
-    (filter: FilterValue) => () => {
+    (filter: FilterValue) => {
       selectedFilters.includes(filter) ? removeFilter(filter) : addFilter(filter)
     },
     [addFilter, removeFilter, selectedFilters]
@@ -343,33 +312,6 @@ const Dataverse = (): JSX.Element => {
   const toggleMobileFilters = useCallback(() => {
     setShowMobileFilters(!showMobileFilters)
   }, [showMobileFilters])
-
-  const FiltersChips = (): JSX.Element =>
-    useMemo(
-      () => (
-        <div className="okp4-dataverse-portal-dataverse-page-filters">
-          {!isLargeScreen ? (
-            renderMobileTitleFilters(filtersLabel, toggleMobileFilters)
-          ) : (
-            <h1>{filtersLabel}</h1>
-          )}
-          <FilterText text={t('resources.label')} />
-          <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
-            {filters.map(filter => (
-              <Chip
-                className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
-                icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
-                isSelected={selectedFilters.includes(filter.value)}
-                key={filter.label}
-                label={t(`resources.${filter.label}`)}
-                onClick={toggleFilter(filter.value)}
-              />
-            ))}
-          </div>
-        </div>
-      ),
-      []
-    )
 
   useEffect(() => {
     if (selectedFilters === filtersInitialState) {
@@ -393,125 +335,12 @@ const Dataverse = (): JSX.Element => {
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
       {(isLargeScreen || showMobileFilters) && (
-        <div className="okp4-dataverse-portal-dataverse-page-filters-container">
-          <FiltersChips />
-          <DynamicCheckboxFilter
-            filterOptions={[
-              'Agriculture environment and forestry',
-              'Marketing and customer behaviour'
-            ]}
-            name={<FilterText text={t('filters:topics')} />}
-            searchPlaceholder="Search topics"
-          />
-
-          <DynamicCheckboxFilter
-            filterOptions={[
-              'Afghanistan',
-              'Albania',
-              'Algeria',
-              'American Samoa',
-              'Andorra',
-              'Angola',
-              'Anguilla',
-              'Antarctica',
-              'Antigua and Barbuda',
-              'Argentina',
-              'Armenia',
-              'Aruba',
-              'Australia',
-              'Austria',
-              'Azerbaijan',
-              'Bahamas (the)',
-              'Bahrain',
-              'Bangladesh',
-              'Barbados',
-              'Belarus',
-              'Belgium',
-              'Belize',
-              'Benin',
-              'Bermuda',
-              'Bhutan',
-              'Bolivia (Plurinational State of)',
-              'Bonaire, Sint Eustatius and Saba',
-              'Bosnia and Herzegovina',
-              'Botswana',
-              'Bouvet Island',
-              'Brazil',
-              'British Indian Ocean Territory (the)',
-              'Brunei Darussalam',
-              'Bulgaria',
-              'Burkina Faso',
-              'Burundi',
-              'Cabo Verde',
-              'Cambodia',
-              'Cameroon',
-              'Canada',
-              'Cayman Islands (the)',
-              'Central African Republic (the)',
-              'Chad',
-              'Chile',
-              'China',
-              'Christmas Island',
-              'Cocos (Keeling) Islands (the)',
-              'Colombia',
-              'Comoros (the)',
-              'Congo (the Democratic Republic of the)',
-              'Congo (the)',
-              'Cook Islands (the)',
-              'Costa Rica',
-              "Côte d'Ivoire",
-              'Croatia',
-              'Cuba',
-              'Curaçao',
-              'Cyprus',
-              'Czechia',
-              'Denmark',
-              'Djibouti',
-              'Dominica',
-              'Dominican Republic (the)',
-              'Ecuador',
-              'Egypt',
-              'El Salvador',
-              'Equatorial Guinea',
-              'Eritrea',
-              'Estonia',
-              'Eswatini',
-              'Ethiopia',
-              'Falkland Islands (the) [Malvinas]',
-              'Faroe Islands (the)',
-              'Fiji',
-              'Finland',
-              'France',
-              'French Guiana',
-              'French Polynesia'
-            ]}
-            name={<FilterText text={t('filters:data-geo-cov')} />}
-            searchPlaceholder="Search countries, regions, cities"
-          />
-          <DynamicCheckboxFilter
-            filterOptions={[
-              'Data cleaning',
-              'Computer vision',
-              'Machine learning',
-              'Data mining',
-              'Data visualization',
-              'Data analysis',
-              'Data management'
-            ]}
-            name={<FilterText text={t('filters:services')} />}
-            searchPlaceholder="Search categories"
-          />
-          <DynamicCheckboxFilter
-            filterOptions={['CSV', 'JSON', 'XML']}
-            name={<FilterText text={t('filters:data-format')} />}
-            searchPlaceholder="Search format" //TODO: add missing translations for placeholders
-          />
-          <DynamicCheckboxFilter
-            filterOptions={['ETALAB', 'LO-FR-2_0', 'Licence 3']}
-            name={<FilterText text={t('filters:data-licence')} />}
-            searchPlaceholder="Search license"
-          />
-        </div>
+        <Filters
+          filters={filters}
+          selectedFilters={selectedFilters}
+          toggleFilter={toggleFilter}
+          toggleMobileFilters={toggleMobileFilters}
+        />
       )}
       {(isLargeScreen || !showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-catalog">
@@ -519,7 +348,7 @@ const Dataverse = (): JSX.Element => {
           {!isLargeScreen && (
             <Button
               className="okp4-dataverse-portal-dataverse-page-filters-button"
-              label={t('filters')}
+              label={t('filters:filters')}
               onClick={toggleMobileFilters}
               size="large"
               variant="primary"

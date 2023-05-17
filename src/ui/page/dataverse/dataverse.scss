@@ -21,101 +21,22 @@
       @include grid-container($colsNb: 6, $gutter: 16px);
     }
 
-    .okp4-dataverse-portal-dataverse-page-filters-container {
-      @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 2, $rowEnd: 3);
-      @include use-breakpoints(('mobile', 'tablet')) {
-        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-      }
-
-      .okp4-dataverse-portal-dataverse-page-filters {
-        @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: auto);
-        grid-auto-rows: max-content;
-
-        h1 {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
-          @include norse-gradient-header($line-height: 61px);
-        }
-
-        .okp4-dataverse-portal-dataverse-page-filters-mobile {
-          display: flex;
-          align-items: center;
-
-          h1 {
-            margin-left: 12px;
-          }
-        }
-
-        .okp4-dataverse-portal-dataverse-page-filters-chips {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          column-gap: 8px;
-          margin-top: 16px;
-          row-gap: 16px;
-
-          @include use-breakpoints(('mobile', 'tablet')) {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, auto));
-            gap: 12px;
-          }
-
-          .okp4-dataverse-portal-dataverse-page-filter {
-            width: fit-content;
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-
-            @include use-breakpoints(('mobile', 'tablet')) {
-              width: 100%;
-              height: 110px;
-              justify-content: center;
-
-              .okp4-dataverse-portal-chip-content {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                white-space: unset;
-                height: 100%;
-
-                .okp4-dataverse-portal-chip-label {
-                  @include use-breakpoints(('mobile')) {
-                    font-size: 14px;
-                  }
-                }
-
-                .okp4-dataverse-portal-chip-icon {
-                  margin-right: unset;
-                  margin-bottom: 10px;
-                }
-              }
-            }
-
-            @include use-breakpoints(('large-desktop')) {
-              margin-right: 8px;
-            }
-          }
-        }
-      }
-    }
-
     .okp4-dataverse-portal-dataverse-page-catalog {
       @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-      @include grid-container($colsNb: 8, $gutter: 48px);
 
       @include use-breakpoints(('desktop')) {
         column-gap: 29px;
       }
 
       @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 8, $gutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
         row-gap: 30px;
       }
-
+      
       @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 8, $gutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
       }
 
       .okp4-dataverse-portal-dataverse-page-filters-button {
@@ -169,18 +90,6 @@
           gap: 29px;
         }
       }
-    }
-
-    .okp4-dataverse-portal-dataverse-filter-text {
-      @include norse-font(700);
-      color: themed('text');
-      width: fit-content;
-      font-size: 18px;
-      line-height: 1;
-      padding: 9px 0;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-align: left;
     }
   }
 }

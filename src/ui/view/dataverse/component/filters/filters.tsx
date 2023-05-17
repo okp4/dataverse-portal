@@ -117,66 +117,72 @@ export const Filters: FC<FiltersProps> = ({
         toggleFilter={toggleFilter}
         toggleMobileFilters={toggleMobileFilters}
       />
-      <DynamicCheckboxFilter
-        filterOptions={['Rhizome', 'DS4I', 'Data space 3', 'Data space 4']}
-        name={<FilterText text={t('data-spaces.name')} />}
-        searchPlaceholder={t('data-spaces.search')}
-      />
-      <DynamicCheckboxFilter
-        filterOptions={['Agriculture environment and forestry', 'Marketing and customer behaviour']}
-        name={<FilterText text={t('topics.name')} />}
-        searchPlaceholder={t('topics.search')}
-      />
-      <DynamicCheckboxFilter
-        filterOptions={[
-          'Data cleaning',
-          'Computer vision',
-          'Machine learning',
-          'Data mining',
-          'Data visualization',
-          'Data analysis',
-          'Data management'
-        ]}
-        name={<FilterText text={t('services.name')} />}
-        searchPlaceholder={t('services.search')}
-      />
-      <DynamicCheckboxFilter
-        filterOptions={[
-          'Afghanistan',
-          'Albania',
-          'Algeria',
-          'American Samoa',
-          'Andorra',
-          'Angola',
-          'Anguilla',
-          'Antarctica',
-          'Antigua and Barbuda',
-          'Argentina',
-          'Armenia',
-          'Aruba',
-          'Australia',
-          'Austria',
-          'Azerbaijan',
-          'Bahamas (the)',
-          'Bahrain',
-          'Bangladesh',
-          'Barbados',
-          'Belarus',
-          'Belgium'
-        ]}
-        name={<FilterText text={t('data-geo-cov.name')} />}
-        searchPlaceholder={t('data-geo-cov.search')}
-      />
-      <DynamicCheckboxFilter
-        filterOptions={['CSV', 'JSON', 'XML']}
-        name={<FilterText text={t('data-format.name')} />}
-        searchPlaceholder={t('data-format.search')}
-      />
-      <DynamicCheckboxFilter
-        filterOptions={['ETALAB', 'LO-FR-2_0', 'Licence 3']}
-        name={<FilterText text={t('data-licence.name')} />}
-        searchPlaceholder={t('data-licence.search')}
-      />
+
+      <div>
+        <DynamicCheckboxFilter
+          filterOptions={['Rhizome', 'DS4I', 'Data space 3', 'Data space 4']}
+          name={<FilterText text={t('data-spaces.name')} />}
+          searchPlaceholder={t('data-spaces.search')}
+        />
+        <DynamicCheckboxFilter
+          filterOptions={[
+            'Agriculture environment and forestry',
+            'Marketing and customer behaviour'
+          ]}
+          name={<FilterText text={t('topics.name')} />}
+          searchPlaceholder={t('topics.search')}
+        />
+        <DynamicCheckboxFilter
+          filterOptions={[
+            'Data cleaning',
+            'Computer vision',
+            'Machine learning',
+            'Data mining',
+            'Data visualization',
+            'Data analysis',
+            'Data management'
+          ]}
+          name={<FilterText text={t('services.name')} />}
+          searchPlaceholder={t('services.search')}
+        />
+        <DynamicCheckboxFilter
+          filterOptions={[
+            'Afghanistan',
+            'Albania',
+            'Algeria',
+            'American Samoa',
+            'Andorra',
+            'Angola',
+            'Anguilla',
+            'Antarctica',
+            'Antigua and Barbuda',
+            'Argentina',
+            'Armenia',
+            'Aruba',
+            'Australia',
+            'Austria',
+            'Azerbaijan',
+            'Bahamas (the)',
+            'Bahrain',
+            'Bangladesh',
+            'Barbados',
+            'Belarus',
+            'Belgium'
+          ]}
+          name={<FilterText text={t('data-geo-cov.name')} />}
+          searchPlaceholder={t('data-geo-cov.search')}
+        />
+        <DynamicCheckboxFilter
+          filterOptions={['CSV', 'JSON', 'XML']}
+          name={<FilterText text={t('data-format.name')} />}
+          searchPlaceholder={t('data-format.search')}
+        />
+        <DynamicCheckboxFilter
+          filterOptions={['ETALAB', 'LO-FR-2_0', 'Licence 3']}
+          name={<FilterText text={t('data-licence.name')} />}
+          searchPlaceholder={t('data-licence.search')}
+        />
+      </div>
     </div>
   )
 }
