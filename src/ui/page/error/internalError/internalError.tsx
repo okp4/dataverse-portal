@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/ui/store/appStore'
 import { Button } from '@/ui/component/button/button'
+import { routes } from '@/ui/routes'
 import '@/ui/page/error/i18n/index'
 import './internalError.scss'
 import '@/ui/page/error/error.scss'
@@ -33,7 +34,7 @@ export const InternalError: FC = () => {
           <Button
             className="okp4-dataverse-portal-error-page-button"
             label={t('returnToHome')}
-            onClick={handleNavigateTo('/')}
+            onClick={handleNavigateTo(routes.home)}
             variant="quaternary-turquoise"
           />
           <Button

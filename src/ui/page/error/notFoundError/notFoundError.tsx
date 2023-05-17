@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/ui/store/appStore'
 import { Button } from '@/ui/component/button/button'
+import { routes } from '@/ui/routes'
 import '@/ui/page/error/i18n/index'
 import '@/ui/page/home/i18n/index'
 import './notFoundError.scss'
@@ -31,13 +32,13 @@ export const NotFoundError: FC = () => {
           <Button
             className="okp4-dataverse-portal-error-page-button"
             label={t('home:home.blocks.explore.label')}
-            onClick={handleNavigateTo('/dataverse')}
+            onClick={handleNavigateTo(routes.dataverse)}
             variant="primary"
           />
           <Button
             className="okp4-dataverse-portal-error-page-button"
             label={t('returnToHome')}
-            onClick={handleNavigateTo('/')}
+            onClick={handleNavigateTo(routes.home)}
           />
         </div>
       </div>
