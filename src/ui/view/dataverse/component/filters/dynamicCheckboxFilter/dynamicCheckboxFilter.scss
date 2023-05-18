@@ -35,6 +35,28 @@
         overflow-y: auto;
         padding-right: 8px;
       }
+
+      .okp4-dataverse-portal-checkbox-filter-no-results-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) * (var(--visible-checkboxes) + 1));
+
+        .okp4-dataverse-portal-checkbox-filter-no-results {
+          @include columns-with-gap(8px);
+          @include noto-sans(400);
+          font-size: 14px;
+          line-height: 20px;
+          color: themed(text);
+          align-items: center;
+
+          svg{
+            path {
+              fill: themed(text);
+            }
+          }
+        }
+      }
     }
   }
 }

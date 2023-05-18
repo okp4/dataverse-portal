@@ -82,6 +82,7 @@ import { ReactComponent as KeplerIcon } from '@/ui/asset/icon/keplr.svg'
 import { ReactComponent as CheckboxEmptyIcon } from '@/ui/asset/icon/checkbox-empty.svg'
 import { ReactComponent as CheckboxCheckedIcon } from '@/ui/asset/icon/checkbox-checked.svg'
 import { ReactComponent as MagnifierIcon } from '@/ui/asset/icon/magnifier.svg'
+import { ReactComponent as NoResultsIcon } from '@/ui/asset/icon/no-results.svg'
 
 export type IconName =
   | 'all-light'
@@ -166,6 +167,7 @@ export type IconName =
   | 'checkbox-empty'
   | 'checkbox-checked'
   | 'magnifier'
+  | 'no-results'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -249,7 +251,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   keplr: KeplerIcon,
   'checkbox-empty': CheckboxEmptyIcon,
   'checkbox-checked': CheckboxCheckedIcon,
-  magnifier: MagnifierIcon
+  magnifier: MagnifierIcon,
+  'no-results': NoResultsIcon
 }
 
 type IconProps = {

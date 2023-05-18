@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { identity, pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
 import * as S from 'fp-ts/string'
@@ -10,7 +11,18 @@ import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import type { CheckboxOption } from '@/ui/component/searchableCheckbox/searchableCheckbox'
 import { SearchableCheckbox } from '@/ui/component/searchableCheckbox/searchableCheckbox'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
+import { Icon } from '@/ui/component/icon/icon'
 import './dynamicCheckboxFilter.scss'
+
+const NoResultsFound: FC = () => {
+  const { t } = useTranslation('common')
+  return (
+    <div className="okp4-dataverse-portal-checkbox-filter-no-results">
+      <Icon name="no-results" />
+      <span>{t('noResultsFound')}</span>
+    </div>
+  )
+}
 
 type DynamicCheckboxFilterProps = {
   name: string | JSX.Element
@@ -98,7 +110,16 @@ export const DynamicCheckboxFilter: FC<DynamicCheckboxFilterProps> = ({
                   onCheckedChange={handleCheckedChange}
                   searchTerm={searchTerm}
                 />
-              ))
+              )),
+              O.fromPredicate(A.isNonEmpty),
+              O.getOrElse(() => [
+                <div
+                  className="okp4-dataverse-portal-checkbox-filter-no-results-wrapper"
+                  key="no-results"
+                >
+                  <NoResultsFound />
+                </div>
+              ])
             )}
           </div>
         </div>
