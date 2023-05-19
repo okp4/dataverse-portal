@@ -1,39 +1,41 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useAppStore } from '@/ui/store/appStore'
 import { Icon } from '@/ui/component/icon/icon'
 import classNames from 'classnames'
+import { useCopyToClipboard } from '@/ui/hook/useCopyToClipboard'
 import './copyToClipboard.scss'
-
-type CopyState = 'copy' | 'success' | 'error'
 
 type CopyToClipBoardProps = {
   textToCopy: string
+  animationDelay?: number
   onCopied?: (isCopied: boolean) => void
 }
 
-export const CopyToClipboard = ({ onCopied, textToCopy }: CopyToClipBoardProps): JSX.Element => {
+export const CopyToClipboard = ({
+  animationDelay = 2000,
+  onCopied,
+  textToCopy
+}: CopyToClipBoardProps): JSX.Element => {
   const theme = useAppStore(state => state.theme)
-  const [copyState, setCopyState] = useState<CopyState>('copy')
+  const {
+    copyState: { status: copyStatus },
+    handleCopy
+  } = useCopyToClipboard(animationDelay)
 
-  const handleClipboardCopy = useCallback(async (): Promise<void> => {
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopyState('success')
-        onCopied?.(true)
-      })
-      .catch((error: Error) => {
-        setCopyState('error')
-        console.error(error.message)
-        onCopied?.(false)
-      })
-  }, [onCopied, textToCopy])
+  const handleClick = useCallback(() => {
+    handleCopy(textToCopy)
+  }, [handleCopy, textToCopy])
+
+  useEffect(() => {
+    copyStatus === 'success' && onCopied?.(true)
+    copyStatus === 'error' && onCopied?.(false)
+  }, [copyStatus, onCopied])
 
   return (
     <div className="okp4-dataverse-portal-copy-paste-main">
       <div
-        className={classNames('okp4-dataverse-portal-copy-paste-icons-container', copyState)}
-        onClick={handleClipboardCopy}
+        className={classNames('okp4-dataverse-portal-copy-paste-icons-container', copyStatus)}
+        onClick={handleClick}
       >
         <div className="okp4-dataverse-portal-copy-paste-icon copy">
           <Icon name={`copy-${theme}`} />

@@ -30,13 +30,14 @@ $copy-icons: ('copy', 'success', 'error');
       @include hide-icons('success', 'copy');
     }
 
-    &.copy {
+    &.idle {
       @include hide-icons('error', 'success');
     }
 
     .okp4-dataverse-portal-copy-paste-icon {
       display: flex;
       justify-content: center;
+      transition: opacity 500ms;
       align-items: center;
 
       &.success,
