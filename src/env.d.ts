@@ -1,3 +1,51 @@
+type ChainId = string
+
+type Currency = {
+  coinDenom: string
+  coinMinimalDenom: string
+  coinDecimals: number
+  coinGeckoId?: string
+  coinImageUrl?: string
+  gasPriceStep?: {
+    low: number
+    average: number
+    high: number
+  }
+}
+type CW20Currency = Currency & {
+  type: 'cw20'
+  contractAddress: string
+}
+type Secret20Currency = Currency & {
+  type: 'secret20'
+  contractAddress: string
+  viewingKey: string
+}
+
+type IBCCurrency = Currency & {
+  paths: {
+    portId: string
+    channelId: string
+  }[]
+  originChainId: string | undefined
+  originCurrency: Currency | CW20Currency | Secret20Currency | undefined
+}
+
+type AppCurrency = Currency | CW20Currency | Secret20Currency | IBCCurrency
+
+type BIP44 = {
+  coinType: number
+}
+
+type Bech32Config = {
+  bech32PrefixAccAddr: string
+  bech32PrefixAccPub: string
+  bech32PrefixValAddr: string
+  bech32PrefixValPub: string
+  bech32PrefixConsAddr: string
+  bech32PrefixConsPub: string
+}
+
 type ChainInfo = {
   id: ChainId
   rpc: string
@@ -12,11 +60,6 @@ type ChainInfo = {
   currencies: AppCurrency[]
   feeCurrencies: Currency[]
   coinType?: number
-  gasPriceStep?: {
-    low: number
-    average: number
-    high: number
-  }
   features?: string[]
   beta?: boolean
 }

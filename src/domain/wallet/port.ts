@@ -16,6 +16,11 @@ export type Currency = {
   coinDecimals: number
   coinGeckoId?: string
   coinImageUrl?: string
+  gasPriceStep?: {
+    low: number
+    average: number
+    high: number
+  }
 }
 export type CW20Currency = Currency & {
   type: 'cw20'
@@ -52,11 +57,6 @@ export type ChainInfo = {
   currencies: AppCurrency[]
   feeCurrencies: Currency[]
   coinType?: number
-  gasPriceStep?: {
-    low: number
-    average: number
-    high: number
-  }
   features?: string[]
   beta?: boolean
 }

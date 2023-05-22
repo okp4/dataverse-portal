@@ -26,15 +26,15 @@ const sharedChainConf = {
     {
       coinDenom: 'KNOW',
       coinMinimalDenom: 'uknow',
-      coinDecimals: 6
+      coinDecimals: 6,
+      gasPriceStep: {
+        low: 0.01,
+        average: 0.025,
+        high: 0.03
+      }
     }
   ],
-  coinType: 118,
-  gasPriceStep: {
-    low: 0.01,
-    average: 0.025,
-    high: 0.03
-  }
+  coinType: 118
 }
 
 const APP_ENV = {
@@ -57,21 +57,21 @@ const APP_ENV = {
       chainName: 'OKP4 nemeton',
       rpc: 'https://api.testnet.okp4.network:443/rpc',
       rest: 'https://api.testnet.okp4.network/',
-      sharedChainConf
+      ...sharedChainConf
     },
     {
       id: 'okp4-devnet-1',
       chainName: 'OKP4 devnet',
       rpc: 'https://api.devnet.okp4.network:443/rpc',
       rest: 'https://api.devnet.okp4.network/',
-      sharedChainConf
+      ...sharedChainConf
     },
     {
       id: 'okp4-devnet-staging-1',
       chainName: 'OKP4 devnet staging',
       rpc: 'https://api.devnet.staging.okp4.network:443/rpc',
       rest: 'https://api.devnet.staging.okp4.network:443/rpc',
-      sharedChainConf
+      ...sharedChainConf
     }
   ]
 }
