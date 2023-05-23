@@ -93,7 +93,7 @@ export const keplrWalletGateway: WalletPort = {
       RTE.chainTaskEitherK((deps: WalletPortDeps) =>
         pipe(
           enableChain(chainId),
-          TE.orElseFirstW(error =>
+          TE.orElse(error =>
             B.match(
               () =>
                 pipe(
