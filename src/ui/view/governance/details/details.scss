@@ -66,6 +66,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            column-gap: 10px;
 
             &.pointer-cursor {
               cursor: pointer;
@@ -87,6 +88,7 @@
               display: flex;
               align-items: center;
               gap: 40px;
+              align-self: start;
 
               .okp4-dataverse-portal-governance-details-article-paragraphs-number {
                 padding: 12px 17px;
