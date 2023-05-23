@@ -1,7 +1,7 @@
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { Option } from 'fp-ts/Option'
-import { match, none } from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
@@ -66,15 +66,23 @@ const serviceGeneralMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
-const Service = (): JSX.Element => {
+const Service: FC = () => {
   const { id } = useParams<string>()
-  const [service, setService] = useState<Option<DataverseItemDetails>>(none)
+  const [service, setService] = useState<O.Option<DataverseItemDetails>>(O.none)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    id && setService(getResourceDetails(id))
+    setIsLoading(true)
+    setService(id ? getResourceDetails(id) : O.none)
+    setIsLoading(false)
   }, [id])
 
-  return match(
+  if (isLoading) {
+    // TODO: add loading component
+    return null
+  }
+
+  return O.match(
     () => <NotFoundError />,
     (service: DataverseItemDetails) => (
       <PageTemplate data={service} metadata={serviceGeneralMetadata} />

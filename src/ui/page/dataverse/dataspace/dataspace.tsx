@@ -1,13 +1,12 @@
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { Option } from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
 import type { DataSpace, DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
-import * as O from 'fp-ts/Option'
-import { pipe } from 'fp-ts/lib/function'
 
 const dataspaceMetadata: ItemGeneralMetadata[] = [
   {
@@ -60,17 +59,27 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
 export const isDataSpace = (resource: DataverseItemDetails): resource is DataSpace =>
   resource.type === 'dataspace'
 
-const Dataspace = (): JSX.Element => {
+const Dataspace: FC = () => {
   const { id } = useParams<string>()
-  const [dataspace, setDataspace] = useState<Option<DataSpace>>(O.none)
+  const [dataspace, setDataspace] = useState<O.Option<DataverseItemDetails>>(O.none)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    pipe(O.fromNullable(id), O.flatMap(getResourceDetails), O.filter(isDataSpace), setDataspace)
+    setIsLoading(true)
+    setDataspace(id ? getResourceDetails(id) : O.none)
+    setIsLoading(false)
   }, [id])
+
+  if (isLoading) {
+    // TODO: add loading component
+    return null
+  }
 
   return O.match(
     () => <NotFoundError />,
-    (dataspace: DataSpace) => <PageTemplate data={dataspace} metadata={dataspaceMetadata} />
+    (dataspace: DataverseItemDetails) => (
+      <PageTemplate data={dataspace} metadata={dataspaceMetadata} />
+    )
   )(dataspace)
 }
 
