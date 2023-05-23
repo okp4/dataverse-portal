@@ -1,35 +1,103 @@
+@import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
+@import '@/ui/style/fonts.scss';
 
 .okp4-dataverse-portal-toolbar-main {
-  @include twelve-column-layout;
-  justify-items: end;
-  align-items: center;
+  @include with-theme {
+    @include twelve-column-layout;
+    justify-items: end;
+    align-items: center;
 
-  .okp4-dataverse-portal-burger-menu {
-    @include grid-item($colStart: 1, $colEnd: 2, $rowStart: 1, $rowEnd: 1);
-    justify-self: flex-start;
-  }
-
-  .okp4-dataverse-portal-toolbar-logo {
-    justify-self: center;
-
-    @include use-breakpoints(('mobile')) {
-      @include grid-item($colStart: 3, $colEnd: 5, $rowStart: 1, $rowEnd: 1);
-    }
-    @include use-breakpoints(('tablet')) {
-      @include grid-item($colStart: 4, $colEnd: 6, $rowStart: 1, $rowEnd: 1);
-    }
-  }
-
-  .okp4-dataverse-portal-wallet {
-    @include grid-item($colStart: -1, $colEnd: -2, $rowStart: 1, $rowEnd: 1);
-    justify-self: flex-end;
-    @include use-breakpoints(('desktop', 'large-desktop')) {
-      @include grid-item($colStart: -1, $colEnd: -5, $rowStart: 1, $rowEnd: 1);
+    .okp4-dataverse-portal-burger-menu {
+      @include grid-item($colStart: 1, $colEnd: 2, $rowStart: 1, $rowEnd: 1);
+      justify-self: flex-start;
     }
 
-    .okp4-dataverse-portal-wallet-icon {
-      padding: 11px;
+    .okp4-dataverse-portal-toolbar-logo {
+      justify-self: center;
+
+      @include use-breakpoints(('mobile')) {
+        @include grid-item($colStart: 3, $colEnd: 5, $rowStart: 1, $rowEnd: 1);
+      }
+      @include use-breakpoints(('tablet')) {
+        @include grid-item($colStart: 4, $colEnd: 6, $rowStart: 1, $rowEnd: 1);
+      }
+    }
+
+    .okp4-dataverse-portal-wallet-container {
+      @include grid-item($colStart: -1, $colEnd: -2, $rowStart: 1, $rowEnd: 1);
+      @include columns-with-gap(5px);
+      position: relative;
+      justify-self: flex-end;
+      @include use-breakpoints(('desktop', 'large-desktop')) {
+        @include grid-item($colStart: -1, $colEnd: -5, $rowStart: 1, $rowEnd: 1);
+      }
+
+      .okp4-dataverse-portal-wallet {
+        @include rows-with-gap(10px);
+
+        .okp4-dataverse-portal-wallet-icon {
+          padding: 11px;
+        }
+
+        .okp4-dataverse-portal-wallet-expand {
+          cursor: pointer;
+
+          &.rotate-down {
+            @include rotation-animation(-180deg);
+          }
+
+          &.rotate-up {
+            @include rotation-animation(0deg);
+          }
+        }
+      }
+
+      .okp4-dataverse-portal-wallet-menu {
+        color: themed('text');
+        border-radius: 12px;
+        background: themed('tertiary-button-background');
+        top: 53px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        width: 223px;
+        position: absolute;
+        z-index: 2;
+
+        .okp4-dataverse-portal-wallet-menu-list {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          padding: 20px;
+
+          .okp4-dataverse-portal-wallet-menu-item {
+            @include rows-with-gap(6px);
+            @include noto-sans(700);
+            width: 100%;
+            padding: 10px 0;
+            align-self: center;
+
+            &.balance {
+              opacity: 0.4;
+
+              svg {
+                width: 22px;
+              }
+
+              .okp4-dataverse-portal-wallet-menu-balance-amount {
+                text-transform: uppercase;
+              }
+            }
+
+            &.disconnect {
+              color: themed('log-out-menu');
+              cursor: pointer;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -2,12 +2,21 @@
   "error": {
     "problem": "Sorry, a problem has occurred.",
     "processing": "We are currently unable to process your request. Please try refreshing this page.",
-    "copy": "An error occurred, the text could not be copied."
+    "copy": "An error occurred, the text could not be copied.",
+    "walletConnectionFailed": "Wallet connection failed",
+    "walletConnectionRejected": "Wallet connection request has been rejected.",
+    "walletConnectionError": "Wallet connection error",
+    "walletNetworkError": "Due to network issues, we failed to connect your wallet. Please try again later."
+  },
+  "warning": {
+    "extensionMissing": "Sorry, you don't have the extension.",
+    "extensionRequired": "You must have the Keplr extension in order to be able to connect your wallet."
   },
   "success": {
     "copy": "Copied"
   },
   "action": {
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "keplrInstall": "Install Keplr"
   }
 }

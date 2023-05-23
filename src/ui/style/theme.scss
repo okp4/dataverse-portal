@@ -42,7 +42,8 @@ $themes: (
       linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
     governance-nav-section-background: $governance-nav-section-background,
     article-background: $article-background-light,
-    paragraph-background: $paragraph-background-light
+    paragraph-background: $paragraph-background-light,
+    log-out-menu: $error
   ),
   dark: (
     primary-color: $primary,
@@ -84,7 +85,8 @@ $themes: (
       linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
     governance-nav-section-background: $tertiary-button-background-dark,
     article-background: $article-background-dark,
-    paragraph-background: $paragraph-background-dark
+    paragraph-background: $paragraph-background-dark,
+    log-out-menu: $error
   )
 );
 

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 import uuid from 'short-uuid'
 import { useNotificationStore } from '@/ui/store'
+import type { ActionType } from '@/ui/store'
 import type { NotificationType } from '@/domain/notification/entity'
 import { toEffectfulObject } from '@/util/effect'
-import type { ActionType } from '@/ui/component/toast/toast'
 import '@/ui/component/notification/i18n'
 
 type DispatchNotificationInput = {

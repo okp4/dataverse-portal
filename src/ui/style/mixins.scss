@@ -105,3 +105,13 @@
   flex-direction: column;
   gap: $gap;
 }
+
+@mixin rows-with-gap($gap) {
+  display: flex;
+  gap: $gap;
+}
+
+@mixin rotation-animation($degrees) {
+  transform: rotate($degrees);
+  transition: transform 0.1s linear;
+}
