@@ -11,22 +11,22 @@
     }
 
     .okp4-dataverse-portal-governance-page-section {
-      @include grid-container($gutter: 48px);
+      @include grid-container($colGutter: 48px);
       color: themed('text');
       grid-auto-rows: max-content;
       row-gap: 26px;
 
       @include use-breakpoints(('desktop')) {
-        @include grid-container($colsNb: 12, $gutter: 34px);
+        @include grid-container($colsNb: 12, $colGutter: 34px);
       }
 
       @include use-breakpoints(('tablet')) {
-        @include grid-container($colsNb: 8, $gutter: 16px);
+        @include grid-container($colsNb: 8, $colGutter: 16px);
         row-gap: 20px;
       }
 
       @include use-breakpoints(('mobile')) {
-        @include grid-container($colsNb: 6, $gutter: 16px);
+        @include grid-container($colsNb: 6, $colGutter: 16px);
         row-gap: 20px;
       }
 
