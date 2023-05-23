@@ -90,21 +90,19 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
   }, [paragraph.description, paragraphRef])
 
   return (
-    <div className="okp4-dataverse-portal-governance-details-paragraph-container">
-      <div className="okp4-dataverse-portal-governance-details-paragraph">
-        <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
-        <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
-          {paragraph.title}
-        </h3>
-        <div className="okp4-dataverse-portal-governance-details-description-container">
-          {paragraphDescription}
-        </div>
-        {isTextTooLong && (
-          <div className="okp4-dataverse-portal-governance-details-button">
-            <Button disabled label={t('actions.seeMore')} variant="outlined-tertiary" />
-          </div>
-        )}
+    <div className="okp4-dataverse-portal-governance-details-paragraph">
+      <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
+      <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
+        {paragraph.title}
+      </h3>
+      <div className="okp4-dataverse-portal-governance-details-description-container">
+        {paragraphDescription}
       </div>
+      {isTextTooLong && (
+        <div className="okp4-dataverse-portal-governance-details-button">
+          <Button disabled label={t('actions.seeMore')} variant="outlined-tertiary" />
+        </div>
+      )}
     </div>
   )
 }
