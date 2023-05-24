@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+import type { FC } from 'react'
 import { useAppStore } from '@/ui/store/appStore'
 import { Icon } from '@/ui/component/icon/icon'
 import classNames from 'classnames'
@@ -11,11 +12,11 @@ type CopyToClipBoardProps = {
   onCopied?: (isCopied: boolean) => void
 }
 
-export const CopyToClipboard = ({
+export const CopyToClipboard: FC<CopyToClipBoardProps> = ({
   animationDelay = 2000,
   onCopied,
   textToCopy
-}: CopyToClipBoardProps): JSX.Element => {
+}) => {
   const theme = useAppStore(state => state.theme)
   const {
     copyState: { status: copyStatus },
