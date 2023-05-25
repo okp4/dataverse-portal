@@ -100,7 +100,6 @@ const Dataset: FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setIsLoading(true)
     const resourceDetails = id ? getResourceDetails(id) : O.none
     setDataset(
       O.isSome(resourceDetails) && isDataSet(resourceDetails.value) ? resourceDetails : O.none

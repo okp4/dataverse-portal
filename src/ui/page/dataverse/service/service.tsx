@@ -75,7 +75,6 @@ const Service: FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setIsLoading(true)
     const resourceDetails = id ? getResourceDetails(id) : O.none
     setService(
       O.isSome(resourceDetails) && isService(resourceDetails.value) ? resourceDetails : O.none
