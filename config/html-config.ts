@@ -58,7 +58,7 @@ const options: Options = {
   headScripts: [
     {
       src: '/assets/env.js',
-      async: true,
+      async: false
     }
   ]
 }
