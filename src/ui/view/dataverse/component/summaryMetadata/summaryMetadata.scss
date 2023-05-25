@@ -15,6 +15,10 @@
         margin-top: 8px;
         white-space: pre;
 
+        svg path {
+          fill: themed(text);
+        }
+
         .okp4-dataverse-portal-metadata-label {
           @include noto-sans(400);
         }

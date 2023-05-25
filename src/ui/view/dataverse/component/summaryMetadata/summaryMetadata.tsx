@@ -1,11 +1,9 @@
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
-import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import './summaryMetadata.scss'
 import './i18n/index'
 
@@ -50,26 +48,15 @@ const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
 
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation('metadata')
-  const dispatchNotification = useDispatchNotification()
 
   const hasClipboard = label === 'registrar' || label === 'createdBy' || label === 'modifiedBy'
-
-  const handleCopy = useCallback(
-    (isCopied: boolean): void => {
-      dispatchNotification({
-        type: isCopied ? 'success' : 'error',
-        titleKey: isCopied ? 'success.copy' : 'error.copy'
-      })
-    },
-    [dispatchNotification]
-  )
 
   return (
     <div className="okp4-dataverse-portal-metadata-clipboard-with-toast">
       <div className="okp4-dataverse-portal-metadata-clipboard-container">
         <p className="okp4-dataverse-portal-metadata-label">{t(`${label}`)}</p>
         <LinkOrSimpleRow label={label} value={value} />
-        {hasClipboard && <CopyToClipboard onCopied={handleCopy} textToCopy={value} />}
+        {hasClipboard && <CopyToClipboard textToCopy={value} />}
       </div>
     </div>
   )
