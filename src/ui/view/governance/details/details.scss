@@ -78,7 +78,13 @@
               }
 
               .okp4-dataverse-portal-governance-details-article-expand-button {
+                display: flex;
                 cursor: pointer;
+
+                path {
+                  stroke: themed('text');
+                  stroke-opacity: 0.6;
+                }
 
                 &.rotate-down {
                   @include rotation-animation(-180deg);
