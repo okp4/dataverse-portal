@@ -122,8 +122,6 @@ const WalletButton = ({
   label,
   onWalletMenuClick
 }: WalletButtonProps): JSX.Element => {
-  const theme = useAppStore(state => state.theme)
-
   const walletIcons = useMemo(
     () => ({
       startIcon: <Icon name="wallet" />,
@@ -133,11 +131,11 @@ const WalletButton = ({
             `okp4-dataverse-portal-wallet-expand ${isWalletMenuOpen ? 'rotate-down' : 'rotate-up'}`
           )}
         >
-          <Icon name={`expand-down-${theme}`} />
+          <Icon name="chevron" />
         </div>
       ) : undefined
     }),
-    [isWalletConnected, isWalletMenuOpen, theme]
+    [isWalletConnected, isWalletMenuOpen]
   )
 
   return (

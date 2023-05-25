@@ -129,6 +129,20 @@
       align-items: flex-end;
       justify-content: center;
 
+      svg {
+        transform: rotate(-90deg);
+
+        path {
+          fill: themed('secondary-color');
+        }
+      }
+
+      &.expanded {
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+
       @include use-breakpoints(('mobile', 'tablet')) {
         display: none;
       }

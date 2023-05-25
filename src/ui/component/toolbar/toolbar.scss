@@ -41,7 +41,14 @@
         }
 
         .okp4-dataverse-portal-wallet-expand {
+          display: flex;
           cursor: pointer;
+
+          svg {
+            path {
+              fill: themed('text');
+            }
+          }
 
           &.rotate-down {
             @include rotation-animation(-180deg);
