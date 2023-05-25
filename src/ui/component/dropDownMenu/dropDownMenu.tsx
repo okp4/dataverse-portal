@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
@@ -11,43 +11,47 @@ type OptionID = string
 
 export type Option = {
   id: OptionID
-  title: string
+  label: string
   value: OptionID[]
 }
 
 type DropDownMenuPage = {
-  title: string
+  label: string
   menuOptions: Option[]
 }
 
 type DropDownMenuProps = {
   options: Option[]
   onSelect: (selectedOptionValue: OptionID[]) => void
-  selectedTitle: string
+  value: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, selectedTitle }) => {
-  const [menuPages, setMenuPages] = useState<DropDownMenuPage[]>([])
+export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, value }) => {
+  const [menuOpened, setMenuOpened] = useState<boolean>(false)
   const [focusedMenuPageIndex, setFocusedMenuPageIndex] = useState<number>(0)
   const menuContainerRef = useRef<HTMLDivElement | null>(null)
   const menuPageRefs = useRef<HTMLDivElement[]>([])
   const theme = useAppStore(state => state.theme)
   const { t } = useTranslation('common')
-  const firstMenuPageOptions = useMemo(
-    () => options.filter(({ id, value }) => id === value[0]),
-    [options]
+  const firstMenuPage = useMemo(
+    () => ({ label: value, menuOptions: options.filter(({ id, value }) => id === value[0]) }),
+    [options, value]
   )
 
+  const [menuPages, setMenuPages] = useState<DropDownMenuPage[]>([firstMenuPage])
+
   const toggleMenu = useCallback(() => {
-    menuPages.length
-      ? setMenuPages([])
-      : setMenuPages([{ title: selectedTitle, menuOptions: firstMenuPageOptions }])
+    setMenuOpened(!menuOpened)
+  }, [menuOpened])
+
+  useEffect(() => {
+    setMenuPages([firstMenuPage])
     setFocusedMenuPageIndex(0)
-  }, [menuPages.length, selectedTitle, firstMenuPageOptions])
+  }, [firstMenuPage, menuOpened])
 
   const clickOutsideHandler = useCallback(() => {
-    setMenuPages([])
+    setMenuOpened(false)
     setFocusedMenuPageIndex(0)
   }, [])
 
@@ -78,7 +82,7 @@ export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, selecte
     (options: Option[], index: number) => () => {
       options.length === 1
         ? selectOption(options[0].value)
-        : slideMenu(index + 1, { title: options[0].title, menuOptions: options.slice(1) })
+        : slideMenu(index + 1, { label: options[0].label, menuOptions: options.slice(1) })
     },
     [selectOption, slideMenu]
   )
@@ -96,24 +100,24 @@ export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, selecte
   )
 
   const selectTitle = useMemo(
-    () => (menuPages.length ? menuPages[focusedMenuPageIndex].title : selectedTitle),
-    [focusedMenuPageIndex, menuPages, selectedTitle]
+    () => (menuPages.length ? menuPages[focusedMenuPageIndex].label : value),
+    [focusedMenuPageIndex, menuPages, value]
   )
 
   return (
     <div className="okp4-dataverse-portal-drop-down-menu-main">
-      {!!menuPages.length && <div className="okp4-dataverse-portal-drop-down-menu-blur" />}
+      {menuOpened && <div className="okp4-dataverse-portal-drop-down-menu-blur" />}
       <div className="okp4-dataverse-portal-drop-down-menu-container" ref={menuContainerRef}>
         <div
           className={classnames('okp4-dataverse-portal-drop-down-menu-item', 'selected', {
-            'menu-opened': !!menuPages.length
+            'menu-opened': menuOpened
           })}
           onClick={toggleMenu}
         >
           <p>{selectTitle}</p>
           <Icon name={`arrow-down-${theme}`} />
         </div>
-        {!!menuPages.length && (
+        {menuOpened && (
           <div className="okp4-dataverse-portal-drop-down-menus-container">
             {[...menuPages, null].map((menuPage, menuPageIndex) => (
               <div
@@ -132,16 +136,16 @@ export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, selecte
                     <p>{t('actions.back')}</p>
                   </div>
                 )}
-                {menuPage?.menuOptions.map(({ id, title }) => {
+                {menuPage?.menuOptions.map(({ id, label }) => {
                   const relatedOptions = options.filter(({ value }) => value.includes(id))
 
                   return (
                     <div
                       className="okp4-dataverse-portal-drop-down-menu-item option"
-                      key={title}
+                      key={label}
                       onClick={handleOptionClick(relatedOptions, menuPageIndex)}
                     >
-                      <p>{title}</p>
+                      <p>{label}</p>
                       {options.filter(({ value }) => id === value[0]).length > 1 && (
                         <Icon name="arrow-right" />
                       )}

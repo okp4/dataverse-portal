@@ -40,18 +40,18 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
           ? [
               {
                 id: sectionId,
-                title: sectionTitle,
+                label: sectionTitle,
                 value: [sectionId]
               },
               ...contains.map(({ id: subSectionId, title: subSectionTitle }) => ({
                 id: subSectionId,
-                title: subSectionTitle,
+                label: subSectionTitle,
                 value: [sectionId, subSectionId]
               }))
             ]
           : {
               id: sectionId,
-              title: sectionTitle,
+              label: sectionTitle,
               value: [sectionId, contains[0].id]
             }
       ),
@@ -64,7 +64,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   )
 
   const dropDownMenuSelectedTitle = useMemo(
-    () => dropDownMenuOptions.find(({ id }) => id === activeSectionId)?.title ?? '',
+    () => dropDownMenuOptions.find(({ id }) => id === activeSectionId)?.label ?? '',
     [activeSectionId, dropDownMenuOptions]
   )
 
@@ -81,7 +81,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
         <DropDownMenu
           onSelect={handleSelect}
           options={dropDownMenuOptions}
-          selectedTitle={dropDownMenuSelectedTitle}
+          value={dropDownMenuSelectedTitle}
         />
       ) : (
         <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
