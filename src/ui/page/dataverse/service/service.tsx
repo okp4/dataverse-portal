@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as O from 'fp-ts/Option'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
-import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
+import { Service, getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
@@ -66,6 +66,9 @@ const serviceGeneralMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
+const isService = (resource: DataverseItemDetails): resource is Service =>
+  resource.type === 'service'
+
 const Service: FC = () => {
   const { id } = useParams<string>()
   const [service, setService] = useState<O.Option<DataverseItemDetails>>(O.none)
@@ -73,7 +76,10 @@ const Service: FC = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    setService(id ? getResourceDetails(id) : O.none)
+    const resourceDetails = id ? getResourceDetails(id) : O.none
+    setService(
+      O.isSome(resourceDetails) && isService(resourceDetails.value) ? resourceDetails : O.none
+    )
     setIsLoading(false)
   }, [id])
 

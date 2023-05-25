@@ -66,7 +66,10 @@ const Dataspace: FC = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    setDataspace(id ? getResourceDetails(id) : O.none)
+    const resourceDetails = id ? getResourceDetails(id) : O.none
+    setDataspace(
+      O.isSome(resourceDetails) && isDataSpace(resourceDetails.value) ? resourceDetails : O.none
+    )
     setIsLoading(false)
   }, [id])
 
