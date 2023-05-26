@@ -1,9 +1,9 @@
+import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { Option } from 'fp-ts/Option'
-import { match, none } from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
-import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
+import { Dataset, getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
@@ -91,15 +91,28 @@ const datasetMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
-const Dataset = (): JSX.Element => {
+const isDataSet = (resource: DataverseItemDetails): resource is Dataset =>
+  resource.type === 'dataset'
+
+const Dataset: FC = () => {
   const { id } = useParams<string>()
-  const [dataset, setDataset] = useState<Option<DataverseItemDetails>>(none)
+  const [dataset, setDataset] = useState<O.Option<DataverseItemDetails>>(O.none)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    id && setDataset(getResourceDetails(id))
+    const resourceDetails = id ? getResourceDetails(id) : O.none
+    setDataset(
+      O.isSome(resourceDetails) && isDataSet(resourceDetails.value) ? resourceDetails : O.none
+    )
+    setIsLoading(false)
   }, [id])
 
-  return match(
+  if (isLoading) {
+    // TODO: add loading component
+    return null
+  }
+
+  return O.match(
     () => <NotFoundError />,
     (dataset: DataverseItemDetails) => <PageTemplate data={dataset} metadata={datasetMetadata} />
   )(dataset)
