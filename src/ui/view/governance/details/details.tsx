@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
@@ -11,8 +11,6 @@ import type {
   ParagraphDTO,
   SectionDTO
 } from '@/ui/page/dataverse/dataspace/governance/mockedData'
-import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
-import { isDID } from '@/util/util'
 import './details.scss'
 
 type ArticleProps = {
@@ -55,48 +53,17 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
     }
   }, [])
 
-  const paragraphDescription = useMemo(() => {
-    const descriptionWords = paragraph.description.slice().split(' ')
-    return (
-      <div
-        className="okp4-dataverse-portal-governance-details-description paragraph"
-        ref={paragraphRef}
-      >
-        {descriptionWords.map((word, index) =>
-          isDID(word) ? (
-            word.length > 22 ? (
-              <div
-                className="okp4-dataverse-portal-governance-details-description-paragraph-did"
-                key={index}
-              >
-                <span>{[word.slice(0, 16), '...', word.slice(-4)].join('')}</span>
-                <CopyToClipboard textToCopy={word} />
-              </div>
-            ) : (
-              <div
-                className="okp4-dataverse-portal-governance-details-description-paragraph-did"
-                key={index}
-              >
-                <span>{`${word} `}</span>
-                <CopyToClipboard textToCopy={word} />
-              </div>
-            )
-          ) : (
-            <span key={index}>{`${word} `}</span>
-          )
-        )}
-      </div>
-    )
-  }, [paragraph.description, paragraphRef])
-
   return (
     <div className="okp4-dataverse-portal-governance-details-paragraph">
       <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
       <h3 className="okp4-dataverse-portal-governance-details-paragraph-title">
         {paragraph.title}
       </h3>
-      <div className="okp4-dataverse-portal-governance-details-description-container">
-        {paragraphDescription}
+      <div
+        className="okp4-dataverse-portal-governance-details-description paragraph"
+        ref={paragraphRef}
+      >
+        {paragraph.description}
       </div>
       {isTextTooLong && (
         <div className="okp4-dataverse-portal-governance-details-button">
