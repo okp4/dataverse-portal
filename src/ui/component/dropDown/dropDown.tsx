@@ -2,153 +2,155 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
-import { useAppStore } from '@/ui/store/appStore'
 import { Icon } from '@/ui/component/icon/icon'
 import classnames from 'classnames'
 import './dropDown.scss'
 
-type OptionID = string
+export type SubOption = Omit<Option, 'subOptions'> & { parentOptionValue: string }
 
 export type Option = {
-  id: OptionID
   label: string
-  value: OptionID[]
+  value: string
+  subOptions?: SubOption[]
 }
 
-type DropDownMenuPage = {
+type DropDownMenu = {
   label: string
   menuOptions: Option[]
 }
 
-type DropDownMenuProps = {
+type DropDownProps = {
   options: Option[]
-  onSelect: (selectedOptionValue: OptionID[]) => void
+  onChange: (selectedOption: string, selectedSubOption?: string) => void
   value: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const DropDown: FC<DropDownMenuProps> = ({ options, onSelect, value }) => {
-  const [menuOpened, setMenuOpened] = useState<boolean>(false)
-  const [focusedMenuPageIndex, setFocusedMenuPageIndex] = useState<number>(0)
-  const menuContainerRef = useRef<HTMLDivElement | null>(null)
-  const menuPageRefs = useRef<HTMLDivElement[]>([])
-  const theme = useAppStore(state => state.theme)
+export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
   const { t } = useTranslation('common')
-  const firstMenuPage = useMemo(
-    () => ({ label: value, menuOptions: options.filter(({ id, value }) => id === value[0]) }),
-    [options, value]
-  )
-
-  const [menuPages, setMenuPages] = useState<DropDownMenuPage[]>([firstMenuPage])
+  const [menuOpened, setMenuOpened] = useState<boolean>(false)
+  const [focusedMenuIndex, setFocusedMenuIndex] = useState<number>(0)
+  const [dropDownMenus, setDropDownMenus] = useState<DropDownMenu[]>([])
+  const menuContainerRef = useRef<HTMLDivElement | null>(null)
+  const dropDownMenusRefs = useRef<HTMLDivElement[]>([])
 
   const toggleMenu = useCallback(() => {
     setMenuOpened(!menuOpened)
   }, [menuOpened])
 
-  useEffect(() => {
-    setMenuPages([firstMenuPage])
-    setFocusedMenuPageIndex(0)
-  }, [firstMenuPage, menuOpened])
-
   const clickOutsideHandler = useCallback(() => {
     setMenuOpened(false)
-    setFocusedMenuPageIndex(0)
   }, [])
 
   useOnClickOutside(menuContainerRef, clickOutsideHandler)
 
   const selectOption = useCallback(
-    (selectedValue: OptionID[]) => {
-      onSelect(selectedValue)
+    (optionValue: string, subOptionValue?: string) => {
+      onChange(optionValue, subOptionValue)
       toggleMenu()
     },
-    [onSelect, toggleMenu]
+    [onChange, toggleMenu]
   )
 
   const slideMenu = useCallback(
-    (menuPageIndex: number, menuPage?: DropDownMenuPage) => {
-      menuPageRefs.current[menuPageIndex].scrollIntoView({
+    (menuIndex: number, nextMenu?: DropDownMenu) => {
+      dropDownMenusRefs.current[menuIndex].scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
         inline: 'center'
       })
-      menuPage && setMenuPages([...menuPages.slice(0, menuPageIndex), menuPage])
-      setFocusedMenuPageIndex(menuPageIndex)
+      nextMenu && setDropDownMenus([...dropDownMenus.slice(0, menuIndex + 1), nextMenu])
+      setFocusedMenuIndex(menuIndex)
     },
-    [menuPages]
+    [dropDownMenus]
+  )
+
+  const handleSubOptionClick = useCallback(
+    ({ parentOptionValue, value }: SubOption) =>
+      () => {
+        selectOption(parentOptionValue, value)
+      },
+    [selectOption]
   )
 
   const handleOptionClick = useCallback(
-    (options: Option[], index: number) => () => {
-      options.length === 1
-        ? selectOption(options[0].value)
-        : slideMenu(index + 1, { label: options[0].label, menuOptions: options.slice(1) })
+    (option: Option, index: number) => () => {
+      if (option.subOptions) {
+        option.subOptions.length === 1
+          ? selectOption(option.value, option.subOptions[0].value)
+          : slideMenu(index + 1, { label: option.label, menuOptions: option.subOptions })
+      }
     },
     [selectOption, slideMenu]
   )
 
-  const handleMenuBack = useCallback(
-    (menuPageIndex: number) => () => {
-      slideMenu(menuPageIndex - 1)
+  const backToPreviousMenu = useCallback(
+    (menuIndex: number) => () => {
+      slideMenu(menuIndex - 1)
     },
     [slideMenu]
   )
 
   const handleRefIndexation = useCallback(
-    (index: number) => (ref: HTMLDivElement) => (menuPageRefs.current[index] = ref),
+    (index: number) => (ref: HTMLDivElement) => (dropDownMenusRefs.current[index] = ref),
     []
   )
 
   const selectTitle = useMemo(
-    () => (menuPages.length ? menuPages[focusedMenuPageIndex].label : value),
-    [focusedMenuPageIndex, menuPages, value]
+    () => (dropDownMenus.length ? dropDownMenus[focusedMenuIndex].label : value),
+    [focusedMenuIndex, dropDownMenus, value]
   )
+
+  useEffect(() => {
+    setDropDownMenus([{ label: value, menuOptions: options }])
+    setFocusedMenuIndex(0)
+  }, [menuOpened, options, value])
 
   return (
     <div className="okp4-dataverse-portal-drop-down-menu-main">
       {menuOpened && <div className="okp4-dataverse-portal-drop-down-menu-blur" />}
       <div className="okp4-dataverse-portal-drop-down-menu-container" ref={menuContainerRef}>
         <div
-          className={classnames('okp4-dataverse-portal-drop-down-menu-item', 'selected', {
+          className={classnames('okp4-dataverse-portal-drop-down-menu-item selected', {
             'menu-opened': menuOpened
           })}
           onClick={toggleMenu}
         >
           <p>{selectTitle}</p>
-          <Icon name={`arrow-down-${theme}`} />
+          <Icon name="chevron-sharp" />
         </div>
         {menuOpened && (
           <div className="okp4-dataverse-portal-drop-down-menus-container">
-            {[...menuPages, null].map((menuPage, menuPageIndex) => (
+            {[...dropDownMenus, null].map((menu, index) => (
               <div
-                className={classnames('okp4-dataverse-portal-drop-down-menu-options-container', {
-                  focused: menuPageIndex === focusedMenuPageIndex
-                })}
-                key={menuPageIndex}
-                ref={handleRefIndexation(menuPageIndex)}
+                className="okp4-dataverse-portal-drop-down-menu-options-container"
+                key={index}
+                ref={handleRefIndexation(index)}
               >
-                {menuPageIndex !== 0 && (
+                {index !== 0 && (
                   <div
                     className="okp4-dataverse-portal-drop-down-menu-item back-button"
-                    onClick={handleMenuBack(menuPageIndex)}
+                    onClick={backToPreviousMenu(index)}
                   >
                     <Icon name="arrow-left" />
                     <p>{t('actions.back')}</p>
                   </div>
                 )}
-                {menuPage?.menuOptions.map(({ id, label }) => {
-                  const relatedOptions = options.filter(({ value }) => value.includes(id))
+                {menu?.menuOptions.map(option => {
+                  const hasSubOptions = option.subOptions && option.subOptions.length > 1
 
                   return (
                     <div
                       className="okp4-dataverse-portal-drop-down-menu-item option"
-                      key={label}
-                      onClick={handleOptionClick(relatedOptions, menuPageIndex)}
+                      key={option.value}
+                      onClick={
+                        option.subOptions
+                          ? handleOptionClick(option, index)
+                          : handleSubOptionClick(option as SubOption)
+                      }
                     >
-                      <p>{label}</p>
-                      {options.filter(({ value }) => id === value[0]).length > 1 && (
-                        <Icon name="arrow-right" />
-                      )}
+                      <p>{option.label}</p>
+                      {hasSubOptions && <Icon name="arrow-right" />}
                     </div>
                   )
                 })}

@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from 'react'
 import type { FC } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import classnames from 'classnames'
 import { useAppStore } from '@/ui/store/appStore'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { DropDown } from '@/ui/component/dropDown/dropDown'
-import type { Option } from '@/ui/component/dropDown/dropDown'
-import classnames from 'classnames'
-import type { SectionDTO } from './mockedData'
+import type { Option, SubOption } from '@/ui/component/dropDown/dropDown'
+import type { SectionDTO, SubSectionDTO } from './mockedData'
 
 type GovernanceWithNavigationProps = {
   dataspaceId: string
@@ -33,44 +33,34 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
 
   const governanceBasePath = `/dataverse/dataspace/${dataspaceId}/governance`
 
+  const convertToSubOptions = (sectionId: string, subSections: SubSectionDTO[]): SubOption[] =>
+    subSections.map(({ id: subSectionId, title: subSectionTitle }) => ({
+      label: subSectionTitle,
+      parentOptionValue: sectionId,
+      value: subSectionId
+    }))
+
   const convertToOptions = useCallback(
     (sections: SectionDTO[]): Option[] =>
-      sections.flatMap(({ id: sectionId, title: sectionTitle, contains }) =>
-        contains.length > 1
-          ? [
-              {
-                id: sectionId,
-                label: sectionTitle,
-                value: [sectionId]
-              },
-              ...contains.map(({ id: subSectionId, title: subSectionTitle }) => ({
-                id: subSectionId,
-                label: subSectionTitle,
-                value: [sectionId, subSectionId]
-              }))
-            ]
-          : {
-              id: sectionId,
-              label: sectionTitle,
-              value: [sectionId, contains[0].id]
-            }
-      ),
+      sections.map(({ id: sectionId, title: sectionTitle, contains: subsections }) => ({
+        label: sectionTitle,
+        value: sectionId,
+        subOptions: convertToSubOptions(sectionId, subsections)
+      })),
+
     []
   )
 
-  const dropDownMenuOptions = useMemo(
-    () => convertToOptions(sections),
-    [convertToOptions, sections]
-  )
+  const options = useMemo(() => convertToOptions(sections), [convertToOptions, sections])
 
-  const dropDownMenuSelectedTitle = useMemo(
-    () => dropDownMenuOptions.find(({ id }) => id === activeSectionId)?.label ?? '',
-    [activeSectionId, dropDownMenuOptions]
+  const selectedOption = useMemo(
+    () => options.find(({ value }) => value === activeSectionId)?.label ?? '',
+    [activeSectionId, options]
   )
 
   const handleSelect = useCallback(
-    ([sectionId, subSectionId]: string[]) => {
-      navigate(`${governanceBasePath}/${sectionId}/${subSectionId}`)
+    (selectedSection: string, selectedSubSection?: string) => {
+      navigate(`${governanceBasePath}/${selectedSection}/${selectedSubSection}`)
     },
     [governanceBasePath, navigate]
   )
@@ -78,11 +68,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
       {isTablet || isMobile ? (
-        <DropDown
-          onSelect={handleSelect}
-          options={dropDownMenuOptions}
-          value={dropDownMenuSelectedTitle}
-        />
+        <DropDown onChange={handleSelect} options={options} value={selectedOption} />
       ) : (
         <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
           {sections.map(({ title: sectionTitle, contains: subsections, id: sectionId }) => {
