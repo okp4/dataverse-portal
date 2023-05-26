@@ -5,8 +5,8 @@ import { useAppStore } from '@/ui/store/appStore'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
-import { DropDownMenu } from '@/ui/component/dropDownMenu/dropDownMenu'
-import type { Option } from '@/ui/component/dropDownMenu/dropDownMenu'
+import { DropDown } from '@/ui/component/dropDown/dropDown'
+import type { Option } from '@/ui/component/dropDown/dropDown'
 import classnames from 'classnames'
 import type { SectionDTO } from './mockedData'
 
@@ -78,7 +78,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
       {isTablet || isMobile ? (
-        <DropDownMenu
+        <DropDown
           onSelect={handleSelect}
           options={dropDownMenuOptions}
           value={dropDownMenuSelectedTitle}

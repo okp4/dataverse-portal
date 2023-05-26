@@ -5,7 +5,7 @@ import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { useAppStore } from '@/ui/store/appStore'
 import { Icon } from '@/ui/component/icon/icon'
 import classnames from 'classnames'
-import './dropDownMenu.scss'
+import './dropDown.scss'
 
 type OptionID = string
 
@@ -27,7 +27,7 @@ type DropDownMenuProps = {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const DropDownMenu: FC<DropDownMenuProps> = ({ options, onSelect, value }) => {
+export const DropDown: FC<DropDownMenuProps> = ({ options, onSelect, value }) => {
   const [menuOpened, setMenuOpened] = useState<boolean>(false)
   const [focusedMenuPageIndex, setFocusedMenuPageIndex] = useState<number>(0)
   const menuContainerRef = useRef<HTMLDivElement | null>(null)
