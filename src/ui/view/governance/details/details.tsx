@@ -105,7 +105,7 @@ const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
               }`}
               onClick={toggleArticle}
             >
-              <Icon name={`arrow-down-${theme}` as IconName} />
+              <Icon name="chevron-sharp" />
             </div>
           </div>
         )}

@@ -102,8 +102,13 @@ export const Sidebar: FC = () => {
           <LanguageSwitcher />
         </div>
       </div>
-      <div className="okp4-dataverse-portal-sidebar-collapse-container" onClick={toggleSidebar}>
-        {isSidebarExpanded ? <Icon name="collapse" /> : <Icon name="expand" />}
+      <div
+        className={classnames('okp4-dataverse-portal-sidebar-collapse-container', {
+          expanded: isSidebarExpanded
+        })}
+        onClick={toggleSidebar}
+      >
+        <Icon name="chevron" />
       </div>
     </div>
   )
