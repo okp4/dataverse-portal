@@ -1,0 +1,51 @@
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-checkbox-main {
+  @include with-theme {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  
+    rect {
+      fill: themed('background-variant-2');
+      stroke: themed('background-variant-2');
+    }
+
+    path {
+      fill: themed('background');
+    }
+
+    rect, path {
+      fill-opacity: 0;
+      transition: fill-opacity 400ms ease-in-out;
+    }
+    
+    &.checked {
+      rect, path {
+        fill-opacity: 1;
+      }
+    }
+  
+    &.disabled {
+      cursor: not-allowed;
+
+      rect {
+        fill-opacity: 1;
+        fill: themed('disabled-checkbox-background');
+        stroke: themed('disabled-checkbox-background');
+      }
+    }
+
+    &.disabled.checked {
+      path {
+        fill: themed('secondary-disabled');
+      }
+    }
+  }
+}
