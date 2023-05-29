@@ -3,12 +3,12 @@ import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import * as TE from 'fp-ts/TaskEither'
-import type { DataverseEntity } from '@/domain/dataverse/entity'
+import type { DataverseElement } from '@/domain/dataverse/entity'
 import type {
   DataversePort,
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult,
-  DataverseElementTypeFilter
+  DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import type { SparqlBinding, SparqlResult } from './dto'
@@ -20,17 +20,13 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
-    const buildContainsExpression = (filter: DataverseElementTypeFilter): string =>
+    const buildContainsExpression = (filter: DataverseElementType): string =>
       `contains(str(?type), "${filter}" )`
 
-    const buildQueryFilter = (
-      index: number,
-      acc: string,
-      cur: DataverseElementTypeFilter
-    ): string =>
+    const buildQueryFilter = (index: number, acc: string, cur: DataverseElementType): string =>
       index === 0 ? buildContainsExpression(cur) : `${acc} || ${buildContainsExpression(cur)}`
 
-    const byTypeFilter = (f: DataverseElementTypeFilter[]): string =>
+    const byTypeFilter = (f: DataverseElementType[]): string =>
       A.reduceWithIndex('', buildQueryFilter)(f)
 
     const query = `
@@ -118,7 +114,7 @@ export const sparqlGateway: DataversePort = {
         O.map(c => [b, a, c])
       )
 
-    const mapDtoToEntity = (dto: SparqlResult): DataverseEntity =>
+    const mapDtoToEntity = (dto: SparqlResult): DataverseElement[] =>
       pipe(
         dto.results.bindings,
         A.filterMap(splitBindingId),
