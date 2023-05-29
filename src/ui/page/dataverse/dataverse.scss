@@ -31,7 +31,7 @@
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: auto);
         grid-auto-rows: max-content;
 
-        h1 {
+        h2 {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           @include norse-gradient-header($line-height: 61px);
         }
@@ -40,7 +40,7 @@
           display: flex;
           align-items: center;
 
-          h1 {
+          h2 {
             margin-left: 12px;
           }
         }
@@ -131,7 +131,7 @@
         }
       }
 
-      h1 {
+      h2 {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         @include norse-gradient-header($line-height: 61px);
 

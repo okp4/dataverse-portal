@@ -452,7 +452,7 @@ const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void
     >
       <Icon name="arrow-left" />
     </div>
-    <h1>{label}</h1>
+    <h2>{label}</h2>
   </div>
 )
 
@@ -516,7 +516,7 @@ const Dataverse = (): JSX.Element => {
           {!isLargeScreen ? (
             renderMobileTitleFilters(filtersLabel, toggleMobileFilters)
           ) : (
-            <h1>{filtersLabel}</h1>
+            <h2>{filtersLabel}</h2>
           )}
           <FilterName>{t('resources.label')}</FilterName>
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
@@ -628,7 +628,7 @@ const Dataverse = (): JSX.Element => {
       )}
       {(isLargeScreen || !showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-catalog">
-          <h1>{t('actions.explore')}</h1>
+          <h2>{t('actions.explore')}</h2>
           {!isLargeScreen && (
             <Button
               className="okp4-dataverse-portal-dataverse-page-filters-button"
