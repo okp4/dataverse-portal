@@ -76,6 +76,7 @@ import { ReactComponent as LogOutIcon } from '@/ui/asset/icon/log-out.svg'
 import { ReactComponent as ChevronIcon } from '@/ui/asset/icon/chevron.svg'
 import { ReactComponent as ChevronSharpIcon } from '@/ui/asset/icon/chevron-sharp.svg'
 import { ReactComponent as KeplerIcon } from '@/ui/asset/icon/keplr.svg'
+import { ReactComponent as MagnifierIcon } from '@/ui/asset/icon/magnifier.svg'
 
 export type IconName =
   | 'all-light'
@@ -154,6 +155,7 @@ export type IconName =
   | 'chevron'
   | 'chevron-sharp'
   | 'keplr'
+  | 'magnifier'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -231,7 +233,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'log-out': LogOutIcon,
   chevron: ChevronIcon,
   'chevron-sharp': ChevronSharpIcon,
-  keplr: KeplerIcon
+  keplr: KeplerIcon,
+  magnifier: MagnifierIcon
 }
 
 type IconProps = {
