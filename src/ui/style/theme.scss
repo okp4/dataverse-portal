@@ -14,6 +14,7 @@ $themes: (
     secondary-color-variant-1: $secondary-variant-1,
     secondary-color-variant-2: $secondary-variant-2,
     secondary-disabled: $secondary-disabled-light,
+    color-text-disabled: $color-text-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
     background: $background-light,
@@ -40,7 +41,7 @@ $themes: (
     skeleton-base-color: $skeleton-base-color-light,
     skeleton-animated-color: $skeleton-animated-color-light,
     skeleton-gradient:
-      linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
+    linear-gradient(90deg, transparent, rgba($skeleton-animated-color-light, 0.04), transparent),
     governance-nav-section-background: $governance-nav-section-background,
     article-background: $article-background-light,
     paragraph-background: $paragraph-background-light,
@@ -62,6 +63,7 @@ $themes: (
     secondary-color-variant-1: $secondary-variant-1,
     secondary-color-variant-2: $secondary-variant-2,
     secondary-disabled: $secondary-disabled-dark,
+    color-text-disabled: $color-text-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
     background: $background-dark,
@@ -88,7 +90,7 @@ $themes: (
     skeleton-base-color: $skeleton-base-color-dark,
     skeleton-animated-color: $skeleton-animated-color-dark,
     skeleton-gradient:
-      linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
+    linear-gradient(90deg, transparent, rgba($skeleton-animated-color-dark, 0.04), transparent),
     governance-nav-section-background: $tertiary-button-background-dark,
     article-background: $article-background-dark,
     paragraph-background: $paragraph-background-dark,
