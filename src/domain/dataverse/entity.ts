@@ -1,6 +1,8 @@
 export type DataverseElementId = string
 
-export type DataverseEntity = DataverseElement[]
+export type Dataverse = {
+  dataverse: DataverseElement[]
+}
 
 export type DataverseElement = {
   id: DataverseElementId
