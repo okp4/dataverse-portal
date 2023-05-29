@@ -1,0 +1,13 @@
+{
+  "share": {
+    "dataset": {
+      "title": "Je partage un jeu de données",
+      "description": "Partagez facilement votre jeu de données dans le dataverse"
+    },
+    "service": {
+      "title": "Je partage un service",
+      "description": "Partagez facilement votre service dans le dataverse"
+    },
+    "disabled": "Bientôt disponible"
+  }
+}

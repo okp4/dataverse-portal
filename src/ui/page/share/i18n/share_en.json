@@ -1,0 +1,13 @@
+{
+  "share": {
+    "dataset": {
+      "title": "I share a dataset",
+      "description": "Easily share your dataset in the dataverse"
+    },
+    "service": {
+      "title": "I share a service",
+      "description": "Easily share your service in the dataverse"
+    },
+    "disabled": "Soon available"
+  }
+}
