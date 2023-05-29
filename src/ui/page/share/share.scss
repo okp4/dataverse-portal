@@ -11,9 +11,9 @@
       @include columns-with-gap(40px);
 
       background-color: themed('card');
-      margin-top: 65px;
+      padding-bottom: 40px;
+      // margin-top: 65px;
       margin-bottom: 39px;
-      padding: 44px 82px;
 
       @include use-breakpoints('large-desktop') {
         margin-bottom: 19px;
@@ -49,17 +49,15 @@
             }
 
             .okp4-dataverse-portal-share-page-text-disabled {
-              display: flex;
-              align-self: center;
+              visibility: visible;
               opacity: 1;
-              margin-top: 55px;
             }
           }
         }
       }
 
       .okp4-dataverse-portal-share-page-ilustration {
-        margin-top: 20px;
+        margin-top: 44px;
         height: 400px;
         width: 400px;
       }
@@ -86,7 +84,10 @@
         }
 
         .okp4-dataverse-portal-share-page-text-disabled {
-          display: none;
+          visibility: hidden;
+          display: flex;
+          align-self: center;
+          margin-top: 55px;
         }
       }
 
