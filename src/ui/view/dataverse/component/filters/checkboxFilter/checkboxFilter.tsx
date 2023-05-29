@@ -24,8 +24,8 @@ const NoResultsFound: FC = () => {
 type FilterNameProps = {
   children: string
 }
-const FilterName: FC<FilterNameProps> = ({ children }) => (
-  <span className="okp4-dataverse-portal-dataverse-filter-name">{children}</span>
+export const FilterName: FC<FilterNameProps> = ({ children }) => (
+  <h3 className="okp4-dataverse-portal-dataverse-filter-name">{children}</h3>
 )
 
 type CheckboxFilterProps = {

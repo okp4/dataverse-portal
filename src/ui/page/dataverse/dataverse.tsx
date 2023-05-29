@@ -11,7 +11,10 @@ import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-import { CheckboxFilter } from '@/ui/view/dataverse/component/filters/checkboxFilter/checkboxFilter'
+import {
+  CheckboxFilter,
+  FilterName
+} from '@/ui/view/dataverse/component/filters/checkboxFilter/checkboxFilter'
 import '@/ui/view/dataverse/component/filters/i18n/index'
 import './dataverse.scss'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
@@ -515,7 +518,7 @@ const Dataverse = (): JSX.Element => {
           ) : (
             <h1>{filtersLabel}</h1>
           )}
-          <h2>{t('resources.label')}</h2>
+          <FilterName>{t('resources.label')}</FilterName>
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
             {dataverseFilters.map(filter => (
               <Chip
