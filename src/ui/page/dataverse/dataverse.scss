@@ -110,21 +110,20 @@
 
     .okp4-dataverse-portal-dataverse-page-catalog {
       @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-      @include grid-container($colsNb: 8, $colGutter: 48px);
 
       @include use-breakpoints(('desktop')) {
         column-gap: 29px;
       }
 
       @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 8, $colGutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
         row-gap: 30px;
       }
 
       @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 8, $colGutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
       }
 
       .okp4-dataverse-portal-dataverse-page-filters-button {
