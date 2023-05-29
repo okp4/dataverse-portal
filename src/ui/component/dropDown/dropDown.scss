@@ -128,7 +128,10 @@
           border-radius: 6px;
           padding: 10px;
           background-color: themed('drop-down-menu-menu-background');
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
+
+          &.focused {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
+          }
 
           &::-webkit-scrollbar-thumb {
             background-color: transparent;

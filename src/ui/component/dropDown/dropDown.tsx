@@ -123,7 +123,9 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
           <div className="okp4-dataverse-portal-drop-down-menus-container">
             {[...dropDownMenus, null].map((menu, index) => (
               <div
-                className="okp4-dataverse-portal-drop-down-menu-options-container"
+                className={classnames('okp4-dataverse-portal-drop-down-menu-options-container', {
+                  focused: index === focusedMenuIndex
+                })}
                 key={index}
                 ref={handleRefIndexation(index)}
               >
