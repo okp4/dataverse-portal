@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import classnames from 'classnames'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { Icon } from '@/ui/component/icon/icon'
-import classnames from 'classnames'
 import './dropDown.scss'
 
 export type SubOption = Omit<Option, 'subOptions'> & { parentOptionValue: string }
@@ -59,7 +59,7 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
         block: 'nearest',
         inline: 'center'
       })
-      nextMenu && setDropDownMenus([...dropDownMenus.slice(0, menuIndex + 1), nextMenu])
+      nextMenu && setDropDownMenus([dropDownMenus[0], nextMenu])
       setFocusedMenuIndex(menuIndex)
     },
     [dropDownMenus]
@@ -91,15 +91,17 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
     [slideMenu]
   )
 
-  const handleRefIndexation = useCallback(
+  const assignMenuRef = useCallback(
     (index: number) => (ref: HTMLDivElement) => (dropDownMenusRefs.current[index] = ref),
     []
   )
 
-  const selectTitle = useMemo(
+  const dropDownTitle = useMemo(
     () => (dropDownMenus.length ? dropDownMenus[focusedMenuIndex].label : value),
     [focusedMenuIndex, dropDownMenus, value]
   )
+
+  const dropDownSlidingMenus = dropDownMenus.length === 1 ? [...dropDownMenus, null] : dropDownMenus
 
   useEffect(() => {
     setDropDownMenus([{ label: value, menuOptions: options }])
@@ -116,18 +118,18 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
           })}
           onClick={toggleMenu}
         >
-          <p>{selectTitle}</p>
+          <p>{dropDownTitle}</p>
           <Icon name="chevron-sharp" />
         </div>
         {menuOpened && (
           <div className="okp4-dataverse-portal-drop-down-menus-container">
-            {[...dropDownMenus, null].map((menu, index) => (
+            {dropDownSlidingMenus.map((menu, index) => (
               <div
                 className={classnames('okp4-dataverse-portal-drop-down-menu-options-container', {
                   focused: index === focusedMenuIndex
                 })}
                 key={index}
-                ref={handleRefIndexation(index)}
+                ref={assignMenuRef(index)}
               >
                 {index !== 0 && (
                   <div
