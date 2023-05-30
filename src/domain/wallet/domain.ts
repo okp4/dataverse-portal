@@ -13,7 +13,7 @@ import type { Reader } from 'fp-ts/lib/Reader'
 import * as RA from 'fp-ts/lib/ReadonlyArray'
 import { pipe } from 'fp-ts/lib/function'
 import type { StoreApi } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createStore } from 'zustand/vanilla'
 import type { Command, Deps } from './command'
@@ -84,88 +84,93 @@ const mapError = <
 export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
   createStore(
     devtools(
-      immer<Domain>((set, get) => ({
-        data: pipe(
-          initialState,
-          O.fromNullable,
-          O.flatMap(it => it.data)
-        ),
-        supportedWalletTypes: (): Reader<Deps, WalletType[]> =>
-          pipe(
-            R.asks((deps: Deps) => deps.walletPorts),
-            R.map(
-              A.map(port => ({
-                id: port.id,
-                type: port.type
-              }))
-            )
+      persist(
+        immer<Domain>((set, get) => ({
+          data: pipe(
+            initialState,
+            O.fromNullable,
+            O.flatMap(it => it.data)
           ),
-        wallet: () => () => get().data,
-        connectWalletForChain: ({ walletId, chainId }) =>
-          pipe(
-            RTE.asks((deps: Deps) => deps.walletPorts),
-            RTE.chainFirst(() => get().disconnectWallet()),
-            RTE.chainOptionKW(() => WalletNotFoundError(walletId))(findWalletPort(walletId)),
-            RTE.chainFirstW(port => pipe(port.connectChain(chainId), RTE.mapLeft(mapError))),
-            RTE.chainTaskEitherKW(port =>
-              pipe(
-                sequenceS(TE.ApplyPar)({
-                  accounts: port.chainAccounts(chainId),
-                  name: port.name(chainId)
-                }),
-                TE.mapLeft(mapError)
+          supportedWalletTypes: (): Reader<Deps, WalletType[]> =>
+            pipe(
+              R.asks((deps: Deps) => deps.walletPorts),
+              R.map(
+                A.map(port => ({
+                  id: port.id,
+                  type: port.type
+                }))
               )
             ),
-            RTE.map(ctx =>
-              O.some({
-                id: walletId,
-                name: ctx.name,
-                chainId,
-                accounts: ctx.accounts.map(fromPortAccount)
-              })
+          wallet: () => () => get().data,
+          connectWalletForChain: ({ walletId, chainId }) =>
+            pipe(
+              RTE.asks((deps: Deps) => deps.walletPorts),
+              RTE.chainFirst(() => get().disconnectWallet()),
+              RTE.chainOptionKW(() => WalletNotFoundError(walletId))(findWalletPort(walletId)),
+              RTE.chainFirstW(port => pipe(port.connectChain(chainId), RTE.mapLeft(mapError))),
+              RTE.chainTaskEitherKW(port =>
+                pipe(
+                  sequenceS(TE.ApplyPar)({
+                    accounts: port.chainAccounts(chainId),
+                    name: port.name(chainId)
+                  }),
+                  TE.mapLeft(mapError)
+                )
+              ),
+              RTE.map(ctx =>
+                O.some({
+                  id: walletId,
+                  name: ctx.name,
+                  chainId,
+                  accounts: ctx.accounts.map(fromPortAccount)
+                })
+              ),
+              RTE.chainIOK(accounts => () => set({ data: accounts }))
             ),
-            RTE.chainIOK(accounts => () => set({ data: accounts }))
-          ),
-        disconnectWallet: () =>
-          pipe(
-            RTE.fromIO(() => get().data),
-            RTE.flatMap(data =>
-              O.match(
-                () => RTE.right(undefined),
-                (wallet: Wallet) =>
-                  pipe(
-                    RTE.asks((deps: Deps) => deps.walletPorts),
-                    RTE.chainOptionKW(() => WalletNotFoundError(wallet.id))(
-                      findWalletPort(wallet.id)
-                    ),
-                    RTE.chainW(port =>
-                      pipe(port.disconnectChain(wallet.chainId), RTE.mapLeft(mapError))
-                    ),
-                    RTE.chainIOK(() => () => set({ data: O.none }))
-                  )
-              )(data)
-            )
-          ),
-        availableWalletTypes: () =>
-          pipe(
-            RT.asks((deps: Deps) => deps.walletPorts),
-            RT.flatMap(
-              pipe(
-                RT.traverseArray(port =>
-                  pipe(
-                    port.isAvailable(),
-                    IO.map(available => ({
-                      ...port,
-                      available
-                    })),
-                    RT.fromIO
+          disconnectWallet: () =>
+            pipe(
+              RTE.fromIO(() => get().data),
+              RTE.flatMap(data =>
+                O.match(
+                  () => RTE.right(undefined),
+                  (wallet: Wallet) =>
+                    pipe(
+                      RTE.asks((deps: Deps) => deps.walletPorts),
+                      RTE.chainOptionKW(() => WalletNotFoundError(wallet.id))(
+                        findWalletPort(wallet.id)
+                      ),
+                      RTE.chainW(port =>
+                        pipe(port.disconnectChain(wallet.chainId), RTE.mapLeft(mapError))
+                      ),
+                      RTE.chainIOK(() => () => set({ data: O.none }))
+                    )
+                )(data)
+              )
+            ),
+          availableWalletTypes: () =>
+            pipe(
+              RT.asks((deps: Deps) => deps.walletPorts),
+              RT.flatMap(
+                pipe(
+                  RT.traverseArray(port =>
+                    pipe(
+                      port.isAvailable(),
+                      IO.map(available => ({
+                        ...port,
+                        available
+                      })),
+                      RT.fromIO
+                    )
                   )
                 )
-              )
-            ),
-            RT.map(RA.toArray)
-          )
-      })),
+              ),
+              RT.map(RA.toArray)
+            )
+        })),
+        {
+          name: 'wallet-storage'
+        }
+      ),
       {
         anonymousActionType: 'Aggregate',
         name: 'wallet',
