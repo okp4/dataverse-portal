@@ -27,6 +27,9 @@ devDependencies:
   '@okp4/eslint-config':
     specifier: ^1.2.0
     version: 1.2.0(@typescript-eslint/eslint-plugin@5.52.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.34.0)(prettier@2.8.4)(tsutils@3.21.0)(typescript@5.0.2)
+  '@radix-ui/react-collapsible':
+    specifier: ^1.0.2
+    version: 1.0.2(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-switch':
     specifier: ^1.0.1
     version: 1.0.1(react-dom@18.2.0)(react@18.2.0)
@@ -1080,6 +1083,25 @@ packages:
       '@babel/runtime': 7.20.13
     dev: true
 
+  /@radix-ui/react-collapsible@1.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-QNiDT6Au8jUU0K1WV+HEd4loH7C5CKQjeXxskwqyiyAkyCmW7qlQM5vSSJCIoQC+OVPyhgafSmGudRP8Qm1/gA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@radix-ui/primitive': 1.0.0
+      '@radix-ui/react-compose-refs': 1.0.0(react@18.2.0)
+      '@radix-ui/react-context': 1.0.0(react@18.2.0)
+      '@radix-ui/react-id': 1.0.0(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.0(react@18.2.0)
+      '@radix-ui/react-use-layout-effect': 1.0.0(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
   /@radix-ui/react-collection@1.0.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-s8WdQQ6wNXpaxdZ308KSr8fEWGrg4un8i4r/w7fhiS4ElRNjk5rRcl0/C6TANG2LvLOGIxtzo/jAg6Qf73TEBw==}
     peerDependencies:
@@ -1127,6 +1149,16 @@ packages:
       '@radix-ui/react-use-escape-keydown': 1.0.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
+  /@radix-ui/react-id@1.0.0(react@18.2.0):
+    resolution: {integrity: sha512-Q6iAB/U7Tq3NTolBBQbHTgclPmGWE3OlktGGqrClPozSw4vkQ1DfQAOtzgRPecKsMdJINE05iaoDUG8tRzCBjw==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@radix-ui/react-use-layout-effect': 1.0.0(react@18.2.0)
+      react: 18.2.0
     dev: true
 
   /@radix-ui/react-portal@1.0.2(react-dom@18.2.0)(react@18.2.0):
