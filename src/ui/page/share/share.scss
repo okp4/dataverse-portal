@@ -34,9 +34,7 @@
         .okp4-dataverse-portal-share-page-ilustration {
           background: center url('@/ui/asset/images/share-service.webp') no-repeat;
         }
-      }
 
-      &.disabled {
         &:hover {
           @include transition-bg-color;
           background-color: themed('card-background-disabled');
