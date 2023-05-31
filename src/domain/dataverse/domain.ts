@@ -146,41 +146,39 @@ export const storeFactory = (
                   () => T.of(undefined),
                   data =>
                     pipe(
-                      T.fromIO(() => set({ data: { ...data, isLoading: true, error: O.none } })),
+                      T.fromIO(() =>
+                        set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
+                      ),
                       T.chain(() =>
-                        pipe(
-                          gateway.retrieveDataverse(
-                            data.language,
-                            data.limit,
-                            data.dataverse.length,
-                            data.filters
-                          ),
-                          TE.matchE(
-                            e =>
-                              T.fromIO(() =>
-                                set({
-                                  data: {
-                                    ...data,
-                                    isLoading: false,
-                                    error: O.some(e)
-                                  }
-                                })
-                              ),
-                            r =>
-                              pipe(
-                                T.fromIO(() =>
-                                  set({
-                                    data: {
-                                      ...data,
-                                      isLoading: false,
-                                      hasNext: r.query.hasNext,
-                                      dataverse: pipe(data.dataverse, A.concat(r.data))
-                                    }
-                                  })
-                                )
-                              )
-                          )
+                        gateway.retrieveDataverse(
+                          data.language,
+                          data.limit,
+                          data.dataverse.length,
+                          data.filters
                         )
+                      ),
+                      TE.matchE(
+                        e =>
+                          T.fromIO(() =>
+                            set(state => ({
+                              data: {
+                                ...state.data,
+                                isLoading: false,
+                                error: O.some(e)
+                              }
+                            }))
+                          ),
+                        r =>
+                          T.fromIO(() =>
+                            set(state => ({
+                              data: {
+                                ...state.data,
+                                isLoading: false,
+                                hasNext: r.query.hasNext,
+                                dataverse: pipe(data.dataverse, A.concat(r.data))
+                              }
+                            }))
+                          )
                       )
                     )
                 )
