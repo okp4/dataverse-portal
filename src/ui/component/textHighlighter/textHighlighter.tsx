@@ -9,7 +9,7 @@ export const TextHighlighter: FC<TextHighlighterProps> = ({
   text,
   termToHighlight: textToHighlight
 }) => {
-  const parts = splitTextByTerm(text, textToHighlight)
+  const parts = splitTextWithTerm(text, termToHighlight)
 
   return (
     <>
