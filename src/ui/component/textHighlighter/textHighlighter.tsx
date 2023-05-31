@@ -1,21 +1,23 @@
 import type { FC } from 'react'
-import { splitTextByTerm } from '@/util/splitTextByTerm/splitTextByTerm'
+import { splitTextWithTerm } from '@/util/splitTextWithTerm/splitTextWithTerm'
 
 type TextHighlighterProps = {
   text: string
   termToHighlight: string
+  highlightClassName: string
 }
 export const TextHighlighter: FC<TextHighlighterProps> = ({
   text,
-  termToHighlight: textToHighlight
+  termToHighlight,
+  highlightClassName
 }) => {
   const parts = splitTextWithTerm(text, termToHighlight)
 
   return (
     <>
       {parts.map((part, index) =>
-        part.toLowerCase() === textToHighlight.toLowerCase() ? (
-          <span className="text-highlight" key={index}>
+        part.toLowerCase() === termToHighlight.toLowerCase() ? (
+          <span className={highlightClassName} key={index}>
             {part}
           </span>
         ) : (
