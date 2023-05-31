@@ -4,21 +4,21 @@
 
 .okp4-dataverse-portal-dataverse-page-main {
   @include with-theme() {
-    @include grid-container($gutter: 48px);
+    @include grid-container($colGutter: 48px);
     color: themed('text');
     grid-auto-rows: max-content;
 
     @include use-breakpoints(('desktop')) {
-      @include grid-container($colsNb: 12, $gutter: 29px);
+      @include grid-container($colsNb: 12, $colGutter: 29px);
     }
 
     @include use-breakpoints(('tablet')) {
-      @include grid-container($colsNb: 8, $gutter: 16px);
+      @include grid-container($colsNb: 8, $colGutter: 16px);
       row-gap: 30px;
     }
 
     @include use-breakpoints(('mobile')) {
-      @include grid-container($colsNb: 6, $gutter: 16px);
+      @include grid-container($colsNb: 6, $colGutter: 16px);
     }
 
     .okp4-dataverse-portal-dataverse-page-filters-container {
@@ -110,7 +110,7 @@
 
     .okp4-dataverse-portal-dataverse-page-catalog {
       @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-      @include grid-container($colsNb: 8, $gutter: 48px);
+      @include grid-container($colsNb: 8, $colGutter: 48px);
 
       @include use-breakpoints(('desktop')) {
         column-gap: 29px;

@@ -26,6 +26,10 @@
     .okp4-dataverse-portal-governance-details-header {
       @include columns-with-gap(16px);
 
+      @include use-breakpoints(('mobile', 'tablet')) {
+        text-align: center;
+      }
+
       .okp4-dataverse-portal-governance-details-header-part {
         @include columns-with-gap(12px);
 
@@ -53,16 +57,30 @@
           border-radius: 20px;
           padding: 40px;
 
+          @include use-breakpoints(('mobile', 'tablet')) {
+            @include columns-with-gap(20px);
+            padding: 20px;
+          }
+
           .okp4-dataverse-portal-governance-details-article-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            column-gap: 10px;
+
+            &.pointer-cursor {
+              cursor: pointer;
+            }
 
             .okp4-dataverse-portal-governance-details-article-header-left-part {
               @include columns-with-gap(12px);
 
               .okp4-dataverse-portal-governance-details-article-title {
                 line-height: 22px;
+
+                @include use-breakpoints(('mobile', 'tablet')) {
+                  font-size: 16px;
+                }
               }
             }
 
@@ -70,6 +88,7 @@
               display: flex;
               align-items: center;
               gap: 40px;
+              align-self: start;
 
               .okp4-dataverse-portal-governance-details-article-paragraphs-number {
                 padding: 12px 17px;
@@ -98,22 +117,28 @@
           }
 
           .okp4-dataverse-portal-governance-details-paragraphs-container {
-            @include columns-with-gap(14px);
-            flex-wrap: wrap;
-            align-content: flex-start;
-            column-gap: 28px;
-            max-height: 670px;
+            @include grid-container(
+              $colsNb: auto-fit,
+              $colsSize: minmax(300px, 320px),
+              $colGutter: 28px,
+              $rowGutter: 14px
+            );
 
-            .okp4-dataverse-portal-governance-details-paragraph-container {
-              background: themed(paragraph-background);
-              max-height: 252px;
-              border-radius: 10px;
-              width: 320px;
-              line-height: 20px;
+            @include use-breakpoints(('mobile', 'tablet')) {
+              @include grid-container(
+                $colsNb: auto-fit,
+                $colsSize: minmax(285px, 330px),
+                $colGutter: 14px,
+                $rowGutter: 14px
+              );
             }
 
             .okp4-dataverse-portal-governance-details-paragraph {
               @include columns-with-gap(6px);
+              background: themed(paragraph-background);
+              max-height: 252px;
+              border-radius: 10px;
+              line-height: 20px;
               padding: 20px;
 
               .okp4-dataverse-portal-governance-details-paragraph-title {
@@ -125,6 +150,7 @@
                   max-height: 112px;
                   overflow: hidden;
                   text-overflow: ellipsis;
+                  overflow-wrap: break-word;
                   /* stylelint-disable-next-line value-no-vendor-prefix */
                   display: -webkit-box;
                   -webkit-line-clamp: 4;

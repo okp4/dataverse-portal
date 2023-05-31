@@ -23,10 +23,13 @@
   }
 }
 
-@mixin grid-container($colsNb: 12, $colsSize: 1fr, $gutter) {
+@mixin grid-container($colsNb: 12, $colsSize: 1fr, $colGutter, $rowGutter: null) {
   display: grid;
   grid-template-columns: repeat($colsNb, $colsSize);
-  column-gap: $gutter;
+  column-gap: $colGutter;
+  @if $rowGutter {
+    row-gap: $rowGutter;
+  }
   @content;
 }
 
@@ -49,19 +52,19 @@
 
 @mixin twelve-column-layout {
   @include use-breakpoints(('mobile')) {
-    @include grid-container($colsNb: 6, $gutter: 16px);
+    @include grid-container($colsNb: 6, $colGutter: 16px);
   }
 
   @include use-breakpoints(('tablet')) {
-    @include grid-container($colsNb: 8, $gutter: 16px);
+    @include grid-container($colsNb: 8, $colGutter: 16px);
   }
 
   @include use-breakpoints(('desktop')) {
-    @include grid-container($gutter: 34px);
+    @include grid-container($colGutter: 34px);
   }
 
   @include use-breakpoints(('large-desktop')) {
-    @include grid-container($gutter: 48px);
+    @include grid-container($colGutter: 48px);
   }
 }
 

@@ -14,7 +14,9 @@
   "actions": {
     "explore": "Dataverse erkunden",
     "details": "Siehe Details",
-    "accessGovernance": "Auf Governance zugreifen"
+    "accessGovernance": "Auf Governance zugreifen",
+    "back": "Zurück",
+    "seeMore": "Mehr sehen"
   },
   "filters": "Filter",
   "dataverse": "Dataverse",
