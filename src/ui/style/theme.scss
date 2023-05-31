@@ -18,6 +18,7 @@ $themes: (
     neutral-variant-1: $neutral-variant-1,
     background: $background-light,
     background-variant-1: $background-light-variant-1,
+    background-variant-2: $background-light-variant-2,
     background-primary-variant: $background-primary-variant,
     background-primary-variant-3: $background-primary-variant-3,
     background-primary-variant-4: $background-primary-variant-4,
@@ -43,7 +44,8 @@ $themes: (
     governance-nav-section-background: $governance-nav-section-background,
     article-background: $article-background-light,
     paragraph-background: $paragraph-background-light,
-    log-out-menu: $error
+    log-out-menu: $error,
+    disabled-checkbox-background: $disabled-checkbox-background
   ),
   dark: (
     primary-color: $primary,
@@ -61,6 +63,7 @@ $themes: (
     neutral-variant-1: $neutral-variant-1,
     background: $background-dark,
     background-variant-1: $background-dark-variant-1,
+    background-variant-2: $background-dark-variant-2,
     tertiary-button-background: $tertiary-button-background-dark,
     tertiary-button-background-variant-1: $tertiary-button-background-dark-variant-1,
     chip: $chip-dark,
@@ -86,7 +89,8 @@ $themes: (
     governance-nav-section-background: $tertiary-button-background-dark,
     article-background: $article-background-dark,
     paragraph-background: $paragraph-background-dark,
-    log-out-menu: $error
+    log-out-menu: $error,
+    disabled-checkbox-background: $disabled-checkbox-background
   )
 );
 
