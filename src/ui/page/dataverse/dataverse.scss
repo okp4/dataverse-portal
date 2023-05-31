@@ -152,6 +152,7 @@
         }
       }
 
+      /* stylelint-disable-next-line selector-class-pattern */
       .infinite-scroll-component__outerdiv {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
 
