@@ -5,26 +5,36 @@
 .okp4-dataverse-portal-share-page-main {
   @include with-theme() {
     @include twelve-column-layout;
+    row-gap: 20px;
     height: 100%;
+    box-sizing: border-box;
+    padding: 53px 0 36px;
+
+    @include use-breakpoints('large-desktop') {
+      padding: 34px 0 78px;
+    }
 
     .okp4-dataverse-portal-share-page-card {
-      @include columns-with-gap(40px);
-
+      height: 100%;
+      box-sizing: border-box;
       background-color: themed('card');
-      padding-bottom: 40px;
-      // margin-top: 65px;
-      margin-bottom: 39px;
+      padding: 44px;
+      position: relative;
+      display: grid;
+      grid-template: 2fr 1fr / 1fr;
+      justify-items: center;
+      align-items: unset;
+      gap: 40px;
 
       @include use-breakpoints('large-desktop') {
-        margin-bottom: 19px;
-        padding: 94px 66px;
+        padding-bottom: 137px;
       }
 
       &.left {
         @include bi-column-item('left');
 
         .okp4-dataverse-portal-share-page-ilustration {
-          background: center url('@/ui/asset/images/share-dataset.webp') no-repeat;
+          background: center / contain url('@/ui/asset/images/share-dataset.webp') no-repeat;
         }
       }
 
@@ -32,7 +42,7 @@
         @include bi-column-item('right');
 
         .okp4-dataverse-portal-share-page-ilustration {
-          background: center url('@/ui/asset/images/share-service.webp') no-repeat;
+          background: center / contain url('@/ui/asset/images/share-service.webp') no-repeat;
         }
 
         &:hover {
@@ -55,15 +65,15 @@
       }
 
       .okp4-dataverse-portal-share-page-ilustration {
-        margin-top: 44px;
-        height: 400px;
-        width: 400px;
+        min-height: 200px;
+        height: 100%;
+        width: 390px;
       }
 
       .okp4-dataverse-portal-share-page-text-container {
-        @include columns-with-gap(35px);
-        justify-content: center;
+        @include columns-with-gap(16px);
         text-align: center;
+        position: relative;
 
         h3 {
           @include noto-sans(700);
@@ -79,13 +89,19 @@
           line-height: 22px;
           align-self: center;
           color: themed('text');
+          margin-top: 19px;
         }
 
         .okp4-dataverse-portal-share-page-text-disabled {
+          position: relative;
+          bottom: -5%;
           visibility: hidden;
           display: flex;
           align-self: center;
-          margin-top: 55px;
+
+          @include use-breakpoints('large-desktop') {
+            bottom: -15%;
+          }
         }
       }
 
