@@ -4,7 +4,7 @@ import { shallow } from 'zustand/shallow'
 import uuid from 'short-uuid'
 import { useNotificationStore } from '@/ui/store'
 import type { ActionType } from '@/ui/store'
-import type { NotificationType } from '@/domain/notification/entity'
+import type { NotificationType } from '@/domain/notification/value-object'
 import { toEffectfulObject } from '@/util/effect'
 import '@/ui/component/notification/i18n'
 
