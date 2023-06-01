@@ -27,7 +27,7 @@
       gap: 40px;
 
       @include use-breakpoints('large-desktop') {
-        padding-bottom: 137px;
+        padding: 119px 44px 137px;
       }
 
       &.left {
