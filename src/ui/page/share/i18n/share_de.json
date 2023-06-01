@@ -1,0 +1,13 @@
+{
+  "share": {
+    "dataset": {
+      "title": "Ich teile einen Datensatz",
+      "description": "Einfaches Freigeben Ihres Datensatzes im Dataverse"
+    },
+    "service": {
+      "title": "Ich teile einen Dienst",
+      "description": "Einfache Freigabe Ihres Dienstes im Dataverse"
+    },
+    "soonAvailable": "Bald verfügbar"
+  }
+}

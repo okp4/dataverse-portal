@@ -53,7 +53,8 @@ export const Navigation: FC = () => {
       [t('sidebar.navigation.interact.label')]: [
         {
           id: 'share',
-          label: t('sidebar.navigation.interact.items.share')
+          label: t('sidebar.navigation.interact.items.share'),
+          path: routes.share
         },
         {
           id: 'create-knowledge',

@@ -1,0 +1,119 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-share-page-main {
+  @include with-theme() {
+    @include twelve-column-layout;
+    row-gap: 20px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 53px 0 36px;
+
+    @include use-breakpoints('large-desktop') {
+      padding: 34px 0 78px;
+    }
+
+    .okp4-dataverse-portal-share-page-card {
+      height: 100%;
+      box-sizing: border-box;
+      background-color: themed('card');
+      padding: 44px;
+      position: relative;
+      display: grid;
+      grid-template: 2fr 1fr / 1fr;
+      justify-items: center;
+      align-items: unset;
+      gap: 40px;
+
+      @include use-breakpoints('large-desktop') {
+        padding: 119px 44px 137px;
+      }
+
+      &.left {
+        @include bi-column-item('left');
+
+        .okp4-dataverse-portal-share-page-ilustration {
+          background: center / contain url('@/ui/asset/images/share-dataset.webp') no-repeat;
+        }
+      }
+
+      &.right {
+        @include bi-column-item('right');
+
+        .okp4-dataverse-portal-share-page-ilustration {
+          background: center / contain url('@/ui/asset/images/share-service.webp') no-repeat;
+        }
+
+        &:hover {
+          @include transition-bg-color;
+          background-color: themed('card-background-disabled');
+
+          .okp4-dataverse-portal-share-page-text-container {
+            h3,
+            p {
+              color: themed('primary-text');
+              opacity: 0.4;
+            }
+
+            .okp4-dataverse-portal-share-page-text-disabled {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .okp4-dataverse-portal-share-page-ilustration {
+        min-height: 200px;
+        height: 100%;
+        width: 390px;
+      }
+
+      .okp4-dataverse-portal-share-page-text-container {
+        @include columns-with-gap(16px);
+        text-align: center;
+        position: relative;
+
+        h3 {
+          @include noto-sans(700);
+          line-height: 28px;
+          font-size: 24px;
+          letter-spacing: 0.4px;
+          color: themed('text');
+        }
+
+        p {
+          @include noto-sans(400);
+          font-size: 16px;
+          line-height: 22px;
+          align-self: center;
+          color: themed('text');
+          margin-top: 19px;
+        }
+
+        .okp4-dataverse-portal-share-page-text-disabled {
+          position: relative;
+          bottom: -5%;
+          visibility: hidden;
+          display: flex;
+          align-self: center;
+
+          @include use-breakpoints('large-desktop') {
+            bottom: -15%;
+          }
+        }
+      }
+
+      &:hover {
+        @include transition-bg-color;
+        background-color: themed('primary-color-variant-1');
+
+        h3,
+        p {
+          color: themed('primary-text');
+        }
+      }
+    }
+  }
+}
