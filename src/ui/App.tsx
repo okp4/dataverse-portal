@@ -23,7 +23,7 @@ const App: FC = () => {
           <div className="okp4-dataverse-portal-toolbar-wrapper">
             <Toolbar />
           </div>
-          <div className="okp4-dataverse-portal-page-wrapper">
+          <div className="okp4-dataverse-portal-page-wrapper" id="page-wrapper">
             <ErrorBoundary>
               <AppRouter />
             </ErrorBoundary>

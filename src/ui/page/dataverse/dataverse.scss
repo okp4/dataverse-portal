@@ -152,30 +152,51 @@
         }
       }
 
-      .okp4-dataverse-portal-dataverse-page-cards-container {
-        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        grid-auto-rows: 220px;
-        gap: 43px;
+      /* stylelint-disable-next-line selector-class-pattern */
+      .infinite-scroll-component__outerdiv {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
 
-        @include use-breakpoints(('mobile', 'tablet')) {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: 4);
-        }
+        .okp4-dataverse-portal-dataverse-page-cards-container {
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          grid-auto-rows: 220px;
+          gap: 43px;
 
-        @include use-breakpoints(('mobile')) {
-          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
-          gap: 20px;
-        }
+          @include use-breakpoints(('mobile', 'tablet')) {
+            @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 3, $rowEnd: 4);
+          }
 
-        @include use-breakpoints(('tablet')) {
-          grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
-          gap: 36px;
-        }
+          @include use-breakpoints(('mobile')) {
+            grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
+            gap: 20px;
+          }
 
-        @include use-breakpoints(('large-desktop')) {
-          grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-          gap: 29px;
+          @include use-breakpoints(('tablet')) {
+            grid-template-columns: repeat(auto-fill, minmax(342px, 1fr));
+            gap: 36px;
+          }
+
+          @include use-breakpoints(('large-desktop')) {
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 29px;
+          }
+
+          .okp4-dataverse-portal-dataverse-page-card-loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+
+            .okp4-dataverse-portal-dataverse-page-card-loader-text-wrapper {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 5px;
+            }
+          }
         }
       }
     }

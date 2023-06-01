@@ -3,11 +3,12 @@ import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import * as TE from 'fp-ts/TaskEither'
-import type { DataverseEntity } from '@/domain/dataverse/entity'
+import type { DataverseElement } from '@/domain/dataverse/entity'
 import type {
   DataversePort,
   RetrieveDataverseQueryFilters,
-  RetrieveDataverseResult
+  RetrieveDataverseResult,
+  DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import type { SparqlBinding, SparqlResult } from './dto'
@@ -19,6 +20,15 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
+    const buildContainsExpression = (filter: DataverseElementType): string =>
+      `contains(str(?type), "${filter}" )`
+
+    const buildQueryFilter = (index: number, acc: string, cur: DataverseElementType): string =>
+      index === 0 ? buildContainsExpression(cur) : `${acc} || ${buildContainsExpression(cur)}`
+
+    const byTypeFilter = (f: DataverseElementType[]): string =>
+      A.reduceWithIndex('', buildQueryFilter)(f)
+
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -38,7 +48,7 @@ export const sparqlGateway: DataversePort = {
           ?id rdf:type core:DataSpace .
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
         }
-        ${filters.byType !== 'all' ? `FILTER ( contains(str(?type), "${filters.byType}" ))` : ''}
+        ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
@@ -46,6 +56,7 @@ export const sparqlGateway: DataversePort = {
         ?metadata core:hasDescription ?description .
         FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?description),'${language}') )
       }
+      ORDER BY ?title
       LIMIT ${limit + 1}
       OFFSET ${offset}
 `
@@ -103,7 +114,7 @@ export const sparqlGateway: DataversePort = {
         O.map(c => [b, a, c])
       )
 
-    const mapDtoToEntity = (dto: SparqlResult): DataverseEntity =>
+    const mapDtoToEntity = (dto: SparqlResult): DataverseElement[] =>
       pipe(
         dto.results.bindings,
         A.filterMap(splitBindingId),
@@ -132,7 +143,7 @@ export const sparqlGateway: DataversePort = {
       TE.map(mapDtoToEntity),
       TE.map(r => ({
         data: A.takeLeft(limit)(r),
-        query: { hasNext: r.length === limit }
+        query: { hasNext: r.length === limit + 1 }
       }))
     )
   }
