@@ -27,7 +27,9 @@ export type Options = {
   initialState: State
 }
 
-const isAllByTypeFilter = (filter: ByTypeQueryFilter): filter is 'all' => filter === 'all'
+const isDataverseElementByTypeFilter = (
+  filter: ByTypeQueryFilter
+): filter is DataverseElementType[] => filter !== 'all'
 
 const removeByTypeFilter = (
   input: DataverseElementType,
@@ -42,11 +44,6 @@ const removeByTypeFilter = (
     )
   )
 
-const addByTypeFilter = (
-  input: DataverseElementType,
-  filter: DataverseElementType[]
-): DataverseElementType[] => A.append(input)(filter)
-
 const updateByTypeFilter = (
   input: ByTypeFilterInput,
   filter: ByTypeQueryFilter
@@ -57,18 +54,18 @@ const updateByTypeFilter = (
     case 'Service':
       return pipe(
         filter,
-        O.fromPredicate(isAllByTypeFilter),
+        O.fromPredicate(isDataverseElementByTypeFilter),
         O.match(
-          () =>
+          () => A.of(input),
+          dataverseElementTypes =>
             pipe(
-              filter as DataverseElementType[],
-              O.fromPredicate(() => filter.includes(input)),
+              dataverseElementTypes,
+              O.fromPredicate(() => dataverseElementTypes.includes(input)),
               O.match(
-                () => addByTypeFilter(input, filter as DataverseElementType[]),
+                () => A.append(input)(dataverseElementTypes),
                 f => removeByTypeFilter(input, f)
               )
-            ),
-          () => A.of(input)
+            )
         )
       )
     case 'all':
@@ -87,7 +84,7 @@ export const storeFactory = (
           initialState,
           O.fromNullable,
           O.map(it => it.data),
-          O.getOrElseW<Dataverse & DataverseQuery>(() => ({
+          O.getOrElse<Dataverse & DataverseQuery>(() => ({
             dataverse: [],
             isLoading: false,
             limit: 20,
