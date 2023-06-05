@@ -12,9 +12,9 @@ import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import {
-  CheckboxFilter,
+  SelectionFilter,
   FilterName
-} from '@/ui/view/dataverse/component/filters/checkboxFilter/checkboxFilter'
+} from '@/ui/view/dataverse/component/filters/selectionFilter/selectionFilter'
 import '@/ui/view/dataverse/component/filters/i18n/index'
 import './dataverse.scss'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
@@ -601,11 +601,12 @@ const Dataverse = (): JSX.Element => {
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
           {Object.entries(selectionFilters).map(([filterName, filterValues]) => (
-            <CheckboxFilter
+            <SelectionFilter
               filterName={t(`filters:${filterName}.name`)}
               filterValues={filterValues}
               key={filterName}
               searchPlaceholder={t(`filters:${filterName}.search`)}
+              selectionType="checkbox"
             />
           ))}
         </div>
