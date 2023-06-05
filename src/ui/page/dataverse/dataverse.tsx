@@ -438,6 +438,36 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
+const selectionFilters = {
+  'data-spaces': ['Rhizome', 'DS4I', 'Data space 3', 'Data space 4'],
+  topics: ['Agriculture environment and forestry', 'Marketing and customer behaviour'],
+  services: [
+    'Data cleaning',
+    'Computer vision',
+    'Machine learning',
+    'Data mining',
+    'Data visualization',
+    'Data analysis',
+    'Data management'
+  ],
+  'data-geo-cov': [
+    'Afghanistan',
+    'France',
+    'Spain',
+    'Germany',
+    'Albania',
+    'Algeria',
+    'Antigua-and-barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Bahamas'
+  ],
+  'data-format': ['CSV', 'JSON', 'XML'],
+  'data-licence': ['ETALAB', 'LO-FR-2_0', 'Licence 3']
+}
+
 export const getResourceDetails = (id: string): O.Option<DataverseItemDetails> =>
   pipe(
     dataverseItems,
@@ -570,60 +600,14 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
-          <CheckboxFilter
-            filterName={t('filters:data-spaces.name')}
-            filterValues={['Rhizome', 'DS4I', 'Data space 3', 'Data space 4']}
-            searchPlaceholder={t('filters:data-spaces.search')}
-          />
-          <CheckboxFilter
-            filterName={t('filters:topics.name')}
-            filterValues={[
-              'Agriculture environment and forestry',
-              'Marketing and customer behaviour'
-            ]}
-            searchPlaceholder={t('filters:topics.search')}
-          />
-          <CheckboxFilter
-            filterName={t('filters:services.name')}
-            filterValues={[
-              'Data cleaning',
-              'Computer vision',
-              'Machine learning',
-              'Data mining',
-              'Data visualization',
-              'Data analysis',
-              'Data management'
-            ]}
-            searchPlaceholder={t('filters:services.search')}
-          />
-          <CheckboxFilter
-            filterName={t('filters:data-geo-cov.name')}
-            filterValues={[
-              'Afghanistan',
-              'France',
-              'Spain',
-              'Germany',
-              'Albania',
-              'Algeria',
-              'Antigua-and-barbuda',
-              'Argentina',
-              'Armenia',
-              'Australia',
-              'Austria',
-              'Bahamas'
-            ]}
-            searchPlaceholder={t('filters:data-geo-cov.search')}
-          />
-          <CheckboxFilter
-            filterName={t('filters:data-format.name')}
-            filterValues={['CSV', 'JSON', 'XML']}
-            searchPlaceholder={t('filters:data-format.search')}
-          />
-          <CheckboxFilter
-            filterName={t('filters:data-licence.name')}
-            filterValues={['ETALAB', 'LO-FR-2_0', 'Licence 3']}
-            searchPlaceholder={t('filters:data-licence.search')}
-          />
+          {Object.entries(selectionFilters).map(([filterName, filterValues]) => (
+            <CheckboxFilter
+              filterName={t(`filters:${filterName}.name`)}
+              filterValues={filterValues}
+              key={filterName}
+              searchPlaceholder={t(`filters:${filterName}.search`)}
+            />
+          ))}
         </div>
       )}
       {(isLargeScreen || !showMobileFilters) && (

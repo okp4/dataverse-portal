@@ -32,13 +32,15 @@ type CheckboxFilterProps = {
   filterName: string
   filterValues: string[]
   searchPlaceholder: string
+  maxSearchResults?: number
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const CheckboxFilter: FC<CheckboxFilterProps> = ({
   filterName,
   filterValues,
-  searchPlaceholder
+  searchPlaceholder,
+  maxSearchResults = 10
 }) => {
   const createDefaultCheckboxOption = ({
     name,
@@ -50,8 +52,6 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({
     checked: false,
     disabled: false
   })
-
-  const MAX_SEARCH_RESULTS = 10
 
   const [searchTerm, setSearchTerm] = useState<string>('')
 
@@ -70,17 +70,17 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({
 
   const handleCheckedChange = useCallback(
     (changedOption: CheckboxOption) => {
-      setCheckboxOptions(checkboxOptions => {
-        const optionIndex = checkboxOptions.findIndex(
+      setCheckboxOptions(prevCheckboxOptions => {
+        const optionIndex = prevCheckboxOptions.findIndex(
           option => option.value === changedOption.value
         )
         if (optionIndex === -1) {
-          return checkboxOptions
+          return prevCheckboxOptions
         }
         return [
-          ...checkboxOptions.slice(0, optionIndex),
+          ...prevCheckboxOptions.slice(0, optionIndex),
           changedOption,
-          ...checkboxOptions.slice(optionIndex + 1)
+          ...prevCheckboxOptions.slice(optionIndex + 1)
         ]
       })
     },
@@ -91,8 +91,8 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({
     () =>
       checkboxOptions
         .filter(({ value }) => isSubstringOf(searchTerm, value))
-        .slice(0, searchTerm.trim() === '' ? checkboxOptions.length : MAX_SEARCH_RESULTS),
-    [checkboxOptions, searchTerm]
+        .slice(0, searchTerm.trim() === '' ? checkboxOptions.length : maxSearchResults),
+    [checkboxOptions, searchTerm, maxSearchResults]
   )
 
   return (
