@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react'
 type UseTimeout = () => void
 
 export const useTimeout = (callback: () => void, delay: number | null): UseTimeout => {
-  const timeoutRef = useRef<number | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const set = useCallback(() => {
     timeoutRef.current = delay !== null ? setTimeout(() => callback(), delay) : null
