@@ -38,18 +38,6 @@
         height: calc(var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) * (var(--visible-checkboxes)));
         overflow-y: auto;
         padding-right: 8px;
-        
-        &::-webkit-scrollbar-thumb {
-          background-color: rgba(themed('text'), 0.28);
-          width: 6px;
-          border-radius: 3px;
-        }
-        
-        &::-webkit-scrollbar-track {
-          background-color: rgba(themed('text'), 0.06);
-          width: 6px;
-          border-radius: 3px;
-        }
       }
 
       .okp4-dataverse-portal-checkbox-filter-no-results-wrapper{

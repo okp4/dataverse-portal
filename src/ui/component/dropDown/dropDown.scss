@@ -1,5 +1,6 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-drop-down-menu-main {
   @include with-theme {
@@ -133,9 +134,10 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
           }
 
-          &::-webkit-scrollbar-thumb {
-            background-color: transparent;
-          }
+          @include scrollbars(
+            $foreground-color: transparent,
+            $background-color: transparent,
+          )
         }
       }
     }
