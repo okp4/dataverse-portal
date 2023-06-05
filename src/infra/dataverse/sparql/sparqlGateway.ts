@@ -14,7 +14,7 @@ import type {
 import { getURILastElement } from '@/util/util'
 import { createAbortableFetch, handleAbortError } from '@/util/fetch/fetch'
 import type { SparqlBinding, SparqlResult } from './dto'
-const abortableFetch = createAbortableFetch()
+const { abortRequest, fetchWithAbort } = createAbortableFetch()
 
 export const sparqlGateway: DataversePort = {
   retrieveDataverse: (
@@ -76,10 +76,10 @@ export const sparqlGateway: DataversePort = {
     const fetchDataverse = (): TE.TaskEither<Error, Response> =>
       pipe(
         TE.tryCatch(
-          async () => abortableFetch(APP_ENV.sparql['endpoint'], fetchHeaders),
+          async () => fetchWithAbort(APP_ENV.sparql['endpoint'], fetchHeaders),
           E.toError
         ),
-        TE.flatMap(
+        TE.chain(
           TE.fromPredicate(
             res => res.ok,
             res =>
@@ -150,5 +150,6 @@ export const sparqlGateway: DataversePort = {
         query: { hasNext: r.length === limit + 1 }
       }))
     )
-  }
+  },
+  abortRequest
 }

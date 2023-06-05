@@ -457,6 +457,7 @@ const Dataverse = (): JSX.Element => {
   const theme = useAppStore(state => state.theme)
   const {
     loadDataverse,
+    cancelDataverseLoading,
     dataverse,
     setByTypeFilter,
     isLoading,
@@ -466,6 +467,7 @@ const Dataverse = (): JSX.Element => {
     error
   } = useDataverseStore(state => ({
     loadDataverse: state.loadDataverse,
+    cancelDataverseLoading: state.cancelDataverseLoading,
     dataverse: state.dataverse,
     isLoading: state.isLoading,
     hasNext: state.hasNext,
@@ -485,10 +487,11 @@ const Dataverse = (): JSX.Element => {
 
   const toggleFilter = useCallback(
     (filter: ByTypeFilterInput) => () => {
+      cancelDataverseLoading()()
       setByTypeFilter(filter)()
       loadDataverse()()
     },
-    [loadDataverse, setByTypeFilter]
+    [cancelDataverseLoading, loadDataverse, setByTypeFilter]
   )
 
   const toggleMobileFilters = useCallback(() => {
@@ -540,6 +543,10 @@ const Dataverse = (): JSX.Element => {
   useEffect(() => {
     setLanguage(currentLng)()
     loadDataverse()()
+
+    return () => {
+      cancelDataverseLoading()()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLng])
 

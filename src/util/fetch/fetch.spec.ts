@@ -13,12 +13,12 @@ describe('fetch utilities', () => {
       fetchMock.mockRejectOnce(async () => Promise.reject(new Error('The user aborted a request.')))
       fetchMock.mockResponseOnce(JSON.stringify(responseBody), { status: 200 })
 
-      const abortableFetch = createAbortableFetch()
+      const { fetchWithAbort } = createAbortableFetch()
 
       // Make first request
-      const firstRequest = abortableFetch('https://example.com')
+      const firstRequest = fetchWithAbort('https://example.com')
       // Make second request, which should abort the first one
-      const secondRequest = abortableFetch('https://example.com')
+      const secondRequest = fetchWithAbort('https://example.com')
 
       // Check that the first request is aborted.
       await expect(firstRequest).rejects.toThrow('The user aborted a request.')

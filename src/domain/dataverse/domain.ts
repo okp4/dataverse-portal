@@ -10,7 +10,6 @@ import { devtools } from 'zustand/middleware'
 import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
 import type { ForgetType } from '@/util/type'
-import { FetchAbortError } from '@/util/fetch/fetch'
 import type { Dataverse } from './entity'
 import type { DataversePort } from './port'
 import type { ByTypeFilterInput, Command, DataverseElementType } from './command'
@@ -136,7 +135,7 @@ export const storeFactory = (
         loadDataverse: (): T.Task<void> =>
           pipe(
             T.fromIO(() => get().data),
-            T.flatMap(data =>
+            T.chain(data =>
               pipe(
                 T.fromIO(() =>
                   set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
@@ -153,16 +152,16 @@ export const storeFactory = (
                   e =>
                     pipe(
                       e,
-                      O.fromPredicate(e => e instanceof FetchAbortError),
+                      O.fromPredicate(e => e.name === 'AbortError'),
                       O.fold(
-                        // do not update state if fetch was aborted
-                        () => T.of(undefined),
                         () =>
                           T.fromIO(() =>
                             set(state => ({
                               data: { ...state.data, isLoading: false, error: O.some(e) }
                             }))
-                          )
+                          ),
+                        // do not update state if fetch was aborted
+                        () => T.of(undefined)
                       )
                     ),
                   r =>
@@ -179,7 +178,14 @@ export const storeFactory = (
                 )
               )
             )
-          )
+          ),
+        cancelDataverseLoading: (): T.Task<void> =>
+          T.fromIO(() => {
+            pipe(
+              O.guard(get().data.isLoading),
+              O.map(() => gateway.abortRequest())
+            )
+          })
       })),
       {
         anonymousActionType: 'Aggregate',

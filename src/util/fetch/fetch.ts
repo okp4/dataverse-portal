@@ -7,34 +7,26 @@ export const FetchAbortError = (): Error => {
 export const handleAbortError = (error: Error): Error => {
   if (error.name === 'AbortError') {
     console.info('Request aborted')
-    throw FetchAbortError()
+    return FetchAbortError()
   }
-  throw error
+  return error
 }
 
-export const createAbortableFetch = (): ((
-  input: RequestInfo,
-  init?: RequestInit
-) => Promise<Response>) => {
+export const createAbortableFetch = (): {
+  fetchWithAbort: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+  abortRequest: () => void
+} => {
   let abortController = new AbortController()
 
-  const fetchWithAbort: (input: RequestInfo, init?: RequestInit) => Promise<Response> = async (
-    input,
-    init
-  ) => {
-    // Cancel the previous fetch request
-    abortController.abort()
-
-    // Create a new AbortController for the new fetch request
-    abortController = new AbortController()
-
-    const fetchInit: RequestInit = {
-      ...init,
-      signal: abortController.signal // Using abortController's signal
+  return {
+    async fetchWithAbort(input: RequestInfo, init?: RequestInit): Promise<Response> {
+      abortController.abort() // Cancel the previous fetch request
+      abortController = new AbortController() // Create a new AbortController for the new fetch request
+      const fetchInit = { ...init, signal: abortController.signal }
+      return fetch(input, fetchInit)
+    },
+    abortRequest: (): void => {
+      abortController.abort()
     }
-
-    return fetch(input, fetchInit)
   }
-
-  return fetchWithAbort
 }
