@@ -19,4 +19,5 @@ export type SparqlBinding = {
   description: SparqlBindingProperty & {
     'xml:lang': string
   }
+  publisher: SparqlBindingProperty
 }
