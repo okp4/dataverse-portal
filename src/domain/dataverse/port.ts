@@ -17,5 +17,5 @@ export type DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ) => TE.TaskEither<Error, RetrieveDataverseResult>
-  abortRequest: () => void
+  cancelDataverseRetrieval: () => void
 }

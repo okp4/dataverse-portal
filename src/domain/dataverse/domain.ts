@@ -140,7 +140,7 @@ export const storeFactory = (
                 T.fromIO(() =>
                   set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
                 ),
-                T.chainFirst(() => T.fromIO(() => gateway.abortRequest())),
+                T.chainFirst(() => T.fromIO(() => gateway.cancelDataverseRetrieval())),
                 T.chain(() =>
                   gateway.retrieveDataverse(
                     data.language,

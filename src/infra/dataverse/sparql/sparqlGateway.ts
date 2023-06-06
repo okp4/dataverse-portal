@@ -149,5 +149,5 @@ export const sparqlGateway: DataversePort = {
       }))
     )
   },
-  abortRequest
+  cancelDataverseRetrieval: (): void => abortRequest()
 }
