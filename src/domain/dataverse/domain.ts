@@ -140,6 +140,7 @@ export const storeFactory = (
                 T.fromIO(() =>
                   set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
                 ),
+                T.chainFirst(() => T.fromIO(() => gateway.abortRequest())),
                 T.chain(() =>
                   gateway.retrieveDataverse(
                     data.language,
@@ -178,14 +179,7 @@ export const storeFactory = (
                 )
               )
             )
-          ),
-        cancelDataverseLoading: (): T.Task<void> =>
-          T.fromIO(() => {
-            pipe(
-              O.guard(get().data.isLoading),
-              O.map(() => gateway.abortRequest())
-            )
-          })
+          )
       })),
       {
         anonymousActionType: 'Aggregate',

@@ -3,7 +3,6 @@ import * as A from 'fp-ts/Array'
 import { pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
-import * as E from 'fp-ts/Either'
 import type { DataverseElement } from '@/domain/dataverse/entity'
 import type {
   DataversePort,
@@ -12,7 +11,7 @@ import type {
   DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
-import { createAbortableFetch, handleAbortError } from '@/util/fetch/fetch'
+import { createAbortableFetch } from '@/util/fetch/fetch'
 import type { SparqlBinding, SparqlResult } from './dto'
 const { abortRequest, fetchWithAbort } = createAbortableFetch()
 
@@ -74,21 +73,20 @@ export const sparqlGateway: DataversePort = {
     }
 
     const fetchDataverse = (): TE.TaskEither<Error, Response> =>
-      pipe(
-        TE.tryCatch(
-          async () => fetchWithAbort(APP_ENV.sparql['endpoint'], fetchHeaders),
-          E.toError
-        ),
-        TE.chain(
-          TE.fromPredicate(
-            res => res.ok,
-            res =>
-              new Error(
-                `Oops.. A ${res.status} HTTP error occurred when fetching ontology: ${res.statusText}`
-              )
-          )
-        ),
-        TE.mapLeft(handleAbortError)
+      TE.tryCatch(
+        async () => {
+          const resp = await fetchWithAbort(APP_ENV.sparql['endpoint'], fetchHeaders)
+          if (!resp.ok) {
+            throw new Error(
+              `Oops.. A ${resp.status} HTTP error occurred with the following message: ${resp.statusText} `
+            )
+          }
+          return resp
+        },
+        reason =>
+          reason instanceof Error
+            ? reason
+            : new Error(`Oops.. Something went wrong fetching ontology: ${JSON.stringify(reason)}`)
       )
 
     const serializeResponse = (response: Response): TE.TaskEither<Error, SparqlResult> =>
