@@ -36,7 +36,7 @@ export const sparqlGateway: DataversePort = {
       PREFIX serviceMetadata: <https://ontology.okp4.space/metadata/service/>
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
       PREFIX dataspaceMetadata: <https://ontology.okp4.space/metadata/dataspace/>
-      SELECT ?id ?metadata ?title ?description ?type
+      SELECT ?id ?metadata ?title ?description ?type ?publisher
       WHERE {
         {
           ?id rdf:type core:Service .
@@ -54,6 +54,7 @@ export const sparqlGateway: DataversePort = {
         ?metadata core:describes ?id .
         ?metadata core:hasTitle ?title .
         ?metadata core:hasDescription ?description .
+        ?metadata core:hasPublisher ?publisher .
         FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?description),'${language}') )
       }
       ORDER BY ?title
@@ -119,22 +120,24 @@ export const sparqlGateway: DataversePort = {
         dto.results.bindings,
         A.filterMap(splitBindingId),
         A.filterMap(splitBindingType),
-        A.map(([{ title, description }, id, type]) => {
-          return {
-            id,
-            properties: [
-              { property: 'title', value: title.value },
-              {
-                property: 'type',
-                value: type
-              },
-              {
-                property: 'description',
-                value: description.value
-              }
-            ]
-          }
-        })
+        A.map(([{ title, description, publisher }, id, type]) => ({
+          id,
+          properties: [
+            { property: 'title', value: title.value },
+            {
+              property: 'type',
+              value: type
+            },
+            {
+              property: 'description',
+              value: description.value
+            },
+            {
+              property: 'publisher',
+              value: publisher.value
+            }
+          ]
+        }))
       )
 
     return pipe(

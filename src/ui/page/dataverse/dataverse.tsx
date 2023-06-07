@@ -547,6 +547,8 @@ const Dataverse = (): JSX.Element => {
     !isLargeScreen && setShowMobileFilters(false)
   }, [isLargeScreen])
 
+  useEffect(() => setByTypeFilter('all'), [setByTypeFilter])
+
   const loadingDataverseCards = [...Array(12)].map((_, i) => (
     <Card key={i}>
       <div className="okp4-dataverse-portal-dataverse-page-card-loader-container">
