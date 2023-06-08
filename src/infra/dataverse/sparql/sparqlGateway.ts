@@ -37,7 +37,7 @@ export const sparqlGateway: DataversePort = {
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
       PREFIX dataspaceMetadata: <https://ontology.okp4.space/metadata/dataspace/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      SELECT ?id ?metadata ?title ?type ?publisher ?topic ?prefLabel
+      SELECT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
         {
           ?id rdf:type core:Service .
@@ -57,9 +57,13 @@ export const sparqlGateway: DataversePort = {
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
         ?metadata core:hasTitle ?title .
+        FILTER langMatches(lang(?title),'${language}')
         ?metadata core:hasPublisher ?publisher .
-        ?topic skos:prefLabel ?prefLabel .
-        FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?prefLabel),'${language}') )
+        OPTIONAL { 
+          ?topic skos:prefLabel ?filteredPrefLabel .
+          FILTER langMatches(lang(?filteredPrefLabel),'${language}')
+        }
+        ?topic skos:prefLabel ?fallbackPrefLabel .
       }
       ORDER BY ?title
       LIMIT ${limit + 1}
