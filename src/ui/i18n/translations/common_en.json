@@ -23,5 +23,7 @@
   "from": "From:",
   "to": "To:",
   "know": "Know",
-  "noResultsFound": "No results found."
+  "noResultsFound": "No results found.",
+  "select": "Select",
+  "selected": "Selected"
 }

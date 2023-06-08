@@ -2,7 +2,10 @@
   "share": {
     "dataset": {
       "title": "Ich teile einen Datensatz",
-      "description": "Einfaches Freigeben Ihres Datensatzes im Dataverse"
+      "description": "Einfaches Freigeben Ihres Datensatzes im Dataverse",
+      "selectStorage": "Wählen Sie einen Speicherdienst",
+      "location": "Mein Datensatz befindet sich in",
+      "serviceStorageSearch": "Suche nach einem Speicherdienst"
     },
     "service": {
       "title": "Ich teile einen Dienst",

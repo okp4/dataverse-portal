@@ -2,7 +2,10 @@
   "share": {
     "dataset": {
       "title": "Je partage un jeu de données",
-      "description": "Partagez facilement votre jeu de données dans le dataverse"
+      "description": "Partagez facilement votre jeu de données dans le dataverse",
+      "selectStorage": "Sélectionner un Service de Stockage",
+      "location": "Mon jeu de données se trouve dans",
+      "serviceStorageSearch": "Rechercher un service de stockage"
     },
     "service": {
       "title": "Je partage un service",

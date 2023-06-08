@@ -2,7 +2,10 @@
   "share": {
     "dataset": {
       "title": "I share a dataset",
-      "description": "Easily share your dataset in the dataverse"
+      "description": "Easily share your dataset in the dataverse",
+      "selectStorage": "Select a Storage Service",
+      "location": "My dataset is in",
+      "serviceStorageSearch": "Search a storage service"
     },
     "service": {
       "title": "I share a service",

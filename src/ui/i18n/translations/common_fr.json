@@ -23,5 +23,7 @@
   "from": "Depuis le :",
   "to": "Jusqu'au :",
   "know": "Know",
-  "noResultsFound": "Aucun résultat trouvé."
+  "noResultsFound": "Aucun résultat trouvé.",
+  "select": "Sélectionner",
+  "selected": "Sélectionné"
 }
