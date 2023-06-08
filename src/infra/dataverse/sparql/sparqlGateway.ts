@@ -36,26 +36,30 @@ export const sparqlGateway: DataversePort = {
       PREFIX serviceMetadata: <https://ontology.okp4.space/metadata/service/>
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
       PREFIX dataspaceMetadata: <https://ontology.okp4.space/metadata/dataspace/>
-      SELECT ?id ?metadata ?title ?description ?type ?publisher
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      SELECT ?id ?metadata ?title ?type ?publisher ?topic ?prefLabel
       WHERE {
         {
           ?id rdf:type core:Service .
           ?metadata rdf:type serviceMetadata:GeneralMetadata .
+          ?metadata core:hasCategory ?topic .
         } UNION {
           ?id rdf:type core:Dataset .
           ?metadata rdf:type datasetMetadata:GeneralMetadata .
+          ?metadata core:hasTopic ?topic .
         } UNION {          
           ?id rdf:type core:DataSpace .
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
+          ?metadata core:hasTopic ?topic .
         }
         ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
         ?metadata core:hasTitle ?title .
-        ?metadata core:hasDescription ?description .
         ?metadata core:hasPublisher ?publisher .
-        FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?description),'${language}') )
+        ?topic skos:prefLabel ?prefLabel .
+        FILTER ( langMatches(lang(?title),'${language}') && langMatches(lang(?prefLabel),'${language}') )
       }
       ORDER BY ?title
       LIMIT ${limit + 1}
@@ -120,7 +124,7 @@ export const sparqlGateway: DataversePort = {
         dto.results.bindings,
         A.filterMap(splitBindingId),
         A.filterMap(splitBindingType),
-        A.map(([{ title, description, publisher }, id, type]) => ({
+        A.map(([{ title, publisher, prefLabel }, id, type]) => ({
           id,
           properties: [
             { property: 'title', value: title.value },
@@ -129,12 +133,12 @@ export const sparqlGateway: DataversePort = {
               value: type
             },
             {
-              property: 'description',
-              value: description.value
-            },
-            {
               property: 'publisher',
               value: publisher.value
+            },
+            {
+              property: 'topic',
+              value: prefLabel.value
             }
           ]
         }))

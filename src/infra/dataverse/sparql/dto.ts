@@ -16,8 +16,9 @@ export type SparqlBinding = {
   title: SparqlBindingProperty & {
     'xml:lang': string
   }
-  description: SparqlBindingProperty & {
+  publisher: SparqlBindingProperty
+  topic: SparqlBindingProperty
+  prefLabel: SparqlBindingProperty & {
     'xml:lang': string
   }
-  publisher: SparqlBindingProperty
 }
