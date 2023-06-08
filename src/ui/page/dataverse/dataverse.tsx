@@ -597,10 +597,10 @@ const Dataverse = (): JSX.Element => {
                 ? loadingDataverseCards
                 : dataverse()().map(({ id, properties }) => (
                     <DataverseItemCard
-                      description={properties.find(p => p.property === 'description')?.value ?? ''}
                       id={id}
                       key={id}
                       label={properties.find(p => p.property === 'title')?.value ?? ''}
+                      topic={properties.find(p => p.property === 'topic')?.value ?? ''}
                       type={
                         properties
                           .find(p => p.property === 'type')

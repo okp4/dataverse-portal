@@ -14,10 +14,10 @@ export type DataverseItemCardProps = {
   id: string
   type: DataverseItem
   label: string
-  description: string
+  topic: string
 }
 
-export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label, description }) => {
+export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label, topic }) => {
   const navigate = useNavigate()
   const { t } = useTranslation('common')
 
@@ -35,8 +35,8 @@ export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label,
   }, [])
 
   const renderItemContent = useCallback(
-    (label: string, description: string): string => `### ${label}
-${description}`,
+    (label: string, topic: string): string => `### ${label}
+${topic}`,
     []
   )
 
@@ -56,8 +56,8 @@ ${description}`,
           {t(`resources.${type}`)}
         </div>
         <div className="okp4-dataverse-portal-dataverse-item-card-content">
-          <div className="okp4-dataverse-portal-dataverse-description">
-            <ReactMarkdown>{renderItemContent(label, description)}</ReactMarkdown>
+          <div className="okp4-dataverse-portal-dataverse-topic">
+            <ReactMarkdown>{renderItemContent(label, topic)}</ReactMarkdown>
           </div>
           <Button label={t('actions.details')} onClick={handleDataverseItemDetails} />
         </div>
