@@ -32,6 +32,7 @@
 
       &.left {
         @include bi-column-item('left');
+        cursor: pointer;
 
         .okp4-dataverse-portal-share-page-ilustration {
           background: center / contain url('@/ui/asset/images/share-dataset.webp') no-repeat;

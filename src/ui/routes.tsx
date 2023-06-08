@@ -5,7 +5,8 @@ import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
 import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
-import { Share } from './page/share/share'
+import { Share } from '@/ui/page/share/share'
+import { ShareDataset } from '@/ui/page/share/dataset/shareDataset'
 
 export enum routes {
   home = '/',
@@ -15,6 +16,7 @@ export enum routes {
   service = 'dataverse/service/:id',
   governance = 'dataverse/dataspace/:id/governance/:sectionId?/:subsectionId?',
   share = 'share',
+  shareDataset = '/share/data',
   notFoundError = '*'
 }
 
@@ -64,5 +66,10 @@ export const appRoutes: Route[] = [
     id: 'share',
     path: routes.share,
     element: <Share />
+  },
+  {
+    id: 'shareDataset',
+    path: routes.shareDataset,
+    element: <ShareDataset />
   }
 ]

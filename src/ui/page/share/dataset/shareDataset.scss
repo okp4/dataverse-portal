@@ -1,0 +1,12 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins';
+
+.okp4-dataverse-portal-share-dataset-page-main {
+  @include with-theme {
+    h1 {
+      @include norse-gradient-header($line-height: 36px);
+      margin-bottom: 20px;
+    }
+  }
+}

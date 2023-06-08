@@ -13,11 +13,15 @@ export type CardProps = {
   children: React.ReactElement
   background?: CardBackground
   mainClassName?: string
+  onClick?: () => void
 }
 
-export const Card: FC<CardProps> = ({ children, mainClassName, background = 'card' }) => {
+export const Card: FC<CardProps> = ({ children, mainClassName, onClick, background = 'card' }) => {
   return (
-    <div className={classNames('okp4-dataverse-portal-card-main', mainClassName, background)}>
+    <div
+      className={classNames('okp4-dataverse-portal-card-main', mainClassName, background)}
+      onClick={onClick}
+    >
       {children}
     </div>
   )
