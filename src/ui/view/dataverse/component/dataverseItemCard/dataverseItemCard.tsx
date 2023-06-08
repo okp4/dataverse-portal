@@ -3,12 +3,12 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '@/ui/component/card/card'
+import type { DataverseItem } from '@/ui/types'
 import { Button } from '@/ui/component/button/button'
 import './dataverseItemCard.scss'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
-type DataverseItem = 'dataspace' | 'dataset' | 'service'
 
 export type DataverseItemCardProps = {
   id: string
