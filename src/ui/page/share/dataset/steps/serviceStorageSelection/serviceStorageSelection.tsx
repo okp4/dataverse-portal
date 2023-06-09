@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -7,16 +7,19 @@ import { useDataverseStore } from '@/ui/store'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
 import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
+import type { Tab } from '@/ui/view/tabs/tabs'
+import { Tabs } from '@/ui/view/tabs/tabs'
 import type { DataverseItem } from '@/ui/types'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import { LottieLoader } from '@/ui/component/loader/lottieLoader'
 import threeDots from '@/ui/asset/loader/threeDots.json'
-import '../../../i18n/index'
+import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
 
 // eslint-disable-next-line max-lines-per-function
 export const ServiceStorageSelection: FC = () => {
   const { t } = useTranslation(['common', 'share', 'publisher'])
+  const [activeTab, setActiveTab] = useState<Tab>('left')
   const currentLng = activeLanguageWithDefault().lng
 
   const { loadDataverse, dataverse, setByTypeFilter, isLoading, hasNext, setLanguage } =
@@ -52,7 +55,13 @@ export const ServiceStorageSelection: FC = () => {
       <h2>{t('share:share.dataset.selectStorage')}</h2>
       <div className="okp4-dataverse-portal-share-dataset-page-service-selection-tabs">
         <h3>{t('share:share.dataset.location')}</h3>
-        <div>tabs</div>
+        <Tabs
+          activeTab={activeTab}
+          disabledTab="right"
+          handleTabChange={setActiveTab}
+          leftTabLabel={t('share:share.dataset.local')}
+          rightTabLabel={t('share:share.dataset.external')}
+        />
       </div>
       <SearchBar
         onSearch={handleServiceSearch}

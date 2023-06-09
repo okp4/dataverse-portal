@@ -5,6 +5,8 @@
       "description": "Partagez facilement votre jeu de données dans le dataverse",
       "selectStorage": "Sélectionner un Service de Stockage",
       "location": "Mon jeu de données se trouve dans",
+      "local": "Un dossier local",
+      "external": "Un stockage externe",
       "serviceStorageSearch": "Rechercher un service de stockage"
     },
     "service": {

@@ -49,7 +49,12 @@ $themes: (
     disabled-checkbox-background: $disabled-checkbox-background,
     drop-down-menu-menu-background: $text-dark,
     drop-down-menu-selected-background: $background-light-variant-1,
-    drop-down-menu-selected-border: rgba($primary-variant-1, 0.12)
+    drop-down-menu-selected-border: rgba($primary-variant-1, 0.12),
+    tab-active-background: $tab-active-background,
+    tab-disabled-background: $tab-disabled-background,
+    tab-disabled-text: $tab-disabled-text,
+    tab-inactive-background: $tab-inactive-background-light,
+    tab-inactive-text: $tab-inactive-text-light
   ),
   dark: (
     primary-color: $primary,
@@ -98,7 +103,12 @@ $themes: (
     disabled-checkbox-background: $disabled-checkbox-background,
     drop-down-menu-menu-background: $card-dark,
     drop-down-menu-selected-background: $card-dark,
-    drop-down-menu-selected-border: transparent
+    drop-down-menu-selected-border: transparent,
+    tab-active-background: $tab-active-background,
+    tab-disabled-background: $tab-disabled-background,
+    tab-disabled-text: $tab-disabled-text,
+    tab-inactive-background: $tab-inactive-background-dark,
+    tab-inactive-text: $tab-inactive-text-dark
   )
 );
 

@@ -7,7 +7,7 @@
     @include grid-container($colGutter: 10px, $rowGutter: 22px);
 
     h2 {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
       @include noto-sans(700);
       font-size: 28px;
       line-height: 28px;
@@ -16,7 +16,8 @@
     }
 
     .okp4-dataverse-portal-share-dataset-page-service-selection-tabs {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 2);
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+
       h3 {
         @include noto-sans(700);
         font-size: 16px;
@@ -28,11 +29,11 @@
     }
 
     .okp4-dataverse-portal-searchbar-main {
-      @include grid-item($colStart: 1, $colEnd: 7, $rowStart: 3, $rowEnd: 3);
+      @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
     }
 
     .okp4-dataverse-portal-share-dataset-page-services-container {
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 4, $rowEnd: auto);
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
       max-height: 610px;
       overflow-y: auto;
 
@@ -46,16 +47,3 @@
     }
   }
 }
-
-// .okp4-dataverse-portal-share-dataset-page-services {
-//   @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 4, $rowEnd: auto);
-//   max-height: 610px;
-//   overflow-y: auto;
-
-//   div {
-//     display: grid;
-//     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-//     gap: 48px;
-//     margin-right: 15px;
-//   }
-// }

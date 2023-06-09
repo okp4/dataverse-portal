@@ -5,6 +5,8 @@
       "description": "Einfaches Freigeben Ihres Datensatzes im Dataverse",
       "selectStorage": "Wählen Sie einen Speicherdienst",
       "location": "Mein Datensatz befindet sich in",
+      "local": "Einem lokalen Ordner",
+      "external": "Ein externer Speicher",
       "serviceStorageSearch": "Suche nach einem Speicherdienst"
     },
     "service": {

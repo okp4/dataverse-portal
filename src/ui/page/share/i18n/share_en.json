@@ -5,6 +5,8 @@
       "description": "Easily share your dataset in the dataverse",
       "selectStorage": "Select a Storage Service",
       "location": "My dataset is in",
+      "local": "A local folder",
+      "external": "An external storage",
       "serviceStorageSearch": "Search a storage service"
     },
     "service": {
