@@ -27,11 +27,11 @@ const NoResultsFound: FC = () => {
   )
 }
 
-type FilterNameProps = {
-  children: string
+type FilterLabelProps = {
+  label: string
 }
-export const FilterName: FC<FilterNameProps> = ({ children }) => (
-  <h3 className="okp4-dataverse-portal-dataverse-filter-name">{children}</h3>
+export const FilterLabel: FC<FilterLabelProps> = ({ label }) => (
+  <h3 className="okp4-dataverse-portal-dataverse-filter-label">{label}</h3>
 )
 
 type SelectionFilterProps = {
@@ -50,11 +50,8 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
   selectionType,
   maxSearchResults = 10
 }) => {
-  const createDefaultFilterOption = ({
-    name,
-    value
-  }: Pick<SelectionOption, 'name' | 'value'>): SelectionOption => ({
-    name,
+  const createDefaultFilterOption = (value: string): SelectionOption => ({
+    name: filterName,
     value,
     selected: false,
     disabled: false
@@ -64,7 +61,7 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
 
   const [filterOptions, setFilterOptions] = useState<SelectionOption[]>(
     filterValues
-      .map(value => createDefaultFilterOption({ name: filterName, value }))
+      .map(value => createDefaultFilterOption(value))
       .sort((a, b) => a.value.localeCompare(b.value))
   )
 
@@ -77,28 +74,24 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
 
   const handleSelectedChange = useCallback(
     (changedOption: Pick<SelectionOption, 'selected' | 'value' | 'name'>) => {
-      setFilterOptions(prevFilterOptions => {
-        const optionIndex = prevFilterOptions.findIndex(
-          option => option.value === changedOption.value
+      setFilterOptions(prevFilterOptions =>
+        prevFilterOptions.map(option =>
+          option.value === changedOption.value
+            ? { ...option, selected: changedOption.selected }
+            : option
         )
-        if (optionIndex === -1) {
-          return prevFilterOptions
-        }
-        return [
-          ...prevFilterOptions.slice(0, optionIndex),
-          { ...prevFilterOptions[optionIndex], ...changedOption },
-          ...prevFilterOptions.slice(optionIndex + 1)
-        ]
-      })
+      )
     },
     [setFilterOptions]
   )
 
   const foundFilterOptions = useMemo(
     () =>
-      filterOptions
-        .filter(({ value }) => isSubstringOf(searchTerm, value))
-        .slice(0, searchTerm.trim() === '' ? filterOptions.length : maxSearchResults),
+      searchTerm.trim() === ''
+        ? filterOptions
+        : filterOptions
+            .filter(({ value }) => isSubstringOf(searchTerm, value))
+            .slice(0, maxSearchResults),
     [filterOptions, searchTerm, maxSearchResults]
   )
 
@@ -108,7 +101,7 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
         content={
           <div className="okp4-dataverse-portal-selection-filter">
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
-            <div className="okp4-dataverse-portal-selection-filter-list">
+            <div className="okp4-dataverse-portal-selection-filter-options-list">
               {foundFilterOptions.length > 0 ? (
                 foundFilterOptions.map(({ selected, disabled, value }) => {
                   switch (selectionType) {
@@ -136,7 +129,7 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
         }
         iconName="chevron"
         open
-        trigger={<FilterName>{filterName}</FilterName>}
+        trigger={<FilterLabel label={filterName} />}
         triggerClassName="okp4-dataverse-portal-selection-filter-trigger"
       />
     </div>

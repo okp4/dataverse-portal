@@ -13,7 +13,7 @@ import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
 import {
   SelectionFilter,
-  FilterName
+  FilterLabel
 } from '@/ui/view/dataverse/component/filters/selectionFilter/selectionFilter'
 import '@/ui/view/dataverse/component/filters/i18n/index'
 import './dataverse.scss'
@@ -548,7 +548,7 @@ const Dataverse = (): JSX.Element => {
           ) : (
             <h2>{filtersLabel}</h2>
           )}
-          <FilterName>{t('resources.label')}</FilterName>
+          <FilterLabel label={t('resources.label')} />
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
             {dataverseFilters.map(filter => (
               <Chip

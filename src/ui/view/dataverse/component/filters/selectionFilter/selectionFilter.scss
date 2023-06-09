@@ -30,7 +30,7 @@
       @include columns-with-gap(16px);
       padding-top: 8px;
       
-      .okp4-dataverse-portal-selection-filter-list {
+      .okp4-dataverse-portal-selection-filter-options-list {
         --checkbox-height: 32px;
         --checkbox-gap: 6px;
         --visible-checkboxes: 3;
@@ -64,7 +64,7 @@
   }
 }
 
-.okp4-dataverse-portal-dataverse-filter-name {
+.okp4-dataverse-portal-dataverse-filter-label {
   @include with-theme {
     @include norse-font(700);
     color: themed('text');
