@@ -4,14 +4,14 @@ import * as A from 'fp-ts/Array'
 import * as O from 'fp-ts/Option'
 import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
+import type { IO } from 'fp-ts/IO'
 import { immer } from 'zustand/middleware/immer'
 import { devtools } from 'zustand/middleware'
 import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
+import type { ForgetType } from '@/util/type'
 import type { Dataverse } from './entity'
 import type { DataversePort } from './port'
-import type { IO } from 'fp-ts/lib/IO'
-import type { ForgetType } from '@/util/type'
 import type { ByTypeFilterInput, Command, DataverseElementType } from './command'
 import type { ByTypeQueryFilter, DataverseQuery } from './valueObject'
 import type { Query } from './query'
@@ -137,46 +137,44 @@ export const storeFactory = (
             T.fromIO(() => get().data),
             T.chain(data =>
               pipe(
-                data,
-                O.fromPredicate(() => !data.isLoading),
-                O.match(
-                  () => T.of(undefined),
-                  data =>
+                T.fromIO(() =>
+                  set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
+                ),
+                T.chainFirst(() => T.fromIO(() => gateway.cancelDataverseRetrieval())),
+                T.chain(() =>
+                  gateway.retrieveDataverse(
+                    data.language,
+                    data.limit,
+                    data.dataverse.length,
+                    data.filters
+                  )
+                ),
+                TE.matchE(
+                  e =>
                     pipe(
-                      T.fromIO(() =>
-                        set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
-                      ),
-                      T.chain(() =>
-                        gateway.retrieveDataverse(
-                          data.language,
-                          data.limit,
-                          data.dataverse.length,
-                          data.filters
-                        )
-                      ),
-                      TE.matchE(
-                        e =>
+                      e,
+                      O.fromPredicate(e => e.name === 'AbortError'),
+                      O.fold(
+                        () =>
                           T.fromIO(() =>
                             set(state => ({
-                              data: {
-                                ...state.data,
-                                isLoading: false,
-                                error: O.some(e)
-                              }
+                              data: { ...state.data, isLoading: false, error: O.some(e) }
                             }))
                           ),
-                        r =>
-                          T.fromIO(() =>
-                            set(state => ({
-                              data: {
-                                ...state.data,
-                                isLoading: false,
-                                hasNext: r.query.hasNext,
-                                dataverse: pipe(data.dataverse, A.concat(r.data))
-                              }
-                            }))
-                          )
+                        // do not update state if fetch was aborted
+                        () => T.of(undefined)
                       )
+                    ),
+                  r =>
+                    T.fromIO(() =>
+                      set(state => ({
+                        data: {
+                          ...state.data,
+                          isLoading: false,
+                          hasNext: r.query.hasNext,
+                          dataverse: pipe(data.dataverse, A.concat(r.data))
+                        }
+                      }))
                     )
                 )
               )

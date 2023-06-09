@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import * as A from 'fp-ts/lib/Array'
-import { pipe } from 'fp-ts/lib/function'
-import * as O from 'fp-ts/lib/Option'
+import * as A from 'fp-ts/Array'
+import { pipe } from 'fp-ts/function'
+import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
 import type { DataverseElement } from '@/domain/dataverse/entity'
 import type {
@@ -11,7 +11,9 @@ import type {
   DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
+import { createAbortableFetch } from '@/util/fetch/fetch'
 import type { SparqlBinding, SparqlResult } from './dto'
+const { abortRequest, fetchWithAbort } = createAbortableFetch()
 
 export const sparqlGateway: DataversePort = {
   retrieveDataverse: (
@@ -82,7 +84,7 @@ export const sparqlGateway: DataversePort = {
     const fetchDataverse = (): TE.TaskEither<Error, Response> =>
       TE.tryCatch(
         async () => {
-          const resp = await fetch(APP_ENV.sparql['endpoint'], fetchHeaders)
+          const resp = await fetchWithAbort(APP_ENV.sparql['endpoint'], fetchHeaders)
           if (!resp.ok) {
             throw new Error(
               `Oops.. A ${resp.status} HTTP error occurred with the following message: ${resp.statusText} `
@@ -157,5 +159,6 @@ export const sparqlGateway: DataversePort = {
         query: { hasNext: r.length === limit + 1 }
       }))
     )
-  }
+  },
+  cancelDataverseRetrieval: (): void => abortRequest()
 }
