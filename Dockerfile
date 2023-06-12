@@ -1,4 +1,4 @@
-FROM node:16.19-alpine as build
+FROM node:20.3-alpine as build
 
 RUN npm install -g pnpm@8.3.1
 
