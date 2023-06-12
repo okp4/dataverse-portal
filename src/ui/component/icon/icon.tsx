@@ -78,6 +78,7 @@ import { ReactComponent as ChevronSharpIcon } from '@/ui/asset/icon/chevron-shar
 import { ReactComponent as KeplerIcon } from '@/ui/asset/icon/keplr.svg'
 import { ReactComponent as MagnifierIcon } from '@/ui/asset/icon/magnifier.svg'
 import { ReactComponent as CheckboxIcon } from '@/ui/asset/icon/checkbox.svg'
+import { ReactComponent as LargeMagnifierWithCrossIcon } from '@/ui/asset/icon/large-magnifier-with-cross.svg'
 
 export type IconName =
   | 'all-light'
@@ -158,6 +159,7 @@ export type IconName =
   | 'keplr'
   | 'magnifier'
   | 'checkbox'
+  | 'large-magnifier-with-cross'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -237,7 +239,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'chevron-sharp': ChevronSharpIcon,
   keplr: KeplerIcon,
   magnifier: MagnifierIcon,
-  checkbox: CheckboxIcon
+  checkbox: CheckboxIcon,
+  'large-magnifier-with-cross': LargeMagnifierWithCrossIcon
 }
 
 type IconProps = {

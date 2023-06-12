@@ -118,3 +118,29 @@
   transform: rotate($degrees);
   transition: transform 0.1s linear;
 }
+
+@mixin scrollbars(
+  $size: 6px,
+  $foreground-color,
+  $background-color,
+) {
+  // Chrome & Safari
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: calc($size / 2);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: calc($size / 2);
+  }
+
+  // Standard version (Firefox only for now)
+  scrollbar-color: $foreground-color $background-color;
+}
+

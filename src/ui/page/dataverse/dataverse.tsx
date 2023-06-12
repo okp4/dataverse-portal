@@ -11,6 +11,11 @@ import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
+import {
+  SelectionFilter,
+  FilterLabel
+} from '@/ui/view/dataverse/component/filters/selectionFilter/selectionFilter'
+import '@/ui/view/dataverse/component/filters/i18n/index'
 import './dataverse.scss'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import { Card } from '@/ui/component/card/card'
@@ -433,6 +438,36 @@ const dataverseItems: DataverseItemDetails[] = [
   }
 ]
 
+const selectionFilters = {
+  'data-spaces': ['Rhizome', 'DS4I', 'Data space 3', 'Data space 4'],
+  topics: ['Agriculture environment and forestry', 'Marketing and customer behaviour'],
+  services: [
+    'Data cleaning',
+    'Computer vision',
+    'Machine learning',
+    'Data mining',
+    'Data visualization',
+    'Data analysis',
+    'Data management'
+  ],
+  'data-geo-cov': [
+    'Afghanistan',
+    'France',
+    'Spain',
+    'Germany',
+    'Albania',
+    'Algeria',
+    'Antigua-and-barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Bahamas'
+  ],
+  'data-format': ['CSV', 'JSON', 'XML'],
+  'data-licence': ['ETALAB', 'LO-FR-2_0', 'Licence 3']
+}
+
 export const getResourceDetails = (id: string): O.Option<DataverseItemDetails> =>
   pipe(
     dataverseItems,
@@ -447,7 +482,7 @@ const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void
     >
       <Icon name="arrow-left" />
     </div>
-    <h1>{label}</h1>
+    <h2>{label}</h2>
   </div>
 )
 
@@ -511,9 +546,9 @@ const Dataverse = (): JSX.Element => {
           {!isLargeScreen ? (
             renderMobileTitleFilters(filtersLabel, toggleMobileFilters)
           ) : (
-            <h1>{filtersLabel}</h1>
+            <h2>{filtersLabel}</h2>
           )}
-          <h2>{t('resources.label')}</h2>
+          <FilterLabel label={t('resources.label')} />
           <div className="okp4-dataverse-portal-dataverse-page-filters-chips">
             {dataverseFilters.map(filter => (
               <Chip
@@ -567,11 +602,20 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
+          {Object.entries(selectionFilters).map(([filterName, filterValues]) => (
+            <SelectionFilter
+              filterName={t(`filters:${filterName}.name`)}
+              filterValues={filterValues}
+              key={filterName}
+              searchPlaceholder={t(`filters:${filterName}.search`)}
+              selectionType="checkbox"
+            />
+          ))}
         </div>
       )}
       {(isLargeScreen || !showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-catalog">
-          <h1>{t('actions.explore')}</h1>
+          <h2>{t('actions.explore')}</h2>
           {!isLargeScreen && (
             <Button
               className="okp4-dataverse-portal-dataverse-page-filters-button"

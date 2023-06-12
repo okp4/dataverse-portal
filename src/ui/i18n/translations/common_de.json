@@ -22,5 +22,6 @@
   "dataverse": "Dataverse",
   "from": "Von:",
   "to": "Bis:",
-  "know": "Know"
+  "know": "Know",
+  "noResultsFound": "Keine Ergebnisse gefunden."
 }

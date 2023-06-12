@@ -1,0 +1,60 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-dynamic-checkbox {
+  @include with-theme {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    gap: 8px;
+    padding: 4px;
+    background-color: transparent;
+    transition: background-color 400ms ease-in-out;
+      
+    path {
+      fill: #ffffff;
+    }
+      
+    &.checked {
+      background-color: rgba(themed('background-variant-2'), 0.4);
+  
+  
+      &.disabled {
+        background-color: transparent
+      }
+    }
+      
+    .okp4-dataverse-portal-dynamic-checkbox-label {
+      @include noto-sans(400);
+      flex-grow: 1;
+      font-size: 14px;
+      line-height: 20px;
+      color:rgba(themed('text'), 0.8);
+      cursor: pointer;
+  
+      .okp4-dataverse-portal-dynamic-checkbox-label-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+  
+        .okp4-dataverse-portal-dynamic-checkbox-label-text-highlighted {
+          @include noto-sans(600);
+        }
+      }
+        
+      &.checked {
+        @include noto-sans(700);
+        letter-spacing: -0.4px;
+      }
+  
+      &.disabled {
+        cursor: not-allowed;
+        color: themed('color-text-disabled')
+      }
+    }
+  }
+}

@@ -3,23 +3,11 @@
 @import '@/ui/style/mixins.scss';
 
 * {
-  /* Firefox */
-  scrollbar-width: thin;
-  scrollbar-color: #a9a9a9 transparent;
-
-  /* Chrome & Safari & Edge */
-  &::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #a9a9a9;
-    border-radius: 5px;
+  @include with-theme() {
+    @include scrollbars(
+      $foreground-color: rgba(themed('text'), 0.28),
+      $background-color: rgba(themed('text'), 0.06),
+    )
   }
 }
 

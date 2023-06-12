@@ -1,6 +1,7 @@
 import type * as O from 'fp-ts/Option'
 import * as A from 'fp-ts/Array'
 import * as T from 'fp-ts/Task'
+import * as S from 'fp-ts/string'
 import { flow, pipe } from 'fp-ts/function'
 import { error, info, log, warn } from 'fp-ts/lib/Console'
 import type { IO } from 'fp-ts/lib/IO'
@@ -31,3 +32,6 @@ export const taskLogger =
         )
       )
     )
+
+export const isSubstringOf = (substring: string, source: string): boolean =>
+  pipe(source, S.toLowerCase, S.includes(S.toLowerCase(substring)))

@@ -31,26 +31,16 @@
         @include grid-item($colStart: 1, $colEnd: 4, $rowStart: 1, $rowEnd: auto);
         grid-auto-rows: max-content;
 
-        h1 {
+        h2 {
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 1, $rowEnd: 1);
           @include norse-gradient-header($line-height: 61px);
-        }
-
-        h2 {
-          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 2);
-          @include norse-font(700);
-          width: fit-content;
-          font-size: 18px;
-          line-height: 36px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
         }
 
         .okp4-dataverse-portal-dataverse-page-filters-mobile {
           display: flex;
           align-items: center;
 
-          h1 {
+          h2 {
             margin-left: 12px;
           }
         }
@@ -60,6 +50,7 @@
           display: flex;
           flex-wrap: wrap;
           align-items: center;
+          margin: 6px 0 31px;
           column-gap: 8px;
           row-gap: 16px;
 
@@ -110,21 +101,20 @@
 
     .okp4-dataverse-portal-dataverse-page-catalog {
       @include grid-item($colStart: 4, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-      @include grid-container($colsNb: 8, $colGutter: 48px);
 
       @include use-breakpoints(('desktop')) {
         column-gap: 29px;
       }
 
       @include use-breakpoints(('tablet')) {
+        @include grid-container($colsNb: 8, $colGutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
         row-gap: 30px;
       }
 
       @include use-breakpoints(('mobile')) {
+        @include grid-container($colsNb: 8, $colGutter: 16px);
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 3);
-        column-gap: 16px;
       }
 
       .okp4-dataverse-portal-dataverse-page-filters-button {
@@ -141,7 +131,7 @@
         }
       }
 
-      h1 {
+      h2 {
         @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         @include norse-gradient-header($line-height: 61px);
 
