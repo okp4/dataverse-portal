@@ -10,8 +10,6 @@
       height: 100%;
       width: 100%;
       backdrop-filter: blur(1px);
-      /* stylelint-disable-next-line property-no-vendor-prefix */
-      -webkit-backdrop-filter: blur(1px);
       z-index: 100;
     }
 
@@ -30,11 +28,6 @@
         cursor: pointer;
         border-radius: 6px;
         user-select: none;
-        /* stylelint-disable property-no-vendor-prefix */
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        -moz-user-select: none;
-        /* stylelint-enable property-no-vendor-prefix */
 
         &.selected {
           @include noto-sans(400);

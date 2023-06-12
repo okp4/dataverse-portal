@@ -98,8 +98,7 @@
   letter-spacing: 4px;
   font-size: 24px;
   background: themed('gradient');
-  /* stylelint-disable-next-line property-no-vendor-prefix */
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
