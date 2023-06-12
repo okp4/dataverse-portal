@@ -34,7 +34,7 @@
   "devDependencies": {
     "@keplr-wallet/types": "^0.12.5",
     "@okp4/eslint-config": "^1.2.0",
-    "@radix-ui/react-collapsible": "^1.0.2",
+    "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.3",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-toast": "^1.1.3",
