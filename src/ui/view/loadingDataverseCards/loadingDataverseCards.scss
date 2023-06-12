@@ -1,0 +1,13 @@
+@import '@/ui/style/mixins';
+
+.okp4-dataverse-portal-card-loader-container {
+  @include columns-with-gap(20px);
+  align-items: center;
+  width: 100%;
+
+  .okp4-dataverse-portal-card-loader-text-wrapper {
+    @include columns-with-gap(5px);
+    width: 100%;
+    align-items: center;
+  }
+}

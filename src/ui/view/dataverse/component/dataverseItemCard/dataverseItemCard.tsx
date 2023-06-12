@@ -1,24 +1,20 @@
 import type { FC } from 'react'
 import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '@/ui/component/card/card'
-import { Button } from '@/ui/component/button/button'
+import type { DataverseItem } from '@/ui/types'
 import './dataverseItemCard.scss'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
-type DataverseItem = 'dataspace' | 'dataset' | 'service'
-
 export type DataverseItemCardProps = {
-  id: string
   type: DataverseItem
   label: string
   topic: string
+  button: JSX.Element
 }
 
-export const DataverseItemCard: FC<DataverseItemCardProps> = ({ id, type, label, topic }) => {
-  const navigate = useNavigate()
+export const DataverseItemCard: FC<DataverseItemCardProps> = ({ type, label, topic, button }) => {
   const { t } = useTranslation('common')
 
   type ColorVariant = 'primary-color' | 'primary-color-variant-3' | 'primary-color-variant-4'
@@ -40,10 +36,6 @@ ${topic}`,
     []
   )
 
-  const handleDataverseItemDetails = useCallback((): void => {
-    navigate(`/dataverse/${type}/${id}`)
-  }, [id, navigate, type])
-
   return (
     <Card>
       <div className="okp4-dataverse-portal-dataverse-card-main">
@@ -59,7 +51,7 @@ ${topic}`,
           <div className="okp4-dataverse-portal-dataverse-topic">
             <ReactMarkdown>{renderItemContent(label, topic)}</ReactMarkdown>
           </div>
-          <Button label={t('actions.details')} onClick={handleDataverseItemDetails} />
+          {button}
         </div>
       </div>
     </Card>

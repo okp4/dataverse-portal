@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { Tags } from '@/ui/view/dataverse/component//tags/tags'
+import type { DataverseItem } from '@/ui/types'
 import './itemOverview.scss'
 
 type ItemOverviewProps = {
@@ -11,7 +12,6 @@ type ItemOverviewProps = {
   description: string
   tags: string[]
 }
-type DataverseItem = 'dataspace' | 'dataset' | 'service'
 type ColorVariant = 'primary-color' | 'primary-color-variant-3' | 'primary-color-variant-4'
 
 const ItemOverview: FC<ItemOverviewProps> = ({ type, title, description, tags }): JSX.Element => {

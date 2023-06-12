@@ -1,13 +1,21 @@
+import { useCallback } from 'react'
 import type { FC } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import '../i18n/index'
 import './explore.scss'
-import type { DataverseItemCardProps } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
-import { NavLink } from 'react-router-dom'
 import { routes } from '@/ui/routes'
+import type { DataverseItem } from '@/ui/types'
+
+type DataverseItemCardProps = {
+  id: string
+  type: DataverseItem
+  label: string
+  topic: string
+}
 
 const exploreItems: DataverseItemCardProps[] = [
   {
@@ -38,13 +46,28 @@ const exploreItems: DataverseItemCardProps[] = [
 
 export const Explore: FC = () => {
   const { t } = useTranslation('home')
+  const navigate = useNavigate()
+
+  const handleDataverseItemDetails = useCallback(
+    (id: string, type: DataverseItem) => (): void => {
+      navigate(`/dataverse/${type}/${id}`)
+    },
+    [navigate]
+  )
 
   return (
     <>
       <h1>{t('home.blocks.explore.label')}</h1>
       {exploreItems.map(({ id, type, topic, label }) => (
         <div className="okp4-dataverse-portal-home-page-explore-card-wrapper" key={label}>
-          <DataverseItemCard id={id} label={label} topic={topic} type={type} />
+          <DataverseItemCard
+            button={
+              <Button label={t('actions.details')} onClick={handleDataverseItemDetails(id, type)} />
+            }
+            label={label}
+            topic={topic}
+            type={type}
+          />
         </div>
       ))}
       <NavLink

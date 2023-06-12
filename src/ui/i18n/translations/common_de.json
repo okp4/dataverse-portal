@@ -23,5 +23,7 @@
   "from": "Von:",
   "to": "Bis:",
   "know": "Know",
-  "noResultsFound": "Keine Ergebnisse gefunden."
+  "noResultsFound": "Keine Ergebnisse gefunden.",
+  "select": "Auswählen",
+  "selected": "Ausgewählt"
 }

@@ -1,0 +1,37 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-tabs-main {
+  @include with-theme() {
+    display: flex;
+    background-color: themed('tab-inactive-background');
+    width: fit-content;
+    border-radius: 12px;
+
+    &.disabled {
+      background-color: themed('tab-disabled-background');
+    }
+
+    @include noto-sans(700);
+    line-height: 20px;
+
+    .okp4-dataverse-portal-tab {
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: themed('tab-inactive-text');
+      cursor: pointer;
+
+      &.disabled {
+        background-color: themed('tab-disabled-background');
+        color: themed('tab-disabled-text');
+        cursor: not-allowed;
+      }
+
+      &.active {
+        background-color: themed('tab-active-background');
+        color: themed('primary-text');
+      }
+    }
+  }
+}

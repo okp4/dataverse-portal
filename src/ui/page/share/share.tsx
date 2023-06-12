@@ -1,15 +1,23 @@
 import type { FC } from 'react'
-import { Card } from '@/ui/component/card/card'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Card } from '@/ui/component/card/card'
+import { routes } from '@/ui/routes'
 import './share.scss'
 import './i18n/index'
 
 export const Share: FC = () => {
   const { t } = useTranslation('share')
+  const navigate = useNavigate()
+
+  const handleShareDataset = useCallback(() => {
+    navigate(routes.shareDataset)
+  }, [navigate])
 
   return (
     <div className="okp4-dataverse-portal-share-page-main">
-      <Card mainClassName="okp4-dataverse-portal-share-page-card left">
+      <Card mainClassName="okp4-dataverse-portal-share-page-card left" onClick={handleShareDataset}>
         <>
           <div className="okp4-dataverse-portal-share-page-ilustration" />
           <div className="okp4-dataverse-portal-share-page-text-container">

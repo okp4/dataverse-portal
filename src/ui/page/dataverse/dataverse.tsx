@@ -18,13 +18,13 @@ import {
 import '@/ui/view/dataverse/component/filters/i18n/index'
 import './dataverse.scss'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
-import { Card } from '@/ui/component/card/card'
-import { Skeleton } from '@/ui/component/skeleton/skeleton'
 import { LottieLoader } from '@/ui/component/loader/lottieLoader'
 import threeDots from '@/ui/asset/loader/threeDots.json'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
+import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
 import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse/command'
 import { pipe } from 'fp-ts/lib/function'
+import { useNavigate } from 'react-router-dom'
 
 type DataverseItemType = 'service' | 'dataspace' | 'dataset'
 type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
@@ -489,6 +489,8 @@ const renderMobileTitleFilters = (label: string, toggleMobileFilters: () => void
 // eslint-disable-next-line max-lines-per-function
 const Dataverse = (): JSX.Element => {
   const { t } = useTranslation('common')
+  const navigate = useNavigate()
+
   const theme = useAppStore(state => state.theme)
   const {
     loadDataverse,
@@ -539,6 +541,13 @@ const Dataverse = (): JSX.Element => {
     })
   }, [dispatchNotification])
 
+  const handleDataverseItemDetails = useCallback(
+    (id: string, type: DataverseItemType) => (): void => {
+      navigate(`/dataverse/${type}/${id}`)
+    },
+    [navigate]
+  )
+
   const FiltersChips = (): JSX.Element =>
     useMemo(
       () => (
@@ -584,19 +593,6 @@ const Dataverse = (): JSX.Element => {
 
   useEffect(() => setByTypeFilter('all'), [setByTypeFilter])
 
-  const loadingDataverseCards = [...Array(12)].map((_, i) => (
-    <Card key={i}>
-      <div className="okp4-dataverse-portal-dataverse-page-card-loader-container">
-        <Skeleton height={30} variant="text" width={80} />
-        <div className="okp4-dataverse-portal-dataverse-page-card-loader-text-wrapper">
-          <Skeleton height={25} variant="text" width={'84%'} />
-          <Skeleton height={25} variant="text" width={'84%'} />
-        </div>
-        <Skeleton height={40} variant="rounded" width={150} />
-      </div>
-    </Card>
-  ))
-
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
       {(isLargeScreen || showMobileFilters) && (
@@ -638,20 +634,26 @@ const Dataverse = (): JSX.Element => {
           >
             <div className="okp4-dataverse-portal-dataverse-page-cards-container">
               {!dataverse()().length && isLoading()()
-                ? loadingDataverseCards
-                : dataverse()().map(({ id, properties }) => (
-                    <DataverseItemCard
-                      id={id}
-                      key={id}
-                      label={properties.find(p => p.property === 'title')?.value ?? ''}
-                      topic={properties.find(p => p.property === 'topic')?.value ?? ''}
-                      type={
-                        properties
-                          .find(p => p.property === 'type')
-                          ?.value.toLowerCase() as DataverseItemType
-                      }
-                    />
-                  ))}
+                ? loadingDataverseCards(12)
+                : dataverse()().map(({ id, properties }) => {
+                    const type = properties
+                      .find(p => p.property === 'type')
+                      ?.value.toLowerCase() as DataverseItemType
+                    return (
+                      <DataverseItemCard
+                        button={
+                          <Button
+                            label={t('actions.details')}
+                            onClick={handleDataverseItemDetails(id, type)}
+                          />
+                        }
+                        key={id}
+                        label={properties.find(p => p.property === 'title')?.value ?? ''}
+                        topic={properties.find(p => p.property === 'topic')?.value ?? ''}
+                        type={type}
+                      />
+                    )
+                  })}
             </div>
           </InfiniteScroll>
         </div>
