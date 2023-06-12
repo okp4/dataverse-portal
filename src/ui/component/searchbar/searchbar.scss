@@ -49,8 +49,7 @@
       &::-webkit-search-decoration,
       &::-webkit-search-results-button,
       &::-webkit-search-results-decoration {
-        /* stylelint-disable-next-line property-no-vendor-prefix */
-        -webkit-appearance:none;
+        appearance:none;
       }
     }
   }
