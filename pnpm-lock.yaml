@@ -142,8 +142,8 @@ devDependencies:
     specifier: ^2.4.0
     version: 2.4.0(vite@4.1.1)
   zustand:
-    specifier: ^4.3.3
-    version: 4.3.3(immer@10.0.2)(react@18.2.0)
+    specifier: ^4.3.8
+    version: 4.3.8(immer@10.0.2)(react@18.2.0)
 
 packages:
 
@@ -6456,8 +6456,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand@4.3.3(immer@10.0.2)(react@18.2.0):
-    resolution: {integrity: sha512-x2jXq8S0kfLGNwGh87nhRfEc2eZy37tSatpSoSIN+O6HIaBhgQHSONV/F9VNrNcBcKQu/E80K1DeHDYQC/zCrQ==}
+  /zustand@4.3.8(immer@10.0.2)(react@18.2.0):
+    resolution: {integrity: sha512-4h28KCkHg5ii/wcFFJ5Fp+k1J3gJoasaIbppdgZFO4BPJnsNxL0mQXBSFgOgAdCdBj35aDTPvdAJReTMntFPGg==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       immer: '>=9.0'
