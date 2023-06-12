@@ -1,9 +1,8 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ServiceStorageSelection } from './steps/serviceStorageSelection/serviceStorageSelection'
 import '../i18n/index'
 import './shareDataset.scss'
-
-import { ServiceStorageSelection } from './steps/serviceStorageSelection/serviceStorageSelection'
 
 export const ShareDataset: FC = () => {
   const { t } = useTranslation('share')

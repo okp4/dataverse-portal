@@ -11,16 +11,13 @@ export const Share: FC = () => {
   const { t } = useTranslation('share')
   const navigate = useNavigate()
 
-  const navigateToShareDataset = useCallback(() => {
+  const handleShareDataset = useCallback(() => {
     navigate(routes.shareDataset)
   }, [navigate])
 
   return (
     <div className="okp4-dataverse-portal-share-page-main">
-      <Card
-        mainClassName="okp4-dataverse-portal-share-page-card left"
-        onClick={navigateToShareDataset}
-      >
+      <Card mainClassName="okp4-dataverse-portal-share-page-card left" onClick={handleShareDataset}>
         <>
           <div className="okp4-dataverse-portal-share-page-ilustration" />
           <div className="okp4-dataverse-portal-share-page-text-container">
