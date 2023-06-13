@@ -11,6 +11,7 @@ import type {
   ParagraphDTO,
   SectionDTO
 } from '@/ui/page/dataverse/dataspace/governance/mockedData'
+import classNames from 'classnames'
 import './details.scss'
 
 type ArticleProps = {
@@ -74,16 +75,23 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
   )
 }
 
+// eslint-disable-next-line max-lines-per-function
 const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
   const theme = useAppStore(store => store.theme)
   const isFirstArticle = article.number.endsWith('1')
   const [isOpen, setIsOpen] = useState<boolean>(isFirstArticle)
-
-  const toggleArticle = useCallback(() => setIsOpen(!isOpen), [isOpen])
+  const handleClick = useCallback(() => {
+    !isOnlyArticle && setIsOpen(!isOpen)
+  }, [isOnlyArticle, isOpen])
 
   return (
     <div className="okp4-dataverse-portal-governance-details-article-container">
-      <div className="okp4-dataverse-portal-governance-details-article-header">
+      <div
+        className={classNames('okp4-dataverse-portal-governance-details-article-header', {
+          'pointer-cursor': !isOnlyArticle
+        })}
+        onClick={handleClick}
+      >
         <div className="okp4-dataverse-portal-governance-details-article-header-left-part">
           <h3 className="okp4-dataverse-portal-governance-details-article-title">
             {article.title}
@@ -103,7 +111,6 @@ const Article: FC<ArticleProps> = ({ article, isOnlyArticle }) => {
               className={`okp4-dataverse-portal-governance-details-article-expand-button ${
                 isOpen ? 'rotate-down' : 'rotate-up'
               }`}
-              onClick={toggleArticle}
             >
               <Icon name="chevron-sharp" />
             </div>
