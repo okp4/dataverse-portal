@@ -1,12 +1,12 @@
 {
     "filters": "Filtres",
     "data-spaces": {
-        "name": "Espaces de données",
-        "search": "Rechercher dans un espace de données"
+        "name": "Data Spaces",
+        "search": "Rechercher dans un data space"
     },
     "topics": {
-        "name": "Sujets",
-        "search": "Rechercher des sujets"
+        "name": "Thèmes",
+        "search": "Rechercher des thèmes"
     },
     "services": {
         "name": "Catégories de services",
