@@ -110,5 +110,12 @@ p {
         padding-bottom: 44px;
       }
     }
+
+    .okp4-dataverse-portal-page-wrapper:has(.okp4-dataverse-portal-share-dataset-page-main) {
+      @include scrollbars(
+        $foreground-color: transparent,
+        $background-color: transparent
+      )
+    }
   }
 }
