@@ -213,7 +213,7 @@ export const mockedGovernanceChapter: Chapter = {
         },
         {
           id: '37',
-          title: 'Create metadata',
+          title: 'Edit metadata',
           number: '1.3.2',
           contains: [
             {
@@ -229,21 +229,49 @@ export const mockedGovernanceChapter: Chapter = {
                   number: '1.3.2.1.1'
                 }
               ]
+            },
+            {
+              title: 'Metadata amendment by specific users',
+              id: '41',
+              number: '1.3.3.2',
+              contains: [
+                {
+                  id: '42',
+                  title: 'Users',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
+                  number: '1.3.3.2.1'
+                }
+              ]
+            },
+            {
+              title: 'Metadata cancellation by specific users',
+              id: '44',
+              number: '1.3.4.3',
+              contains: [
+                {
+                  id: '45',
+                  title: 'Users',
+                  description:
+                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
+                  number: '1.3.4.3.1'
+                }
+              ]
             }
           ]
         },
         {
-          id: '40',
-          title: 'Edit metadata',
+          id: '46',
+          title: 'Dereference dataset',
           number: '1.3.3',
           contains: [
             {
-              title: 'Metadata amendment by specific users',
-              id: '41',
+              title: 'Datasets dereferencing by specific users',
+              id: '47',
               number: '1.3.3.1',
               contains: [
                 {
-                  id: '42',
+                  id: '48',
                   title: 'Users',
                   description:
                     'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
@@ -254,63 +282,21 @@ export const mockedGovernanceChapter: Chapter = {
           ]
         },
         {
-          id: '43',
-          title: 'Remove metadata',
-          number: '1.3.4',
-          contains: [
-            {
-              title: 'Metadata cancellation by specific users',
-              id: '44',
-              number: '1.3.4.1',
-              contains: [
-                {
-                  id: '45',
-                  title: 'Users',
-                  description:
-                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
-                  number: '1.3.4.1.1'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: '46',
-          title: 'Dereference dataset',
-          number: '1.3.5',
-          contains: [
-            {
-              title: 'Datasets dereferencing by specific users',
-              id: '47',
-              number: '1.3.5.1',
-              contains: [
-                {
-                  id: '48',
-                  title: 'Users',
-                  description:
-                    'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
-                  number: '1.3.5.1.1'
-                }
-              ]
-            }
-          ]
-        },
-        {
           id: '49',
           title: 'Download dataset',
-          number: '1.3.6',
+          number: '1.3.4',
           contains: [
             {
               title: 'Datasets download by specific users',
               id: '50',
-              number: '1.3.6.1',
+              number: '1.3.4.1',
               contains: [
                 {
                   id: '51',
                   title: 'Users',
                   description:
                     'did:key:0x04d1f1b8f8a7a28f9a5a254c326a963a22f5a5b5d5f5e5d5c5b5a5958575655',
-                  number: '1.3.6.1.1'
+                  number: '1.3.4.1.1'
                 }
               ]
             }
