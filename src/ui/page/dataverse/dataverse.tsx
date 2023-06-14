@@ -122,7 +122,7 @@ const dataverseItems: DataverseItemDetails[] = [
   {
     id: '97ff7e16-c08d-47be-8475-211016c82e33',
     type: 'dataspace',
-    label: 'DS4I',
+    label: 'Data Space For Investors',
     description:
       "Data Space for Investors (DS4I) is a private Data Space created and maintained by OKP4 Team. DS4I's purpose is to present a simple and user-friendly Proof of Concept to demonstrate for potential investors how OKP4 protocol works based on simple governance rules.",
     governance: {
@@ -149,6 +149,13 @@ const dataverseItems: DataverseItemDetails[] = [
     id: '79ec2986-0d71-4e92-a48d-95379b3da9ed',
     type: 'dataset',
     label: 'ADMIN EXPRESS COG 2020 DEPARTMENT',
+    description:
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+  },
+  {
+    id: 'cb6ea0aa-e32d-4d79-8492-a6ebcc80b897',
+    type: 'dataset',
+    label: 'ADMIN EXPRESS COG 2020 REGION',
     description:
       'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
   },
