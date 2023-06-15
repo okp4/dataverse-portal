@@ -1,5 +1,4 @@
-import type { FC } from 'react'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '@/ui/component/card/card'
 import type { DataverseItem } from '@/ui/types'
@@ -16,8 +15,9 @@ export type DataverseItemCardProps = {
   className?: string
 }
 
-export const DataverseItemCard: FC<DataverseItemCardProps> = ({ type, label, topic, button,className }) => {
-  const { t } = useTranslation('common')
+export const DataverseItemCard = React.forwardRef<HTMLDivElement, DataverseItemCardProps>(
+  ({ type, label, topic, button, className }, ref) => {
+    const { t } = useTranslation('common')
 
     const renderItemContent = useCallback(
       (label: string, topic: string): string => `### ${label}
@@ -27,7 +27,7 @@ ${topic}`,
 
     return (
       <Card mainClassName={className}>
-        <div className="okp4-dataverse-portal-dataverse-card-main">
+        <div className="okp4-dataverse-portal-dataverse-card-main" ref={ref}>
           <div
             className={classNames(
               'okp4-dataverse-portal-dataverse-item-type',
@@ -46,3 +46,6 @@ ${topic}`,
       </Card>
     )
   }
+)
+
+DataverseItemCard.displayName = 'DataverseItemCard'

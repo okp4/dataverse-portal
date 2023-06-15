@@ -8,7 +8,7 @@ import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
-const serviceGeneralMetadata: ItemGeneralMetadata[] = [
+export const serviceGeneralMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
     property: 'category',
@@ -66,7 +66,7 @@ const serviceGeneralMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
-const isService = (resource: DataverseItemDetails): resource is Service =>
+export const isService = (resource: DataverseItemDetails): resource is Service =>
   resource.type === 'service'
 
 const Service: FC = () => {

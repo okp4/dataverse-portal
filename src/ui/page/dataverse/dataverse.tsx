@@ -92,7 +92,7 @@ const dataverseFilters: Filter[] = [
   }
 ]
 
-const dataverseItems: DataverseItemDetails[] = [
+export const dataverseItems: DataverseItemDetails[] = [
   {
     id: 'ef347285-e52a-430d-9679-dcb76b962ce7',
     type: 'dataspace',
