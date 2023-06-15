@@ -1,39 +1,56 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+$colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4');
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
-  @include twelve-column-layout;
-  row-gap: 19px;
+  @include with-theme() {
+    @include twelve-column-layout;
+    row-gap: 19px;
 
-  @include use-breakpoints(('mobile')) {
-    row-gap: 13px;
-  }
+    @include use-breakpoints(('mobile')) {
+      row-gap: 13px;
+    }
 
-  .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
-    @include bi-column-item('left');
-    display: flex;
-    flex-direction: column;
-    row-gap: 40px;
-  }
+    .okp4-dataverse-portal-dataverse-page-template-left-side-wrapper {
+      @include bi-column-item('left');
 
-  .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
-    @include bi-column-item($side: 'right');
+      .okp4-dataverse-portal-dataverse-item-overview-type {
+        @include noto-sans(700);
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+        font-size: 14px;
+        line-height: 24px;
+        text-transform: uppercase;
 
-    h2 {
-      @include norse-gradient-header;
-      margin-bottom: 30px;
-
-      @include use-breakpoints(('mobile', 'tablet')) {
-        margin: 27px auto 30px;
+        @each $color-key in $colors {
+          &.#{$color-key} {
+            color: themed($color-key);
+          }
+        }
       }
     }
 
-    .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
-      display: grid;
-      row-gap: 22px;
+    .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
+      @include bi-column-item($side: 'right');
 
-      @include use-breakpoints(('mobile')) {
-        row-gap: 16px;
+      h2 {
+        @include norse-gradient-header;
+        margin-bottom: 30px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          margin: 27px auto 30px;
+        }
+      }
+
+      .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
+        display: grid;
+        row-gap: 22px;
+
+        @include use-breakpoints(('mobile')) {
+          row-gap: 16px;
+        }
       }
     }
   }

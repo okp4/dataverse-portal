@@ -1,0 +1,5 @@
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-dataverse-item-details {
+  @include columns-with-gap(40px);
+}
