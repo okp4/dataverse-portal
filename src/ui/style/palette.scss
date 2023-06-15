@@ -52,6 +52,8 @@ $switch-light-variant-1: #ffffff;
 $card-dark: #242433;
 $card-light: #f2f6f9;
 $card-background-disabled: #001526;
+$card-button-selected: #004564;
+$card-background-selected: rgba(0, 103, 150, 0.08);
 
 // menus
 $menu-dark: #121320;
@@ -65,7 +67,12 @@ $text-light: $primary-variant-1;
 
 // gradients
 $gradient: linear-gradient(270deg, #00b6b7 17.51%, #004073 100%);
-
+$card-background-light-gradient: linear-gradient(180deg, #f2f6f9 0%, rgba(242, 246, 249, 0) 100%);
+$card-background-dark-gradient: linear-gradient(
+  180deg,
+  rgba($card-dark, 0.8) 0%,
+  rgba($card-dark, 0) 100%
+);
 // semantic
 $success: #4ad377;
 $error: #ff3648;
