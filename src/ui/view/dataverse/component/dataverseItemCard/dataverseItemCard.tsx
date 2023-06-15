@@ -6,6 +6,7 @@ import type { DataverseItem } from '@/ui/types'
 import './dataverseItemCard.scss'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
+import { renderItemTypeColor } from '@/ui/common'
 
 export type DataverseItemCardProps = {
   type: DataverseItem
