@@ -22,8 +22,8 @@ dependencies:
 
 devDependencies:
   '@keplr-wallet/types':
-    specifier: ^0.12.5
-    version: 0.12.5
+    specifier: ^0.12.10
+    version: 0.12.10
   '@okp4/eslint-config':
     specifier: ^1.2.0
     version: 1.2.0(@typescript-eslint/eslint-plugin@5.52.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.42.0)(prettier@2.8.8)(tsutils@3.21.0)(typescript@5.0.2)
@@ -1081,8 +1081,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@keplr-wallet/types@0.12.5:
-    resolution: {integrity: sha512-6taOUz8ZfD0ixtXZfwTwSIRNRRl15LaHJKlEw7agr0ECK7Dcl46yA8QI6RxwIsf06Y7A6WFEWuD5H2M2/3C/GQ==}
+  /@keplr-wallet/types@0.12.10:
+    resolution: {integrity: sha512-kls+vn/nBpu34IL3U3/9pEzKf5mzExfjVZWwiK102wEh1hEVaxrZ9Z62MqYmyeLq+rP0dOtjxj+mSTHxXGxdzQ==}
     dependencies:
       long: 4.0.0
     dev: true
