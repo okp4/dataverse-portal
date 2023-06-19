@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import classNames from 'classnames'
+import * as O from 'fp-ts/Option'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { useDataverseStore } from '@/ui/store'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
@@ -20,6 +21,7 @@ import { dataverseItems } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
 
@@ -33,6 +35,7 @@ export const ServiceStorageSelection: FC = () => {
   const [selectedService, setSelectedService] = useState<DataverseItemDetails | null>(null)
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
+  const dispatchNotification = useDispatchNotification()
 
   const {
     loadDataverse,
@@ -42,7 +45,8 @@ export const ServiceStorageSelection: FC = () => {
     setByPropertyFilter,
     isLoading,
     hasNext,
-    setLanguage
+    setLanguage,
+    error
   } = useDataverseStore(state => ({
     loadDataverse: state.loadDataverse,
     dataverse: state.dataverse,
@@ -51,7 +55,8 @@ export const ServiceStorageSelection: FC = () => {
     setLanguage: state.setLanguage,
     byPropertyFilter: state.byPropertyFilter,
     setByPropertyFilter: state.setByPropertyFilter,
-    setByTypeFilter: state.setByTypeFilter
+    setByTypeFilter: state.setByTypeFilter,
+    error: state.error
   }))
 
   const handleServiceSearch = useCallback(
@@ -86,6 +91,19 @@ export const ServiceStorageSelection: FC = () => {
   )
 
   useOnKeyboard(handleDetailsEscape)
+
+  const handleServicesError = useCallback(() => {
+    dispatchNotification({
+      type: 'error',
+      titleKey: 'error.problem',
+      messageKey: 'error.processing',
+      action: 'refresh'
+    })
+  }, [dispatchNotification])
+
+  useEffect(() => {
+    O.map(handleServicesError)(error()())
+  }, [error, handleServicesError])
 
   useEffect(() => {
     if (selectedService)
