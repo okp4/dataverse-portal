@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import * as A from 'fp-ts/Array'
-import { pipe } from 'fp-ts/function'
+import { flow, pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
 import type { DataverseElement } from '@/domain/dataverse/entity'
@@ -22,14 +22,10 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
-    const buildContainsExpression = (filter: DataverseElementType): string =>
-      `contains(str(?type), "${filter}" )`
+    const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
-    const buildQueryFilter = (index: number, acc: string, cur: DataverseElementType): string =>
-      index === 0 ? buildContainsExpression(cur) : `${acc} || ${buildContainsExpression(cur)}`
-
-    const byTypeFilter = (f: DataverseElementType[]): string =>
-      A.reduceWithIndex('', buildQueryFilter)(f)
+    const byTypeFilter = (filters: DataverseElementType[]): string =>
+      flow(A.map(buildStrExpression), a => a.join(' || '))(filters)
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
@@ -54,9 +50,9 @@ export const sparqlGateway: DataversePort = {
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         }
-        ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
+        ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?metadata core:describes ?id .
         ?metadata core:hasTitle ?title .
         FILTER langMatches(lang(?title),'${language}')
