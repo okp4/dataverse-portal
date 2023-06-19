@@ -40,25 +40,11 @@
         padding-right: 8px;
       }
 
-      .okp4-dataverse-portal-selection-filter-no-results-wrapper{
+      .okp4-dataverse-portal-selection-filter-no-results-wrapper {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         display: flex;
         justify-content: center;
-        align-items: center;
         height: inherit;
-
-        .okp4-dataverse-portal-selection-filter-no-results {
-          @include columns-with-gap(8px);
-          @include noto-sans(400);
-          font-size: 14px;
-          line-height: 20px;
-          color: themed('text');
-          align-items: center;
-
-          path {
-            fill-opacity: 0.2;
-            fill: themed('text');
-          }
-        }
       }
     }
   }
@@ -77,4 +63,3 @@
     text-align: left;
   }
 }
-
