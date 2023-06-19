@@ -2,38 +2,25 @@
 @import '@/ui/style/fonts.scss';
 @import '@/ui/style/mixins.scss';
 
-$colors: (
-  'primary-color',
-  'primary-color-variant-3',
-  'primary-color-variant-4'
-);
-
 .okp4-dataverse-portal-dataverse-item-overview-main {
   @include with-theme() {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
-    .okp4-dataverse-portal-dataverse-item-overview-type {
-      @include noto-sans(700);
-      letter-spacing: 2px;
-      font-size: 14px;
-      line-height: 24px;
-      text-transform: uppercase;
-      @each $color-key in $colors {
-        &.#{$color-key} {
-          color: themed($color-key);
-        }
-      }
-    }
-    
+
     .okp4-dataverse-portal-dataverse-item-overview-title {
       @include noto-sans(700);
+      display: flex;
+      justify-content: space-between;
       font-size: 14px;
       color: themed('text');
       font-size: 24px;
+
+      .okp4-dataverse-portal-dataverse-item-overview-close {
+        cursor: pointer;
+      }
     }
-    
+
     .okp4-dataverse-portal-dataverse-item-overview-description {
       @include noto-sans(300);
       font-size: 16px;

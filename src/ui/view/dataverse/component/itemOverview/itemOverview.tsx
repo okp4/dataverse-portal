@@ -1,44 +1,33 @@
 import type { FC } from 'react'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import classNames from 'classnames'
 import { Tags } from '@/ui/view/dataverse/component//tags/tags'
-import type { DataverseItem } from '@/ui/types'
+import { Icon } from '@/ui/component/icon/icon'
+import { useAppStore } from '@/ui/store/appStore'
 import './itemOverview.scss'
 
 type ItemOverviewProps = {
-  type: DataverseItem
   title: string
   description: string
   tags: string[]
+  onClose?: () => void
 }
-type ColorVariant = 'primary-color' | 'primary-color-variant-3' | 'primary-color-variant-4'
 
-const ItemOverview: FC<ItemOverviewProps> = ({ type, title, description, tags }): JSX.Element => {
-  const { t } = useTranslation('common')
-
-  const renderItemTypeColor = useCallback((type: DataverseItem): ColorVariant => {
-    switch (type) {
-      case 'service':
-        return 'primary-color'
-      case 'dataspace':
-        return 'primary-color-variant-3'
-      case 'dataset':
-        return 'primary-color-variant-4'
-    }
-  }, [])
-
+const ItemOverview: FC<ItemOverviewProps> = ({
+  title,
+  description,
+  tags,
+  onClose
+}): JSX.Element => {
+  const theme = useAppStore(store => store.theme)
   return (
     <div className="okp4-dataverse-portal-dataverse-item-overview-main">
-      <h3
-        className={classNames(
-          'okp4-dataverse-portal-dataverse-item-overview-type',
-          renderItemTypeColor(type)
+      <h2 className="okp4-dataverse-portal-dataverse-item-overview-title">
+        <span>{title}</span>
+        {!!onClose && (
+          <div className="okp4-dataverse-portal-dataverse-item-overview-close" onClick={onClose}>
+            <Icon name={`close-${theme}`} />
+          </div>
         )}
-      >
-        {t(`resources.${type}`)}
-      </h3>
-      <h2 className="okp4-dataverse-portal-dataverse-item-overview-title">{title}</h2>
+      </h2>
       <p className="okp4-dataverse-portal-dataverse-item-overview-description">{description}</p>
       {tags.length > 0 && <Tags tags={tags} />}
     </div>

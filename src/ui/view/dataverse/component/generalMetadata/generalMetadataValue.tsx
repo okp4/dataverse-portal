@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
-import { isGeneralMetadataWithIcon } from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
+import { isGeneralMetadataWithIcon } from '@/ui/view/dataverse/component/dataverseItemDetails/detailedDataverseItem'
 import './generalMetadata.scss'
 import './i18n/index'
 import { DateInterval } from './dateInterval'
