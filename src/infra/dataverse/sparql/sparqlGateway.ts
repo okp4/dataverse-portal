@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import * as A from 'fp-ts/Array'
-import { pipe } from 'fp-ts/function'
+import { flow, pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
 import type { DataverseElement } from '@/domain/dataverse/entity'
@@ -22,14 +22,10 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
-    const buildStrExpression = (filter: DataverseElementType): string =>
-      `str(?type) = str(core:${filter})`
+    const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
-    const buildQueryFilter = (index: number, acc: string, cur: DataverseElementType): string =>
-      index === 0 ? buildStrExpression(cur) : `${acc} || ${buildStrExpression(cur)}`
-
-    const byTypeFilter = (f: DataverseElementType[]): string =>
-      A.reduceWithIndex('', buildQueryFilter)(f)
+    const byTypeFilter = (filters: DataverseElementType[]): string =>
+      flow(A.map(buildStrExpression), a => a.join(' || '))(filters)
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
