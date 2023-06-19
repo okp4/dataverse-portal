@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-import './noResulFound.scss'
+import './noResultFound.scss'
 
 type NoResultsFoundProps = {
   iconName: IconName

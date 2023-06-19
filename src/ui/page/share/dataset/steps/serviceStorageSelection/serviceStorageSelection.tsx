@@ -19,6 +19,7 @@ import { DetailedDataverseItem } from '@/ui/view/dataverse/component/dataverseIt
 import { dataverseItems } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
+import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
 
@@ -33,19 +34,34 @@ export const ServiceStorageSelection: FC = () => {
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
 
-  const { loadDataverse, dataverse, setByTypeFilter, isLoading, hasNext, setLanguage } =
-    useDataverseStore(state => ({
-      loadDataverse: state.loadDataverse,
-      dataverse: state.dataverse,
-      isLoading: state.isLoading,
-      hasNext: state.hasNext,
-      setLanguage: state.setLanguage,
-      setByTypeFilter: state.setByTypeFilter
-    }))
+  const {
+    loadDataverse,
+    dataverse,
+    setByTypeFilter,
+    byPropertyFilter,
+    setByPropertyFilter,
+    isLoading,
+    hasNext,
+    setLanguage
+  } = useDataverseStore(state => ({
+    loadDataverse: state.loadDataverse,
+    dataverse: state.dataverse,
+    isLoading: state.isLoading,
+    hasNext: state.hasNext,
+    setLanguage: state.setLanguage,
+    byPropertyFilter: state.byPropertyFilter,
+    setByPropertyFilter: state.setByPropertyFilter,
+    setByTypeFilter: state.setByTypeFilter
+  }))
 
-  const handleServiceSearch = useCallback((searchTearm: string) => {
-    console.log(searchTearm)
-  }, [])
+  const handleServiceSearch = useCallback(
+    (searchTearm: string) => {
+      setSelectedService(null)
+      setByPropertyFilter({ property: 'title', value: searchTearm })()
+      loadDataverse()()
+    },
+    [loadDataverse, setByPropertyFilter]
+  )
 
   const handleSelect = useCallback(
     (id: string) => () => {
@@ -102,7 +118,7 @@ export const ServiceStorageSelection: FC = () => {
       <SearchBar
         onSearch={handleServiceSearch}
         placeholder={t('share:share.dataset.serviceStorageSearch')}
-        value=""
+        value={byPropertyFilter()()}
       />
       <div
         className={classNames('okp4-dataverse-portal-share-dataset-page-services-container', {
@@ -151,6 +167,13 @@ export const ServiceStorageSelection: FC = () => {
                 })}
           </div>
         </InfiniteScroll>
+
+        {!dataverse()().length && !isLoading()() && (
+          <NoResultFound
+            className="okp4-dataverse-portal-service-search-no-result-wrapper"
+            iconName="large-magnifier-with-cross"
+          />
+        )}
       </div>
       {!!selectedService && (
         <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">
