@@ -4,8 +4,15 @@ import type { DataverseElement } from '@/domain/dataverse/entity'
 export type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
+type FilterQueryProperty = 'title'
+export type ByPropertyQueryFilter = {
+  property: FilterQueryProperty
+  value: string
+} | null
+
 export type RetrieveDataverseQueryFilters = {
   byType: ByTypeQueryFilter
+  byProperty: ByPropertyQueryFilter
 }
 
 export type RetrieveDataverseResult = { data: DataverseElement[]; query: { hasNext: boolean } }

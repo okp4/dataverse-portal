@@ -4,7 +4,8 @@ import * as A from 'fp-ts/Array'
 import * as O from 'fp-ts/Option'
 import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
-import type { IO } from 'fp-ts/IO'
+import type { IO as IOType } from 'fp-ts/IO'
+import * as IO from 'fp-ts/IO'
 import { immer } from 'zustand/middleware/immer'
 import { devtools } from 'zustand/middleware'
 import type { StoreApi } from 'zustand/vanilla'
@@ -12,7 +13,12 @@ import { createStore } from 'zustand/vanilla'
 import type { ForgetType } from '@/util/type'
 import type { Dataverse } from './entity'
 import type { DataversePort } from './port'
-import type { ByTypeFilterInput, Command, DataverseElementType } from './command'
+import type {
+  ByPropertyFilterInput,
+  ByTypeFilterInput,
+  Command,
+  DataverseElementType
+} from './command'
 import type { ByTypeQueryFilter, DataverseQuery } from './valueObject'
 import type { Query } from './query'
 
@@ -90,7 +96,7 @@ export const storeFactory = (
             limit: 20,
             hasNext: false,
             error: O.none,
-            filters: { byType: 'all' },
+            filters: { byType: 'all', byProperty: null },
             language: 'en'
           }))
         ),
@@ -98,7 +104,21 @@ export const storeFactory = (
         hasNext: () => () => get().data.hasNext,
         isLoading: () => () => get().data.isLoading,
         error: () => () => get().data.error,
-        filters: () => () => get().data.filters,
+        byTypeFilter: () => () => get().data.filters.byType,
+        byPropertyFilter: () =>
+          pipe(
+            () => get().data.filters.byProperty,
+            IO.flatMap(x =>
+              pipe(
+                x,
+                O.fromNullable,
+                O.match(
+                  () => IO.of(''),
+                  filter => IO.of(filter.value)
+                )
+              )
+            )
+          ),
         setByTypeFilter: (newFilter: ByTypeFilterInput) => () =>
           set(state => ({
             data: {
@@ -110,7 +130,7 @@ export const storeFactory = (
               }
             }
           })),
-        setLanguage: (newLng: string): IO<void> =>
+        setLanguage: (newLng: string): IOType<void> =>
           pipe(
             newLng,
             O.fromPredicate(lng => !!lng.length),
@@ -179,7 +199,25 @@ export const storeFactory = (
                 )
               )
             )
-          )
+          ),
+        setByPropertyFilter: (newFilter: ByPropertyFilterInput) => () =>
+          set(state => ({
+            data: {
+              ...state.data,
+              dataverse: [],
+              filters: {
+                ...state.data.filters,
+                byProperty: pipe(
+                  newFilter.value,
+                  O.fromPredicate(v => !!v.length),
+                  O.match(
+                    () => null,
+                    () => newFilter
+                  )
+                )
+              }
+            }
+          }))
       })),
       {
         anonymousActionType: 'Aggregate',
