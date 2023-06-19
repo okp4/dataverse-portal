@@ -498,7 +498,7 @@ const Dataverse = (): JSX.Element => {
     setByTypeFilter,
     isLoading,
     hasNext,
-    filters,
+    byTypeFilter,
     setLanguage,
     error
   } = useDataverseStore(state => ({
@@ -508,7 +508,7 @@ const Dataverse = (): JSX.Element => {
     hasNext: state.hasNext,
     setLanguage: state.setLanguage,
     setByTypeFilter: state.setByTypeFilter,
-    filters: state.filters,
+    byTypeFilter: state.byTypeFilter,
     error: state.error
   }))
 
@@ -564,8 +564,8 @@ const Dataverse = (): JSX.Element => {
                 className={`okp4-dataverse-portal-dataverse-page-filter ${filter.label}`}
                 icon={<Icon name={`${filter.icon}-${theme}` as IconName} />}
                 isSelected={
-                  filters()().byType === filter.value ||
-                  filters()().byType.includes(filter.value as DataverseElementType)
+                  byTypeFilter()() === filter.value ||
+                  byTypeFilter()().includes(filter.value as DataverseElementType)
                 }
                 key={filter.label}
                 label={t(`resources.${filter.label}`)}
