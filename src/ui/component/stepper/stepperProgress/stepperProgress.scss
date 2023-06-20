@@ -1,0 +1,18 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-stepper-progress-main {
+  @include with-theme {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .okp4-dataverse-portal-stepper-progress-step-count {
+      font-size: 16px;
+      @include noto-sans(400);
+      color: rgba(themed('text'), 0.4);
+      line-height: 22px;
+    }
+  }
+}
