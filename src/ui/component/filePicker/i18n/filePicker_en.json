@@ -1,6 +1,9 @@
 {
   "file-picker": {
     "drag-and-drop-files": "Drag and Drop your files",
-    "or": "Or"
+    "or": "Or",
+    "browse": "Browse",
+    "select-folder": "Select folder",
+    "select-files": "Select files"
   }
 }

@@ -44,6 +44,21 @@
         }
       }
 
+      .okp4-dataverse-portal-file-picker-button-wrapper {
+        max-height: 48px;
+
+        .okp4-dataverse-portal-file-picker-browse-icon {
+          display: flex;
+          align-items: center;
+          min-width: 24px;
+
+          svg {
+            path {
+              fill: currentColor;
+            }
+          }
+        }
+      }
     }
   }
 }

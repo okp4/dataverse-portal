@@ -42,8 +42,10 @@ import { ReactComponent as ArrowRightIcon } from '@/ui/asset/icon/arrow-right.sv
 import { ReactComponent as AllLightIcon } from '@/ui/asset/icon/all-light.svg'
 import { ReactComponent as AllDarkIcon } from '@/ui/asset/icon/all-dark.svg'
 import { ReactComponent as ArrowLeftIcon } from '@/ui/asset/icon/arrow-left.svg'
+import { ReactComponent as FileDetailedIcon } from '@/ui/asset/icon/file-detailed.svg'
 import { ReactComponent as FileIcon } from '@/ui/asset/icon/file.svg'
 import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
+import { ReactComponent as FolderOpenedIcon } from '@/ui/asset/icon/folder-opened.svg'
 import { ReactComponent as FolderOutlinedIcon } from '@/ui/asset/icon/folder-outlined.svg'
 import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
 import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
@@ -125,7 +127,9 @@ export type IconName =
   | 'close-light'
   | 'close-dark'
   | 'file'
+  | 'file-detailed'
   | 'folder'
+  | 'folder-opened'
   | 'folder-outlined'
   | 'calendar'
   | 'earth'
@@ -206,8 +210,10 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'all-light': AllLightIcon,
   'all-dark': AllDarkIcon,
   'arrow-left': ArrowLeftIcon,
+  'file-detailed': FileDetailedIcon,
   file: FileIcon,
   folder: FolderIcon,
+  'folder-opened': FolderOpenedIcon,
   'folder-outlined': FolderOutlinedIcon,
   calendar: CalendarIcon,
   earth: EarthIcon,
