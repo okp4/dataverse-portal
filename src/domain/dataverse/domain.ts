@@ -1,11 +1,12 @@
 /* eslint-disable max-lines-per-function */
-import { pipe } from 'fp-ts/function'
+import { flow, pipe } from 'fp-ts/function'
 import * as A from 'fp-ts/Array'
+import * as B from 'fp-ts/boolean'
 import * as O from 'fp-ts/Option'
 import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
-import type { IO as IOType } from 'fp-ts/IO'
 import * as IO from 'fp-ts/IO'
+import * as S from 'fp-ts/string'
 import { immer } from 'zustand/middleware/immer'
 import { devtools } from 'zustand/middleware'
 import type { StoreApi } from 'zustand/vanilla'
@@ -108,13 +109,12 @@ export const storeFactory = (
         byPropertyFilter: () =>
           pipe(
             () => get().data.filters.byProperty,
-            IO.flatMap(x =>
-              pipe(
-                x,
+            IO.map(
+              flow(
                 O.fromNullable,
                 O.match(
-                  () => IO.of(''),
-                  filter => IO.of(filter.value)
+                  () => '',
+                  filter => filter.value
                 )
               )
             )
@@ -130,7 +130,7 @@ export const storeFactory = (
               }
             }
           })),
-        setLanguage: (newLng: string): IOType<void> =>
+        setLanguage: (newLng: string): IO.IO<void> =>
           pipe(
             newLng,
             O.fromPredicate(lng => !!lng.length),
@@ -209,10 +209,10 @@ export const storeFactory = (
                 ...state.data.filters,
                 byProperty: pipe(
                   newFilter.value,
-                  O.fromPredicate(v => !!v.length),
-                  O.match(
-                    () => null,
-                    () => newFilter
+                  S.isEmpty,
+                  B.match(
+                    () => newFilter,
+                    () => null
                   )
                 )
               }
