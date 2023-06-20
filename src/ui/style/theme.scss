@@ -58,7 +58,11 @@ $themes: (
     tab-inactive-text: $tab-inactive-text-light,
     card-button-selected: $card-button-selected,
     card-background-selected: $card-background-selected,
-    card-background-gradient: $card-background-light-gradient
+    card-background-gradient: $card-background-light-gradient,
+    file-picker-background: $file-picker-background-light,
+    file-picker-background-focused: $file-picker-background-focused-light,
+    file-picker-border: $file-picker-border-light,
+    file-picker-border-focused: $file-picker-border-focused-light
   ),
   dark: (
     primary-color: $primary,
@@ -116,7 +120,11 @@ $themes: (
     tab-inactive-text: $tab-inactive-text-dark,
     card-button-selected: $card-button-selected,
     card-background-selected: $card-background-selected,
-    card-background-gradient: $card-background-dark-gradient
+    card-background-gradient: $card-background-dark-gradient,
+    file-picker-background: $file-picker-background-dark,
+    file-picker-background-focused: $file-picker-background-focused-dark,
+    file-picker-border: $file-picker-border-dark,
+    file-picker-border-focused: $file-picker-border-focused-dark
   )
 );
 

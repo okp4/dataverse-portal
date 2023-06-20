@@ -118,22 +118,18 @@
   transition: transform 0.1s linear;
 }
 
-@mixin scrollbars(
-  $size: 6px,
-  $foreground-color,
-  $background-color,
-) {
+@mixin scrollbars($size: 6px, $foreground-color, $background-color) {
   // Chrome & Safari
   &::-webkit-scrollbar {
     width: $size;
     height: $size;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $foreground-color;
     border-radius: calc($size / 2);
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $background-color;
     border-radius: calc($size / 2);
@@ -143,3 +139,6 @@
   scrollbar-color: $foreground-color $background-color;
 }
 
+@mixin custom-dashed-border($color, $width, $dashArray, $border-radius: 0, $offset: 0) {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='#{$border-radius}' ry='#{$border-radius}' stroke='#{$color}' stroke-width='#{$width}' stroke-dasharray='#{$dashArray}' stroke-dashoffset='#{$offset}' stroke-linecap='square'/%3e%3c/svg%3e");
+}
