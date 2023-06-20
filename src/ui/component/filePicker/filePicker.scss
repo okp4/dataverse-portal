@@ -1,5 +1,6 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
+@import '@/ui/style/fonts.scss';
 
 .okp4-dataverse-portal-file-picker-main {
   @include with-theme {
@@ -30,8 +31,18 @@
     }
 
     .okp4-dataverse-portal-file-picker-content-container {
-      @include columns-with-gap(10px);
+      @include columns-with-gap(20px);
       align-items: center;
+
+      .okp4-dataverse-portal-file-picker-content-description {
+        @include noto-sans(400);
+        text-align: center;
+        color: themed('text');
+
+        &.bold {
+          @include noto-sans(700);
+        }
+      }
 
     }
   }
