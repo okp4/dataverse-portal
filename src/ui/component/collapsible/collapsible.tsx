@@ -10,6 +10,8 @@ type CollapsibleProps = {
   content: JSX.Element
   trigger: JSX.Element
   open?: boolean
+  contentClassName?: string
+  rootClassName?: string
   triggerClassName?: string
   iconName?: IconName
 }
@@ -18,13 +20,15 @@ export const Collapsible: FC<CollapsibleProps> = ({
   open = false,
   content,
   trigger,
+  contentClassName,
+  rootClassName,
   triggerClassName,
   iconName = 'chevron'
 }) => {
   const [isOpen, setIsOpen] = useState(open)
 
   return (
-    <RCollapsible.Root onOpenChange={setIsOpen} open={isOpen}>
+    <RCollapsible.Root className={rootClassName} onOpenChange={setIsOpen} open={isOpen}>
       <RCollapsible.Trigger
         className={classNames('okp4-dataverse-portal-collapsible-trigger-button', triggerClassName)}
       >
@@ -37,7 +41,9 @@ export const Collapsible: FC<CollapsibleProps> = ({
           <Icon name={iconName} />
         </div>
       </RCollapsible.Trigger>
-      <RCollapsible.Content className="okp4-dataverse-portal-collapsible-content">
+      <RCollapsible.Content
+        className={classNames('okp4-dataverse-portal-collapsible-content', contentClassName)}
+      >
         {content}
       </RCollapsible.Content>
     </RCollapsible.Root>
