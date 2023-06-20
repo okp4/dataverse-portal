@@ -1,0 +1,73 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+$transition-duration: 600ms;
+
+.okp4-dataverse-portal-progress-bar-main {
+  @include with-theme {
+    width: 40px;
+    height: 6px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(themed('text'), 0.12);
+    
+    &.delayed-transition {
+      transition-delay: $transition-duration;
+    }
+    
+    &.active {
+      background-color: themed('primary-color-variant-3');
+      transition-duration: $transition-duration;
+      transition-property: background-color;
+    }
+    
+    &.complete {
+      background-color: themed('success');
+      transition-duration: $transition-duration;
+      transition-property: background-color;
+    }
+  
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: themed('primary-color-variant-3');
+      transform: translateX(-100%);
+    }
+
+    &.none::before {
+      transform: translateX(-100%);
+    }
+    
+    &.forward::before {
+      animation: progress-forward $transition-duration forwards;
+    } 
+    
+    &.backward::before {
+      animation: progress-backward $transition-duration forwards;
+    }
+  }
+}
+
+@keyframes progress-backward {
+  from {
+    transform: translateX(0%);
+  }
+  
+  to {
+    transform: translateX(-100%);
+  }
+}
+    
+  
+@keyframes progress-forward {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+  
