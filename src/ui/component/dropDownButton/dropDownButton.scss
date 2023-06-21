@@ -69,23 +69,12 @@
       padding: 0 10px;
       box-sizing: border-box;
 
-      .okp4-dataverse-portal-drop-down-button-option-button {
-        @include noto-sans(700);
-        display: flex;
-        align-items: center;
-        font-size: 16px;
-        line-height: 24px;
-        cursor: pointer;
-        padding: 4px 8px;
+      .okp4-dataverse-portal-drop-down-button-content-button-wrapper {
         margin-bottom: 6px;
-        border: unset;
-        border-radius: 4px;
-        column-gap: 10px;
-        width: 100%;
         white-space: nowrap;
       }
 
-      .okp4-dataverse-portal-drop-down-button-option-button:last-of-type {
+      .okp4-dataverse-portal-drop-down-button-content-button-wrapper:last-of-type {
         margin-bottom: unset;
       }
     }

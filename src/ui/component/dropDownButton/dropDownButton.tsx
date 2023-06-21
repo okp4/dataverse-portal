@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { FC } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
+import { Button } from '@/ui/component/button/button'
 import classNames from 'classnames'
 import './dropDownButton.scss'
 
@@ -14,19 +15,11 @@ export type Option = {
   icons?: Icons
 }
 
-type ButtonProps = Option
 type DropDownButtonProps = {
   label: string
   options: [Option, ...Option[]]
   variant?: 'primary' | 'secondary'
 }
-
-const Button: FC<ButtonProps> = ({ label, onClick, icons }): JSX.Element => (
-  <button className="okp4-dataverse-portal-drop-down-button-option-button" onClick={onClick}>
-    {icons?.startIcon}
-    {label}
-  </button>
-)
 
 export const DropDownButton: FC<DropDownButtonProps> = ({
   label,
@@ -38,11 +31,16 @@ export const DropDownButton: FC<DropDownButtonProps> = ({
     () => (
       <>
         {options.map(({ label, onClick, icons }, index) => (
-          <Button icons={icons} key={index} label={label} onClick={onClick} />
+          <div
+            className="okp4-dataverse-portal-drop-down-button-content-button-wrapper"
+            key={index}
+          >
+            <Button icons={icons} label={label} onClick={onClick} variant={`${variant}-discret`} />
+          </div>
         ))}
       </>
     ),
-    [options]
+    [options, variant]
   )
 
   return (
