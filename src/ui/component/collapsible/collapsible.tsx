@@ -25,12 +25,13 @@ export const Collapsible: FC<CollapsibleProps> = ({
   triggerClassName,
   iconName = 'chevron'
 }) => {
-  const [triggerInitWidth, setTriggerInitWidth] = useState<number | null>(null)
+  const [triggerInitWidth, setTriggerInitWidth] = useState<number>(0)
   const [isOpen, setIsOpen] = useState(open)
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    setTriggerInitWidth(triggerRef.current?.clientWidth ?? null)
+    const triggerWidth = triggerRef.current?.clientWidth
+    triggerWidth && setTriggerInitWidth(triggerWidth)
   }, [])
 
   return (
@@ -53,8 +54,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
         style={{
           // Copying the behaviour of the Radix-ui collapsible, for the slide animations
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ['--okp4-collapsible-trigger-initial-width' as any]:
-            triggerInitWidth && `${triggerInitWidth}px`
+          ['--okp4-collapsible-trigger-initial-width' as any]: `${triggerInitWidth}px`
         }}
       >
         {content}
