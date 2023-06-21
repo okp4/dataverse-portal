@@ -1,16 +1,10 @@
 import type { FC } from 'react'
 import type { ProgressBarTransition } from './progressBar/progressBar'
 import { ProgressBar } from './progressBar/progressBar'
+import { findStep, type Step, type StepId } from '../useStepper'
 import './stepperProgress.scss'
 
-type StepId = string
 export type StepStatus = 'error' | 'disabled' | 'complete' | 'incomplete'
-
-type Step = {
-  id: StepId
-  order: number
-  status: StepStatus
-}
 
 type StepperProgressProps = {
   steps: Step[]
@@ -35,9 +29,6 @@ const getProgressBarTransition = ({
   }
   return 'none'
 }
-
-const findStep = (steps: Step[], stepId: StepId): Step =>
-  steps.find(({ id }) => id === stepId) ?? steps[0]
 
 export const StepperProgress: FC<StepperProgressProps> = ({
   steps,
