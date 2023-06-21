@@ -1,9 +1,11 @@
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import type { FC, ReactElement } from 'react'
 import { cloneElement, useRef } from 'react'
 import { StepperProgress } from './stepperProgress/stepperProgress'
 import type { StepId, StepStatus, StepperControls } from './useStepper'
 import { useStepper } from './useStepper'
 import { StepperActions } from './stepperActions/stepperActions'
+import './stepper.scss'
 
 export type StepProps = {
   id: StepId
@@ -44,7 +46,14 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
         previousActiveStepId={previousActiveStepId}
         steps={steps}
       />
-      <div className="okp4-dataverse-portal-stepper-content">{activeStep}</div>
+
+      <TransitionGroup className="okp4-dataverse-portal-stepper-content-wrapper">
+        {/* timeout transition duration must match the $transition-duration variable from stepper.scss and progressBar.scss */}
+        <CSSTransition classNames="transition" key={activeStepId} timeout={600}>
+          <div className="okp4-dataverse-portal-stepper-content">{activeStep}</div>
+        </CSSTransition>
+      </TransitionGroup>
+
       <StepperActions
         activeStepId={activeStepId}
         nextStep={nextStep}

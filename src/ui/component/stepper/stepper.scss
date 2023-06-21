@@ -1,8 +1,36 @@
+@import '@/ui/style/mixins.scss';
+
+$transition-duration: 600ms;
+
 .okp4-dataverse-portal-stepper-main {
   display: flex;
   flex-direction: column;
 
+  .okp4-dataverse-portal-stepper-content-wrapper {
+    flex-grow: 1;
+    display: grid;
+  }
+
   .okp4-dataverse-portal-stepper-content {
-    animation: none;
+    @include grid-item($colStart: 1, $colEnd: auto, $rowStart: 1, $rowEnd: auto);
+
+    &.transition-enter {
+      opacity: 0;
+    }
+    
+    &.transition-enter-active {
+      opacity: 1;
+      transition: opacity calc($transition-duration / 2) ease-out;
+      transition-delay: calc($transition-duration / 2);
+    }
+    
+    &.transition-exit {
+      opacity: 1;
+    }
+    
+    &.transition-exit-active {
+      opacity: 0;
+      transition: opacity calc($transition-duration / 2) ease-out;
+    }
   }
 }
