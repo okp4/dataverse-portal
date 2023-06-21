@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FC } from 'react'
+import './dragAndDrop.scss'
 
 export type DragDropState = 'dragging-over' | 'not-dragging-over' | 'dropped'
 type DragEvent = React.DragEvent<HTMLDivElement>
@@ -46,11 +47,11 @@ export const DragAndDrop: FC<DragAndDropProps> = ({ children, onDrop, onChange }
 
   return (
     <div
+      className="okp4-dataverse-portal-drag-and-drop-main"
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={preventDefaultAndStopPropagation}
       onDrop={handleDrop}
-      style={{ width: '100%', height: '100%' }}
     >
       {children}
     </div>
