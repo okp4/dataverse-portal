@@ -8,7 +8,8 @@ import type {
   DataversePort,
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult,
-  DataverseElementType
+  DataverseElementType,
+  ByPropertyQueryFilter
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import { createAbortableFetch } from '@/util/fetch/fetch'
@@ -20,12 +21,15 @@ export const sparqlGateway: DataversePort = {
     language: string,
     limit: number,
     offset: number,
-    filters: RetrieveDataverseQueryFilters
+    { byType, byProperty }: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
     const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
     const byTypeFilter = (filters: DataverseElementType[]): string =>
       flow(A.map(buildStrExpression), a => a.join(' || '))(filters)
+
+    const byPropertyFilter = (filter: ByPropertyQueryFilter): string =>
+      `contains(lcase(str(?${filter?.property})), "${filter?.value.toLowerCase()}" )`
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
@@ -50,9 +54,10 @@ export const sparqlGateway: DataversePort = {
           ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         }
+        ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}
+        ${byProperty?.property ? `FILTER ( ${byPropertyFilter(byProperty)} )` : ''}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
-        ${filters.byType === 'all' ? '' : `FILTER ( ${byTypeFilter(filters.byType)} )`}
         ?metadata core:describes ?id .
         ?metadata core:hasTitle ?title .
         FILTER langMatches(lang(?title),'${language}')

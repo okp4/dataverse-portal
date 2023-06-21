@@ -5,8 +5,15 @@ type DataverseQueryError = Error
 type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
+type FilterProperty = 'title'
+export type ByPropertyFilter = {
+  property: FilterProperty
+  value: string
+} | null
+
 type DataverseQueryFilters = {
   byType: ByTypeQueryFilter
+  byProperty: ByPropertyFilter
 }
 
 export type DataverseQuery = {

@@ -1,11 +1,10 @@
 import type { FC } from 'react'
 import { useMemo, useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
-import { Icon } from '@/ui/component/icon/icon'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
+import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import './selectionFilter.scss'
 
 export type SelectionOption = {
@@ -16,16 +15,6 @@ export type SelectionOption = {
 }
 
 type SelectionItemType = 'checkbox'
-
-const NoResultsFound: FC = () => {
-  const { t } = useTranslation('common')
-  return (
-    <div className="okp4-dataverse-portal-selection-filter-no-results">
-      <Icon name="large-magnifier-with-cross" />
-      <span>{t('noResultsFound')}</span>
-    </div>
-  )
-}
 
 type FilterLabelProps = {
   label: string
@@ -120,9 +109,10 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
                   }
                 })
               ) : (
-                <div className="okp4-dataverse-portal-selection-filter-no-results-wrapper">
-                  <NoResultsFound />
-                </div>
+                <NoResultFound
+                  className="okp4-dataverse-portal-selection-filter-no-results-wrapper"
+                  iconName="large-magnifier-with-cross"
+                />
               )}
             </div>
           </div>

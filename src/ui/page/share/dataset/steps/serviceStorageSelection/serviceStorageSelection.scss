@@ -5,6 +5,8 @@
 .okp4-dataverse-portal-share-dataset-page-service-selection-container {
   @include with-theme() {
     @include grid-container($colGutter: 10px, $rowGutter: 22px);
+    grid-template-rows: auto auto auto 1fr;
+    height: 100%;
 
     h2 {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
@@ -64,6 +66,11 @@
             box-shadow: none;
           }
         }
+      }
+
+      .okp4-dataverse-portal-service-search-no-result-wrapper {
+        justify-content: center;
+        height: 100%;
       }
     }
 

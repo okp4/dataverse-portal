@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import classNames from 'classnames'
+import * as O from 'fp-ts/Option'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { useDataverseStore } from '@/ui/store'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
@@ -19,6 +20,8 @@ import { DetailedDataverseItem } from '@/ui/view/dataverse/component/dataverseIt
 import { dataverseItems } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
+import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
 
@@ -32,20 +35,38 @@ export const ServiceStorageSelection: FC = () => {
   const [selectedService, setSelectedService] = useState<DataverseItemDetails | null>(null)
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
+  const dispatchNotification = useDispatchNotification()
 
-  const { loadDataverse, dataverse, setByTypeFilter, isLoading, hasNext, setLanguage } =
-    useDataverseStore(state => ({
-      loadDataverse: state.loadDataverse,
-      dataverse: state.dataverse,
-      isLoading: state.isLoading,
-      hasNext: state.hasNext,
-      setLanguage: state.setLanguage,
-      setByTypeFilter: state.setByTypeFilter
-    }))
+  const {
+    loadDataverse,
+    dataverse,
+    setByTypeFilter,
+    byPropertyFilter,
+    setByPropertyFilter,
+    isLoading,
+    hasNext,
+    setLanguage,
+    error
+  } = useDataverseStore(state => ({
+    loadDataverse: state.loadDataverse,
+    dataverse: state.dataverse,
+    isLoading: state.isLoading,
+    hasNext: state.hasNext,
+    setLanguage: state.setLanguage,
+    byPropertyFilter: state.byPropertyFilter,
+    setByPropertyFilter: state.setByPropertyFilter,
+    setByTypeFilter: state.setByTypeFilter,
+    error: state.error
+  }))
 
-  const handleServiceSearch = useCallback((searchTearm: string) => {
-    console.log(searchTearm)
-  }, [])
+  const handleServiceSearch = useCallback(
+    (searchTearm: string) => {
+      setSelectedService(null)
+      setByPropertyFilter({ property: 'title', value: searchTearm })()
+      loadDataverse()()
+    },
+    [loadDataverse, setByPropertyFilter]
+  )
 
   const handleSelect = useCallback(
     (id: string) => () => {
@@ -70,6 +91,19 @@ export const ServiceStorageSelection: FC = () => {
   )
 
   useOnKeyboard(handleDetailsEscape)
+
+  const handleServicesError = useCallback(() => {
+    dispatchNotification({
+      type: 'error',
+      titleKey: 'error.problem',
+      messageKey: 'error.processing',
+      action: 'refresh'
+    })
+  }, [dispatchNotification])
+
+  useEffect(() => {
+    O.map(handleServicesError)(error()())
+  }, [error, handleServicesError])
 
   useEffect(() => {
     if (selectedService)
@@ -102,7 +136,7 @@ export const ServiceStorageSelection: FC = () => {
       <SearchBar
         onSearch={handleServiceSearch}
         placeholder={t('share:share.dataset.serviceStorageSearch')}
-        value=""
+        value={byPropertyFilter()()}
       />
       <div
         className={classNames('okp4-dataverse-portal-share-dataset-page-services-container', {
@@ -151,6 +185,13 @@ export const ServiceStorageSelection: FC = () => {
                 })}
           </div>
         </InfiniteScroll>
+
+        {!dataverse()().length && !isLoading()() && (
+          <NoResultFound
+            className="okp4-dataverse-portal-service-search-no-result-wrapper"
+            iconName="large-magnifier-with-cross"
+          />
+        )}
       </div>
       {!!selectedService && (
         <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">

@@ -19,10 +19,6 @@ export type DataverseQueryError = Error
 export type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
-export type DataverseQueryFilters = {
-  byType: ByTypeQueryFilter
-}
-
 export type Query = {
   // Get the whole dataverse.
   dataverse: () => IO<Dataverse>
@@ -32,6 +28,8 @@ export type Query = {
   hasNext: () => IO<boolean>
   // Return the error that may have occurred while retrieving the dataverse
   error: () => IOOption<DataverseQueryError>
-  // Return the dataverse filters' object
-  filters: () => IO<DataverseQueryFilters>
+  // Return the dataverse by type filter
+  byTypeFilter: () => IO<ByTypeQueryFilter>
+  // Return the dataverse filter value according to the property
+  byPropertyFilter: () => IO<string>
 }

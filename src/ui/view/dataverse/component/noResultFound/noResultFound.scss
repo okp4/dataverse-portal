@@ -1,0 +1,19 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-no-results {
+  @include with-theme {
+    @include columns-with-gap(8px);
+    @include noto-sans(400);
+    font-size: 14px;
+    line-height: 20px;
+    color: themed('text');
+    align-items: center;
+
+    path {
+      fill-opacity: 0.2;
+      fill: themed('text');
+    }
+  }
+}
