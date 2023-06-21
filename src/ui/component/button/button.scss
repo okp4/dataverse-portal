@@ -51,6 +51,17 @@
       );
     }
 
+    &.primary-discret {
+      @include button(
+        $content-color: themed('primary-text'),
+        $background-color: themed('secondary-color'),
+        $box-shadow: none,
+        $hover-color: themed('secondary-color-variant-1')
+      );
+      border-radius: 4px;
+      justify-content: flex-start;
+    }
+
     &.secondary {
       @include button(
         $content-color: themed('primary-text'),
@@ -58,6 +69,17 @@
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
         $hover-color: themed('primary-color-variant-2')
       );
+    }
+
+    &.secondary-discret {
+      @include button(
+        $content-color: themed('primary-text'),
+        $background-color: themed('primary-color'),
+        $box-shadow: none,
+        $hover-color: themed('primary-color-variant-2')
+      );
+      border-radius: 4px;
+      justify-content: flex-start;
     }
 
     &.tertiary {
@@ -153,6 +175,12 @@
           padding: 7px 10px;
           gap: 6px;
         }
+      }
+
+      &.primary-discret,
+      &.secondary-discret {
+        padding: 4px 8px;
+        gap: 10px;
       }
 
       .okp4-dataverse-portal-button-label {
