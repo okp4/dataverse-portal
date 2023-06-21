@@ -10,8 +10,20 @@ import classNames from 'classnames'
 import './i18n/index'
 import './filePicker.scss'
 
+type FilePickerProps = {
+  onDrop: (event: React.DragEvent<HTMLDivElement>) => void
+  onFileChange?: (event: React.DragEvent<HTMLInputElement>) => void
+  onFolderChange?: (event: React.DragEvent<HTMLInputElement>) => void
+  multiple?: boolean
+}
+
 // eslint-disable-next-line max-lines-per-function
-export const FilePicker: FC = (): JSX.Element => {
+export const FilePicker: FC<FilePickerProps> = ({
+  onFileChange,
+  onFolderChange,
+  onDrop,
+  multiple = false
+}): JSX.Element => {
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false)
   const { t } = useTranslation('file-picker')
 
@@ -19,75 +31,72 @@ export const FilePicker: FC = (): JSX.Element => {
     state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
   }, [])
 
-  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    // TODO: Implement file domain function call
-    console.log(event)
-  }, [])
-
-  const handleFiles = useCallback((event: React.DragEvent<HTMLInputElement>) => {
-    // TODO: Implement file domain function call
-    console.log(event)
-  }, [])
-
-  const handleFolder = useCallback((event: React.DragEvent<HTMLInputElement>) => {
-    // TODO: Implement file domain function call
-    console.log(event)
-  }, [])
-
   const filesInput = useMemo(
     () =>
       Object.assign(document.createElement('input'), {
-        onchange: handleFiles,
+        onchange: onFileChange,
         type: 'file',
-        multiple: true
+        multiple
       }),
-    [handleFiles]
+    [multiple, onFileChange]
   )
 
   const folderInput = useMemo(
     () =>
       Object.assign(document.createElement('input'), {
-        onchange: handleFolder,
+        onchange: onFolderChange,
         type: 'file',
         webkitdirectory: true
       }),
-    [handleFolder]
+    [onFolderChange]
+  )
+
+  const folderButtonOption: Option = useMemo(
+    () => ({
+      label: t('file-picker.select-folder'),
+      onClick: (): void => {
+        folderInput.click()
+      },
+      icons: {
+        startIcon: (
+          <div className="okp4-dataverse-portal-file-picker-browse-icon">
+            <Icon name="folder-opened" />
+          </div>
+        )
+      }
+    }),
+    [folderInput, t]
+  )
+
+  const filesButtonOption: Option = useMemo(
+    () => ({
+      label: multiple ? t('file-picker.select-files') : t('file-picker.select-file'),
+      onClick: (): void => {
+        filesInput.click()
+      },
+      icons: {
+        startIcon: (
+          <div className="okp4-dataverse-portal-file-picker-browse-icon">
+            <Icon name="file-detailed" />
+          </div>
+        )
+      }
+    }),
+    [filesInput, multiple, t]
   )
 
   const dropDownButtonOptions: [Option, ...Option[]] = useMemo(
-    () => [
-      {
-        label: t('file-picker.select-folder'),
-        onClick: (): void => {
-          folderInput.click()
-        },
-        icons: {
-          startIcon: (
-            <div className="okp4-dataverse-portal-file-picker-browse-icon">
-              <Icon name="folder-opened" />
-            </div>
-          )
-        }
-      },
-      {
-        label: t('file-picker.select-files'),
-        onClick: (): void => {
-          filesInput.click()
-        },
-        icons: {
-          startIcon: (
-            <div className="okp4-dataverse-portal-file-picker-browse-icon">
-              <Icon name="file-detailed" />
-            </div>
-          )
-        }
-      }
-    ],
-    [filesInput, folderInput, t]
+    () =>
+      onFileChange && onFolderChange
+        ? [folderButtonOption, filesButtonOption]
+        : onFileChange
+        ? [filesButtonOption]
+        : [folderButtonOption],
+    [filesButtonOption, folderButtonOption, onFileChange, onFolderChange]
   )
 
   return (
-    <DragAndDrop onChange={handleDragAndDropState} onDrop={handleDrop}>
+    <DragAndDrop onChange={handleDragAndDropState} onDrop={onDrop}>
       <div
         className={classNames('okp4-dataverse-portal-file-picker-main', {
           focused: isDraggingOver
@@ -99,13 +108,17 @@ export const FilePicker: FC = (): JSX.Element => {
             <p className="okp4-dataverse-portal-file-picker-content-description bold">
               {t('file-picker.drag-and-drop-files')}
             </p>
-            <p className="okp4-dataverse-portal-file-picker-content-description">
-              {t('file-picker.or')}
-            </p>
+            {(onFileChange || onFolderChange) && (
+              <p className="okp4-dataverse-portal-file-picker-content-description">
+                {t('file-picker.or')}
+              </p>
+            )}
           </div>
-          <div className="okp4-dataverse-portal-file-picker-button-wrapper">
-            <DropDownButton label={t('file-picker.browse')} options={dropDownButtonOptions} />
-          </div>
+          {(onFileChange || onFolderChange) && (
+            <div className="okp4-dataverse-portal-file-picker-button-wrapper">
+              <DropDownButton label={t('file-picker.browse')} options={dropDownButtonOptions} />
+            </div>
+          )}
         </div>
       </div>
     </DragAndDrop>
