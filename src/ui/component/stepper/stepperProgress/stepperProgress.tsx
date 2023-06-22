@@ -9,7 +9,7 @@ export type StepStatus = 'error' | 'disabled' | 'complete' | 'incomplete'
 type StepperProgressProps = {
   steps: Step[]
   activeStepId: StepId
-  previousActiveStepId: StepId
+  previousActiveStepId?: StepId
 }
 
 const getProgressBarTransition = ({

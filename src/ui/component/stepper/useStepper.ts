@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useReducer, useState } from 'react'
 import uuid from 'short-uuid'
 
 export type StepId = string
@@ -16,17 +16,30 @@ export type StepperControls = {
   previousStep: () => void
   updateStep: (stepId: string, status: StepStatus) => void
   activeStepId: StepId
-  previousActiveStepId: StepId
+  previousActiveStepId?: StepId
 }
 
-export const findStep = (steps: Step[], stepId: StepId): Step =>
+export const findStep = (steps: Step[], stepId?: StepId): Step =>
   steps.find(({ id }) => id === stepId) ?? steps[0]
+
+type activeStepsId = {
+  current: StepId
+  previous?: StepId
+}
+
+const activeStepsIdReducer = (state: activeStepsId, action: StepId): activeStepsId => ({
+  current: action,
+  previous: state.current
+})
 
 // eslint-disable-next-line max-lines-per-function
 export const useStepper = (totalSteps: number): StepperControls => {
   const firstStepId = useMemo(() => uuid.generate(), [])
-  const [activeStepId, setActiveStepId] = useState<StepId>(() => firstStepId)
-  const [previousActiveStepId, setPreviousActiveStepId] = useState<StepId>(() => firstStepId)
+
+  const [activeStepsId, setActiveStepsId] = useReducer(activeStepsIdReducer, {
+    current: firstStepId
+  })
+
   const [steps, setSteps] = useState<Step[]>(
     Array.from({ length: totalSteps }, (_, index) => ({
       id: index === 0 ? firstStepId : uuid.generate(),
@@ -36,26 +49,24 @@ export const useStepper = (totalSteps: number): StepperControls => {
   )
 
   const nextStep = useCallback(() => {
-    const activeStep = findStep(steps, activeStepId)
+    const activeStep = findStep(steps, activeStepsId.current)
     if (activeStep.status !== 'complete' || activeStep.order === steps.length - 1) return
 
     const nextStepId = steps.find(step => step.order === activeStep.order + 1)?.id
     if (!nextStepId) return
 
-    setActiveStepId(nextStepId)
-    setPreviousActiveStepId(activeStepId)
-  }, [activeStepId, steps])
+    setActiveStepsId(nextStepId)
+  }, [activeStepsId, steps])
 
   const previousStep = useCallback(() => {
-    const activeStep = findStep(steps, activeStepId)
+    const activeStep = findStep(steps, activeStepsId.current)
     if (activeStep.order === 0) return
 
     const previousStepId = steps.find(step => step.order === activeStep.order - 1)?.id
     if (!previousStepId) return
 
-    setActiveStepId(previousStepId)
-    setPreviousActiveStepId(activeStepId)
-  }, [activeStepId, steps])
+    setActiveStepsId(previousStepId)
+  }, [activeStepsId, steps])
 
   const updateStep = useCallback((stepId: string, stepStatus: StepStatus) => {
     setSteps(prevSteps => {
@@ -79,7 +90,7 @@ export const useStepper = (totalSteps: number): StepperControls => {
     nextStep,
     previousStep,
     updateStep,
-    activeStepId,
-    previousActiveStepId
+    activeStepId: activeStepsId.current,
+    previousActiveStepId: activeStepsId.previous
   }
 }
