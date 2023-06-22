@@ -8,6 +8,7 @@ import './dropDownButton.scss'
 
 type Icons = {
   startIcon?: JSX.Element
+  endIcon?: JSX.Element
 }
 
 export type Option = {
