@@ -22,7 +22,6 @@ export const DragAndDrop: FC<DragAndDropProps> = ({ children, onDrop, onChange }
 
   const handleDragEnter = useCallback(() => {
     depthRef.current++
-
     depthRef.current === 1 && setDragDropState('dragging-over')
   }, [])
 
