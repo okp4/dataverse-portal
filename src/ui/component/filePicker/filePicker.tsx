@@ -14,6 +14,8 @@ type FilePickerProps = {
   onDrop: (event: React.DragEvent<HTMLDivElement>) => void
   onFileChange?: (event: React.DragEvent<HTMLInputElement>) => void
   onFolderChange?: (event: React.DragEvent<HTMLInputElement>) => void
+  hasFolderExplorer?: boolean
+  hasFileExplorer?: boolean
   multiple?: boolean
 }
 
@@ -22,6 +24,8 @@ export const FilePicker: FC<FilePickerProps> = ({
   onFileChange,
   onFolderChange,
   onDrop,
+  hasFolderExplorer = false,
+  hasFileExplorer = false,
   multiple = false
 }): JSX.Element => {
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false)
@@ -87,12 +91,12 @@ export const FilePicker: FC<FilePickerProps> = ({
 
   const dropDownButtonOptions: [Option, ...Option[]] = useMemo(
     () =>
-      onFileChange && onFolderChange
+      hasFileExplorer && hasFolderExplorer
         ? [folderButtonOption, filesButtonOption]
-        : onFileChange
+        : hasFileExplorer
         ? [filesButtonOption]
         : [folderButtonOption],
-    [filesButtonOption, folderButtonOption, onFileChange, onFolderChange]
+    [filesButtonOption, folderButtonOption, hasFileExplorer, hasFolderExplorer]
   )
 
   return (
@@ -104,7 +108,7 @@ export const FilePicker: FC<FilePickerProps> = ({
       >
         <div className="okp4-dataverse-portal-file-picker-content-container">
           <Icon name="folder-outlined" />
-          {onFileChange || onFolderChange ? (
+          {hasFileExplorer || hasFolderExplorer ? (
             <>
               <div>
                 <p className="okp4-dataverse-portal-file-picker-content-description bold">
