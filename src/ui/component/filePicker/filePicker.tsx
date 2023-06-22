@@ -10,10 +10,17 @@ import classNames from 'classnames'
 import './i18n/index'
 import './filePicker.scss'
 
+export type File = {
+  name: string
+  fullPath: string
+  size: number
+  mediaType: string
+  stream: ReadableStream<Uint8Array>
+}
+
 type FilePickerProps = {
+  onFileChange: (files: File[]) => void
   onDrop: (event: React.DragEvent<HTMLDivElement>) => void
-  onFileChange?: (event: React.DragEvent<HTMLInputElement>) => void
-  onFolderChange?: (event: React.DragEvent<HTMLInputElement>) => void
   hasFolderExplorer?: boolean
   hasFileExplorer?: boolean
   multiple?: boolean
@@ -22,7 +29,6 @@ type FilePickerProps = {
 // eslint-disable-next-line max-lines-per-function
 export const FilePicker: FC<FilePickerProps> = ({
   onFileChange,
-  onFolderChange,
   onDrop,
   hasFolderExplorer = false,
   hasFileExplorer = false,
@@ -35,24 +41,46 @@ export const FilePicker: FC<FilePickerProps> = ({
     state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
   }, [])
 
+  const toFileDTO = useCallback(
+    (file: globalThis.File) => ({
+      name: file.name,
+      fullPath: file.webkitRelativePath,
+      size: file.size,
+      mediaType: file.type,
+      stream: file.stream()
+    }),
+    []
+  )
+
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const fileList = event.target.files
+      if (fileList?.length) {
+        const files = Array.from(fileList).map(file => toFileDTO(file))
+        onFileChange(files)
+      }
+    },
+    [onFileChange, toFileDTO]
+  )
+
   const filesInput = useMemo(
     () =>
       Object.assign(document.createElement('input'), {
-        onchange: onFileChange,
+        onchange: handleFileChange,
         type: 'file',
         multiple
       }),
-    [multiple, onFileChange]
+    [handleFileChange, multiple]
   )
 
   const folderInput = useMemo(
     () =>
       Object.assign(document.createElement('input'), {
-        onchange: onFolderChange,
+        onchange: handleFileChange,
         type: 'file',
         webkitdirectory: true
       }),
-    [onFolderChange]
+    [handleFileChange]
   )
 
   const folderButtonOption: Option = useMemo(
