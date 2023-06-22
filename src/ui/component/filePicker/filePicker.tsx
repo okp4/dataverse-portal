@@ -103,20 +103,26 @@ export const FilePicker: FC<FilePickerProps> = ({
         })}
       >
         <div className="okp4-dataverse-portal-file-picker-content-container">
-          <Icon name={'folder-outlined'} />
-          <div>
-            <p className="okp4-dataverse-portal-file-picker-content-description bold">
-              {t('filePicker.drag-and-drop-files')}
-            </p>
-            {(onFileChange || onFolderChange) && (
-              <p className="okp4-dataverse-portal-file-picker-content-description">
-                {t('filePicker.or')}
+          <Icon name="folder-outlined" />
+          {onFileChange || onFolderChange ? (
+            <>
+              <div>
+                <p className="okp4-dataverse-portal-file-picker-content-description bold">
+                  {t('filePicker.drag-and-drop-files')}
+                </p>
+                <p className="okp4-dataverse-portal-file-picker-content-description">
+                  {t('filePicker.or')}
+                </p>
+              </div>
+              <div className="okp4-dataverse-portal-file-picker-button-wrapper">
+                <DropDownButton label={t('filePicker.browse')} options={dropDownButtonOptions} />
+              </div>
+            </>
+          ) : (
+            <div>
+              <p className="okp4-dataverse-portal-file-picker-content-description bold">
+                {t('filePicker.drag-and-drop-files')}
               </p>
-            )}
-          </div>
-          {(onFileChange || onFolderChange) && (
-            <div className="okp4-dataverse-portal-file-picker-button-wrapper">
-              <DropDownButton label={t('filePicker.browse')} options={dropDownButtonOptions} />
             </div>
           )}
         </div>
