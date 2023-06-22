@@ -1,3 +1,5 @@
+import type { NonEmptyArray } from '@/util/type'
+
 type ID = {
   id: string
 }
@@ -12,8 +14,6 @@ type DescriptedDTO = ID & DescribableDTO
 type Numbered = {
   number: string
 }
-
-type NonEmptyArray<T> = [T, ...T[]]
 
 type Container<T> = {
   contains: T[]

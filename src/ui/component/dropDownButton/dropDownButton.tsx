@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { FC } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { Button } from '@/ui/component/button/button'
+import type { NonEmptyArray } from '@/util/type'
 import classNames from 'classnames'
 import './dropDownButton.scss'
 
@@ -17,7 +18,7 @@ export type Option = {
 
 type DropDownButtonProps = {
   label: string
-  options: [Option, ...Option[]]
+  options: NonEmptyArray<Option>
   variant?: 'primary' | 'secondary'
 }
 
