@@ -53,8 +53,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
         className={classNames('okp4-dataverse-portal-collapsible-content', contentClassName)}
         style={{
           // Copying the behaviour of the Radix-ui collapsible, for the slide animations
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ['--okp4-collapsible-trigger-initial-width' as any]: `${triggerInitWidth}px`
+          ['--okp4-collapsible-trigger-initial-width' as string]: `${triggerInitWidth}px`
         }}
       >
         {content}
