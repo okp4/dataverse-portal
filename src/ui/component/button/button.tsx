@@ -16,9 +16,9 @@ type ButtonProps = {
   icons?: Icons
   variant?:
     | 'primary'
-    | 'primary-discret'
+    | 'primary-discreet'
     | 'secondary'
-    | 'secondary-discret'
+    | 'secondary-discreet'
     | 'tertiary'
     | 'outlined-tertiary'
     | 'quaternary-turquoise'

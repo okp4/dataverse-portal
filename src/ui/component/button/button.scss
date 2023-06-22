@@ -51,7 +51,7 @@
       );
     }
 
-    &.primary-discret {
+    &.primary-discreet {
       @include button(
         $content-color: themed('primary-text'),
         $background-color: themed('secondary-color'),
@@ -71,7 +71,7 @@
       );
     }
 
-    &.secondary-discret {
+    &.secondary-discreet {
       @include button(
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
@@ -177,8 +177,8 @@
         }
       }
 
-      &.primary-discret,
-      &.secondary-discret {
+      &.primary-discreet,
+      &.secondary-discreet {
         padding: 4px 8px;
         gap: 10px;
       }

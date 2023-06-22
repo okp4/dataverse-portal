@@ -37,7 +37,7 @@ export const DropDownButton: FC<DropDownButtonProps> = ({
             className="okp4-dataverse-portal-drop-down-button-content-button-wrapper"
             key={index}
           >
-            <Button icons={icons} label={label} onClick={onClick} variant={`${variant}-discret`} />
+            <Button icons={icons} label={label} onClick={onClick} variant={`${variant}-discreet`} />
           </div>
         ))}
       </>
