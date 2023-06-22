@@ -25,7 +25,7 @@ export const FilePicker: FC<FilePickerProps> = ({
   multiple = false
 }): JSX.Element => {
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false)
-  const { t } = useTranslation('file-picker')
+  const { t } = useTranslation('filePicker')
 
   const handleDragAndDropState = useCallback((state: DragDropState) => {
     state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
@@ -53,7 +53,7 @@ export const FilePicker: FC<FilePickerProps> = ({
 
   const folderButtonOption: Option = useMemo(
     () => ({
-      label: t('file-picker.select-folder'),
+      label: t('filePicker.select-folder'),
       onClick: (): void => {
         folderInput.click()
       },
@@ -70,7 +70,7 @@ export const FilePicker: FC<FilePickerProps> = ({
 
   const filesButtonOption: Option = useMemo(
     () => ({
-      label: multiple ? t('file-picker.select-files') : t('file-picker.select-file'),
+      label: multiple ? t('filePicker.select-files') : t('filePicker.select-file'),
       onClick: (): void => {
         filesInput.click()
       },
@@ -106,17 +106,17 @@ export const FilePicker: FC<FilePickerProps> = ({
           <Icon name={'folder-outlined'} />
           <div>
             <p className="okp4-dataverse-portal-file-picker-content-description bold">
-              {t('file-picker.drag-and-drop-files')}
+              {t('filePicker.drag-and-drop-files')}
             </p>
             {(onFileChange || onFolderChange) && (
               <p className="okp4-dataverse-portal-file-picker-content-description">
-                {t('file-picker.or')}
+                {t('filePicker.or')}
               </p>
             )}
           </div>
           {(onFileChange || onFolderChange) && (
             <div className="okp4-dataverse-portal-file-picker-button-wrapper">
-              <DropDownButton label={t('file-picker.browse')} options={dropDownButtonOptions} />
+              <DropDownButton label={t('filePicker.browse')} options={dropDownButtonOptions} />
             </div>
           )}
         </div>

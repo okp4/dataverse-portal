@@ -5,9 +5,9 @@ import type { I18nResource } from '@/ui/i18n/utils'
 import { loadTranslations } from '@/ui/i18n/utils'
 
 const i18nTranslations: I18nResource[] = [
-  { lng: 'en', namespace: 'file-picker', resource: filePicker_en },
-  { lng: 'fr', namespace: 'file-picker', resource: filePicker_fr },
-  { lng: 'de', namespace: 'file-picker', resource: filePicker_de }
+  { lng: 'en', namespace: 'filePicker', resource: filePicker_en },
+  { lng: 'fr', namespace: 'filePicker', resource: filePicker_fr },
+  { lng: 'de', namespace: 'filePicker', resource: filePicker_de }
 ]
 
 loadTranslations(i18nTranslations)
