@@ -4,6 +4,7 @@ import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { findStep, type Step, type StepId } from '../useStepper'
 import './stepperActions.scss'
+import { useTranslation } from 'react-i18next'
 
 type StepperActionsProps = {
   activeStepId: StepId
@@ -18,6 +19,8 @@ export const StepperActions: FC<StepperActionsProps> = ({
   nextStep,
   previousStep
 }) => {
+  const { t } = useTranslation('common')
+
   const activeStep = findStep(steps, activeStepId)
   const isStepComplete = activeStep.status === 'complete'
   const isFirstStep = activeStep.order === 0
@@ -32,7 +35,7 @@ export const StepperActions: FC<StepperActionsProps> = ({
         icons={{
           startIcon: <Icon name="forward" />
         }}
-        label="Previous"
+        label={t('actions.previous')}
         onClick={previousStep}
         variant="tertiary"
       />
@@ -48,7 +51,7 @@ export const StepperActions: FC<StepperActionsProps> = ({
         icons={{
           endIcon: <Icon name="forward" />
         }}
-        label="Next"
+        label={t('actions.next')}
         onClick={nextStep}
         size="small"
         variant="tertiary"
