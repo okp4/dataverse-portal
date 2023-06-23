@@ -18,6 +18,11 @@
       box-sizing: border-box;
       overflow-y: auto;
 
+      @include scrollbars(
+        $foreground-color: transparent,
+        $background-color: transparent,
+      );
+
       @include use-breakpoints(('mobile')) {
         width: 299px;
       }
