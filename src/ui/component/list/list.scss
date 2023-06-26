@@ -1,0 +1,26 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-list-main {
+  @include columns-with-gap(16px);
+  list-style: none;
+  padding: 0;
+}
+
+.okp4-dataverse-portal-list-item-main {
+  @include with-theme {
+    @include grid-container($colsNb: 3, $colGutter: 16px);
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    background-color: themed('list-item');
+    color: themed('text');
+    @include noto-sans(400);
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+}
