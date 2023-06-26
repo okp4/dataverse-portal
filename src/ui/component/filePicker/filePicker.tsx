@@ -6,6 +6,7 @@ import type { DragDropState } from '@/ui/component/dragAndDrop/dragAndDrop'
 import { DropDownButton } from '@/ui/component/dropDownButton/dropDownButton'
 import type { Option } from '@/ui/component/dropDownButton/dropDownButton'
 import { Icon } from '@/ui/component/icon/icon'
+import { isError } from '@/util/util'
 import classNames from 'classnames'
 import './i18n/index'
 import './filePicker.scss'
@@ -20,19 +21,19 @@ export type File = {
 
 type FilePickerProps = {
   onFileChange: (files: File[]) => void
-  onDrop: (event: React.DragEvent<HTMLDivElement>) => void
   hasFolderExplorer?: boolean
   hasFileExplorer?: boolean
   multiple?: boolean
+  onError?: (error: Error) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const FilePicker: FC<FilePickerProps> = ({
   onFileChange,
-  onDrop,
   hasFolderExplorer = false,
   hasFileExplorer = false,
-  multiple = false
+  multiple = false,
+  onError
 }): JSX.Element => {
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false)
   const { t } = useTranslation('filePicker')
@@ -50,6 +51,27 @@ export const FilePicker: FC<FilePickerProps> = ({
       stream: file.stream()
     }),
     []
+  )
+
+  const handleDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      const files = Array.from(event.dataTransfer.items).map(item => {
+        try {
+          const fsEntry = item.webkitGetAsEntry()
+          const file = item.getAsFile()
+
+          if (!fsEntry) throw new Error('Could not read item')
+          if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
+
+          return toFileDTO(file)
+        } catch (error: unknown) {
+          isError(error) && onError?.(error)
+        }
+      })
+
+      !files.includes(undefined) && onFileChange(files as File[])
+    },
+    [onError, onFileChange, toFileDTO]
   )
 
   const handleFileChange = useCallback(
@@ -128,7 +150,7 @@ export const FilePicker: FC<FilePickerProps> = ({
   )
 
   return (
-    <DragAndDrop onChange={handleDragAndDropState} onDrop={onDrop}>
+    <DragAndDrop onChange={handleDragAndDropState} onDrop={handleDrop}>
       <div
         className={classNames('okp4-dataverse-portal-file-picker-main', {
           focused: isDraggingOver
