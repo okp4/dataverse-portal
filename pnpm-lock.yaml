@@ -121,8 +121,8 @@ devDependencies:
     specifier: ^1.2.3
     version: 1.2.3(react@18.2.0)
   sass:
-    specifier: ^1.58.2
-    version: 1.58.2
+    specifier: ^1.63.6
+    version: 1.63.6
   stylelint:
     specifier: ^15.1.0
     version: 15.1.0
@@ -137,7 +137,7 @@ devDependencies:
     version: 5.1.3
   vite:
     specifier: ^4.3.9
-    version: 4.3.9(sass@1.58.2)
+    version: 4.3.9(sass@1.63.6)
   vite-plugin-html-config:
     specifier: ^1.0.11
     version: 1.0.11(vite@4.3.9)
@@ -2262,7 +2262,7 @@ packages:
       vite: ^4
     dependencies:
       '@swc/core': 1.3.62
-      vite: 4.3.9(sass@1.58.2)
+      vite: 4.3.9(sass@1.63.6)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -5721,9 +5721,9 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /sass@1.58.2:
-    resolution: {integrity: sha512-2mbyOWOv/lhEXD6nVrQZQ4KT2DlwcODbTskM42EyqBAFUWOhiiYtAXZqjZz1ygzapYf+N+2GwfIH9M5FM4GUMg==}
-    engines: {node: '>=12.0.0'}
+  /sass@1.63.6:
+    resolution: {integrity: sha512-MJuxGMHzaOW7ipp+1KdELtqKbfAWbH7OLIdoSMnVe3EXPMTmxTmlaZDCTsgIpPCs3w99lLo9/zDKkOrJuT5byw==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
@@ -6397,7 +6397,7 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
     dependencies:
-      vite: 4.3.9(sass@1.58.2)
+      vite: 4.3.9(sass@1.63.6)
     dev: true
 
   /vite-plugin-svgr@3.2.0(vite@4.3.9):
@@ -6408,13 +6408,13 @@ packages:
       '@rollup/pluginutils': 5.0.2
       '@svgr/core': 7.0.0
       '@svgr/plugin-jsx': 7.0.0
-      vite: 4.3.9(sass@1.58.2)
+      vite: 4.3.9(sass@1.63.6)
     transitivePeerDependencies:
       - rollup
       - supports-color
     dev: true
 
-  /vite@4.3.9(sass@1.58.2):
+  /vite@4.3.9(sass@1.63.6):
     resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6442,7 +6442,7 @@ packages:
       esbuild: 0.17.19
       postcss: 8.4.24
       rollup: 3.25.1
-      sass: 1.58.2
+      sass: 1.63.6
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
