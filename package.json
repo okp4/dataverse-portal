@@ -27,7 +27,7 @@
     "fp-ts": "^2.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-markdown": "^8.0.5",
+    "react-markdown": "^8.0.7",
     "react-router-dom": "^6.12.1",
     "short-uuid": "^4.2.2"
   },
