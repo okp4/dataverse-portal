@@ -78,7 +78,7 @@ export const FilePicker: FC<FilePickerProps> = ({
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const fileList = event.target.files
       if (fileList?.length) {
-        const files = Array.from(fileList).map(file => toFileDTO(file))
+        const files = Array.from(fileList, toFileDTO)
         onFileChange(files)
       }
     },
