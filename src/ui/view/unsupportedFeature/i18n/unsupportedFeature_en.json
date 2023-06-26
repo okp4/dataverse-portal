@@ -1,0 +1,9 @@
+{
+  "unsupportedFeature": {
+    "sorry": "Sorry,",
+    "titleTablet": "Feature not supported on tablet",
+    "titleMobile": "Feature not supported on mobile",
+    "message": "Please switch to your computer.",
+    "returnToHome": "Go to homepage"
+  }
+}

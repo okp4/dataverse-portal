@@ -1,0 +1,9 @@
+{
+  "unsupportedFeature": {
+    "sorry": "Désolé,",
+    "titleTablet": "Fonctionnalité non prise en charge sur tablette",
+    "titleMobile": "Fonctionnalité non prise en charge sur mobile",
+    "message": "Veuillez basculer vers votre ordinateur.",
+    "returnToHome": "Aller à la page d'accueil"
+  }
+}
