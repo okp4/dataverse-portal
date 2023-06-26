@@ -112,8 +112,8 @@ devDependencies:
     specifier: ^2.8.8
     version: 2.8.8
   react-i18next:
-    specifier: ^12.1.5
-    version: 12.1.5(i18next@23.2.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^13.0.0
+    version: 13.0.0(i18next@23.2.0)(react-dom@18.2.0)(react@18.2.0)
   react-infinite-scroll-component:
     specifier: ^6.1.0
     version: 6.1.0(react@18.2.0)
@@ -5446,10 +5446,10 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
-  /react-i18next@12.1.5(i18next@23.2.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-7PQAv6DA0TcStG96fle+8RfTwxVbHVlZZJPoEszwUNvDuWpGldJmNWa3ZPesEsZQZGF6GkzwvEh6p57qpFD2gQ==}
+  /react-i18next@13.0.0(i18next@23.2.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-qRFbrSgynsBSjfnSTb/Um3mw9uPjOfDi4Iq2rMCuzfsRsYGdkEdyCr0i+T0bR0bG6xwULvK4k1oRVLLd7ZDBVw==}
     peerDependencies:
-      i18next: '>= 19.0.0'
+      i18next: '>= 23.0.1'
       react: '>= 16.8.0'
       react-dom: '*'
       react-native: '*'
@@ -5459,7 +5459,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@babel/runtime': 7.20.13
+      '@babel/runtime': 7.22.5
       html-parse-stringify: 3.0.1
       i18next: 23.2.0
       react: 18.2.0
