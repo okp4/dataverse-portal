@@ -1,10 +1,11 @@
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import type { FC, ReactElement } from 'react'
-import { cloneElement, useRef } from 'react'
+import { useRef } from 'react'
 import { StepperProgress } from './stepperProgress/stepperProgress'
 import type { StepId, StepStatus, StepperControls } from './useStepper'
 import { useStepper } from './useStepper'
 import { StepperActions } from './stepperActions/stepperActions'
+import { StepContext } from './stepContext'
 import './stepper.scss'
 
 export type StepProps = {
@@ -18,6 +19,7 @@ type StepperProps = {
   steps: Step[]
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
   const {
     steps,
@@ -29,15 +31,22 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
   }: StepperControls = useStepper(stepElements.length)
 
   const stepsWithValidationRef = useRef(
-    stepElements.map((stepElement, index) =>
-      cloneElement(stepElement, {
-        id: steps[index].id,
-        onUpdateStep: (status: StepStatus) => updateStep(steps[index].id, status)
-      })
-    )
+    stepElements.map((stepElement, index) => (
+      <StepContext.Provider
+        key={steps[index].id}
+        value={{
+          id: steps[index].id,
+          onUpdateStep: (status: StepStatus) => updateStep(steps[index].id, status)
+        }}
+      >
+        {stepElement}
+      </StepContext.Provider>
+    ))
   )
 
-  const activeStep = stepsWithValidationRef.current.find(step => step.props.id === activeStepId)
+  const activeStep = stepsWithValidationRef.current.find(
+    step => step.props.value.id === activeStepId
+  )
 
   return (
     <div className="okp4-dataverse-portal-stepper-main">
