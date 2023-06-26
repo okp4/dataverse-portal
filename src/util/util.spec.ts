@@ -1,4 +1,4 @@
-import { getURILastElement, isSubstringOf } from './util'
+import { getURILastElement, isError, isSubstringOf } from './util'
 import * as O from 'fp-ts/Option'
 
 type Data = {
@@ -47,5 +47,28 @@ describe('isSubstringOf', () => {
 
   it('returns true when both strings are empty', () => {
     expect(isSubstringOf('', '')).toBeTruthy()
+  })
+})
+
+describe('isError guard function', () => {
+  describe.each`
+    arg                                                                                   | expectedResult
+    ${2}                                                                                  | ${false}
+    ${{}}                                                                                 | ${false}
+    ${true}                                                                               | ${false}
+    ${null}                                                                               | ${false}
+    ${undefined}                                                                          | ${false}
+    ${new Error()}                                                                        | ${true}
+    ${'test string'}                                                                      | ${false}
+    ${new TypeError()}                                                                    | ${true}
+    ${new SyntaxError()}                                                                  | ${true}
+    ${{ name: 'Error', message: 'error test message', cause: 'to test', stack: 'stack' }} | ${false}
+  `('Given an argument <"$arg">', ({ arg, expectedResult }: Data) => {
+    describe('When checking the type of the value in the function isError(value)', () => {
+      const result = isError(arg)
+      test('Then, the result is as expected', () => {
+        expect(result).toStrictEqual(expectedResult)
+      })
+    })
   })
 })
