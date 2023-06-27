@@ -25,6 +25,8 @@ $backgrounds: (
         }
 
         &.disabled {
+          cursor: unset;
+
           &:hover {
             background-color: themed(card-background-disabled);
           }
