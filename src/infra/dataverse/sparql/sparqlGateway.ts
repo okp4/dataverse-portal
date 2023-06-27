@@ -37,7 +37,7 @@ export const sparqlGateway: DataversePort = {
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX serviceMetadata: <https://ontology.okp4.space/metadata/service/>
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
-      PREFIX dataspaceMetadata: <https://ontology.okp4.space/metadata/dataspace/>
+      PREFIX zoneMetadata: <https://ontology.okp4.space/metadata/zone/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
@@ -50,8 +50,8 @@ export const sparqlGateway: DataversePort = {
           ?metadata rdf:type datasetMetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         } UNION {          
-          ?id rdf:type core:DataSpace .
-          ?metadata rdf:type dataspaceMetadata:GeneralMetadata .
+          ?id rdf:type core:Zone .
+          ?metadata rdf:type zoneMetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         }
         ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}

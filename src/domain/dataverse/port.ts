@@ -1,7 +1,7 @@
 import type * as TE from 'fp-ts/TaskEither'
 import type { DataverseElement } from '@/domain/dataverse/entity'
 
-export type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
+export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
 type FilterQueryProperty = 'title'

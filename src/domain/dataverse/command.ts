@@ -3,7 +3,7 @@ import type { IO } from 'fp-ts/IO'
 
 type FilterProperty = 'title'
 
-export type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
+export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeFilterInput = DataverseElementType | 'all'
 export type ByPropertyFilterInput = {
   property: FilterProperty

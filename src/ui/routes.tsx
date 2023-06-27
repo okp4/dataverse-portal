@@ -11,10 +11,10 @@ import { ShareDataset } from '@/ui/page/share/dataset/shareDataset'
 export enum routes {
   home = '/',
   dataverse = 'dataverse',
-  dataspace = 'dataverse/dataspace/:id',
+  zone = 'dataverse/zone/:id',
   dataset = 'dataverse/dataset/:id',
   service = 'dataverse/service/:id',
-  governance = 'dataverse/dataspace/:id/governance/:sectionId?/:subsectionId?',
+  governance = 'dataverse/zone/:id/governance/:sectionId?/:subsectionId?',
   share = 'share',
   shareDataset = '/share/data',
   notFoundError = '*'
@@ -38,8 +38,8 @@ export const appRoutes: Route[] = [
     element: <Dataverse />
   },
   {
-    id: 'dataspace',
-    path: routes.dataspace,
+    id: 'zone',
+    path: routes.zone,
     element: <Dataspace />
   },
   {

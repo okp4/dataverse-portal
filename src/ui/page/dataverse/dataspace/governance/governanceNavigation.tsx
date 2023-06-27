@@ -31,7 +31,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     []
   )
 
-  const governanceBasePath = `/dataverse/dataspace/${dataspaceId}/governance`
+  const governanceBasePath = `/dataverse/zone/${dataspaceId}/governance`
 
   const convertToSubOptions = (sectionId: string, subSections: SubSectionDTO[]): SubOption[] =>
     subSections.map(({ id: subSectionId, title: subSectionTitle }) => ({

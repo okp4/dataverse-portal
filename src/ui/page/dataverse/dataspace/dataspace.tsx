@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import * as O from 'fp-ts/Option'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
-import type { DataSpace, DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import type { Zone, DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
@@ -56,8 +56,7 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
   }
 ]
 
-export const isDataSpace = (resource: DataverseItemDetails): resource is DataSpace =>
-  resource.type === 'dataspace'
+export const isZone = (resource: DataverseItemDetails): resource is Zone => resource.type === 'zone'
 
 const Dataspace: FC = () => {
   const { id } = useParams<string>()
@@ -67,7 +66,7 @@ const Dataspace: FC = () => {
   useEffect(() => {
     const resourceDetails = id ? getResourceDetails(id) : O.none
     setDataspace(
-      O.isSome(resourceDetails) && isDataSpace(resourceDetails.value) ? resourceDetails : O.none
+      O.isSome(resourceDetails) && isZone(resourceDetails.value) ? resourceDetails : O.none
     )
     setIsLoading(false)
   }, [id])

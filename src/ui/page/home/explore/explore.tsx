@@ -20,7 +20,7 @@ type DataverseItemCardProps = {
 const exploreItems: DataverseItemCardProps[] = [
   {
     id: 'ef347285-e52a-430d-9679-dcb76b962ce7',
-    type: 'dataspace',
+    type: 'zone',
     label: 'Rhizome',
     topic: 'Agriculture, food, environment and forestry'
   },

@@ -2,7 +2,7 @@ import type { Option } from 'fp-ts/Option'
 
 type DataverseQueryError = Error
 
-type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
+type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
 type FilterProperty = 'title'

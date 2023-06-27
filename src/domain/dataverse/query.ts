@@ -16,7 +16,7 @@ export type Dataverse = DataverseElement[]
 
 export type DataverseQueryError = Error
 
-export type DataverseElementType = 'DataSpace' | 'Dataset' | 'Service'
+export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
 export type Query = {

@@ -39,8 +39,8 @@ export const Interact: FC = () => {
         }
       },
       {
-        action: t('home.blocks.interact.data-spaces.action'),
-        category: t('home.blocks.interact.data-spaces.category'),
+        action: t('home.blocks.interact.zones.action'),
+        category: t('home.blocks.interact.zones.category'),
         disabled: true,
         style: {
           backgroundColor: 'primary-color-variant-2'
