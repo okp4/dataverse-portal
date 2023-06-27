@@ -56,7 +56,7 @@ const updateByTypeFilter = (
   filter: ByTypeQueryFilter
 ): ByTypeQueryFilter => {
   switch (input) {
-    case 'DataSpace':
+    case 'Zone':
     case 'Dataset':
     case 'Service':
       return pipe(
