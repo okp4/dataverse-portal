@@ -1,10 +1,10 @@
 {
   "filePicker": {
-    "drag-and-drop-files": "Ziehen Sie Ihre Dateien und legen Sie sie ab",
+    "dragAndDropFiles": "Ziehen Sie Ihre Dateien und legen Sie sie ab",
     "or": "Oder",
     "browse": "Durchsuchen",
-    "select-folder": "Ordner auswählen",
-    "select-file": "Datei auswählen",
-    "select-files": "Dateien auswählen"
+    "selectFolder": "Ordner auswählen",
+    "selectFile": "Datei auswählen",
+    "selectFiles": "Dateien auswählen"
   }
 }

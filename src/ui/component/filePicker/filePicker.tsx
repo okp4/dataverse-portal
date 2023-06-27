@@ -107,7 +107,7 @@ export const FilePicker: FC<FilePickerProps> = ({
 
   const folderButtonOption: Option = useMemo(
     () => ({
-      label: t('filePicker.select-folder'),
+      label: t('filePicker.selectFolder'),
       onClick: (): void => {
         folderInput.click()
       },
@@ -124,7 +124,7 @@ export const FilePicker: FC<FilePickerProps> = ({
 
   const filesButtonOption: Option = useMemo(
     () => ({
-      label: multiple ? t('filePicker.select-files') : t('filePicker.select-file'),
+      label: multiple ? t('filePicker.selectFiles') : t('filePicker.selectFile'),
       onClick: (): void => {
         filesInput.click()
       },
@@ -162,7 +162,7 @@ export const FilePicker: FC<FilePickerProps> = ({
             <>
               <div>
                 <p className="okp4-dataverse-portal-file-picker-content-description bold">
-                  {t('filePicker.drag-and-drop-files')}
+                  {t('filePicker.dragAndDropFiles')}
                 </p>
                 <p className="okp4-dataverse-portal-file-picker-content-description">
                   {t('filePicker.or')}
@@ -175,7 +175,7 @@ export const FilePicker: FC<FilePickerProps> = ({
           ) : (
             <div>
               <p className="okp4-dataverse-portal-file-picker-content-description bold">
-                {t('filePicker.drag-and-drop-files')}
+                {t('filePicker.dragAndDropFiles')}
               </p>
             </div>
           )}
