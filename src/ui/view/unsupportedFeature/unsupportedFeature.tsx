@@ -24,11 +24,7 @@ export const UnsupportedFeature: FC = () => {
             <h1 className="okp4-dataverse-portal-unsupported-feature-title">
               {t('unsupportedFeature.sorry')}
             </h1>
-            {isTablet ? (
-              <h1>{t('unsupportedFeature.titleTablet')}</h1>
-            ) : (
-              <h1>{t('unsupportedFeature.titleMobile')}</h1>
-            )}
+            <h1>{t(`unsupportedFeature.title${isTablet ? 'Tablet' : 'Mobile'}`)}</h1>
           </div>
           <p className="okp4-dataverse-portal-unsupported-feature-message">
             {t('unsupportedFeature.message')}
