@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
-import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
+import { isZone } from '@/ui/page/dataverse/dataspace/dataspace'
 import { DataverseItemStatCard } from '@/ui/view/dataverse/component/dataverseItemStatCard/dataverseItemStatCard'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
@@ -34,7 +34,7 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
         <DetailedDataverseItem data={data} metadata={metadata} />
       </div>
       <div className="okp4-dataverse-portal-dataverse-page-template-right-side-wrapper">
-        {isDataSpace(data) && (
+        {isZone(data) && (
           <>
             <h2>{t('inZone')}</h2>
             <div className="okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards">

@@ -26,8 +26,8 @@ import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse
 import { pipe } from 'fp-ts/lib/function'
 import { useNavigate } from 'react-router-dom'
 
-type DataverseItemType = 'service' | 'dataspace' | 'dataset'
-type FilterLabel = 'dataspaces' | 'datasets' | 'services' | 'all'
+type DataverseItemType = 'service' | 'zone' | 'dataset'
+type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'
 
 type DataverseItem = {
   id: string
@@ -45,8 +45,8 @@ export type Governance = {
 
 type Typed<T extends DataverseItemType> = { type: T }
 
-type DataSpaceResource = {
-  type: Exclude<DataverseItemType, 'dataspace'>
+type ZoneResource = {
+  type: Exclude<DataverseItemType, 'zone'>
   amount: number
   lastUpdated: string
 }
@@ -55,13 +55,13 @@ export type Service = DataverseItem & Typed<'service'>
 
 export type Dataset = DataverseItem & Typed<'dataset'>
 
-export type DataSpace = DataverseItem &
-  Typed<'dataspace'> & {
+export type Zone = DataverseItem &
+  Typed<'zone'> & {
     governance: Governance
-    resources: DataSpaceResource[]
+    resources: ZoneResource[]
   }
 
-export type DataverseItemDetails = DataSpace | Dataset | Service
+export type DataverseItemDetails = Zone | Dataset | Service
 
 type Filter = {
   label: FilterLabel
@@ -76,8 +76,8 @@ const dataverseFilters: Filter[] = [
     icon: 'all'
   },
   {
-    label: 'dataspaces',
-    value: 'DataSpace',
+    label: 'zones',
+    value: 'Zone',
     icon: 'dataspace-created'
   },
   {
@@ -95,7 +95,7 @@ const dataverseFilters: Filter[] = [
 export const dataverseItems: DataverseItemDetails[] = [
   {
     id: 'ef347285-e52a-430d-9679-dcb76b962ce7',
-    type: 'dataspace',
+    type: 'zone',
     label: 'Rhizome',
     description:
       'Rhizome is a data space operated by OKP4, currently under development based on OKP4 technology. Rhizome demonstrates the power of data processing and sharing, and the value we can achieve by effectively connecting different sources of open access agricultural data in different data formats. Rhizome aims to connect as much data as possible and provide valuable visuals and metrics in various agriculture-related areas, such as land use and land management, crop and livestock management, and forest resources and timber industry.',
@@ -121,7 +121,7 @@ export const dataverseItems: DataverseItemDetails[] = [
   },
   {
     id: '97ff7e16-c08d-47be-8475-211016c82e33',
-    type: 'dataspace',
+    type: 'zone',
     label: 'DS4I',
     description:
       "Data Space for Investors (DS4I) is a private Data Space created and maintained by OKP4 Team. DS4I's purpose is to present a simple and user-friendly Proof of Concept to demonstrate for potential investors how OKP4 protocol works based on simple governance rules.",
