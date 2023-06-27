@@ -4,9 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
-import type { DataSpace } from '@/ui/page/dataverse/dataverse'
+import type { Zone } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
-import { isDataSpace } from '@/ui/page/dataverse/dataspace/dataspace'
+import { isZone } from '@/ui/page/dataverse/dataspace/dataspace'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceDetails } from '@/ui/view/governance/details/details'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
@@ -35,7 +35,7 @@ export const Governance: FC = () => {
   )
 
   const navigationPath = useMemo((): string | undefined => {
-    const governanceBasePath = `/dataverse/dataspace/${dataspaceId}/governance`
+    const governanceBasePath = `/dataverse/zone/${dataspaceId}/governance`
     const firstSection = sections[0]
     const firstSubsection = firstSection.contains[0]
 
@@ -64,8 +64,8 @@ export const Governance: FC = () => {
       pipe(
         O.fromNullable(dataspaceId),
         O.flatMap(getResourceDetails),
-        O.filter(isDataSpace),
-        O.map((dataspace: DataSpace) => dataspace.label),
+        O.filter(isZone),
+        O.map((dataspace: Zone) => dataspace.label),
         O.toNullable
       ),
     [dataspaceId]
@@ -86,7 +86,7 @@ export const Governance: FC = () => {
   return (
     <div className="okp4-dataverse-portal-governance-page-main">
       <div className="okp4-dataverse-portal-governance-page-back-button">
-        <BackButton to={`/dataverse/dataspace/${dataspaceId}`} />
+        <BackButton to={`/dataverse/zone/${dataspaceId}`} />
       </div>
       <section className="okp4-dataverse-portal-governance-page-section">
         <h1>{`${dataspaceLabel} | ${t('resources.governance')}`}</h1>
