@@ -2,10 +2,10 @@
   "resources": {
     "label": "Ressources",
     "all": "Tout",
-    "dataspace": "Data Space",
+    "zone": "Zone",
     "dataset": "Données",
     "service": "Service",
-    "dataspaces": "Data Spaces",
+    "zones": "Zones",
     "datasets": "Jeux de données",
     "services": "Services",
     "governance": "Gouvernance",

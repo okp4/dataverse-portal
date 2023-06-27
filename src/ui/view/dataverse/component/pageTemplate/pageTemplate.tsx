@@ -36,7 +36,7 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
       <div className="okp4-dataverse-portal-dataverse-page-template-right-side-wrapper">
         {isDataSpace(data) && (
           <>
-            <h2>{t('inDataspace')}</h2>
+            <h2>{t('inZone')}</h2>
             <div className="okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards">
               {data.resources.map(({ type, amount, lastUpdated }) => (
                 <DataverseItemStatCard

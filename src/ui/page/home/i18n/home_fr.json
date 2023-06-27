@@ -4,7 +4,7 @@
       "community": {
         "label": "La communauté",
         "stats": {
-          "dataspacesCreated": "Data Spaces créés",
+          "zonesCreated": "Zones créées",
           "datasetsShared": "Jeux de données partagés",
           "servicesShared": "Services partagés",
           "communityParticipants": "Nombre de participants à l'écosystème OKP4"
@@ -24,9 +24,9 @@
           "action": "Créer",
           "category": "des Connaissances"
         },
-        "data-spaces": {
+        "zones": {
           "action": "Créer",
-          "category": "des Data Spaces"
+          "category": "des Zones"
         },
         "applications": {
           "action": "Construire",

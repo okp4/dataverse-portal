@@ -67,7 +67,7 @@ export const Community: FC = () => {
           {
             icon: <Icon name={`dataspace-created-${theme}`} />,
             stat: dataspacesCreatedNb,
-            description: t('home.blocks.community.stats.dataspacesCreated')
+            description: t('home.blocks.community.stats.zonesCreated')
           },
           {
             icon: <Icon name={`dataset-folder-${theme}`} />,

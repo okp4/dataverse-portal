@@ -5,8 +5,7 @@
         "label": "Allgemein",
         "items": {
           "home": "Startseite",
-          "explore": "Erkunden",
-          "myDataSpaces": "Meine Data-Spaces"
+          "explore": "Erkunden"
         }
       },
       "interact": {
@@ -14,7 +13,7 @@
         "items": {
           "share": "Daten & Dienste teilen",
           "createKnowledge": "Wissen schaffen",
-          "createDataspace": "Data-Spaces erstellen",
+          "createZones": "Zonen erstellen",
           "buildApps": "Anwendungen erstellen"
         }
       },
