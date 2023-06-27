@@ -10,10 +10,11 @@
 
 .okp4-dataverse-portal-list-item-main {
   @include with-theme {
-    @include grid-container($colsNb: 3, $colGutter: 16px);
-    justify-content: center;
+    display: grid;
+    column-gap: 14px;
+    grid-template-columns: 1fr;
     align-items: center;
-    padding: 12px 24px;
+    padding: 13px 16px;
     border-radius: 12px;
     background-color: themed('list-item');
     color: themed('text');
@@ -21,6 +22,18 @@
 
     &.clickable {
       cursor: pointer;
+    }
+
+    &.list-item-3-columns {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    &.list-item-2-columns-left {
+      grid-template-columns: auto 1fr;
+    }
+
+    &.list-item-2-columns-right {
+      grid-template-columns: 1fr auto;
     }
   }
 }
