@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
-import { Link } from 'react-router-dom'
 import { CopyToClipboard } from '@/ui/component/copyToClipboard/copyToClipboard'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import './summaryMetadata.scss'
@@ -16,14 +15,7 @@ type MetadataRowProps = {
   value: string
 }
 
-const originsProperties = [
-  'publisher',
-  'creator',
-  'registrar',
-  'provider',
-  'belongsTo',
-  'id'
-] as const
+const originsProperties = ['publisher', 'creator', 'registrar', 'provider', 'id'] as const
 
 type OriginsProperty = (typeof originsProperties)[number]
 
@@ -37,15 +29,6 @@ const isAuditMetadata = (
 ): metadata is Omit<ItemGeneralMetadata, 'value'> & { value: string } =>
   metadata.category === 'auditMetadata'
 
-const LinkOrSimpleRow = ({ label, value }: MetadataRowProps): JSX.Element =>
-  label === 'belongsTo' ? (
-    <Link className="okp4-dataverse-portal-metadata-link-value" to="/dataverse/dataspace/1">
-      {value}
-    </Link>
-  ) : (
-    <p className="okp4-dataverse-portal-metadata-value">{value}</p>
-  )
-
 const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
   const { t } = useTranslation('metadata')
 
@@ -55,7 +38,7 @@ const MetadataRow = ({ label, value }: MetadataRowProps): JSX.Element => {
     <div className="okp4-dataverse-portal-metadata-clipboard-with-toast">
       <div className="okp4-dataverse-portal-metadata-clipboard-container">
         <p className="okp4-dataverse-portal-metadata-label">{t(`${label}`)}</p>
-        <LinkOrSimpleRow label={label} value={value} />
+        <p className="okp4-dataverse-portal-metadata-value">{value}</p>
         {hasClipboard && <CopyToClipboard textToCopy={value} />}
       </div>
     </div>

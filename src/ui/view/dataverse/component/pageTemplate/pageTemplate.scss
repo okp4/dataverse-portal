@@ -31,27 +31,5 @@ $colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4')
         }
       }
     }
-
-    .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
-      @include bi-column-item($side: 'right');
-
-      h2 {
-        @include norse-gradient-header;
-        margin-bottom: 30px;
-
-        @include use-breakpoints(('mobile', 'tablet')) {
-          margin: 27px auto 30px;
-        }
-      }
-
-      .okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards {
-        display: grid;
-        row-gap: 22px;
-
-        @include use-breakpoints(('mobile')) {
-          row-gap: 16px;
-        }
-      }
-    }
   }
 }

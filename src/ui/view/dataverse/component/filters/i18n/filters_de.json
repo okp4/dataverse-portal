@@ -1,31 +1,27 @@
 {
-    "filters": "Filter",
-    "data-spaces": {
-        "name": "Datenräume",
-        "search": "Suche in einem Datenraum"
-    },
-    "topics": {
-        "name": "Themen",
-        "search": "Themen suchen"
-    },
-    "services": {
-        "name": "Dienstkategorien",
-        "search": "Kategorien suchen"
-    },
-    "data-geo-cov": {
-        "name": "Geografische Abdeckung der Daten",
-        "search": "Suche nach Land, Registern ..."
-    },
-    "data-temp-cov": {
-        "name": "Zeitliche Abdeckung der Daten",
-        "search": "Suche nach zeitlicher Abdeckung"
-    },
-    "data-format": {
-        "name": "Datenformat",
-        "search": "Suche nach Format"
-    },
-    "data-licence": {
-        "name": "Lizenz der Daten",
-        "search": "Suche nach Lizenz"
-    }
+  "filters": "Filter",
+  "topics": {
+    "name": "Themen",
+    "search": "Themen suchen"
+  },
+  "services": {
+    "name": "Dienstkategorien",
+    "search": "Kategorien suchen"
+  },
+  "data-geo-cov": {
+    "name": "Geografische Abdeckung der Daten",
+    "search": "Suche nach Land, Registern ..."
+  },
+  "data-temp-cov": {
+    "name": "Zeitliche Abdeckung der Daten",
+    "search": "Suche nach zeitlicher Abdeckung"
+  },
+  "data-format": {
+    "name": "Datenformat",
+    "search": "Suche nach Format"
+  },
+  "data-licence": {
+    "name": "Lizenz der Daten",
+    "search": "Suche nach Lizenz"
+  }
 }

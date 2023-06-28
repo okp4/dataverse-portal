@@ -61,11 +61,6 @@ const datasetMetadata: ItemGeneralMetadata[] = [
   },
   {
     category: 'generalMetadata',
-    property: 'belongsTo',
-    value: 'Rhizome'
-  },
-  {
-    category: 'generalMetadata',
     property: 'id',
     value: 'ca752b42-9740-4436-a86f-cd3c5e084d33'
   },

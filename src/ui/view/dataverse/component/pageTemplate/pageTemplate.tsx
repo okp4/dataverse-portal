@@ -2,13 +2,10 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
-import { isZone } from '@/ui/page/dataverse/dataspace/dataspace'
-import { DataverseItemStatCard } from '@/ui/view/dataverse/component/dataverseItemStatCard/dataverseItemStatCard'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { DetailedDataverseItem } from '@/ui/view/dataverse/component/dataverseItemDetails/detailedDataverseItem'
 import { renderItemTypeColor } from '@/ui/common'
-import './i18n/index'
 import './pageTemplate.scss'
 
 type PageTemplateProps = {
@@ -17,7 +14,7 @@ type PageTemplateProps = {
 }
 
 const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
-  const { t } = useTranslation(['pageTemplate', 'common'])
+  const { t } = useTranslation('common')
 
   return (
     <div className="okp4-dataverse-portal-dataverse-component-page-template-main">
@@ -32,23 +29,6 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
           {t(`resources.${data.type}`)}
         </h3>
         <DetailedDataverseItem data={data} metadata={metadata} />
-      </div>
-      <div className="okp4-dataverse-portal-dataverse-page-template-right-side-wrapper">
-        {isZone(data) && (
-          <>
-            <h2>{t('inZone')}</h2>
-            <div className="okp4-dataverse-portal-dataverse-page-template-dataverse-item-stat-cards">
-              {data.resources.map(({ type, amount, lastUpdated }) => (
-                <DataverseItemStatCard
-                  amount={amount}
-                  key={type}
-                  lastUpdated={lastUpdated}
-                  type={type}
-                />
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </div>
   )
