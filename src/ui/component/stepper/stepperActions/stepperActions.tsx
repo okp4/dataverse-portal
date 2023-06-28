@@ -1,31 +1,25 @@
 /* eslint-disable max-lines-per-function */
 import { type FC } from 'react'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
-import { findStep } from '../useStepper'
-import type { Step, StepId } from '../stepper'
 import './stepperActions.scss'
-import { useTranslation } from 'react-i18next'
 
 type StepperActionsProps = {
-  activeStepId: StepId
-  steps: Omit<Step, 'content'>[]
+  isFirstStep: boolean
+  isLastStep: boolean
   nextStep: () => void
   previousStep: () => void
 }
 
 export const StepperActions: FC<StepperActionsProps> = ({
-  activeStepId,
-  steps,
   nextStep,
-  previousStep
+  previousStep,
+  isFirstStep,
+  isLastStep
 }) => {
   const { t } = useTranslation('common')
-
-  const activeStep = findStep(steps, activeStepId)
-  const isFirstStep = activeStep.order === 0
-  const isLastStep = activeStep.order === steps.length - 1
 
   return (
     <div className="okp4-dataverse-portal-stepper-actions-main">

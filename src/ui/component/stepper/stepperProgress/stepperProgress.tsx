@@ -1,12 +1,12 @@
 import type { FC } from 'react'
+import type { Step, StepId } from '../useStepper'
 import { findStep } from '../useStepper'
-import type { Step, StepId } from '../stepper'
 import type { ProgressBarTransition } from './progressBar/progressBar'
 import { ProgressBar } from './progressBar/progressBar'
 import './stepperProgress.scss'
 
 type StepperProgressProps = {
-  steps: Omit<Step, 'content'>[]
+  steps: Step[]
   activeStepId: StepId
   previousActiveStepId?: StepId
 }

@@ -1,10 +1,14 @@
 import { useCallback, useState } from 'react'
-import type { Step, StepElement, StepId, StepStatus } from './stepper'
+import type { Optional } from '@/util/type'
 
-export type UseStepperInput = Array<Omit<StepElement, 'content'>>
+export type StepId = string
 
-export type StepperControls = {
-  steps: Omit<Step, 'content'>[]
+export type StepStatus = 'complete' | 'incomplete'
+
+export type UseStepperInput = Optional<Omit<Step, 'order'>, 'status'>[]
+
+export type UseStepper = {
+  steps: Step[]
   nextStep: () => void
   previousStep: () => void
   activeStepId: StepId
@@ -16,16 +20,22 @@ type ActiveStepsId = {
   previous?: StepId
 }
 
-export const findStep = (steps: Omit<Step, 'content'>[], stepId?: StepId): Omit<Step, 'content'> =>
+export type Step = {
+  id: StepId
+  order: number
+  status: StepStatus
+}
+
+export const findStep = (steps: Step[], stepId?: StepId): Step =>
   steps.find(({ id }) => id === stepId) ?? steps[0]
 
 // eslint-disable-next-line max-lines-per-function
-export const useStepper = (stepsProps: UseStepperInput): StepperControls => {
+export const useStepper = (stepsProps: UseStepperInput): UseStepper => {
   const [activeStepsId, setActiveStepsId] = useState<ActiveStepsId>({
     current: stepsProps[0].id
   })
 
-  const [steps, setSteps] = useState<Omit<Step, 'content'>[]>(
+  const [steps, setSteps] = useState<Step[]>(
     stepsProps.map((step, index) => ({
       ...step,
       order: index,
