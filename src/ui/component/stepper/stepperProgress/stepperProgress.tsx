@@ -1,13 +1,12 @@
 import type { FC } from 'react'
+import { findStep } from '../useStepper'
+import type { Step, StepId } from '../stepper'
 import type { ProgressBarTransition } from './progressBar/progressBar'
 import { ProgressBar } from './progressBar/progressBar'
-import { findStep, type Step, type StepId } from '../useStepper'
 import './stepperProgress.scss'
 
-export type StepStatus = 'error' | 'disabled' | 'complete' | 'incomplete'
-
 type StepperProgressProps = {
-  steps: Step[]
+  steps: Omit<Step, 'content'>[]
   activeStepId: StepId
   previousActiveStepId?: StepId
 }
@@ -43,7 +42,7 @@ export const StepperProgress: FC<StepperProgressProps> = ({
       {steps.map(({ id, status, order }) => (
         <ProgressBar
           key={id}
-          state={id === activeStepId ? 'active' : status === 'complete' ? 'complete' : 'incomplete'}
+          state={id === activeStepId ? 'active' : status}
           transition={getProgressBarTransition({
             stepOrder: order,
             activeStepOrder: activeStep.order,

@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
-import type { StepStatus } from '../../useStepper'
+import type { StepStatus } from '../../stepper'
 import './progressBar.scss'
 
-type ProgressBarState = 'active' | Extract<StepStatus, 'complete' | 'incomplete'>
+type ProgressBarState = 'active' | StepStatus
 export type ProgressBarTransition = 'none' | 'backward' | 'forward'
 
 type ProgressBarProps = {

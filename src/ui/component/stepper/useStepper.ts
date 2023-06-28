@@ -1,74 +1,39 @@
-import { useCallback, useMemo, useReducer, useState } from 'react'
-import uuid from 'short-uuid'
+import { useCallback, useState } from 'react'
+import type { Step, StepElement, StepId, StepStatus } from './stepper'
 
-export type StepId = string
-export type StepStatus = 'complete' | 'incomplete' | 'error' | 'disabled'
-
-export type Step = {
-  id: StepId
-  order: number
-  status: StepStatus
-}
+export type UseStepperInput = Array<Omit<StepElement, 'content'>>
 
 export type StepperControls = {
-  steps: Step[]
+  steps: Omit<Step, 'content'>[]
   nextStep: () => void
   previousStep: () => void
-  updateStep: (stepId: string, status: StepStatus) => void
   activeStepId: StepId
   previousActiveStepId?: StepId
 }
 
-export const findStep = (steps: Step[], stepId?: StepId): Step =>
-  steps.find(({ id }) => id === stepId) ?? steps[0]
-
-type activeStepsId = {
+type ActiveStepsId = {
   current: StepId
   previous?: StepId
 }
 
-const activeStepsIdReducer = (state: activeStepsId, action: StepId): activeStepsId => ({
-  current: action,
-  previous: state.current
-})
+export const findStep = (steps: Omit<Step, 'content'>[], stepId?: StepId): Omit<Step, 'content'> =>
+  steps.find(({ id }) => id === stepId) ?? steps[0]
 
 // eslint-disable-next-line max-lines-per-function
-export const useStepper = (totalSteps: number): StepperControls => {
-  const firstStepId = useMemo(() => uuid.generate(), [])
-
-  const [activeStepsId, setActiveStepsId] = useReducer(activeStepsIdReducer, {
-    current: firstStepId
+export const useStepper = (stepsProps: UseStepperInput): StepperControls => {
+  const [activeStepsId, setActiveStepsId] = useState<ActiveStepsId>({
+    current: stepsProps[0].id
   })
 
-  const [steps, setSteps] = useState<Step[]>(
-    Array.from({ length: totalSteps }, (_, index) => ({
-      id: index === 0 ? firstStepId : uuid.generate(),
-      status: 'incomplete',
-      order: index
+  const [steps, setSteps] = useState<Omit<Step, 'content'>[]>(
+    stepsProps.map((step, index) => ({
+      ...step,
+      order: index,
+      status: step.status ?? 'incomplete'
     }))
   )
 
-  const nextStep = useCallback(() => {
-    const activeStep = findStep(steps, activeStepsId.current)
-    if (activeStep.status !== 'complete' || activeStep.order === steps.length - 1) return
-
-    const nextStepId = steps.find(step => step.order === activeStep.order + 1)?.id
-    if (!nextStepId) return
-
-    setActiveStepsId(nextStepId)
-  }, [activeStepsId, steps])
-
-  const previousStep = useCallback(() => {
-    const activeStep = findStep(steps, activeStepsId.current)
-    if (activeStep.order === 0) return
-
-    const previousStepId = steps.find(step => step.order === activeStep.order - 1)?.id
-    if (!previousStepId) return
-
-    setActiveStepsId(previousStepId)
-  }, [activeStepsId, steps])
-
-  const updateStep = useCallback((stepId: string, stepStatus: StepStatus) => {
+  const updateStepStatus = useCallback((stepId: string, stepStatus: StepStatus) => {
     setSteps(prevSteps => {
       const matchPreviousStep = prevSteps.find(step => step.id === stepId)?.status === stepStatus
 
@@ -85,11 +50,47 @@ export const useStepper = (totalSteps: number): StepperControls => {
     })
   }, [])
 
+  const nextStep = useCallback(() => {
+    const activeStep = findStep(steps, activeStepsId.current)
+    // TODO: add validation check: if active step is not valid, return
+    if (activeStep.order === steps.length - 1) return
+
+    const nextStep = steps.find(step => step.order === activeStep.order + 1)
+    const nextStepId = nextStep?.id
+    if (!nextStepId) return
+
+    updateStepStatus(activeStep.id, 'complete')
+    updateStepStatus(nextStepId, 'incomplete')
+
+    setActiveStepsId(prevActiveStepsId => ({
+      current: nextStepId,
+      previous: prevActiveStepsId.current
+    }))
+  }, [activeStepsId, steps, updateStepStatus])
+
+  const previousStep = useCallback(() => {
+    const activeStep = findStep(steps, activeStepsId.current)
+    if (activeStep.order === 0) return
+
+    const previousStep = steps.find(step => step.order === activeStep.order - 1)
+    const previousStepId = previousStep?.id
+    if (!previousStepId) return
+
+    // TODO: add validation check: if active step is valid, update with 'complete' status
+    updateStepStatus(activeStep.id, 'incomplete')
+
+    updateStepStatus(previousStepId, 'incomplete')
+
+    setActiveStepsId(prevActiveStepsId => ({
+      current: previousStepId,
+      previous: prevActiveStepsId.current
+    }))
+  }, [activeStepsId, steps, updateStepStatus])
+
   return {
     steps,
     nextStep,
     previousStep,
-    updateStep,
     activeStepId: activeStepsId.current,
     previousActiveStepId: activeStepsId.previous
   }
