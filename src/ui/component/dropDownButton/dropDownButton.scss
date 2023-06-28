@@ -72,6 +72,10 @@
       .okp4-dataverse-portal-drop-down-button-content-button-wrapper {
         margin-bottom: 6px;
         white-space: nowrap;
+
+        .okp4-dataverse-portal-drop-down-button-content-button {
+          min-width: min-content;
+        }
       }
 
       .okp4-dataverse-portal-drop-down-button-content-button-wrapper:last-of-type {
