@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type { FC } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { Button } from '@/ui/component/button/button'
@@ -28,7 +28,17 @@ export const DropDownButton: FC<DropDownButtonProps> = ({
   options,
   variant = 'secondary'
 }) => {
+  const [isOpened, setIsOpened] = useState<boolean>(false)
   const labelParagraph = useMemo(() => <p>{label}</p>, [label])
+
+  const handleButtonClick = useCallback(
+    (callback: () => void) => () => {
+      setIsOpened(false)
+      callback()
+    },
+    []
+  )
+
   const content = useMemo(
     () => (
       <>
@@ -37,18 +47,25 @@ export const DropDownButton: FC<DropDownButtonProps> = ({
             className="okp4-dataverse-portal-drop-down-button-content-button-wrapper"
             key={index}
           >
-            <Button icons={icons} label={label} onClick={onClick} variant={`${variant}-discreet`} />
+            <Button
+              icons={icons}
+              label={label}
+              onClick={handleButtonClick(onClick)}
+              variant={`${variant}-discreet`}
+            />
           </div>
         ))}
       </>
     ),
-    [options, variant]
+    [handleButtonClick, options, variant]
   )
 
   return (
     <Collapsible
       content={content}
       contentClassName={classNames('okp4-dataverse-portal-drop-down-button-content', variant)}
+      onOpenChange={setIsOpened}
+      open={isOpened}
       rootClassName={classNames('okp4-dataverse-portal-drop-down-button-main', variant)}
       trigger={labelParagraph}
       triggerClassName="okp4-dataverse-portal-drop-down-button-label"
