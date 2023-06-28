@@ -1,31 +1,27 @@
 {
-    "filters": "Filters",
-    "data-spaces": {
-        "name": "Data spaces",
-        "search": "Search a data space"
-    },
-    "topics": {
-        "name": "Topics",
-        "search": "Search topics"
-    },
-    "services": {
-        "name": "Service categories",
-        "search": "Search categories"
-    },
-    "data-geo-cov": {
-        "name": "Data geographical coverage",
-        "search": "Search country, regions ..."
-    },
-    "data-temp-cov": {
-        "name": "Data temporal coverage",
-        "search": "Search temporal coverage"
-    },
-    "data-format": {
-        "name": "Data format",
-        "search": "Search format"
-    },
-    "data-licence": {
-        "name": "Data license",
-        "search": "Search license"
-    }
+  "filters": "Filters",
+  "topics": {
+    "name": "Topics",
+    "search": "Search topics"
+  },
+  "services": {
+    "name": "Service categories",
+    "search": "Search categories"
+  },
+  "data-geo-cov": {
+    "name": "Data geographical coverage",
+    "search": "Search country, regions ..."
+  },
+  "data-temp-cov": {
+    "name": "Data temporal coverage",
+    "search": "Search temporal coverage"
+  },
+  "data-format": {
+    "name": "Data format",
+    "search": "Search format"
+  },
+  "data-licence": {
+    "name": "Data license",
+    "search": "Search license"
+  }
 }

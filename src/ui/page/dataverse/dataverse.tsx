@@ -439,7 +439,6 @@ export const dataverseItems: DataverseItemDetails[] = [
 ]
 
 const selectionFilters = {
-  'data-spaces': ['Rhizome', 'DS4I', 'Data space 3', 'Data space 4'],
   topics: ['Agriculture environment and forestry', 'Marketing and customer behaviour'],
   services: [
     'Data cleaning',
