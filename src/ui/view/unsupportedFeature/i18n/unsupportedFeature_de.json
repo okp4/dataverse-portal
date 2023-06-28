@@ -1,0 +1,9 @@
+{
+  "unsupportedFeature": {
+    "sorry": "Entschuldigung,",
+    "titleTablet": "Funktion wird auf dem Tablet nicht unterstützt",
+    "titleMobile": "Funktion wird auf dem Handy nicht unterstützt",
+    "message": "Bitte wechseln Sie zu Ihrem Computer.",
+    "returnToHome": "Zur Homepage gehen"
+  }
+}
