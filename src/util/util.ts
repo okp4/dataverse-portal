@@ -35,3 +35,5 @@ export const taskLogger =
 
 export const isSubstringOf = (substring: string, source: string): boolean =>
   pipe(source, S.toLowerCase, S.includes(S.toLowerCase(substring)))
+
+export const isError = (value: unknown): value is Error => value instanceof Error

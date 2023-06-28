@@ -1,0 +1,64 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/fonts.scss';
+
+.okp4-dataverse-portal-file-picker-main {
+  @include with-theme {
+    @include custom-dashed-border(
+      $color: themed('file-picker-border'),
+      $width: 3px,
+      $border-radius: 12px,
+      $dashArray: 24px
+    );
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: themed('file-picker-background');
+    padding: 24px;
+    box-sizing: border-box;
+    border-radius: 12px;
+
+    &.focused {
+      @include custom-dashed-border(
+        $color: themed('file-picker-border-focused'),
+        $width: 3px,
+        $border-radius: 12px,
+        $dashArray: 24px
+      );
+      background-color: themed('file-picker-background-focused');
+    }
+
+    .okp4-dataverse-portal-file-picker-content-container {
+      @include columns-with-gap(20px);
+      align-items: center;
+
+      .okp4-dataverse-portal-file-picker-content-description {
+        @include noto-sans(400);
+        text-align: center;
+        color: themed('text');
+
+        &.bold {
+          @include noto-sans(700);
+        }
+      }
+
+      .okp4-dataverse-portal-file-picker-button-wrapper {
+        max-height: 48px;
+
+        .okp4-dataverse-portal-file-picker-browse-icon {
+          display: flex;
+          align-items: center;
+          min-width: 24px;
+
+          svg {
+            path {
+              fill: currentColor;
+            }
+          }
+        }
+      }
+    }
+  }
+}

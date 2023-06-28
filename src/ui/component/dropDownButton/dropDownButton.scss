@@ -1,0 +1,86 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+@mixin button($content-color, $background-color, $box-shadow, $hover-color) {
+  box-shadow: $box-shadow;
+  background-color: $background-color;
+
+  .okp4-dataverse-portal-drop-down-button-label {
+    color: $content-color;
+    background-color: inherit;
+  }
+
+  .okp4-dataverse-portal-drop-down-button-content {
+    .okp4-dataverse-portal-drop-down-button-option-button {
+      color: $content-color;
+      background-color: inherit;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+    }
+  }
+}
+
+.okp4-dataverse-portal-drop-down-button-main {
+  @include with-theme {
+    border-radius: 12px;
+
+    &.primary {
+      @include button(
+        $content-color: themed('primary-text'),
+        $background-color: themed('secondary-color'),
+        $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
+        $hover-color: themed('secondary-color-variant-1')
+      );
+    }
+
+    &.secondary {
+      @include button(
+        $content-color: themed('primary-text'),
+        $background-color: themed('primary-color'),
+        $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
+        $hover-color: themed('primary-color-variant-2')
+      );
+    }
+
+    &[data-state='open'] {
+      .okp4-dataverse-portal-drop-down-button-content {
+        padding: 0 10px 12px;
+      }
+    }
+
+    .okp4-dataverse-portal-drop-down-button-label {
+      @include noto-sans(700);
+      column-gap: 12px;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 12px 20px;
+      border-radius: 12px;
+
+      svg path {
+        fill: currentColor;
+        stroke: currentColor;
+      }
+    }
+
+    .okp4-dataverse-portal-drop-down-button-content {
+      border-radius: 12px;
+      padding: 0 10px;
+      box-sizing: border-box;
+
+      .okp4-dataverse-portal-drop-down-button-content-button-wrapper {
+        margin-bottom: 6px;
+        white-space: nowrap;
+
+        .okp4-dataverse-portal-drop-down-button-content-button {
+          min-width: min-content;
+        }
+      }
+
+      .okp4-dataverse-portal-drop-down-button-content-button-wrapper:last-of-type {
+        margin-bottom: unset;
+      }
+    }
+  }
+}

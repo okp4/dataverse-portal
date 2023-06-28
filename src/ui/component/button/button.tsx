@@ -14,7 +14,14 @@ type ButtonProps = {
   onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void
   iconButtonOnly?: JSX.Element
   icons?: Icons
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'outlined-tertiary' | 'quaternary-turquoise'
+  variant?:
+    | 'primary'
+    | 'primary-discreet'
+    | 'secondary'
+    | 'secondary-discreet'
+    | 'tertiary'
+    | 'outlined-tertiary'
+    | 'quaternary-turquoise'
   size?: 'small' | 'large'
 }
 

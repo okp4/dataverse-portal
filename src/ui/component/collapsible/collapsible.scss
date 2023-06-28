@@ -42,19 +42,23 @@
 @keyframes slideDown {
   from {
     height: 0;
+    width: var(--okp4-collapsible-trigger-initial-width);
   }
 
   to {
     height: var(--radix-collapsible-content-height);
+    width: var(--radix-collapsible-content-width);
   }
 }
 
 @keyframes slideUp {
   from {
     height: var(--radix-collapsible-content-height);
+    width: var(--radix-collapsible-content-width);
   }
 
   to {
     height: 0;
+    width: var(--okp4-collapsible-trigger-initial-width);
   }
 }
