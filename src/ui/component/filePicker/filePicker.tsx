@@ -53,25 +53,30 @@ export const FilePicker: FC<FilePickerProps> = ({
     []
   )
 
+  const toFile = useCallback(
+    (item: DataTransferItem) => {
+      try {
+        const fsEntry = item.webkitGetAsEntry()
+        const file = item.getAsFile()
+
+        if (!fsEntry) throw new Error('Could not read item')
+        if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
+
+        return toFileDTO(file)
+      } catch (error: unknown) {
+        isError(error) && onError?.(error)
+      }
+    },
+    [onError, toFileDTO]
+  )
+
   const handleDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
-      const files = Array.from(event.dataTransfer.items).map(item => {
-        try {
-          const fsEntry = item.webkitGetAsEntry()
-          const file = item.getAsFile()
-
-          if (!fsEntry) throw new Error('Could not read item')
-          if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
-
-          return toFileDTO(file)
-        } catch (error: unknown) {
-          isError(error) && onError?.(error)
-        }
-      })
+      const files = Array.from(event.dataTransfer.items, toFile)
 
       !files.includes(undefined) && onFileChange(files as File[])
     },
-    [onError, onFileChange, toFileDTO]
+    [onFileChange, toFile]
   )
 
   const handleFileChange = useCallback(
