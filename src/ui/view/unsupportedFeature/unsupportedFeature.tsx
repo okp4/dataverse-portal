@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/ui/component/button/button'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
+import { routes } from '@/ui/routes'
 import './unsupportedFeature.scss'
 import '@/ui/view/unsupportedFeature/i18n/index'
 
@@ -11,7 +12,7 @@ export const UnsupportedFeature: FC = () => {
   const { t } = useTranslation('unsupportedFeature')
 
   const navigate = useNavigate()
-  const handleReturnToHome = useCallback(() => navigate('/'), [navigate])
+  const handleReturnToHome = useCallback(() => navigate(routes.home), [navigate])
 
   const { isTablet } = useBreakpoint()
 
