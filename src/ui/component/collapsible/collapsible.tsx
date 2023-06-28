@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import classNames from 'classnames'
 import * as RCollapsible from '@radix-ui/react-collapsible'
@@ -14,8 +14,10 @@ type CollapsibleProps = {
   rootClassName?: string
   triggerClassName?: string
   iconName?: IconName
+  onOpenChange?: (isOpened: boolean) => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const Collapsible: FC<CollapsibleProps> = ({
   open = false,
   content,
@@ -23,11 +25,13 @@ export const Collapsible: FC<CollapsibleProps> = ({
   contentClassName,
   rootClassName,
   triggerClassName,
-  iconName = 'chevron'
+  iconName = 'chevron',
+  onOpenChange
 }) => {
   const [triggerInitWidth, setTriggerInitWidth] = useState<number>(0)
   const [isOpen, setIsOpen] = useState(open)
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const openState = useMemo(() => (onOpenChange ? open : isOpen), [isOpen, open, onOpenChange])
 
   useEffect(() => {
     const triggerWidth = triggerRef.current?.clientWidth
@@ -35,7 +39,11 @@ export const Collapsible: FC<CollapsibleProps> = ({
   }, [])
 
   return (
-    <RCollapsible.Root className={rootClassName} onOpenChange={setIsOpen} open={isOpen}>
+    <RCollapsible.Root
+      className={rootClassName}
+      onOpenChange={onOpenChange ?? setIsOpen}
+      open={openState}
+    >
       <RCollapsible.Trigger
         className={classNames('okp4-dataverse-portal-collapsible-trigger-button', triggerClassName)}
         ref={triggerRef}
@@ -43,7 +51,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
         {trigger}
         <div
           className={classNames('okp4-dataverse-portal-collapsible-trigger-icon', {
-            flipped: isOpen
+            flipped: openState
           })}
         >
           <Icon name={iconName} />
