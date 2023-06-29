@@ -1,0 +1,40 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-share-data-selection-container {
+  @include with-theme() {
+    @include grid-container($colGutter: 10px, $rowGutter: 22px);
+    grid-template-rows: auto auto 1fr;
+    height: 100%;
+
+    h2 {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+      @include noto-sans(700);
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 0.4px;
+      color: themed('text');
+    }
+
+    .okp4-dataverse-portal-share-data-selection-descritpion {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+
+      h3 {
+        @include noto-sans(700);
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.4px;
+        color: themed('text');
+        margin-bottom: 16px;
+      }
+    }
+
+    .okp4-dataverse-portal-share-data-selection-drag-drop-container {
+      @include bi-column-item(left);
+    }
+    .okp4-dataverse-portal-share-dataset-page-file-list-container {
+      @include bi-column-item(right);
+    }
+  }
+}
