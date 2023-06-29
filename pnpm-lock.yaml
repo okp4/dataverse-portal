@@ -42,6 +42,9 @@ devDependencies:
   '@radix-ui/react-toast':
     specifier: ^1.1.4
     version: 1.1.4(@types/react-dom@18.2.6)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
+  '@relmify/jest-fp-ts':
+    specifier: ^2.1.1
+    version: 2.1.1(fp-ts@2.15.0)(io-ts@2.2.20)
   '@swc/jest':
     specifier: ^0.2.26
     version: 0.2.26(@swc/core@1.3.62)
@@ -105,6 +108,9 @@ devDependencies:
   immer:
     specifier: ^10.0.2
     version: 10.0.2
+  io-ts:
+    specifier: ^2.2.20
+    version: 2.2.20(fp-ts@2.15.0)
   jest:
     specifier: ^29.5.0
     version: 29.5.0
@@ -150,6 +156,9 @@ devDependencies:
   vite-plugin-svgr:
     specifier: ^3.2.0
     version: 3.2.0(vite@4.3.9)
+  web-streams-polyfill:
+    specifier: ^3.2.1
+    version: 3.2.1
   zustand:
     specifier: ^4.3.8
     version: 4.3.8(immer@10.0.2)(react@18.2.0)
@@ -1638,6 +1647,20 @@ packages:
       '@types/react-dom': 18.2.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
+  /@relmify/jest-fp-ts@2.1.1(fp-ts@2.15.0)(io-ts@2.2.20):
+    resolution: {integrity: sha512-ljNGMAINGa8YjIjbkufx6qV0+1HRoX3yNJi92A/RSZifYJpaztqjNtYm9jvKPBmQuZtnkWv+Vik+zMa2rZI0TQ==}
+    peerDependencies:
+      fp-ts: 2.x
+      io-ts: 2.x
+    dependencies:
+      '@jest/expect-utils': 29.5.0
+      expect: 29.5.0
+      fp-ts: 2.15.0
+      io-ts: 2.2.20(fp-ts@2.15.0)
+      jest-get-type: 29.4.3
+      jest-matcher-utils: 29.5.0
     dev: true
 
   /@remix-run/router@1.6.3:
@@ -3503,7 +3526,6 @@ packages:
 
   /fp-ts@2.15.0:
     resolution: {integrity: sha512-3o6EllAvGuCsDgjM+frscLKDRPR9pqbrg13tJ13z86F4eni913kBV8h85rM6zpu2fEvJ8RWA0ouYlUWwHEmxTg==}
-    dev: false
 
   /fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
@@ -3856,6 +3878,14 @@ packages:
       get-intrinsic: 1.2.0
       has: 1.0.3
       side-channel: 1.0.4
+    dev: true
+
+  /io-ts@2.2.20(fp-ts@2.15.0):
+    resolution: {integrity: sha512-Rq2BsYmtwS5vVttie4rqrOCIfHCS9TgpRLFpKQCM1wZBBRY9nWVGmEvm2FnDbSE2un1UE39DvFpTR5UL47YDcA==}
+    peerDependencies:
+      fp-ts: ^2.5.0
+    dependencies:
+      fp-ts: 2.15.0
     dev: true
 
   /is-array-buffer@3.0.1:
@@ -6487,6 +6517,11 @@ packages:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
     dependencies:
       makeerror: 1.0.12
+    dev: true
+
+  /web-streams-polyfill@3.2.1:
+    resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
+    engines: {node: '>= 8'}
     dev: true
 
   /webidl-conversions@3.0.1:
