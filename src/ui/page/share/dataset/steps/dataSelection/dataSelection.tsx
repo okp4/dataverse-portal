@@ -1,7 +1,9 @@
+/* eslint-disable max-lines-per-function */
 import { useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as short from 'short-uuid'
-import { File, FilePicker } from '@/ui/component/filePicker/filePicker'
+import type { File } from '@/ui/component/filePicker/filePicker'
+import { FilePicker } from '@/ui/component/filePicker/filePicker'
 import { List, ListItem } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
@@ -16,19 +18,25 @@ export const DataSelection: FC = () => {
     storeFiles: state.storeFiles
   }))
 
-  const handleFiles = (files: File[]) => {
-    const mappedStoreFiles: StoreFilesInput = files.map((file: File) => ({
-      id: short.generate(),
-      name: file.name,
-      path: file.fullPath,
-      type: file.mediaType,
-      stream: file.stream,
-      size: file.size
-    }))
-    storeFiles(mappedStoreFiles)()
-  }
+  const handleFiles = useCallback(
+    (files: File[]): void => {
+      const mappedStoreFiles: StoreFilesInput = files.map((file: File) => ({
+        id: short.generate(),
+        name: file.name,
+        path: file.fullPath,
+        type: file.mediaType,
+        stream: file.stream,
+        size: file.size
+      }))
+      storeFiles(mappedStoreFiles)()
+    },
+    [storeFiles]
+  )
 
-  const handleFileDeletion = useCallback((fileId: string) => () => removeFile(fileId)(), [])
+  const handleFileDeletion = useCallback(
+    (fileId: string) => () => removeFile(fileId)(),
+    [removeFile]
+  )
 
   return (
     <div className="okp4-dataverse-portal-share-data-selection-container">
@@ -40,9 +48,10 @@ export const DataSelection: FC = () => {
         <FilePicker hasFileExplorer hasFolderExplorer multiple onFileChange={handleFiles} />
       </div>
       <List className="okp4-dataverse-portal-share-dataset-page-file-list-container">
-        {files()().map(file => (
+        {files()().map(({ id, name }) => (
           <ListItem
-            content={<p>{file.name}</p>}
+            content={<p>{name}</p>}
+            key={id}
             leftElement={
               <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
                 <Icon name="folder-outlined" />
@@ -51,7 +60,7 @@ export const DataSelection: FC = () => {
             rightElement={
               <div
                 className="okp4-dataverse-portal-share-dataset-page-file-deletion"
-                onClick={handleFileDeletion(file.id)}
+                onClick={handleFileDeletion(id)}
               >
                 <Icon name="bin" />
               </div>
