@@ -1,0 +1,68 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-stepper-actions-main {
+  @include with-theme {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: center;
+
+    .okp4-dataverse-portal-button-main {
+      .okp4-dataverse-portal-content-container {
+        gap: 16px;
+        padding: 0;
+
+        .okp4-dataverse-portal-button-label {
+          @include noto-sans(700);
+          font-size: 14px;
+        }
+      }
+
+    }
+
+    .okp4-dataverse-portal-stepper-actions-button {
+      background-color: transparent;
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      circle {
+        fill: themed('primary-color');
+      }
+
+      path {
+        stroke: #ffffff;
+      }
+
+      &.hidden {
+        visibility: hidden;
+      }
+
+      &.disabled {
+        circle {
+          fill: themed('background-disabled');
+        }
+
+        path {
+          stroke: themed('secondary-disabled');
+        }
+
+        cursor: not-allowed;
+
+        .okp4-dataverse-portal-button-label {
+          color: rgba(#ffffff, 0.4);
+        }
+      }
+
+      &.previous {
+        svg {
+          transform: rotateY(180deg);
+        }
+      }
+    }
+  }
+}

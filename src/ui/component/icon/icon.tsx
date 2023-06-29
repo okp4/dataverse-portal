@@ -82,6 +82,7 @@ import { ReactComponent as KeplerIcon } from '@/ui/asset/icon/keplr.svg'
 import { ReactComponent as MagnifierIcon } from '@/ui/asset/icon/magnifier.svg'
 import { ReactComponent as CheckboxIcon } from '@/ui/asset/icon/checkbox.svg'
 import { ReactComponent as LargeMagnifierWithCrossIcon } from '@/ui/asset/icon/large-magnifier-with-cross.svg'
+import { ReactComponent as ForwardIcon } from '@/ui/asset/icon/forward.svg'
 
 export type IconName =
   | 'all-light'
@@ -166,6 +167,7 @@ export type IconName =
   | 'magnifier'
   | 'checkbox'
   | 'large-magnifier-with-cross'
+  | 'forward'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -249,7 +251,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   keplr: KeplerIcon,
   magnifier: MagnifierIcon,
   checkbox: CheckboxIcon,
-  'large-magnifier-with-cross': LargeMagnifierWithCrossIcon
+  'large-magnifier-with-cross': LargeMagnifierWithCrossIcon,
+  forward: ForwardIcon
 }
 
 type IconProps = {
