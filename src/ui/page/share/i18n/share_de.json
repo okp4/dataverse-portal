@@ -7,7 +7,9 @@
       "location": "Mein Datensatz befindet sich in",
       "local": "Einem lokalen Ordner",
       "external": "Ein externer Speicher",
-      "serviceStorageSearch": "Suche nach einem Speicherdienst"
+      "serviceStorageSearch": "Suche nach einem Speicherdienst",
+      "select": "Wählen Sie Ihre Daten",
+      "selectDescription": "Wählen Sie den Datensatz, den Sie in den Speicherdienst hochladen möchten."
     },
     "service": {
       "title": "Ich teile einen Dienst",

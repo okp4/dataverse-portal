@@ -16,6 +16,7 @@ $transition-duration: 600ms;
 
   .okp4-dataverse-portal-stepper-content {
     @include grid-item($colStart: 1, $colEnd: auto, $rowStart: 1, $rowEnd: auto);
+    overflow: hidden;
 
     &.transition-enter {
       opacity: 0;

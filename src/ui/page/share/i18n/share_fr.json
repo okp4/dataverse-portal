@@ -7,7 +7,9 @@
       "location": "Mon jeu de données se trouve dans",
       "local": "Un dossier local",
       "external": "Un stockage externe",
-      "serviceStorageSearch": "Rechercher un service de stockage"
+      "serviceStorageSearch": "Rechercher un service de stockage",
+      "select": "Sélectionnez vos données",
+      "selectDescription": "Sélectionnez le jeu de données que vous souhaitez télécharger dans le service de stockage."
     },
     "service": {
       "title": "Je partage un service",

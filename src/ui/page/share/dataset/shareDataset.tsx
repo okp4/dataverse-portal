@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ServiceStorageSelection } from './steps/serviceStorageSelection/serviceStorageSelection'
+import { DataSelection } from './steps/dataSelection/dataSelection'
 import { Stepper } from '@/ui/component/stepper/stepper'
 import type { StepElement } from '@/ui/component/stepper/stepper'
 import '../i18n/index'
@@ -10,7 +11,7 @@ export const ShareDataset: FC = () => {
   const { t } = useTranslation('share')
 
   const storageServiceSelection: StepElement = { id: 'step1', content: <ServiceStorageSelection /> }
-  const dataSelection: StepElement = { id: 'step2', content: <h1>Step 2</h1> }
+  const dataSelection: StepElement = { id: 'step2', content: <DataSelection /> }
 
   const steps = [storageServiceSelection, dataSelection]
 

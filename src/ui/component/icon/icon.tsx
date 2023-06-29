@@ -46,7 +46,7 @@ import { ReactComponent as FileDetailedIcon } from '@/ui/asset/icon/file-detaile
 import { ReactComponent as FileIcon } from '@/ui/asset/icon/file.svg'
 import { ReactComponent as FolderIcon } from '@/ui/asset/icon/folder.svg'
 import { ReactComponent as FolderOpenedIcon } from '@/ui/asset/icon/folder-opened.svg'
-import { ReactComponent as FolderOutlinedIcon } from '@/ui/asset/icon/folder-outlined.svg'
+import { ReactComponent as FolderOutlinedShadowIcon } from '@/ui/asset/icon/folder-outlined-shadow.svg'
 import { ReactComponent as CalendarIcon } from '@/ui/asset/icon/calendar.svg'
 import { ReactComponent as EarthIcon } from '@/ui/asset/icon/earth.svg'
 import { ReactComponent as EarthLightIcon } from '@/ui/asset/icon/earth-light.svg'
@@ -83,6 +83,8 @@ import { ReactComponent as MagnifierIcon } from '@/ui/asset/icon/magnifier.svg'
 import { ReactComponent as CheckboxIcon } from '@/ui/asset/icon/checkbox.svg'
 import { ReactComponent as LargeMagnifierWithCrossIcon } from '@/ui/asset/icon/large-magnifier-with-cross.svg'
 import { ReactComponent as ForwardIcon } from '@/ui/asset/icon/forward.svg'
+import { ReactComponent as FolderOutlinedIcon } from '@/ui/asset/icon/folder-outlined.svg'
+import { ReactComponent as BinIcon } from '@/ui/asset/icon/bin.svg'
 
 export type IconName =
   | 'all-light'
@@ -131,6 +133,7 @@ export type IconName =
   | 'file-detailed'
   | 'folder'
   | 'folder-opened'
+  | 'folder-outlined-shadow'
   | 'folder-outlined'
   | 'calendar'
   | 'earth'
@@ -168,6 +171,7 @@ export type IconName =
   | 'checkbox'
   | 'large-magnifier-with-cross'
   | 'forward'
+  | 'bin'
 
 const icons: Record<IconName, React.FunctionComponent> = {
   'arrow-right': ArrowRightIcon,
@@ -216,7 +220,7 @@ const icons: Record<IconName, React.FunctionComponent> = {
   file: FileIcon,
   folder: FolderIcon,
   'folder-opened': FolderOpenedIcon,
-  'folder-outlined': FolderOutlinedIcon,
+  'folder-outlined-shadow': FolderOutlinedShadowIcon,
   calendar: CalendarIcon,
   earth: EarthIcon,
   'earth-light': EarthLightIcon,
@@ -252,7 +256,9 @@ const icons: Record<IconName, React.FunctionComponent> = {
   magnifier: MagnifierIcon,
   checkbox: CheckboxIcon,
   'large-magnifier-with-cross': LargeMagnifierWithCrossIcon,
-  forward: ForwardIcon
+  forward: ForwardIcon,
+  'folder-outlined': FolderOutlinedIcon,
+  bin: BinIcon
 }
 
 type IconProps = {
