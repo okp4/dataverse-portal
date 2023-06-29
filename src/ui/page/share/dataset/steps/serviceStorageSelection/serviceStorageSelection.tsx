@@ -105,13 +105,14 @@ export const ServiceStorageSelection: FC = () => {
     O.map(handleServicesError)(error()())
   }, [error, handleServicesError])
 
-  useEffect(() => {
-    if (selectedService)
-      selectedServiceRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      })
-  }, [selectedService])
+  // TODO: fix headers scroll bug before enabling this
+  // useEffect(() => {
+  //   if (selectedService)
+  //     selectedServiceRef.current?.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'center'
+  //     })
+  // }, [selectedService])
 
   useEffect(() => {
     setLanguage(currentLng)()

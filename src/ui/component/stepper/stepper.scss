@@ -6,6 +6,7 @@ $transition-duration: 600ms;
   display: flex;
   flex-direction: column;
   height: inherit;
+  overflow: hidden;
 
   .okp4-dataverse-portal-stepper-content-wrapper {
     flex-grow: 1;
