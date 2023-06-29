@@ -162,7 +162,7 @@ export const FilePicker: FC<FilePickerProps> = ({
         })}
       >
         <div className="okp4-dataverse-portal-file-picker-content-container">
-          <Icon name="folder-outlined" />
+          <Icon name="folder-outlined-shadow" />
           {hasFileExplorer || hasFolderExplorer ? (
             <>
               <div>
