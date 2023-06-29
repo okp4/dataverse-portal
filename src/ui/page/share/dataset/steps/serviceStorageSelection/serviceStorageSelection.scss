@@ -7,6 +7,7 @@
     @include grid-container($colGutter: 10px, $rowGutter: 22px);
     grid-template-rows: auto auto auto 1fr;
     height: 100%;
+    padding-top: 34px;
 
     h2 {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
@@ -36,7 +37,11 @@
 
     .okp4-dataverse-portal-share-dataset-page-services-container {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-      max-height: 610px;
+      max-height: 420px;
+
+      @include use-breakpoints(('large-desktop')) {
+        max-height: 100%;
+      }
       overflow-y: auto;
 
       &.detailed {
@@ -82,10 +87,14 @@
       margin-left: 18px;
 
       .okp4-dataverse-portal-share-dataset-page-service-details-scroll-container {
-        max-height: 588px;
+        max-height: 420px;
         height: 100%;
         padding-right: 20px;
         overflow-y: auto;
+
+        @include use-breakpoints(('large-desktop')) {
+          max-height: 100%;
+        }
       }
     }
   }

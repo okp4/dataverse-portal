@@ -5,6 +5,8 @@
 .okp4-dataverse-portal-share-dataset-page-main {
   @include with-theme {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     h1 {
       @include norse-gradient-header($line-height: 36px);
