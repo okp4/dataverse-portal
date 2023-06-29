@@ -2,7 +2,7 @@
 import * as FileDomain from '@/domain/file/domain'
 import type { StoreApi } from 'zustand'
 import type { FileId } from '../command'
-import { ResourceNotFoudError } from '../command'
+import { ResourceNotFoundError } from '../command'
 import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
 
@@ -14,7 +14,7 @@ type Data = {
   fileToRemove: FileId
   preloadedState: FileDomain.Options
   expectedFilesDescriptor: FilesDescriptor
-  error?: ResourceNotFoudError
+  error?: ResourceNotFoundError
 }
 
 const initStore = (initialState?: FileDomain.Options): InitialProps => {
@@ -61,7 +61,7 @@ describe('Remove a file from memory', () => {
     ${{ initialState: { data: [file1] } }}        | ${''}            | ${expectFilesDescriptor([file1])} | ${undefined}
     ${{ initialState: { data: [file1] } }}        | ${fileToRemove1} | ${[]}                             | ${undefined}
     ${{ initialState: { data: [file1, file2] } }} | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${undefined}
-    ${{ initialState: { data: [file1] } }}        | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${ResourceNotFoudError(fileToRemove2)}
+    ${{ initialState: { data: [file1] } }}        | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${ResourceNotFoundError(fileToRemove2)}
   `(
     `Given that there are a file to remove with a given id <$fileToRemove>`,
     ({ preloadedState, fileToRemove, expectedFilesDescriptor, error }: Data): void => {

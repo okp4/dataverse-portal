@@ -14,7 +14,7 @@ import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
 import type { File } from './entity'
 import type { Command, FileId, StoreFileInput, StoreFilesInput } from './command'
-import { ResourceConflictError, ResourceNotFoudError } from './command'
+import { ResourceConflictError, ResourceNotFoundError } from './command'
 import type { ForgetType } from '@/util/type'
 import { isDevMode } from '@/util/env.util'
 import type { FileDescriptor, Query } from './query'
@@ -38,8 +38,8 @@ const eqFile: Eq<{ id: string }> = pipe(
 )
 
 const throwResourceConflictError = (): ResourceConflictError => ResourceConflictError()
-const throwResourceNotFoundError = (fileId: FileId): ResourceNotFoudError =>
-  ResourceNotFoudError(fileId)
+const throwResourceNotFoundError = (fileId: FileId): ResourceNotFoundError =>
+  ResourceNotFoundError(fileId)
 
 const isStoreFilesPayloadUniq = (files: StoreFilesInput): boolean =>
   N.Eq.equals(A.uniq(eqFile)(files).length, files.length)
@@ -59,7 +59,7 @@ const removeFileIdExists =
 const removeFileInvariant = (
   fileId: FileId,
   state: File[]
-): E.Either<ResourceNotFoudError, FileId> =>
+): E.Either<ResourceNotFoundError, FileId> =>
   pipe(fileId, E.fromPredicate(flow(removeFileIdExists(state)), throwResourceNotFoundError))
 
 const storeFilesInvariant = (
