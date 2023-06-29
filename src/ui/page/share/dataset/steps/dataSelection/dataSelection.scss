@@ -4,9 +4,14 @@
 
 .okp4-dataverse-portal-share-data-selection-container {
   @include with-theme() {
-    @include grid-container($colGutter: 10px, $rowGutter: 22px);
+    @include grid-container($colGutter: 48px, $rowGutter: 22px);
     grid-template-rows: auto auto 1fr;
     height: 100%;
+    padding-top: 34px;
+
+    @include use-breakpoints(('desktop')) {
+      @include grid-container($colGutter: 34px, $rowGutter: 22px);
+    }
 
     h2 {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
@@ -17,7 +22,7 @@
       color: themed('text');
     }
 
-    .okp4-dataverse-portal-share-data-selection-descritpion {
+    .okp4-dataverse-portal-share-data-selection-description {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
 
       h3 {
@@ -35,6 +40,21 @@
     }
     .okp4-dataverse-portal-share-dataset-page-file-list-container {
       @include bi-column-item(right);
+      margin: 0;
+
+      .okp4-dataverse-portal-share-dataset-page-file-icon {
+        display: flex;
+
+        svg {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      .okp4-dataverse-portal-share-dataset-page-file-deletion {
+        cursor: pointer;
+        margin-right: 13px;
+      }
     }
   }
 }

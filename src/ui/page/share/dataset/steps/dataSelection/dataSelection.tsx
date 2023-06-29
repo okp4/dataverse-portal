@@ -1,19 +1,23 @@
-import type { FC } from 'react'
+import { useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as short from 'short-uuid'
 import { File, FilePicker } from '@/ui/component/filePicker/filePicker'
+import { List, ListItem } from '@/ui/component/list/list'
+import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
 import type { StoreFilesInput } from '@/domain/file/command'
 import './dataSelection.scss'
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
-  const { storeFiles } = useFileStore(state => ({
+  const { files, removeFile, storeFiles } = useFileStore(state => ({
+    files: state.filesDescriptor,
+    removeFile: state.removeFile,
     storeFiles: state.storeFiles
   }))
 
   const handleFiles = (files: File[]) => {
-    const storeFilesObject: StoreFilesInput = files.map((file: File) => ({
+    const mappedStoreFiles: StoreFilesInput = files.map((file: File) => ({
       id: short.generate(),
       name: file.name,
       path: file.fullPath,
@@ -21,20 +25,40 @@ export const DataSelection: FC = () => {
       stream: file.stream,
       size: file.size
     }))
-    console.log(files[0].fullPath)
-    storeFiles(storeFilesObject)()
+    storeFiles(mappedStoreFiles)()
   }
+
+  const handleFileDeletion = useCallback((fileId: string) => () => removeFile(fileId)(), [])
 
   return (
     <div className="okp4-dataverse-portal-share-data-selection-container">
       <h2>{t('share:share.dataset.select')}</h2>
-      <div className="okp4-dataverse-portal-share-data-selection-descritpion">
+      <div className="okp4-dataverse-portal-share-data-selection-description">
         <h3>{t('share:share.dataset.selectDescription')}</h3>
       </div>
       <div className="okp4-dataverse-portal-share-data-selection-drag-drop-container">
-        <FilePicker onFileChange={handleFiles} />
+        <FilePicker hasFileExplorer hasFolderExplorer multiple onFileChange={handleFiles} />
       </div>
-      <div className="okp4-dataverse-portal-share-dataset-page-file-list-container">right</div>
+      <List className="okp4-dataverse-portal-share-dataset-page-file-list-container">
+        {files()().map(file => (
+          <ListItem
+            content={<p>{file.name}</p>}
+            leftElement={
+              <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
+                <Icon name="folder-outlined" />
+              </div>
+            }
+            rightElement={
+              <div
+                className="okp4-dataverse-portal-share-dataset-page-file-deletion"
+                onClick={handleFileDeletion(file.id)}
+              >
+                <Icon name="bin" />
+              </div>
+            }
+          />
+        ))}
+      </List>
     </div>
   )
 }
