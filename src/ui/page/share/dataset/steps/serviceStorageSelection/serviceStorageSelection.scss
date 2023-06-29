@@ -37,7 +37,7 @@
 
     .okp4-dataverse-portal-share-dataset-page-services-container {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-      max-height: 420px;
+      max-height: 409px;
 
       @include use-breakpoints(('large-desktop')) {
         max-height: 100%;
@@ -87,7 +87,7 @@
       margin-left: 18px;
 
       .okp4-dataverse-portal-share-dataset-page-service-details-scroll-container {
-        max-height: 420px;
+        max-height: 376px;
         height: 100%;
         padding-right: 20px;
         overflow-y: auto;
