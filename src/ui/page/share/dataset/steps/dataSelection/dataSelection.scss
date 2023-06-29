@@ -6,7 +6,7 @@
   @include with-theme() {
     @include grid-container($colGutter: 48px, $rowGutter: 22px);
     grid-template-rows: auto auto 1fr;
-    height: 100%;
+    height: calc(100% - 45px);
     padding-top: 34px;
 
     @include use-breakpoints(('desktop')) {
