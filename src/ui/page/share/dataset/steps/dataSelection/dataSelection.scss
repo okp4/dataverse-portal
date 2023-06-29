@@ -6,7 +6,7 @@
   @include with-theme() {
     @include grid-container($colGutter: 48px, $rowGutter: 22px);
     grid-template-rows: auto auto 1fr;
-    height: calc(100% - 45px);
+    height: 100%;
     padding-top: 34px;
 
     @include use-breakpoints(('desktop')) {
@@ -37,24 +37,31 @@
 
     .okp4-dataverse-portal-share-data-selection-drag-drop-container {
       @include bi-column-item(left);
+      height: 80%;
     }
 
     .okp4-dataverse-portal-share-dataset-page-file-list-container {
       @include bi-column-item(right);
-      margin: 0;
+      height: 80%;
+      overflow: auto;
 
-      .okp4-dataverse-portal-share-dataset-page-file-icon {
-        display: flex;
+      .okp4-dataverse-portal-share-dataset-page-file-list {
+        padding-right: 14px;
+        margin: 0;
 
-        svg {
-          width: 36px;
-          height: 36px;
+        .okp4-dataverse-portal-share-dataset-page-file-icon {
+          display: flex;
+
+          svg {
+            width: 36px;
+            height: 36px;
+          }
         }
-      }
 
-      .okp4-dataverse-portal-share-dataset-page-file-deletion {
-        cursor: pointer;
-        margin-right: 13px;
+        .okp4-dataverse-portal-share-dataset-page-file-deletion {
+          cursor: pointer;
+          margin-right: 13px;
+        }
       }
     }
   }

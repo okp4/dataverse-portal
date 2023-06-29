@@ -47,27 +47,29 @@ export const DataSelection: FC = () => {
       <div className="okp4-dataverse-portal-share-data-selection-drag-drop-container">
         <FilePicker hasFileExplorer hasFolderExplorer multiple onFileChange={handleFiles} />
       </div>
-      <List className="okp4-dataverse-portal-share-dataset-page-file-list-container">
-        {files()().map(({ id, name }) => (
-          <ListItem
-            content={<p>{name}</p>}
-            key={id}
-            leftElement={
-              <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
-                <Icon name="folder-outlined" />
-              </div>
-            }
-            rightElement={
-              <div
-                className="okp4-dataverse-portal-share-dataset-page-file-deletion"
-                onClick={handleFileDeletion(id)}
-              >
-                <Icon name="bin" />
-              </div>
-            }
-          />
-        ))}
-      </List>
+      <div className="okp4-dataverse-portal-share-dataset-page-file-list-container">
+        <List className="okp4-dataverse-portal-share-dataset-page-file-list">
+          {files()().map(({ id, name }) => (
+            <ListItem
+              content={<p>{name}</p>}
+              key={id}
+              leftElement={
+                <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
+                  <Icon name="folder-outlined" />
+                </div>
+              }
+              rightElement={
+                <div
+                  className="okp4-dataverse-portal-share-dataset-page-file-deletion"
+                  onClick={handleFileDeletion(id)}
+                >
+                  <Icon name="bin" />
+                </div>
+              }
+            />
+          ))}
+        </List>
+      </div>
     </div>
   )
 }
