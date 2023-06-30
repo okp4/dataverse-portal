@@ -1,14 +1,7 @@
-import type { FC, ReactElement, ReactNode } from 'react'
+import type { FC, ReactElement } from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import classNames from 'classnames'
 import './list.scss'
-
-type ListItemProps = {
-  content: ReactElement
-  leftElement?: ReactElement
-  rightElement?: ReactElement
-  onClick?: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
-  className?: string
-}
 
 const gridTemplateColumnClasses = (
   leftElement?: ReactElement,
@@ -20,33 +13,41 @@ const gridTemplateColumnClasses = (
   return 'list-item-1-column'
 }
 
-export const ListItem: FC<ListItemProps> = ({
-  leftElement,
-  rightElement,
-  content,
-  onClick,
-  className
-}) => (
-  <li
-    className={classNames(
-      'okp4-dataverse-portal-list-item-main',
-      { clickable: onClick },
-      gridTemplateColumnClasses(leftElement, rightElement),
-      className
-    )}
-    onClick={onClick}
-  >
-    {leftElement}
-    {content}
-    {rightElement}
-  </li>
-)
+export type Item = {
+  id: string
+  className?: string
+  content: ReactElement
+  leftElement?: ReactElement
+  rightElement?: ReactElement
+  onClick?: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+}
 
 type ListProps = {
-  children: ReactNode
+  items: Item[]
   className?: string
 }
 
-export const List: FC<ListProps> = ({ children, className }) => (
-  <ul className={classNames('okp4-dataverse-portal-list-main', className)}>{children}</ul>
+export const List: FC<ListProps> = ({ items, className }) => (
+  <ul className={classNames('okp4-dataverse-portal-list-main', className)}>
+    <TransitionGroup className="okp4-dataverse-portal-list-container">
+      {items.map(({ leftElement, rightElement, content, className, id, onClick }) => (
+        <CSSTransition classNames="transition" key={id} timeout={400}>
+          <li
+            className={classNames(
+              'okp4-dataverse-portal-list-item-main',
+              { clickable: onClick },
+              gridTemplateColumnClasses(leftElement, rightElement),
+              className
+            )}
+            key={id}
+            onClick={onClick}
+          >
+            {leftElement}
+            {content}
+            {rightElement}
+          </li>
+        </CSSTransition>
+      ))}
+    </TransitionGroup>
+  </ul>
 )

@@ -2,38 +2,62 @@
 @import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
 
+$transition-duration: 400ms;
+
 .okp4-dataverse-portal-list-main {
-  @include columns-with-gap(16px);
-  list-style: none;
   padding: 0;
-}
 
-.okp4-dataverse-portal-list-item-main {
-  @include with-theme {
-    display: grid;
-    column-gap: 14px;
-    grid-template-columns: 1fr;
-    align-items: center;
-    padding: 16px 13px;
-    border-radius: 12px;
-    background-color: themed('list-item');
-    color: themed('text');
-    @include noto-sans(400);
+  .okp4-dataverse-portal-list-container {
+    @include columns-with-gap(16px);
+    list-style: none;
 
-    &.clickable {
-      cursor: pointer;
-    }
+    .okp4-dataverse-portal-list-item-main {
+      @include with-theme {
+        @include noto-sans(400);
+        display: grid;
+        column-gap: 14px;
+        grid-template-columns: 1fr;
+        align-items: center;
+        padding: 16px 13px;
+        border-radius: 12px;
+        background-color: themed('list-item');
+        color: themed('text');
 
-    &.list-item-3-columns {
-      grid-template-columns: auto 1fr auto;
-    }
+        &.clickable {
+          cursor: pointer;
+        }
 
-    &.list-item-2-columns-left {
-      grid-template-columns: auto 1fr;
-    }
+        &.list-item-3-columns {
+          grid-template-columns: auto 1fr auto;
+        }
 
-    &.list-item-2-columns-right {
-      grid-template-columns: 1fr auto;
+        &.list-item-2-columns-left {
+          grid-template-columns: auto 1fr;
+        }
+
+        &.list-item-2-columns-right {
+          grid-template-columns: 1fr auto;
+        }
+
+        &.transition-enter {
+          opacity: 0;
+        }
+
+        &.transition-enter-active {
+          opacity: 1;
+          transition: opacity calc($transition-duration / 2) ease-out;
+          transition-delay: calc($transition-duration / 2);
+        }
+
+        &.transition-exit {
+          opacity: 1;
+        }
+
+        &.transition-exit-active {
+          opacity: 0;
+          transition: opacity calc($transition-duration / 2) ease-out;
+        }
+      }
     }
   }
 }
