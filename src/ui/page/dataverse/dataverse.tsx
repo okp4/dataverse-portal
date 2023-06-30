@@ -78,7 +78,7 @@ const dataverseFilters: Filter[] = [
   {
     label: 'zones',
     value: 'Zone',
-    icon: 'dataspace-created'
+    icon: 'zone-created'
   },
   {
     label: 'datasets',

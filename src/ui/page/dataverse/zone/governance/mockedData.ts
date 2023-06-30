@@ -48,7 +48,7 @@ export const mockedGovernanceChapter: Chapter = {
       id: '2',
       title: 'Identity Management',
       description:
-        'It refers to the processes and tools used to manage and secure the access and use of data within a Data Space.',
+        'It refers to the processes and tools used to manage and secure the access and use of data within a Zone.',
       number: '1.1',
       contains: [
         {
@@ -126,13 +126,13 @@ export const mockedGovernanceChapter: Chapter = {
           id: '13',
           title: 'Remove rules',
           description:
-            'Process of removing or revoking established policies and procedures governing the management and use of data within an Data Space.',
+            'Process of removing or revoking established policies and procedures governing the management and use of data within an Zone.',
           number: '1.2.3',
           contains: [
             {
               title: 'Governance cancellation by Specific users',
               id: '14',
-              description: 'Keys with the permissions to delete rules related to the Data Space.',
+              description: 'Keys with the permissions to delete rules related to the Zone.',
               number: '1.2.3.1',
               contains: [
                 {

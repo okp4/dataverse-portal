@@ -61,7 +61,7 @@ export const Navigation: FC = () => {
           label: t('sidebar.navigation.interact.items.createKnowledge')
         },
         {
-          id: 'create-dataspace',
+          id: 'create-zone',
           label: t('sidebar.navigation.interact.items.createZones')
         },
         {

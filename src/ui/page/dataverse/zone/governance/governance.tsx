@@ -6,7 +6,7 @@ import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
 import type { Zone } from '@/ui/page/dataverse/dataverse'
 import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
-import { isZone } from '@/ui/page/dataverse/dataspace/dataspace'
+import { isZone } from '@/ui/page/dataverse/zone/zone'
 import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import { GovernanceDetails } from '@/ui/view/governance/details/details'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
@@ -19,7 +19,7 @@ export const Governance: FC = () => {
   const { t } = useTranslation('common')
   const navigate = useNavigate()
   const {
-    id: dataspaceId,
+    id: zoneId,
     sectionId: sectionIdParams,
     subsectionId: subsectionIdParams
   } = useParams<string>()
@@ -35,7 +35,7 @@ export const Governance: FC = () => {
   )
 
   const navigationPath = useMemo((): string | undefined => {
-    const governanceBasePath = `/dataverse/zone/${dataspaceId}/governance`
+    const governanceBasePath = `/dataverse/zone/${zoneId}/governance`
     const firstSection = sections[0]
     const firstSubsection = firstSection.contains[0]
 
@@ -50,25 +50,18 @@ export const Governance: FC = () => {
     if (!subsectionIdParams && currentSection) {
       return `${governanceBasePath}/${currentSection.id}/${currentSection.contains[0].id}`
     }
-  }, [
-    dataspaceId,
-    sectionIdParams,
-    subsectionIdParams,
-    currentSection,
-    currentSubsection,
-    sections
-  ])
+  }, [zoneId, sectionIdParams, subsectionIdParams, currentSection, currentSubsection, sections])
 
-  const dataspaceLabel = useMemo(
+  const zoneLabel = useMemo(
     () =>
       pipe(
-        O.fromNullable(dataspaceId),
+        O.fromNullable(zoneId),
         O.flatMap(getResourceDetails),
         O.filter(isZone),
-        O.map((dataspace: Zone) => dataspace.label),
+        O.map((zone: Zone) => zone.label),
         O.toNullable
       ),
-    [dataspaceId]
+    [zoneId]
   )
 
   useEffect(() => {
@@ -77,23 +70,23 @@ export const Governance: FC = () => {
     }
   }, [navigate, navigationPath])
 
-  if (!dataspaceLabel || !navigationPath) {
+  if (!zoneLabel || !navigationPath) {
     return <NotFoundError />
   }
 
-  if (!dataspaceId || !currentSection || !currentSubsection) return null
+  if (!zoneId || !currentSection || !currentSubsection) return null
 
   return (
     <div className="okp4-dataverse-portal-governance-page-main">
       <div className="okp4-dataverse-portal-governance-page-back-button">
-        <BackButton to={`/dataverse/zone/${dataspaceId}`} />
+        <BackButton to={`/dataverse/zone/${zoneId}`} />
       </div>
       <section className="okp4-dataverse-portal-governance-page-section">
-        <h1>{`${dataspaceLabel} | ${t('resources.governance')}`}</h1>
+        <h1>{`${zoneLabel} | ${t('resources.governance')}`}</h1>
         <GovernanceNavigation
           activeSectionId={currentSection.id}
-          dataspaceId={dataspaceId}
           sections={sections}
+          zoneId={zoneId}
         />
         <GovernanceDetails section={currentSection} subSection={currentSubsection} />
       </section>

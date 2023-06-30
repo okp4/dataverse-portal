@@ -39,7 +39,7 @@ const options: Options = {
         'Dataverse',
         'Services',
         'Dataset',
-        'Data Space',
+        'Zone',
         'Deposit',
         'Catalog',
         'Files',

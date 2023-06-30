@@ -11,14 +11,14 @@ import type { Option, SubOption } from '@/ui/component/dropDown/dropDown'
 import type { SectionDTO, SubSectionDTO } from './mockedData'
 
 type GovernanceWithNavigationProps = {
-  dataspaceId: string
+  zoneId: string
   sections: SectionDTO[]
   activeSectionId: string
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
-  dataspaceId,
+  zoneId,
   sections,
   activeSectionId
 }) => {
@@ -31,7 +31,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
     []
   )
 
-  const governanceBasePath = `/dataverse/zone/${dataspaceId}/governance`
+  const governanceBasePath = `/dataverse/zone/${zoneId}/governance`
 
   const convertToSubOptions = (sectionId: string, subSections: SubSectionDTO[]): SubOption[] =>
     subSections.map(({ id: subSectionId, title: subSectionTitle }) => ({

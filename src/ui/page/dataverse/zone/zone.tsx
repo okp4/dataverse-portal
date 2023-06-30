@@ -2,13 +2,13 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as O from 'fp-ts/Option'
-import { getResourceDetails } from '@/ui/page/dataverse/dataverse'
+import { getResourceDetails, Zone } from '@/ui/page/dataverse/dataverse'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
-import type { Zone, DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
+import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import type { ItemGeneralMetadata } from '@/ui/view/dataverse/types'
 import PageTemplate from '@/ui/view/dataverse/component/pageTemplate/pageTemplate'
 
-const dataspaceMetadata: ItemGeneralMetadata[] = [
+const zoneMetadata: ItemGeneralMetadata[] = [
   {
     category: 'generalMetadata',
     property: 'topic',
@@ -58,16 +58,14 @@ const dataspaceMetadata: ItemGeneralMetadata[] = [
 
 export const isZone = (resource: DataverseItemDetails): resource is Zone => resource.type === 'zone'
 
-const Dataspace: FC = () => {
+const Zone: FC = () => {
   const { id } = useParams<string>()
-  const [dataspace, setDataspace] = useState<O.Option<DataverseItemDetails>>(O.none)
+  const [zone, setZone] = useState<O.Option<DataverseItemDetails>>(O.none)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const resourceDetails = id ? getResourceDetails(id) : O.none
-    setDataspace(
-      O.isSome(resourceDetails) && isZone(resourceDetails.value) ? resourceDetails : O.none
-    )
+    setZone(O.isSome(resourceDetails) && isZone(resourceDetails.value) ? resourceDetails : O.none)
     setIsLoading(false)
   }, [id])
 
@@ -78,10 +76,8 @@ const Dataspace: FC = () => {
 
   return O.match(
     () => <NotFoundError />,
-    (dataspace: DataverseItemDetails) => (
-      <PageTemplate data={dataspace} metadata={dataspaceMetadata} />
-    )
-  )(dataspace)
+    (zone: DataverseItemDetails) => <PageTemplate data={zone} metadata={zoneMetadata} />
+  )(zone)
 }
 
-export default Dataspace
+export default Zone
