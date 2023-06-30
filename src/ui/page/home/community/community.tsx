@@ -42,10 +42,10 @@ const Stat: FC<StatProps> = ({ description, stat, icon }): JSX.Element => (
 export const Community: FC = () => {
   const { t } = useTranslation('home')
   const theme = useAppStore(store => store.theme)
-  const { dataspacesCreatedNb, datasetsSharedNb, servicesSharedNb, communityParticipantNb } =
+  const { zonesCreatedNb, datasetsSharedNb, servicesSharedNb, communityParticipantNb } =
     useStatsAggregate(
       aggregate => ({
-        dataspacesCreatedNb: aggregate.dataspacesCreatedNb,
+        zonesCreatedNb: aggregate.zonesCreatedNb,
         datasetsSharedNb: aggregate.datasetsSharedNb,
         servicesSharedNb: aggregate.servicesSharedNb,
         communityParticipantNb: aggregate.communityParticipantNb
@@ -65,8 +65,8 @@ export const Community: FC = () => {
         _tag: 'multistat',
         stats: [
           {
-            icon: <Icon name={`dataspace-created-${theme}`} />,
-            stat: dataspacesCreatedNb,
+            icon: <Icon name={`zone-created-${theme}`} />,
+            stat: zonesCreatedNb,
             description: t('home.blocks.community.stats.zonesCreated')
           },
           {
@@ -82,7 +82,7 @@ export const Community: FC = () => {
         ]
       }
     ],
-    [communityParticipantNb, datasetsSharedNb, dataspacesCreatedNb, servicesSharedNb, t, theme]
+    [communityParticipantNb, datasetsSharedNb, zonesCreatedNb, servicesSharedNb, t, theme]
   )
 
   return (

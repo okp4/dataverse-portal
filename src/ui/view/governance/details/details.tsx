@@ -10,7 +10,7 @@ import type {
   SubSectionDTO,
   ParagraphDTO,
   SectionDTO
-} from '@/ui/page/dataverse/dataspace/governance/mockedData'
+} from '@/ui/page/dataverse/zone/governance/mockedData'
 import classNames from 'classnames'
 import './details.scss'
 

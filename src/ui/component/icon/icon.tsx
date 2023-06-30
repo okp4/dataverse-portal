@@ -8,10 +8,10 @@ import { ReactComponent as BuildAppsIcon } from '@/ui/asset/icon/build-apps.svg'
 import { ReactComponent as BuildAppsActiveIcon } from '@/ui/asset/icon/build-apps-active.svg'
 import { ReactComponent as CreateKnowledgeIcon } from '@/ui/asset/icon/create-knowledge.svg'
 import { ReactComponent as CreateKnowledgeActiveIcon } from '@/ui/asset/icon/create-knowledge-active.svg'
-import { ReactComponent as CreateDataspaceIcon } from '@/ui/asset/icon/create-dataspace.svg'
-import { ReactComponent as DataspaceCreatedLightIcon } from '@/ui/asset/icon/dataspace-created-light.svg'
-import { ReactComponent as DataspaceCreatedDarkIcon } from '@/ui/asset/icon/dataspace-created-dark.svg'
-import { ReactComponent as CreateDataspaceActiveIcon } from '@/ui/asset/icon/create-dataspace-active.svg'
+import { ReactComponent as CreateZoneIcon } from '@/ui/asset/icon/create-zone.svg'
+import { ReactComponent as ZoneCreatedLightIcon } from '@/ui/asset/icon/zone-created-light.svg'
+import { ReactComponent as ZoneCreatedDarkIcon } from '@/ui/asset/icon/zone-created-dark.svg'
+import { ReactComponent as CreateZoneActiveIcon } from '@/ui/asset/icon/create-zone-active.svg'
 import { ReactComponent as DatasetFolderLightIcon } from '@/ui/asset/icon/dataset-folder-light.svg'
 import { ReactComponent as DatasetFolderDarkIcon } from '@/ui/asset/icon/dataset-folder-dark.svg'
 import { ReactComponent as DiscordLightIcon } from '@/ui/asset/icon/discord-light.svg'
@@ -94,7 +94,7 @@ export type IconName =
   | 'documentation'
   | 'build-apps'
   | 'create-knowledge'
-  | 'create-dataspace'
+  | 'create-zone'
   | 'explore'
   | 'feedback'
   | 'help'
@@ -112,7 +112,7 @@ export type IconName =
   | 'medium-dark'
   | 'build-apps-active'
   | 'create-knowledge-active'
-  | 'create-dataspace-active'
+  | 'create-zone-active'
   | 'explore-active'
   | 'documentation-active'
   | 'help-active'
@@ -123,8 +123,8 @@ export type IconName =
   | 'dataset-folder-dark'
   | 'service-folder-light'
   | 'service-folder-dark'
-  | 'dataspace-created-light'
-  | 'dataspace-created-dark'
+  | 'zone-created-light'
+  | 'zone-created-dark'
   | 'burger-menu-light'
   | 'burger-menu-dark'
   | 'close-light'
@@ -178,7 +178,7 @@ const icons: Record<IconName, React.FunctionComponent> = {
   documentation: DocumentationIcon,
   'build-apps': BuildAppsIcon,
   'create-knowledge': CreateKnowledgeIcon,
-  'create-dataspace': CreateDataspaceIcon,
+  'create-zone': CreateZoneIcon,
   explore: ExploreIcon,
   feedback: FeedbackIcon,
   help: HelpIcon,
@@ -196,7 +196,7 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'medium-dark': MediumDarkIcon,
   'build-apps-active': BuildAppsActiveIcon,
   'create-knowledge-active': CreateKnowledgeActiveIcon,
-  'create-dataspace-active': CreateDataspaceActiveIcon,
+  'create-zone-active': CreateZoneActiveIcon,
   'explore-active': ExploreActiveIcon,
   'documentation-active': DocumentationActiveIcon,
   'help-active': HelpActiveIcon,
@@ -207,8 +207,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   'dataset-folder-light': DatasetFolderLightIcon,
   'service-folder-dark': ServiceFolderDarkIcon,
   'service-folder-light': ServiceFolderLightIcon,
-  'dataspace-created-dark': DataspaceCreatedDarkIcon,
-  'dataspace-created-light': DataspaceCreatedLightIcon,
+  'zone-created-dark': ZoneCreatedDarkIcon,
+  'zone-created-light': ZoneCreatedLightIcon,
   'burger-menu-light': BurgerMenuLightIcon,
   'burger-menu-dark': BurgerMenuDarkIcon,
   'close-light': CloseLightIcon,

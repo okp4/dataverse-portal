@@ -29,12 +29,12 @@ export const GovernanceDescription: FC<GovernanceDescriptionProps> = ({
   }, [navigate])
 
   return (
-    <Card mainClassName="okp4-dataverse-portal-data-space-governance-description-main">
-      <div className="okp4-dataverse-portal-data-space-governance-description-container">
-        <h2 className="okp4-dataverse-portal-data-space-governance-description-title">
+    <Card mainClassName="okp4-dataverse-portal-zone-governance-description-main">
+      <div className="okp4-dataverse-portal-zone-governance-description-container">
+        <h2 className="okp4-dataverse-portal-zone-governance-description-title">
           {t('resources.governance')}
         </h2>
-        <p className="okp4-dataverse-portal-data-space-governance-description-description">
+        <p className="okp4-dataverse-portal-zone-governance-description-description">
           {internationalizedDescription()}
         </p>
         <Button

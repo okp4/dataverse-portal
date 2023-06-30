@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 type StatsAggregate = {
-  dataspacesCreatedNb: number
+  zonesCreatedNb: number
   datasetsSharedNb: number
   servicesSharedNb: number
   communityParticipantNb: number
@@ -10,7 +10,7 @@ type StatsAggregate = {
 
 export const useStatsAggregate = create<StatsAggregate, [['zustand/immer', never]]>(
   immer(() => ({
-    dataspacesCreatedNb: 2,
+    zonesCreatedNb: 2,
     datasetsSharedNb: 18,
     servicesSharedNb: 5,
     communityParticipantNb: 34

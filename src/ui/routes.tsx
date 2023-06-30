@@ -1,9 +1,9 @@
 import { Home } from '@/ui/page/home/home'
 import Dataverse from '@/ui/page/dataverse/dataverse'
-import Dataspace from '@/ui/page/dataverse/dataspace/dataspace'
+import Zone from '@/ui/page/dataverse/zone/zone'
 import Dataset from '@/ui/page/dataverse/dataset/dataset'
 import Service from '@/ui/page/dataverse/service/service'
-import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
+import { Governance } from '@/ui/page/dataverse/zone/governance/governance'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
 import { Share } from '@/ui/page/share/share'
 import { ShareDataset } from '@/ui/page/share/dataset/shareDataset'
@@ -40,7 +40,7 @@ export const appRoutes: Route[] = [
   {
     id: 'zone',
     path: routes.zone,
-    element: <Dataspace />
+    element: <Zone />
   },
   {
     id: 'dataset',
