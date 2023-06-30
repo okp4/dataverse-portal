@@ -124,7 +124,7 @@ export const dataverseItems: DataverseItemDetails[] = [
     type: 'zone',
     label: 'DS4I',
     description:
-      "Zone for Investors (DS4I) is a private Zone created and maintained by OKP4 Team. DS4I's purpose is to present a simple and user-friendly Proof of Concept to demonstrate for potential investors how OKP4 protocol works based on simple governance rules.",
+      "Data Space for Investors (DS4I) is a private Zone created and maintained by OKP4 Team. DS4I's purpose is to present a simple and user-friendly Proof of Concept to demonstrate for potential investors how OKP4 protocol works based on simple governance rules.",
     governance: {
       description: {
         en: 'DS4I is a private Zone where resources are only accessible for a group of addresses contained in a dedicated whitelist. Only OKP4 have the authority to edit the Whitelist.',
