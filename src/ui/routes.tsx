@@ -7,6 +7,7 @@ import { Governance } from '@/ui/page/dataverse/dataspace/governance/governance'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
 import { Share } from '@/ui/page/share/share'
 import { ShareDataset } from '@/ui/page/share/dataset/shareDataset'
+import { UnsupportedFeatureLayout } from '@/ui//view/unsupportedFeatureLayout/unsupportedFeatureLayout'
 
 export enum routes {
   home = '/',
@@ -24,6 +25,7 @@ export type Route = {
   id: string
   path: string
   element: React.ReactNode
+  layout?: React.ReactNode
 }
 
 export const appRoutes: Route[] = [
@@ -65,11 +67,13 @@ export const appRoutes: Route[] = [
   {
     id: 'share',
     path: routes.share,
-    element: <Share />
+    element: <Share />,
+    layout: <UnsupportedFeatureLayout />
   },
   {
     id: 'shareDataset',
     path: routes.shareDataset,
-    element: <ShareDataset />
+    element: <ShareDataset />,
+    layout: <UnsupportedFeatureLayout />
   }
 ]
