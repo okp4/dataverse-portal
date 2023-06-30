@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next'
 import * as short from 'short-uuid'
 import type { File } from '@/ui/component/filePicker/filePicker'
 import { FilePicker } from '@/ui/component/filePicker/filePicker'
-import { List, ListItem } from '@/ui/component/list/list'
+import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
 import type { StoreFilesInput } from '@/domain/file/command'
 import './dataSelection.scss'
+import type { FilesDescriptor } from '@/domain/file/query'
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
@@ -38,6 +39,27 @@ export const DataSelection: FC = () => {
     [removeFile]
   )
 
+  const mapToListItems = (files: FilesDescriptor): Item[] => {
+    return files.map(({ id, name }) => ({
+      content: <p>{name}</p>,
+      id: id,
+      key: id,
+      leftElement: (
+        <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
+          <Icon name="folder-outlined" />
+        </div>
+      ),
+      rightElement: (
+        <div
+          className="okp4-dataverse-portal-share-dataset-page-file-deletion"
+          onClick={handleFileDeletion(id)}
+        >
+          <Icon name="bin" />
+        </div>
+      )
+    }))
+  }
+
   return (
     <div className="okp4-dataverse-portal-share-data-selection-container">
       <h2>{t('share:share.dataset.select')}</h2>
@@ -48,27 +70,10 @@ export const DataSelection: FC = () => {
         <FilePicker hasFileExplorer hasFolderExplorer multiple onFileChange={handleFiles} />
       </div>
       <div className="okp4-dataverse-portal-share-dataset-page-file-list-container">
-        <List className="okp4-dataverse-portal-share-dataset-page-file-list">
-          {files()().map(({ id, name }) => (
-            <ListItem
-              content={<p>{name}</p>}
-              key={id}
-              leftElement={
-                <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
-                  <Icon name="folder-outlined" />
-                </div>
-              }
-              rightElement={
-                <div
-                  className="okp4-dataverse-portal-share-dataset-page-file-deletion"
-                  onClick={handleFileDeletion(id)}
-                >
-                  <Icon name="bin" />
-                </div>
-              }
-            />
-          ))}
-        </List>
+        <List
+          className="okp4-dataverse-portal-share-dataset-page-file-list"
+          items={mapToListItems(files()())}
+        />
       </div>
     </div>
   )
