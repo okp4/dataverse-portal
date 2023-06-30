@@ -56,21 +56,19 @@ const removeFileIdExists =
   (fileId: FileId): boolean =>
     A.some((file: File) => file.id === fileId)(state)
 
-const removeFileInvariant = (
-  fileId: FileId,
-  state: File[]
-): E.Either<ResourceNotFoundError, FileId> =>
-  pipe(fileId, E.fromPredicate(flow(removeFileIdExists(state)), throwResourceNotFoundError))
+const removeFileInvariant =
+  (fileId: FileId) =>
+  (state: File[]): E.Either<ResourceNotFoundError, FileId> =>
+    pipe(fileId, E.fromPredicate(flow(removeFileIdExists(state)), throwResourceNotFoundError))
 
-const storeFilesInvariant = (
-  files: StoreFilesInput,
-  state: File[]
-): E.Either<ResourceConflictError, StoreFilesInput> =>
-  pipe(
-    files,
-    E.fromPredicate(flow(isStoreFilesIdUniq(state)), throwResourceConflictError),
-    E.flatMap(flow(E.fromPredicate(isStoreFilesPayloadUniq, throwResourceConflictError)))
-  )
+const storeFilesInvariant =
+  (files: StoreFilesInput) =>
+  (state: File[]): E.Either<ResourceConflictError, StoreFilesInput> =>
+    pipe(
+      files,
+      E.fromPredicate(flow(isStoreFilesIdUniq(state)), throwResourceConflictError),
+      E.flatMap(flow(E.fromPredicate(isStoreFilesPayloadUniq, throwResourceConflictError)))
+    )
 
 const mapFileToFileDescriptor = (file: File): FileDescriptor => ({
   id: file.id,
@@ -97,9 +95,10 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
               () =>
                 pipe(
                   IOE.fromIO(() => get().data),
-                  IOE.flatMap(files =>
-                    pipe(
-                      IOE.fromEither(storeFilesInvariant(payload, files)),
+                  IOE.flatMap(
+                    flow(
+                      storeFilesInvariant(payload),
+                      IOE.fromEither,
                       IOE.chainIOK(
                         f => () => set(state => ({ data: pipe(state.data, A.concat(f)) }))
                       )
@@ -117,9 +116,10 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
               () =>
                 pipe(
                   IOE.fromIO(() => get().data),
-                  IOE.flatMap(files =>
-                    pipe(
-                      IOE.fromEither(removeFileInvariant(payload, files)),
+                  IOE.flatMap(
+                    flow(
+                      removeFileInvariant(payload),
+                      IOE.fromEither,
                       IOE.chainIOK(
                         fileId => () =>
                           set(state => ({
