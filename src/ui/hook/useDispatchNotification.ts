@@ -8,13 +8,13 @@ import type { NotificationType } from '@/domain/notification/value-object'
 import { toEffectfulObject } from '@/util/effect'
 import '@/ui/component/notification/i18n'
 
-type DispatchNotificationInput = {
+export type DispatchNotificationInput = {
   type: NotificationType
   titleKey: string
   messageKey?: string
   action?: ActionType
 }
-type DispatchNotification = (input: DispatchNotificationInput) => void
+export type DispatchNotification = (input: DispatchNotificationInput) => void
 
 export const useDispatchNotification = (): DispatchNotification => {
   const { t } = useTranslation('notification')
@@ -29,17 +29,7 @@ export const useDispatchNotification = (): DispatchNotification => {
   )
 
   const dispatchNotification = useCallback(
-    ({
-      type,
-      titleKey,
-      messageKey,
-      action
-    }: {
-      type: NotificationType
-      titleKey: string
-      messageKey?: string
-      action?: ActionType
-    }) => {
+    ({ type, titleKey, messageKey, action }: DispatchNotificationInput) => {
       if (hasReportedNotificationWithAction()) return
 
       reportNotification({
