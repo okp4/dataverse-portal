@@ -24,11 +24,13 @@ export type Item = {
 
 type ListProps = {
   items: Item[]
-  className?: string
+  classes?: {
+    main?: string
+  }
 }
 
-export const List: FC<ListProps> = ({ items, className }) => (
-  <ul className={classNames('okp4-dataverse-portal-list-main', className)}>
+export const List: FC<ListProps> = ({ items, classes }) => (
+  <ul className={classNames('okp4-dataverse-portal-list-main', classes?.main)}>
     <TransitionGroup className="okp4-dataverse-portal-list-container">
       {items.map(({ leftElement, rightElement, content, className, id, onClick }) => (
         <CSSTransition classNames="transition" key={id} timeout={400}>
