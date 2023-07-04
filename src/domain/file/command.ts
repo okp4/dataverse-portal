@@ -52,7 +52,7 @@ export const ShowFileError: Show<FileError> = {
   show: (error: FileError): string => {
     switch (error._tag) {
       case 'resource-conflict': {
-        return `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: ${error.fileIds}...`
+        return `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: [${error.fileIds}]`
       }
       case 'resource-not-found': {
         return `Oops... The provided id '${error.fileId}' does not exist in memory... So we can't remove this file...`

@@ -2,9 +2,11 @@
 import * as FileDomain from '@/domain/file/domain'
 import type { StoreApi } from 'zustand'
 import type { StoreFileInput, StoreFilesInput } from '../command'
-import { ResourceConflictError } from '../command'
+import { ResourceConflictError, ShowFileError } from '../command'
 import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
+import * as E from 'fp-ts/Either'
+import { pipe } from 'fp-ts/lib/function'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
@@ -70,8 +72,8 @@ describe('Store files in memory', () => {
     ${{ initialState: { data: [file1] } }} | ${[]}                           | ${expectFilesDescriptor([file1])}        | ${undefined}
     ${undefined}                           | ${[fileToStore1]}               | ${expectFilesDescriptor([file1])}        | ${undefined}
     ${undefined}                           | ${[fileToStore1, fileToStore2]} | ${expectFilesDescriptor([file1, file2])} | ${undefined}
-    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${ResourceConflictError()}
-    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${ResourceConflictError()}
+    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${ResourceConflictError([fileToStore3.id])}
+    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${ResourceConflictError([fileToStore1.id, fileToStore3.id])}
   `(
     `Given that there are $filesToStore.length file(s) to store`,
     ({ preloadedState, filesToStore, expectedFilesDescriptor, error }: Data): void => {
@@ -87,6 +89,14 @@ describe('Store files in memory', () => {
           if (error) {
             expect(result).toBeLeft()
             expect(result).toEqualLeft(error)
+
+            const message = pipe(
+              result,
+              E.getOrElseW(e => ShowFileError.show(e))
+            )
+            expect(message).toStrictEqual(
+              `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: [${error.fileIds}]`
+            )
           } else {
             expect(result).toBeRight()
           }
