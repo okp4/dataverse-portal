@@ -37,7 +37,8 @@ const eqFile: Eq<{ id: string }> = pipe(
   eqContramap(it => it.id)
 )
 
-const throwResourceConflictError = (): ResourceConflictError => ResourceConflictError()
+const throwResourceConflictError = (filesIds: FileId[]): ResourceConflictError =>
+  ResourceConflictError(filesIds)
 const throwResourceNotFoundError = (fileId: FileId): ResourceNotFoundError =>
   ResourceNotFoundError(fileId)
 
@@ -66,8 +67,24 @@ const storeFilesInvariant =
   (state: File[]): E.Either<ResourceConflictError, StoreFilesInput> =>
     pipe(
       files,
-      E.fromPredicate(flow(isStoreFilesIdUniq(state)), throwResourceConflictError),
-      E.flatMap(flow(E.fromPredicate(isStoreFilesPayloadUniq, throwResourceConflictError)))
+      E.fromPredicate(
+        flow(isStoreFilesIdUniq(state)),
+        flow(
+          A.map(x => x.id),
+          throwResourceConflictError
+        )
+      ),
+      E.flatMap(
+        flow(
+          E.fromPredicate(
+            isStoreFilesPayloadUniq,
+            flow(
+              A.map(x => x.id),
+              throwResourceConflictError
+            )
+          )
+        )
+      )
     )
 
 const mapFileToFileDescriptor = (file: File): FileDescriptor => ({
