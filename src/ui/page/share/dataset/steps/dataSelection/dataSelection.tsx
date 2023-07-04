@@ -9,36 +9,17 @@ import { FilePicker } from '@/ui/component/filePicker/filePicker'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
-import type {
-  FileId,
-  ResourceConflictError,
-  ResourceNotFoundError,
-  StoreFilesInput
+import {
+  ShowFileError,
+  type FileError,
+  type FileId,
+  type StoreFilesInput
 } from '@/domain/file/command'
 import './dataSelection.scss'
 import {
   useDispatchNotification,
   type DispatchNotificationInput
 } from '@/ui/hook/useDispatchNotification'
-
-type FileError = ResourceConflictError | ResourceNotFoundError
-
-const logFileError = (error: FileError): void => {
-  switch (error._tag) {
-    case 'resource-conflict': {
-      console.error(
-        "Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files..."
-      )
-      break
-    }
-    case 'resource-not-found': {
-      console.error(
-        `Oops... The provided id '${error.fileId}' does not exist in memory... So we can't remove this file...`
-      )
-      break
-    }
-  }
-}
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
@@ -57,7 +38,7 @@ export const DataSelection: FC = () => {
         messageKey: 'error.processing',
         action: 'refresh'
       }
-      logFileError(error)
+      console.error(ShowFileError.show(error))
       dispatchNotification(notificationInput)
     },
     [dispatchNotification]
