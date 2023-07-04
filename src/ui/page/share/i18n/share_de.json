@@ -8,8 +8,8 @@
       "local": "Einem lokalen Ordner",
       "external": "Ein externer Speicher",
       "serviceStorageSearch": "Suche nach einem Speicherdienst",
-      "select": "Wählen Sie Ihre Daten",
-      "selectDescription": "Wählen Sie den Datensatz, den Sie in den Speicherdienst hochladen möchten."
+      "select": "Wählen Sie Ihre Daten aus",
+      "selectDescription": "Wählen Sie den Datensatz aus, den Sie in den Speicherdienst hochladen möchten."
     },
     "service": {
       "title": "Ich teile einen Dienst",
