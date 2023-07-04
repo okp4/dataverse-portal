@@ -1,4 +1,5 @@
 import type { IOEither } from 'fp-ts/IOEither'
+import type { Show } from 'fp-ts/lib/Show'
 
 export type MediaType = string
 
@@ -15,9 +16,10 @@ export type StoreFileInput = {
 
 export type StoreFilesInput = StoreFileInput[]
 
-export const ResourceConflictError = () =>
+export const ResourceConflictError = (fileIds: FileId[]) =>
   ({
-    _tag: 'resource-conflict'
+    _tag: 'resource-conflict',
+    fileIds
   } as const)
 
 /**
@@ -42,4 +44,19 @@ export type Command = {
   storeFiles: (files: StoreFilesInput) => IOEither<ResourceConflictError, void>
   // Remove a file in memory by a given file id
   removeFile: (fileId: FileId) => IOEither<ResourceNotFoundError, void>
+}
+
+export type FileError = ResourceConflictError | ResourceNotFoundError
+
+export const ShowFileError: Show<FileError> = {
+  show: (error: FileError): string => {
+    switch (error._tag) {
+      case 'resource-conflict': {
+        return `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: ${error.fileIds}...`
+      }
+      case 'resource-not-found': {
+        return `Oops... The provided id '${error.fileId}' does not exist in memory... So we can't remove this file...`
+      }
+    }
+  }
 }
