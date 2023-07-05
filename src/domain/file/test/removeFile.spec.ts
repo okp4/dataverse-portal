@@ -85,7 +85,7 @@ describe('Remove a file from memory', () => {
               E.getOrElseW(e => ShowFileError.show(e))
             )
             expect(message).toStrictEqual(
-              `Oops... The provided id '${error.fileId}' does not exist in memory... So we can't remove this file...`
+              `Error ${error._tag}: Failed to remove resource with ID '${error.resourceId}' since it does not exist.`
             )
           } else {
             expect(result).toBeRight()

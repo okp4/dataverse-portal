@@ -95,7 +95,9 @@ describe('Store files in memory', () => {
               E.getOrElseW(e => ShowFileError.show(e))
             )
             expect(message).toStrictEqual(
-              `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: [${error.fileIds}]`
+              `Error ${
+                error._tag
+              }: Failed to store resource with conflicting IDs [${error.resourceIds.join(', ')}].`
             )
           } else {
             expect(result).toBeRight()
