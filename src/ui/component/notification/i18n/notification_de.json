@@ -6,7 +6,9 @@
     "walletConnectionFailed": "Wallet-Verbindung fehlgeschlagen",
     "walletConnectionRejected": "Die Anfrage zur Verbindung mit der Wallet wurde abgelehnt.",
     "walletConnectionError": "Fehler bei der Verbindung zur Brieftasche",
-    "walletNetworkError": "Aufgrund von Netzwerkproblemen konnten wir Ihre Brieftasche nicht verbinden. Bitte versuchen Sie es später noch einmal."
+    "walletNetworkError": "Aufgrund von Netzwerkproblemen konnten wir Ihre Brieftasche nicht verbinden. Bitte versuchen Sie es später noch einmal.",
+    "selectionFailed": "Auswahl fehlgeschlagen",
+    "selectionError": "Bei der Auswahl der Datei ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
   },
   "warning": {
     "extensionMissing": "Sie haben die Erweiterung leider nicht.",

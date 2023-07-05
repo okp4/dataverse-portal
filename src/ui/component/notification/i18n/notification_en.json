@@ -6,7 +6,9 @@
     "walletConnectionFailed": "Wallet connection failed",
     "walletConnectionRejected": "Wallet connection request has been rejected.",
     "walletConnectionError": "Wallet connection error",
-    "walletNetworkError": "Due to network issues, we failed to connect your wallet. Please try again later."
+    "walletNetworkError": "Due to network issues, we failed to connect your wallet. Please try again later.",
+    "selectionFailed": "Selection Failed",
+    "selectionError": "An error occurred while selecting the file. Please try again later."
   },
   "warning": {
     "extensionMissing": "Sorry, you don't have the extension.",
