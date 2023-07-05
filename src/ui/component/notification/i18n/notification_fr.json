@@ -6,7 +6,9 @@
     "walletConnectionFailed": "La connexion au portefeuille a échoué",
     "walletConnectionRejected": "La demande de connexion au portefeuille a été rejetée.",
     "walletConnectionError": "Erreur de connexion au portefeuille",
-    "walletNetworkError": "En raison de problèmes de réseau, nous n'avons pas réussi à connecter votre portefeuille. Veuillez réessayer plus tard."
+    "walletNetworkError": "En raison de problèmes de réseau, nous n'avons pas réussi à connecter votre portefeuille. Veuillez réessayer plus tard.",
+    "selectionFailed": "Error lors de la sélection",
+    "selectionError": "Une erreur s'est produite lors de la sélection du fichier. Veuillez réessayer plus tard."
   },
   "warning": {
     "extensionMissing": "Désolé, vous n'avez pas l'extension.",

@@ -1,4 +1,6 @@
 /* eslint-disable max-lines-per-function */
+import { pipe } from 'fp-ts/lib/function'
+import * as IOE from 'fp-ts/IOEither'
 import { useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as short from 'short-uuid'
@@ -7,8 +9,17 @@ import { FilePicker } from '@/ui/component/filePicker/filePicker'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
-import type { StoreFilesInput } from '@/domain/file/command'
+import {
+  ShowFileError,
+  type FileError,
+  type FileId,
+  type StoreFilesInput
+} from '@/domain/file/command'
 import './dataSelection.scss'
+import {
+  useDispatchNotification,
+  type DispatchNotificationInput
+} from '@/ui/hook/useDispatchNotification'
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
@@ -17,6 +28,20 @@ export const DataSelection: FC = () => {
     removeFile: state.removeFile,
     storeFiles: state.storeFiles
   }))
+  const dispatchNotification = useDispatchNotification()
+
+  const handleFileError = useCallback(
+    (error: FileError) => {
+      const notificationInput: DispatchNotificationInput = {
+        type: 'error',
+        titleKey: 'error.selectionFailed',
+        messageKey: 'error.selectionError'
+      }
+      console.error(ShowFileError.show(error))
+      dispatchNotification(notificationInput)
+    },
+    [dispatchNotification]
+  )
 
   const handleFileChange = useCallback(
     (files: File[]): void => {
@@ -30,14 +55,16 @@ export const DataSelection: FC = () => {
           size
         })
       )
-      storeFiles(storeFilesInput)()
+      pipe(storeFilesInput, storeFiles, IOE.mapLeft(handleFileError))()
     },
-    [storeFiles]
+    [storeFiles, handleFileError]
   )
 
   const handleFileDeletion = useCallback(
-    (fileId: string) => () => removeFile(fileId)(),
-    [removeFile]
+    (fileId: FileId) => () => {
+      pipe(fileId, removeFile, IOE.mapLeft(handleFileError))()
+    },
+    [handleFileError, removeFile]
   )
 
   const items: Item[] = files()().map(({ id, name }) => ({

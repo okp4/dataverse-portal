@@ -2,9 +2,11 @@
 import * as FileDomain from '@/domain/file/domain'
 import type { StoreApi } from 'zustand'
 import type { FileId } from '../command'
-import { ResourceNotFoundError } from '../command'
+import { ResourceNotFoundError, ShowFileError } from '../command'
 import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
+import * as E from 'fp-ts/Either'
+import { pipe } from 'fp-ts/lib/function'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
@@ -77,6 +79,14 @@ describe('Remove a file from memory', () => {
           if (error) {
             expect(result).toBeLeft()
             expect(result).toEqualLeft(error)
+
+            const message = pipe(
+              result,
+              E.getOrElseW(e => ShowFileError.show(e))
+            )
+            expect(message).toStrictEqual(
+              `Error ${error._tag}: Failed to remove resource with ID '${error.resourceId}' since it does not exist.`
+            )
           } else {
             expect(result).toBeRight()
           }
