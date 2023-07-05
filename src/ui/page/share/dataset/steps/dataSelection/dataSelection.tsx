@@ -34,9 +34,8 @@ export const DataSelection: FC = () => {
     (error: FileError) => {
       const notificationInput: DispatchNotificationInput = {
         type: 'error',
-        titleKey: 'error.problem',
-        messageKey: 'error.processing',
-        action: 'refresh'
+        titleKey: 'error.selectionFailed',
+        messageKey: 'error.selectionError'
       }
       console.error(ShowFileError.show(error))
       dispatchNotification(notificationInput)
