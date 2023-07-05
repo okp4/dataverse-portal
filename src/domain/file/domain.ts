@@ -37,10 +37,10 @@ const eqFile: Eq<{ id: string }> = pipe(
   eqContramap(it => it.id)
 )
 
-const throwResourceConflictError = (filesIds: FileId[]): ResourceConflictError =>
-  ResourceConflictError(filesIds)
-const throwResourceNotFoundError = (fileId: FileId): ResourceNotFoundError =>
-  ResourceNotFoundError(fileId)
+const resourceConflictError = (resourceIds: FileId[]): ResourceConflictError =>
+  ResourceConflictError(resourceIds)
+const resourceNotFoundError = (resourceId: FileId): ResourceNotFoundError =>
+  ResourceNotFoundError(resourceId)
 
 const isStoreFilesPayloadUniq = (files: StoreFilesInput): boolean =>
   N.Eq.equals(A.uniq(eqFile)(files).length, files.length)
@@ -60,7 +60,7 @@ const removeFileIdExists =
 const removeFileInvariant =
   (fileId: FileId) =>
   (state: File[]): E.Either<ResourceNotFoundError, FileId> =>
-    pipe(fileId, E.fromPredicate(flow(removeFileIdExists(state)), throwResourceNotFoundError))
+    pipe(fileId, E.fromPredicate(flow(removeFileIdExists(state)), resourceNotFoundError))
 
 const storeFilesInvariant =
   (files: StoreFilesInput) =>
@@ -71,7 +71,7 @@ const storeFilesInvariant =
         flow(isStoreFilesIdUniq(state)),
         flow(
           A.map(x => x.id),
-          throwResourceConflictError
+          resourceConflictError
         )
       ),
       E.flatMap(
@@ -80,7 +80,7 @@ const storeFilesInvariant =
             isStoreFilesPayloadUniq,
             flow(
               A.map(x => x.id),
-              throwResourceConflictError
+              resourceConflictError
             )
           )
         )
