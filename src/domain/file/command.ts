@@ -16,26 +16,26 @@ export type StoreFileInput = {
 
 export type StoreFilesInput = StoreFileInput[]
 
-export const ResourceConflictError = (fileIds: FileId[]) =>
+export const ResourceConflictError = (resourceIds: FileId[]) =>
   ({
     _tag: 'resource-conflict',
-    fileIds
+    resourceIds
   } as const)
 
 /**
- *  Error thrown when an id of a file to be stored already exists in memory,
+ *  Error when an id of a file to be stored already exists in memory,
  *  or if multiple files in the StoreFileInput payload have the same id
  */
 export type ResourceConflictError = ReturnType<typeof ResourceConflictError>
 
-export const ResourceNotFoundError = (fileId: FileId) =>
+export const ResourceNotFoundError = (resourceId: FileId) =>
   ({
     _tag: 'resource-not-found',
-    fileId
+    resourceId
   } as const)
 
 /**
- *  Error thrown when the id of a file to be removed is not found in the list of stored files in memory.
+ *  Error when the id of a file to be removed is not found in the list of stored files in memory.
  */
 export type ResourceNotFoundError = ReturnType<typeof ResourceNotFoundError>
 
@@ -52,10 +52,12 @@ export const ShowFileError: Show<FileError> = {
   show: (error: FileError): string => {
     switch (error._tag) {
       case 'resource-conflict': {
-        return `Oops... You are trying either to store a file whose id already exists in memory or to store files with the same id... So we can't store these files with these ids: [${error.fileIds}]`
+        return `Error ${
+          error._tag
+        }: Failed to store resource with conflicting IDs [${error.resourceIds.join(', ')}].`
       }
       case 'resource-not-found': {
-        return `Oops... The provided id '${error.fileId}' does not exist in memory... So we can't remove this file...`
+        return `Error ${error._tag}: Failed to remove resource with ID '${error.resourceId}' since it does not exist.`
       }
     }
   }
