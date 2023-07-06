@@ -5,7 +5,6 @@
 $card-height: 220px;
 $card-gap: 48px;
 $search-container-gap: 26px;
-$search-height: 42px;
 
 .okp4-dataverse-portal-share-dataset-page-service-selection-container {
   @include with-theme() {
@@ -47,20 +46,22 @@ $search-height: 42px;
     }
 
     .okp4-dataverse-portal-share-dataset-page-services-container {
+      box-sizing: border-box;
       position: relative; // necessary to compute the height of the scroll container
+      padding-bottom: $search-container-gap;
+      overflow-y: auto;
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 16);
+
       max-height: calc(($card-height + $card-gap) * 2);
 
-      @media (max-height: 1024px) {
-        max-height: calc(($card-height + $card-gap + $card-height / 2));
+      @media (min-height: 851px) and (max-height: 1024px) {
+        max-height: calc($card-height + $card-gap + $card-height / 2);
       }
-      
-      @media (max-height: 900px) {
-        max-height: calc(($card-height + $card-gap + 20px)); // extra height to make the next cards visibles
-      }
-      
 
-      overflow-y: auto;
+      @media (max-height: 850px) {
+        max-height: $card-height;
+      }
+      
 
       &.detailed {
         @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
@@ -100,19 +101,23 @@ $search-height: 42px;
     .okp4-dataverse-portal-share-dataset-page-service-details-container {
       @include grid-item($colStart: 7, $colEnd: 13, $rowStart: 1, $rowEnd: 12);
       border-radius: 12px;
-      padding: 22px 22px 0;
+      padding: 21px 24px;
       background: themed('card-background-gradient');
       margin-left: 18px;
+      max-height: calc(($card-height + $card-gap) * 2 + $search-container-gap);
 
+      @media (min-height: 851px) and (max-height: 1024px) {
+        max-height: calc($card-height + $card-gap + $card-height / 2 + $search-container-gap);
+      }
+
+      @media (max-height: 850px) {
+        max-height: $card-height + $search-container-gap;
+      }
+      
       .okp4-dataverse-portal-share-dataset-page-service-details-scroll-container {
         padding-right: 20px;
         overflow-y: auto;
-
-        max-height: calc((($card-height + $card-gap) * 2) + $search-height + $search-container-gap);
-
-        @media (max-height: 1024px) {
-          max-height: calc(($card-height + $card-gap + $card-height / 2));
-        }
+        max-height: inherit;
       }
     }
   }
