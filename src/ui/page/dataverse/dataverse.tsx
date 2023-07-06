@@ -25,6 +25,9 @@ import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDa
 import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse/command'
 import { pipe } from 'fp-ts/lib/function'
 import { useNavigate } from 'react-router-dom'
+import { SearchBar } from '@/ui/component/searchbar/searchbar'
+import './i18n/index'
+import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 
 type DataverseItemType = 'service' | 'zone' | 'dataset'
 type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'
@@ -499,7 +502,11 @@ const Dataverse = (): JSX.Element => {
     hasNext,
     byTypeFilter,
     setLanguage,
-    error
+    error,
+    byPropertyFilter,
+    setByPropertyFilter,
+    resetByTypeFilter,
+    resetByPropertyFilter
   } = useDataverseStore(state => ({
     loadDataverse: state.loadDataverse,
     dataverse: state.dataverse,
@@ -508,7 +515,11 @@ const Dataverse = (): JSX.Element => {
     setLanguage: state.setLanguage,
     setByTypeFilter: state.setByTypeFilter,
     byTypeFilter: state.byTypeFilter,
-    error: state.error
+    error: state.error,
+    byPropertyFilter: state.byPropertyFilter,
+    setByPropertyFilter: state.setByPropertyFilter,
+    resetByTypeFilter: state.resetByTypeFilter,
+    resetByPropertyFilter: state.resetByPropertyFilter
   }))
 
   const { isDesktop, isLargeDesktop } = useBreakpoint()
@@ -547,6 +558,14 @@ const Dataverse = (): JSX.Element => {
     [navigate]
   )
 
+  const handleSearch = useCallback(
+    (searchTearm: string) => {
+      setByPropertyFilter({ property: 'title', value: searchTearm })()
+      loadDataverse()()
+    },
+    [loadDataverse, setByPropertyFilter]
+  )
+
   const FiltersChips = (): JSX.Element =>
     useMemo(
       () => (
@@ -583,14 +602,16 @@ const Dataverse = (): JSX.Element => {
   useEffect(() => {
     setLanguage(currentLng)()
     loadDataverse()()
+    return () => {
+      resetByPropertyFilter()()
+      resetByTypeFilter()()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLng])
 
   useEffect(() => {
     !isLargeScreen && setShowMobileFilters(false)
   }, [isLargeScreen])
-
-  useEffect(() => setByTypeFilter('all'), [setByTypeFilter])
 
   return (
     <div className="okp4-dataverse-portal-dataverse-page-main">
@@ -611,6 +632,13 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || !showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-catalog">
           <h2>{t('actions.explore')}</h2>
+          <div className="okp4-dataverse-portal-dataverse-page-catalog-search-bar-container">
+            <SearchBar
+              onSearch={handleSearch}
+              placeholder={t('dataverse:dataverse.search.placeholder')}
+              value={byPropertyFilter()()}
+            />
+          </div>
           {!isLargeScreen && (
             <Button
               className="okp4-dataverse-portal-dataverse-page-filters-button"
@@ -655,6 +683,12 @@ const Dataverse = (): JSX.Element => {
                   })}
             </div>
           </InfiniteScroll>
+          {!dataverse()().length && !isLoading()() && (
+            <NoResultFound
+              className="okp4-dataverse-portal-search-no-result-wrapper"
+              iconName="large-magnifier-with-cross"
+            />
+          )}
         </div>
       )}
     </div>
