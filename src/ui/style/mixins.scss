@@ -137,6 +137,7 @@
 
   // Standard version (Firefox only for now)
   scrollbar-color: $foreground-color $background-color;
+  scrollbar-width: thin;
 }
 
 @mixin custom-dashed-border($color, $width, $dashArray, $border-radius: 0, $offset: 0) {
