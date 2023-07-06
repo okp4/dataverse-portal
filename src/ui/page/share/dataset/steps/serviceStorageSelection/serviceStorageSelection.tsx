@@ -46,7 +46,9 @@ export const ServiceStorageSelection: FC = () => {
     isLoading,
     hasNext,
     setLanguage,
-    error
+    error,
+    resetByTypeFilter,
+    resetByPropertyFilter
   } = useDataverseStore(state => ({
     loadDataverse: state.loadDataverse,
     dataverse: state.dataverse,
@@ -56,7 +58,9 @@ export const ServiceStorageSelection: FC = () => {
     byPropertyFilter: state.byPropertyFilter,
     setByPropertyFilter: state.setByPropertyFilter,
     setByTypeFilter: state.setByTypeFilter,
-    error: state.error
+    error: state.error,
+    resetByTypeFilter: state.resetByTypeFilter,
+    resetByPropertyFilter: state.resetByPropertyFilter
   }))
 
   const handleServiceSearch = useCallback(
@@ -118,8 +122,18 @@ export const ServiceStorageSelection: FC = () => {
     setLanguage(currentLng)()
     setByTypeFilter('Service')()
     loadDataverse()()
-    return () => setByTypeFilter('all')()
-  }, [currentLng, loadDataverse, setByTypeFilter, setLanguage])
+    return () => {
+      resetByPropertyFilter()()
+      resetByTypeFilter()()
+    }
+  }, [
+    currentLng,
+    loadDataverse,
+    setByTypeFilter,
+    setLanguage,
+    resetByTypeFilter,
+    resetByPropertyFilter
+  ])
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-page-service-selection-container">
