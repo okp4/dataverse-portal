@@ -46,10 +46,10 @@ export const DataSelection: FC = () => {
   const handleFileChange = useCallback(
     (files: File[]): void => {
       const storeFilesInput: StoreFilesInput = files.map(
-        ({ name, fullPath: path, size, stream, mediaType: type }: File) => ({
+        ({ name, webkitRelativePath, size, stream, type }: File) => ({
           id: short.generate(),
           name,
-          path,
+          path: webkitRelativePath ? webkitRelativePath : `/${name}`,
           type,
           stream,
           size

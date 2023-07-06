@@ -5,19 +5,14 @@ import { DragAndDrop } from '@/ui/component/dragAndDrop/dragAndDrop'
 import type { DragDropState } from '@/ui/component/dragAndDrop/dragAndDrop'
 import { DropDownButton } from '@/ui/component/dropDownButton/dropDownButton'
 import type { Option } from '@/ui/component/dropDownButton/dropDownButton'
+import { isNonEmpty } from 'fp-ts/lib/ReadonlyArray'
 import { Icon } from '@/ui/component/icon/icon'
 import { isError } from '@/util/util'
 import classNames from 'classnames'
 import './i18n/index'
 import './filePicker.scss'
 
-export type File = {
-  name: string
-  fullPath: string
-  size: number
-  mediaType: string
-  stream: ReadableStream<Uint8Array>
-}
+export type File = Omit<globalThis.File, 'stream'> & { stream: ReadableStream<Uint8Array> }
 
 type FilePickerProps = {
   onFileChange: (files: File[]) => void
@@ -42,14 +37,11 @@ export const FilePicker: FC<FilePickerProps> = ({
     state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
   }, [])
 
-  const toFileDTO = useCallback(
-    (file: globalThis.File) => ({
-      name: file.name,
-      fullPath: file.webkitRelativePath,
-      size: file.size,
-      mediaType: file.type,
-      stream: file.stream()
-    }),
+  const extractFileStream = useCallback(
+    (file: globalThis.File): File =>
+      Object.assign(file, {
+        stream: file.stream()
+      }),
     []
   )
 
@@ -62,32 +54,36 @@ export const FilePicker: FC<FilePickerProps> = ({
         if (!fsEntry) throw new Error('Could not read item')
         if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
 
-        return toFileDTO(file)
+        return extractFileStream(file)
       } catch (error: unknown) {
         isError(error) && onError?.(error)
       }
     },
-    [onError, toFileDTO]
+    [extractFileStream, onError]
+  )
+
+  const isFileArray = useCallback(
+    (files: (File | undefined)[]): files is File[] => !files.includes(undefined),
+    []
   )
 
   const handleDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       const files = Array.from(event.dataTransfer.items, toFile)
-
-      !files.includes(undefined) && onFileChange(files as File[])
+      isNonEmpty(files) && isFileArray(files) && onFileChange(files)
     },
-    [onFileChange, toFile]
+    [isFileArray, onFileChange, toFile]
   )
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const fileList = event.target.files
       if (fileList?.length) {
-        const files = Array.from(fileList, toFileDTO)
+        const files = Array.from(fileList, extractFileStream)
         onFileChange(files)
       }
     },
-    [onFileChange, toFileDTO]
+    [extractFileStream, onFileChange]
   )
 
   const filesInput = useMemo(
