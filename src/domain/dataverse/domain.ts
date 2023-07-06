@@ -217,6 +217,28 @@ export const storeFactory = (
                 )
               }
             }
+          })),
+        resetByTypeFilter: () => () =>
+          set(state => ({
+            data: {
+              ...state.data,
+              dataverse: [],
+              filters: {
+                ...state.data.filters,
+                byType: 'all'
+              }
+            }
+          })),
+        resetByPropertyFilter: () => () =>
+          set(state => ({
+            data: {
+              ...state.data,
+              dataverse: [],
+              filters: {
+                ...state.data.filters,
+                byProperty: null
+              }
+            }
           }))
       })),
       {
