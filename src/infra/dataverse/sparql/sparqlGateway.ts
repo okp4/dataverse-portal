@@ -32,7 +32,9 @@ export const sparqlGateway: DataversePort = {
         byProperty,
         O.map(
           filter =>
-            `FILTER ( contains(lcase(str(?${filter.property})), "${filter.value.toLowerCase()}" ) )`
+            `FILTER ( contains(lcase(str(?${filter.property})), "${filter.value
+              .toLowerCase()
+              .replace(/"/g, '\\"')}" ) )`
         ),
         O.getOrElse(() => '')
       )
