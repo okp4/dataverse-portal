@@ -48,7 +48,7 @@ $search-height: 42px;
 
     .okp4-dataverse-portal-share-dataset-page-services-container {
       position: relative; // necessary to compute the height of the scroll container
-      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: 16);
       max-height: calc(($card-height + $card-gap) * 2);
 
       @media (max-height: 1024px) {
