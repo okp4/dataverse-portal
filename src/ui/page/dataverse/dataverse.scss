@@ -123,11 +123,11 @@
         justify-content: center;
 
         @include use-breakpoints(('mobile')) {
-          margin: 30px 0;
+          margin: 18px 0 30px;
         }
 
         @include use-breakpoints(('tablet')) {
-          @include grid-item($colStart: 3, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
+          @include grid-item($colStart: 7, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
         }
       }
 
@@ -139,6 +139,30 @@
           @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
           text-align: center;
           justify-self: center;
+        }
+      }
+
+      .okp4-dataverse-portal-dataverse-page-catalog-search-bar-container {
+        @include grid-container($colGutter: 48px);
+        margin-bottom: 24px;
+
+        @include use-breakpoints(('mobile', 'tablet')) {
+          margin-bottom: unset;
+          @include grid-container($colsNb: 8, $colGutter: 16px);
+        }
+
+        @include use-breakpoints(('mobile')) {
+          margin-top: 10px;
+          @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        }
+
+        @include use-breakpoints(('tablet')) {
+          display: grid;
+          @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
+        }
+
+        .okp4-dataverse-portal-searchbar-main {
+          @include grid-item($colStart: 1, $colEnd: 9, $rowStart: auto, $rowEnd: auto);
         }
       }
 
@@ -172,6 +196,12 @@
             gap: 29px;
           }
         }
+      }
+
+      .okp4-dataverse-portal-search-no-result-wrapper {
+        grid-column-start: 1;
+        grid-column-end: -1;
+        margin-top: 60px;
       }
     }
   }

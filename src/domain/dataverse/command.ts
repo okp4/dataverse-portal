@@ -19,4 +19,8 @@ export type Command = {
   setByTypeFilter: (newFilter: ByTypeFilterInput) => IO<void>
   // Filter the dataverse by an enumerated property
   setByPropertyFilter: (newFilter: ByPropertyFilterInput) => IO<void>
+  // Reset the by type filter
+  resetByTypeFilter: () => IO<void>
+  // Reset the by property filter
+  resetByPropertyFilter: () => IO<void>
 }
