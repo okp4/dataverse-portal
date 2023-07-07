@@ -39,7 +39,7 @@ export const sparqlGateway: DataversePort = {
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
       PREFIX zoneMetadata: <https://ontology.okp4.space/metadata/zone/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      SELECT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
+      SELECT DISTINCT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
         {
           ?id rdf:type core:Service .
