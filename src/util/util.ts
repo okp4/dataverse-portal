@@ -37,3 +37,9 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
   pipe(source, S.toLowerCase, S.includes(S.toLowerCase(substring)))
 
 export const isError = (value: unknown): value is Error => value instanceof Error
+
+export const escapeRegExp = (str?: string): string => {
+  const slashedRegExp = /[\\^"'$.*+?()[\]{}|]/g
+  const regExp = RegExp(slashedRegExp.source)
+  return str && regExp.test(str) ? str.replace(regExp, '\\$&') : str ?? ''
+}
