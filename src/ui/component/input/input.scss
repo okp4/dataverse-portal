@@ -1,0 +1,143 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+$transition-duration: 400ms;
+
+.okp4-dataverse-portal-input-main {
+  position: relative;
+  @include with-theme {
+    .okp4-dataverse-portal-input-field {
+      box-sizing: border-box;
+      overflow: hidden;
+      width: 100%;
+      @include noto-sans(400);
+      font-size: 16px;
+      line-height: 22px;
+      color: themed('text');
+      background-color: themed('input-background');
+      border: 1px solid rgba(themed('input-border'), 0.12);
+      border-radius: 6px;
+      padding: 18px 8px 8px 18px;
+      outline: none;
+      transition: border-color $transition-duration ease-in-out;
+
+      &.with-start-icon {
+        padding-left: 40px;
+      }
+
+      &.with-end-icon {
+        padding-right: 40px;
+      }
+
+      &.error {
+        border-color: themed('error');
+      }
+    
+      &:focus:not(:disabled, :read-only) {
+        outline: none;
+        border-color: themed('text');
+        background-color: themed('input-background-focused');
+      }
+
+      &:disabled, &:read-only {
+        background-color: themed('input-background-disabled');
+        border-color: rgba(24, 28, 73, 0.06);
+        cursor: not-allowed;
+      }
+    }
+
+    .okp4-dataverse-portal-input-start-icon,
+    .okp4-dataverse-portal-input-end-icon {
+      position: absolute;
+      top: 13px;
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+
+      path {
+        fill: themed('input-label-shrinked');
+      }
+    }
+
+    .okp4-dataverse-portal-input-start-icon {
+      left: 12px;
+    }
+
+    .okp4-dataverse-portal-input-end-icon {
+      right: 12px;
+    }
+
+    .okp4-dataverse-portal-input-label {
+      position: absolute;
+      @include noto-sans(400);
+      font-size: 16px;
+      line-height: 22px;
+      color: rgba(themed('text'), 0.6);
+      top: 13px;
+      left: 18px;
+      pointer-events: none;
+      transform-origin: 0 0;
+      transition: transform $transition-duration, color $transition-duration;
+      transition-timing-function: ease-in-out;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    .okp4-dataverse-portal-input-field:focus:not(:disabled, :read-only) ~ .okp4-dataverse-portal-input-label,
+    .filled ~ .okp4-dataverse-portal-input-label {
+      transform: translateY(-20%) scale(0.6);
+      color: themed('input-label-shrinked');
+    }
+
+    .with-start-icon ~ .okp4-dataverse-portal-input-label {
+      left: 40px;
+    }
+
+    .okp4-dataverse-portal-input-field:disabled ~ .okp4-dataverse-portal-input-label,
+    .okp4-dataverse-portal-input-field:read-only ~ .okp4-dataverse-portal-input-label {
+      color: themed('secondary-disabled');
+      border-color: rgba(24, 28, 73, 0.06);
+      @include noto-sans(700);
+    }
+
+    .okp4-dataverse-portal-input-error {
+      position: absolute;
+      bottom: -17px;
+      left: 17px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: calc(100% - 17px);
+      
+      .okp4-dataverse-portal-input-error-message {
+        box-sizing: border-box;
+        @include noto-sans(400);
+        font-size: 10px;
+        line-height: 14px;
+        color: themed('text');
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+
+      svg {
+        flex-shrink: 0;
+        width: 12px;
+        height: 12px;
+
+        path {
+          fill: themed('error');
+        }
+      }
+    }
+  }
+}

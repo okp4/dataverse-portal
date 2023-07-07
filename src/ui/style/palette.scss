@@ -123,3 +123,15 @@ $file-picker-border-light: hsla(207, 100%, 23%, 0.4);
 $file-picker-border-dark: hsl(0, 0%, 100%);
 $file-picker-border-focused-light: hsl(199, 100%, 29%);
 $file-picker-border-focused-dark: hsl(199, 100%, 29%);
+
+// input
+$input-background-dark: #242433;
+$input-background-light: #f2f6f9;
+$input-border-light: $primary-variant-1;
+$input-border-dark: #f2f6f9;
+$input-label-shrinked-light: #809FB9;
+$input-label-shrinked-dark: rgba(255, 255, 255, 0.6);
+$input-background-focused-light: rgba(0, 64, 115, 0.08);
+$input-background-focused-dark: #242433;
+$input-background-disabled-light: $background-disabled;
+$input-background-disabled-dark: #494955;
