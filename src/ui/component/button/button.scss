@@ -20,6 +20,7 @@
 
   &:focus {
     background-color: $pressed-color;
+    box-shadow: none;
   }
 
   &:active {
