@@ -39,7 +39,7 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
 export const isError = (value: unknown): value is Error => value instanceof Error
 
 export const escapeRegExp = (str?: string): string => {
-  const slashedRegExp = /[\\^"'$.*+?()[\]{}|]/g
-  const regExp = RegExp(slashedRegExp.source)
-  return str && regExp.test(str) ? str.replace(regExp, '\\$&') : str ?? ''
+  const regExp = /[\\^"'$.*+?()[\]{}|]/g
+  const regExpFromSource = RegExp(regExp.source)
+  return str && regExpFromSource.test(str) ? str.replace(regExp, '\\$&') : str ?? ''
 }
