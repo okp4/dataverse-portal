@@ -9,7 +9,9 @@
       "external": "Ein externer Speicher",
       "serviceStorageSearch": "Suche nach einem Speicherdienst",
       "select": "Wählen Sie Ihre Daten aus",
-      "selectDescription": "Wählen Sie den Datensatz aus, den Sie in den Speicherdienst hochladen möchten."
+      "selectDescription": "Wählen Sie den Datensatz aus, den Sie in den Speicherdienst hochladen möchten.",
+      "summary": "Zusammenfassung",
+      "summaryCertify": "Ich bestätige, dass ich keine persönlichen Metadaten weitergebe."
     },
     "service": {
       "title": "Ich teile einen Dienst",

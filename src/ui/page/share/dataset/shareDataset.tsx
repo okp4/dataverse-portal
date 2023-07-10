@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import * as O from 'fp-ts/Option'
 import { ServiceStorageSelection } from './steps/serviceStorageSelection/serviceStorageSelection'
 import { DataSelection } from './steps/dataSelection/dataSelection'
+import { Summary } from './steps/summary/summary'
 import { MetadataFilling } from './steps/metadataFilling/metadataFilling'
 import { Stepper } from '@/ui/component/stepper/stepper'
 import type { StepElement } from '@/ui/component/stepper/stepper'
@@ -30,8 +31,9 @@ export const ShareDataset: FC = () => {
     validate: () => hasStoredFiles()()
   }
   const metadataFilling: StepElement = { id: 'step3', content: <MetadataFilling /> }
+  const summary: StepElement = { id: 'step4', content: <Summary /> }
 
-  const steps = [storageServiceSelection, dataSelection, metadataFilling]
+  const steps = [storageServiceSelection, dataSelection, metadataFilling, summary]
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-page-main">
