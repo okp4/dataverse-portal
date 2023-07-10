@@ -2,7 +2,7 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-@mixin button($content-color, $background-color, $box-shadow, $hover-color) {
+@mixin button($content-color, $background-color, $box-shadow, $hover-color, $pressed-color) {
   @include transition-bg-color;
   display: flex;
   justify-content: center;
@@ -15,6 +15,11 @@
   &:hover {
     background: $hover-color;
     border-color: $hover-color;
+    box-shadow: none;
+  }
+
+  &:focus {
+    background-color: $pressed-color;
     box-shadow: none;
   }
 
@@ -47,7 +52,8 @@
         $content-color: themed('primary-text'),
         $background-color: themed('secondary-color'),
         $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
-        $hover-color: themed('secondary-color-variant-1')
+        $hover-color: themed('secondary-color-variant-1'),
+        $pressed-color: themed('primary-button-background-pressed')
       );
     }
 
@@ -56,7 +62,8 @@
         $content-color: themed('primary-text'),
         $background-color: themed('secondary-color'),
         $box-shadow: none,
-        $hover-color: themed('secondary-color-variant-1')
+        $hover-color: themed('secondary-color-variant-1'),
+        $pressed-color: themed('primary-button-background-pressed')
       );
       border-radius: 4px;
       justify-content: flex-start;
@@ -67,7 +74,8 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2')
+        $hover-color: themed('primary-color-variant-2'),
+        $pressed-color: themed('secondary-button-background-pressed')
       );
     }
 
@@ -76,7 +84,8 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-2')
+        $hover-color: themed('primary-color-variant-2'),
+        $pressed-color: themed('secondary-button-background-pressed')
       );
       border-radius: 4px;
       justify-content: flex-start;
@@ -97,7 +106,8 @@
         $content-color: themed('secondary-color'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('secondary-color-variant-1')
+        $hover-color: themed('secondary-color-variant-1'),
+        $pressed-color: themed('primary-button-background-pressed')
       );
       border-radius: 6px;
       border: 1px solid themed('secondary-color');
@@ -125,7 +135,8 @@
         $content-color: themed('primary-color-variant-3'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-2')
+        $hover-color: themed('primary-color-variant-2'),
+        $pressed-color: themed('primary-color')
       );
       border-radius: 6px;
       border: 1px solid themed('primary-color-variant-3');

@@ -24,6 +24,10 @@ $backgrounds: (
           background-color: themed(card-background-hover);
         }
 
+        &:focus {
+          background-color: themed('card-background-pressed');
+        }
+
         &.disabled {
           cursor: unset;
 
