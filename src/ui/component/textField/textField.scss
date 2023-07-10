@@ -4,10 +4,10 @@
 
 $transition-duration: 400ms;
 
-.okp4-dataverse-portal-input-main {
+.okp4-dataverse-portal-text-field-main {
   position: relative;
   @include with-theme {
-    .okp4-dataverse-portal-input-field {
+    .okp4-dataverse-portal-text-field {
       box-sizing: border-box;
       overflow: hidden;
       width: 100%;
@@ -21,6 +21,7 @@ $transition-duration: 400ms;
       padding: 18px 8px 8px 18px;
       outline: none;
       transition: border-color $transition-duration ease-in-out;
+      resize: none;
 
       &.with-start-icon {
         padding-left: 40px;
@@ -45,10 +46,14 @@ $transition-duration: 400ms;
         border-color: rgba(24, 28, 73, 0.06);
         cursor: not-allowed;
       }
+
+      &.resizable {
+        resize: vertical;
+      }
     }
 
-    .okp4-dataverse-portal-input-start-icon,
-    .okp4-dataverse-portal-input-end-icon {
+    .okp4-dataverse-portal-text-field-start-icon,
+    .okp4-dataverse-portal-text-field-end-icon {
       position: absolute;
       top: 13px;
       width: 22px;
@@ -60,15 +65,15 @@ $transition-duration: 400ms;
       }
     }
 
-    .okp4-dataverse-portal-input-start-icon {
+    .okp4-dataverse-portal-text-field-start-icon {
       left: 12px;
     }
 
-    .okp4-dataverse-portal-input-end-icon {
+    .okp4-dataverse-portal-text-field-end-icon {
       right: 12px;
     }
 
-    .okp4-dataverse-portal-input-label {
+    .okp4-dataverse-portal-text-field-label {
       position: absolute;
       @include noto-sans(400);
       font-size: 16px;
@@ -86,24 +91,24 @@ $transition-duration: 400ms;
       }
     }
 
-    .okp4-dataverse-portal-input-field:focus:not(:disabled, :read-only) ~ .okp4-dataverse-portal-input-label,
-    .filled ~ .okp4-dataverse-portal-input-label {
+    .okp4-dataverse-portal-text-field:focus:not(:disabled, :read-only) ~ .okp4-dataverse-portal-text-field-label,
+    .filled ~ .okp4-dataverse-portal-text-field-label {
       transform: translateY(-20%) scale(0.6);
       color: themed('input-label-shrinked');
     }
 
-    .with-start-icon ~ .okp4-dataverse-portal-input-label {
+    .with-start-icon ~ .okp4-dataverse-portal-text-field-label {
       left: 40px;
     }
 
-    .okp4-dataverse-portal-input-field:disabled ~ .okp4-dataverse-portal-input-label,
-    .okp4-dataverse-portal-input-field:read-only ~ .okp4-dataverse-portal-input-label {
+    .okp4-dataverse-portal-text-field:disabled ~ .okp4-dataverse-portal-text-field-label,
+    .okp4-dataverse-portal-text-field:read-only ~ .okp4-dataverse-portal-text-field-label {
       color: themed('secondary-disabled');
       border-color: rgba(24, 28, 73, 0.06);
       @include noto-sans(700);
     }
 
-    .okp4-dataverse-portal-input-error {
+    .okp4-dataverse-portal-text-field-error {
       position: absolute;
       bottom: -17px;
       left: 17px;
@@ -113,7 +118,7 @@ $transition-duration: 400ms;
       gap: 5px;
       width: calc(100% - 17px);
       
-      .okp4-dataverse-portal-input-error-message {
+      .okp4-dataverse-portal-text-field-error-message {
         box-sizing: border-box;
         @include noto-sans(400);
         font-size: 10px;
