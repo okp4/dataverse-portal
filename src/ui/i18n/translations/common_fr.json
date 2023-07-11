@@ -18,7 +18,8 @@
     "back": "Retour",
     "previous": "Précédent",
     "next": "Suivant",
-    "seeMore": "Voir plus"
+    "seeMore": "Voir plus",
+    "delete": "Supprimer"
   },
   "filters": "Filtres",
   "dataverse": "Dataverse",
