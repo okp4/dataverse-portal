@@ -6,6 +6,7 @@ $card-height: 220px;
 $card-gap: 48px;
 $search-container-gap: 26px;
 $searchbar-height: 42px;
+$service-details-vertical-padding: 21px;
 
 .okp4-dataverse-portal-share-dataset-page-service-selection-container {
   @include with-theme() {
@@ -45,7 +46,7 @@ $searchbar-height: 42px;
       flex: 1;
 
       .okp4-dataverse-portal-searchbar-main {
-        @include grid-item($colStart: 1, $colEnd: 7, $rowStart: 1, $rowEnd: 1);
+        @include grid-item($colStart: 1, $colEnd: 7, $rowStart: 1, $rowEnd: 2);
       }
 
       .okp4-dataverse-portal-share-dataset-page-services-container {
@@ -53,7 +54,7 @@ $searchbar-height: 42px;
         position: relative; // necessary to compute the height of the scroll container
         padding-bottom: $search-container-gap;
         overflow-y: auto;
-        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2);
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: 2, $rowEnd: -1);
 
         &:has(.okp4-dataverse-portal-service-search-no-result-wrapper) {
           align-self: center;
@@ -105,24 +106,30 @@ $searchbar-height: 42px;
 
       .okp4-dataverse-portal-share-dataset-page-service-details-container {
         @include grid-item($colStart: 7, $colEnd: 13, $rowStart: 1);
-        border-radius: 12px;
-        padding: 21px 24px;
-        background: themed('card-background-gradient');
+
         margin-left: 18px;
-        max-height: calc(($card-height + $card-gap) * 2 + $search-container-gap);
+        max-height: calc(
+          $searchbar-height + ($card-height + $card-gap) * 2 + $search-container-gap
+        );
 
         @media (min-height: 851px) and (max-height: 1024px) {
-          max-height: calc($card-height + $card-gap + $card-height / 2 + $search-container-gap);
+          max-height: calc(
+            $searchbar-height + $search-container-gap + $card-height + $card-gap + $card-height / 2 -
+              $service-details-vertical-padding
+          );
         }
 
         @media (max-height: 850px) {
-          max-height: $card-height + $search-container-gap;
+          max-height: $searchbar-height + $card-height;
         }
 
         .okp4-dataverse-portal-share-dataset-page-service-details-scroll-container {
           padding-right: 20px;
           overflow-y: auto;
           max-height: inherit;
+          padding: $service-details-vertical-padding 24px;
+          background: themed('card-background-gradient');
+          border-radius: 12px;
         }
       }
     }
