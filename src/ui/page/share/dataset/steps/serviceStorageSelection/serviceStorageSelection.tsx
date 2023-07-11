@@ -35,7 +35,7 @@ export const ServiceStorageSelection: FC = () => {
   const [selectedService, setSelectedService] = useState<DataverseItemDetails | null>(null)
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
-  const scrollerRef = useRef<HTMLDivElement | null>(null)
+  const serviceContainerRef = useRef<HTMLDivElement | null>(null)
   const dispatchNotification = useDispatchNotification()
 
   const {
@@ -111,18 +111,18 @@ export const ServiceStorageSelection: FC = () => {
   }, [error, handleServicesError])
 
   useEffect(() => {
-    if (!selectedServiceRef.current || !scrollerRef.current || !selectedService) return
+    if (!selectedServiceRef.current || !serviceContainerRef.current) return
 
-    const scrollTop = scrollerRef.current.scrollTop
+    const scrollTop = serviceContainerRef.current.scrollTop
     // offsetTop is relative to the offsetParent,
     // which is the closest ancestor in the DOM tree with position: relative
     const offsetTop = selectedServiceRef.current.offsetTop
 
-    scrollerRef.current.scrollBy({
+    serviceContainerRef.current.scrollBy({
       top: offsetTop - scrollTop,
       behavior: 'smooth'
     })
-  }, [selectedServiceRef, scrollerRef, selectedService])
+  }, [selectedServiceRef, serviceContainerRef, selectedService])
 
   useEffect(() => {
     setLanguage(currentLng)()
@@ -165,7 +165,7 @@ export const ServiceStorageSelection: FC = () => {
             detailed: !!selectedService
           })}
           id="scrollable-container"
-          ref={scrollerRef}
+          ref={serviceContainerRef}
         >
           <InfiniteScroll
             dataLength={dataverse()().length}
