@@ -5,7 +5,7 @@
 import type { RenderHookResult } from '@testing-library/react'
 import { renderHook, act } from '@testing-library/react'
 import { useAppStore } from '@/ui/store/appStore'
-import type { Form, ShareDataFormSlice } from '../shareDataForm.slice'
+import type { Form, FormItem, ShareDataFormSlice } from '../shareDataForm.slice'
 import * as O from 'fp-ts/Option'
 import type { Renderer } from 'react-dom'
 
@@ -18,24 +18,28 @@ describe('Considering the ShareDataFormSlice', () => {
   const initialForm1: Form = [
     {
       id: '1',
+      label: 'title',
       value: ''
     }
   ]
-  const initialForm2 = [
+  const initialForm2: Form = [
     {
       id: '2',
+      label: 'tags',
       value: []
     }
   ]
-  const initialForm3 = [
+  const initialForm3: Form = [
     {
       id: '3',
+      label: 'fees',
       value: 0
     }
   ]
-  const initialForm4 = [
+  const initialForm4: Form = [
     {
       id: '4',
+      label: 'date',
       value: {}
     }
   ]
@@ -47,22 +51,38 @@ describe('Considering the ShareDataFormSlice', () => {
   const formItemPayload4 = { id: '4', value: { from: '2023-02-01T00:00:00.000Z' } }
 
   // Expected forms
-  const expectedForm1 = [formItemPayload1]
-  const expectedForm2 = [formItemPayload2]
-  const expectedForm3 = [formItemPayload3]
-  const expectedForm4 = [formItemPayload4]
+  const expectedForm1: Form = [{ ...formItemPayload1, label: 'title' }]
+  const expectedForm2: Form = [{ ...formItemPayload2, label: 'tags' }]
+  const expectedForm3: Form = [{ ...formItemPayload3, label: 'fees' }]
+  const expectedForm4: Form = [{ ...formItemPayload4, label: 'date' }]
 
   // Expected form items
-  const expectedFormItem1 = {
+  const expectedFormItem1: FormItem = {
     id: '1',
+    label: 'title',
     value: ''
   }
-  const expectedFormItem2 = {
+  const expectedUpdatedFormItem1: FormItem = {
     id: '1',
+    label: 'title',
     value: 'foo'
   }
-  const expectedFormItem3 = {
+
+  const expectedFormItem2: FormItem = {
+    id: '2',
+    label: 'tags',
+    value: ['foo', 'bar']
+  }
+
+  const expectedFormItem3: FormItem = {
+    id: '3',
+    label: 'fees',
+    value: 777
+  }
+
+  const expectedFormItem4: FormItem = {
     id: '4',
+    label: 'date',
     value: { from: '2023-02-01T00:00:00.000Z' }
   }
 
@@ -71,10 +91,12 @@ describe('Considering the ShareDataFormSlice', () => {
     ${undefined}    | ${undefined}        | ${undefined} | ${[]}            | ${O.none}
     ${initialForm1} | ${undefined}        | ${'4'}       | ${initialForm1}  | ${O.none}
     ${initialForm1} | ${undefined}        | ${'1'}       | ${initialForm1}  | ${O.some(expectedFormItem1)}
-    ${initialForm1} | ${formItemPayload1} | ${'1'}       | ${expectedForm1} | ${O.some(expectedFormItem2)}
+    ${initialForm1} | ${formItemPayload1} | ${'1'}       | ${expectedForm1} | ${O.some(expectedUpdatedFormItem1)}
     ${initialForm2} | ${formItemPayload2} | ${undefined} | ${expectedForm2} | ${O.none}
+    ${initialForm2} | ${formItemPayload2} | ${'2'}       | ${expectedForm2} | ${O.some(expectedFormItem2)}
     ${initialForm3} | ${formItemPayload3} | ${undefined} | ${expectedForm3} | ${O.none}
-    ${initialForm4} | ${formItemPayload4} | ${'4'}       | ${expectedForm4} | ${O.some(expectedFormItem3)}
+    ${initialForm3} | ${formItemPayload3} | ${'3'}       | ${expectedForm3} | ${O.some(expectedFormItem3)}
+    ${initialForm4} | ${formItemPayload4} | ${'4'}       | ${expectedForm4} | ${O.some(expectedFormItem4)}
   `(
     `Given an initial form <$initialForm> and a form item payload <$formItemPayload>`,
     ({ initialForm, formItemPayload, id, expectedForm, expectedFormItem }) => {

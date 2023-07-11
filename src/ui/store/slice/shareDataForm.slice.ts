@@ -18,6 +18,7 @@ export type DatePickerValue = {
 
 export type FormItem = Readonly<{
   id: FormItemId
+  label: string
   value: FormItemValue
   required?: boolean
 }>
