@@ -5,6 +5,7 @@
   @include with-theme {
     @include noto-sans(700);
     display: flex;
+    gap: 4px;
     align-items: center;
     justify-content: center;
     color: themed(primary-color-variant-3);
@@ -23,6 +24,18 @@
       text-overflow: ellipsis;
       overflow: hidden;
       max-width: 240px;
+    }
+
+    .okp4-dataverse-portal-tag-icon {
+      svg {
+        height: 14px;
+        width: 14px;
+        margin-bottom: -2px;
+      }
+
+      path {
+        fill: currentColor;
+      }
     }
   }
 }
