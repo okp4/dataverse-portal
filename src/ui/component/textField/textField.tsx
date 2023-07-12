@@ -3,11 +3,6 @@ import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './textField.scss'
 
-type Icons = {
-  startIcon?: JSX.Element
-  endIcon?: JSX.Element
-}
-
 type TextFieldProps = {
   id: string
   label: string
@@ -18,7 +13,8 @@ type TextFieldProps = {
   disabled?: boolean
   multiline?: boolean
   resizable?: boolean
-  icons?: Icons
+  leftElement?: JSX.Element
+  rightElement?: JSX.Element
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -32,7 +28,8 @@ export const TextField: FC<TextFieldProps> = ({
   disabled = false,
   multiline = false,
   resizable = false,
-  icons
+  leftElement,
+  rightElement
 }) => {
   const [focused, setFocused] = useState(false)
   const handleFocus = useCallback((): void => setFocused(true), [])
@@ -52,8 +49,8 @@ export const TextField: FC<TextFieldProps> = ({
     { focus: focused },
     { disabled },
     { resizable },
-    { 'with-start-icon': icons?.startIcon },
-    { 'with-end-icon': icons?.endIcon }
+    { 'with-left-element': leftElement },
+    { 'with-right-element': rightElement }
   )
 
   const textFieldInputProps = {
@@ -71,11 +68,14 @@ export const TextField: FC<TextFieldProps> = ({
 
   return (
     <div className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-main')}>
-      {icons?.startIcon && (
+      {leftElement && (
         <div
-          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-start-icon')}
+          className={classNames(
+            textFieldClassNames,
+            'okp4-dataverse-portal-text-field-left-element'
+          )}
         >
-          {icons.startIcon}
+          {leftElement}
         </div>
       )}
 
@@ -85,11 +85,14 @@ export const TextField: FC<TextFieldProps> = ({
         <input {...textFieldInputProps} type="text" />
       )}
 
-      {icons?.endIcon && (
+      {rightElement && (
         <div
-          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-end-icon')}
+          className={classNames(
+            textFieldClassNames,
+            'okp4-dataverse-portal-text-field-right-element'
+          )}
         >
-          {icons.endIcon}
+          {rightElement}
         </div>
       )}
       <label

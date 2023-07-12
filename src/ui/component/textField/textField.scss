@@ -64,15 +64,16 @@
       }
     }
 
-    .okp4-dataverse-portal-text-field-start-icon,
-    .okp4-dataverse-portal-text-field-end-icon {
+    .okp4-dataverse-portal-text-field-left-element,
+    .okp4-dataverse-portal-text-field-right-element {
       flex-shrink: 0;
-      width: 22px;
-      height: 22px;
       pointer-events: none;
       transform: translateY(calc(-25%));
       
       svg {
+        width: 22px;
+        height: 22px;
+
         * {
           transition: fill $transition-duration ease-in-out;
           fill: themed('input-label-shrinked');
@@ -88,8 +89,16 @@
       }
     }
 
-    .okp4-dataverse-portal-text-field-end-icon {
+    .okp4-dataverse-portal-text-field-right-element {
+      @include noto-sans(400);
+      font-size: 16px;
+      transition: color $transition-duration ease-in-out;
+      color: rgba(themed('text'), 0.4);
       margin-right: 18px;
+      
+      &.focus {
+        color: themed('primary-color-variant-1');
+      }
     }
 
     .okp4-dataverse-portal-text-field-label {
@@ -115,7 +124,7 @@
         @include noto-sans(700);
       }
 
-      &.with-start-icon {
+      &.with-left-element {
         left: calc(40px + $input-gap);
       }
 
