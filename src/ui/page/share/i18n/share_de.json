@@ -10,6 +10,7 @@
       "serviceStorageSearch": "Suche nach einem Speicherdienst",
       "select": "Wählen Sie Ihre Daten aus",
       "selectDescription": "Wählen Sie den Datensatz aus, den Sie in den Speicherdienst hochladen möchten.",
+      "knowFee": "Gebühren für die Nutzung der Daten",
       "summary": "Zusammenfassung",
       "summaryCertify": "Ich bestätige, dass ich keine persönlichen Metadaten weitergebe."
     },

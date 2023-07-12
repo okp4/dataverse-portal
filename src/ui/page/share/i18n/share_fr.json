@@ -10,6 +10,7 @@
       "serviceStorageSearch": "Rechercher un service de stockage",
       "select": "Sélectionnez vos données",
       "selectDescription": "Sélectionnez le jeu de données que vous souhaitez télécharger dans le service de stockage.",
+      "knowFee": "Redevances liées à l'utilisation des données",
       "summary": "Récapitulatif",
       "summaryCertify": "Je certifie que je ne partage aucune métadonnée personnelle."
     },

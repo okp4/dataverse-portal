@@ -5,6 +5,7 @@ import { useFileStore } from '@/ui/store'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
+import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 import './summary.scss'
 
 export const Summary: FC = () => {
@@ -63,7 +64,7 @@ export const Summary: FC = () => {
           classes={{ main: 'okp4-dataverse-portal-share-dataset-summary-file-list' }}
           items={items}
         />
-        <div className="okp4-dataverse-portal-share-dataset-summary-know">HELLO</div>
+        <KnowFee />
       </div>
       <p className="okp4-dataverse-portal-share-dataset-summary-certify">
         <DynamicCheckbox
