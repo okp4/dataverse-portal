@@ -1,4 +1,4 @@
-import { type FC, type ChangeEvent, useCallback } from 'react'
+import { type FC, type ChangeEvent, useCallback, useState, useRef } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './textField.scss'
@@ -16,7 +16,6 @@ type TextFieldProps = {
   error?: string
   required?: boolean
   disabled?: boolean
-  readonly?: boolean
   multiline?: boolean
   resizable?: boolean
   icons?: Icons
@@ -29,13 +28,17 @@ export const TextField: FC<TextFieldProps> = ({
   onChange,
   value,
   error,
-  readonly = false,
   required = false,
   disabled = false,
   multiline = false,
   resizable = false,
   icons
 }) => {
+  const [focused, setFocused] = useState(false)
+  const handleFocus = useCallback((): void => setFocused(true), [])
+  const handleBlur = useCallback((): void => setFocused(false), [])
+  const textInputRef = useRef(null)
+
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
       onChange(e.target.value)
@@ -43,48 +46,56 @@ export const TextField: FC<TextFieldProps> = ({
     [onChange]
   )
 
-  const inputClassName = classNames(
-    'okp4-dataverse-portal-text-field',
+  const textFieldClassNames = classNames(
     { filled: value },
     { error },
+    { focus: focused },
+    { disabled },
     { resizable },
     { 'with-start-icon': icons?.startIcon },
     { 'with-end-icon': icons?.endIcon }
   )
 
+  const textFieldInputProps = {
+    className: classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-input'),
+    disabled,
+    id,
+    name: id,
+    onBlur: handleBlur,
+    onChange: handleChange,
+    onFocus: handleFocus,
+    required,
+    ref: textInputRef,
+    value
+  }
+
   return (
-    <div className="okp4-dataverse-portal-text-field-main">
-      {multiline ? (
-        <textarea
-          className={inputClassName}
-          disabled={disabled}
-          id={id}
-          name={id}
-          onChange={handleChange}
-          readOnly={readonly}
-          required={required}
-          value={value}
-        />
-      ) : (
-        <input
-          className={inputClassName}
-          disabled={disabled}
-          id={id}
-          name={id}
-          onChange={handleChange}
-          readOnly={readonly}
-          required={required}
-          type="text"
-          value={value}
-        />
-      )}
+    <div className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-main')}>
       {icons?.startIcon && (
-        <div className="okp4-dataverse-portal-text-field-start-icon">{icons.startIcon}</div>
+        <div
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-start-icon')}
+        >
+          {icons.startIcon}
+        </div>
       )}
+
+      {multiline ? (
+        <textarea {...textFieldInputProps} />
+      ) : (
+        <input {...textFieldInputProps} type="text" />
+      )}
+
       {icons?.endIcon && (
-        <div className="okp4-dataverse-portal-text-field-end-icon">{icons.endIcon}</div>
+        <div
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-end-icon')}
+        >
+          {icons.endIcon}
+        </div>
       )}
-      <label className="okp4-dataverse-portal-text-field-label" htmlFor={id}>
+      <label
+        className={classNames(textFieldClassNames, 'okp4-dataverse-portal-text-field-label')}
+        htmlFor={id}
+      >
         {required ? label + '*' : label}
       </label>
       {error && (

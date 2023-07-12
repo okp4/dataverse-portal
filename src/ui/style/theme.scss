@@ -68,6 +68,7 @@ $themes: (
     input-background :$input-background-light,
     input-border :$input-border-light,
     input-label-shrinked :$input-label-shrinked-light,
+    input-label-disabled :$input-label-disabled-light,
     input-background-focused :$input-background-focused-light,
     input-background-disabled :$input-background-disabled-light,
   ),
@@ -137,6 +138,7 @@ $themes: (
     input-background :$input-background-dark,
     input-border :$input-border-dark,
     input-label-shrinked :$input-label-shrinked-dark,
+    input-label-disabled :$input-label-disabled-dark,
     input-background-focused :$input-background-focused-dark,
     input-background-disabled :$input-background-disabled-dark,
   )
