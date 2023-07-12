@@ -27,10 +27,12 @@
     }
 
     .okp4-dataverse-portal-tag-icon {
+      cursor: pointer;
+
+      &,
       svg {
         height: 14px;
         width: 14px;
-        margin-bottom: -2px;
       }
 
       path {

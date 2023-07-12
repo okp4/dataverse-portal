@@ -1,4 +1,4 @@
-import { useCallback, type FC } from 'react'
+import { type FC } from 'react'
 import { Icon } from '@/ui/component/icon/icon'
 import './tag.scss'
 import { useTranslation } from 'react-i18next'
@@ -10,11 +10,6 @@ type TagProps = {
 
 export const Tag: FC<TagProps> = ({ tagName, onDelete }) => {
   const { t } = useTranslation('common')
-  const handleDelete = useCallback(() => {
-    if (onDelete) {
-      onDelete()
-    }
-  }, [onDelete])
 
   return (
     <div className="okp4-dataverse-portal-tag-main">
@@ -22,7 +17,7 @@ export const Tag: FC<TagProps> = ({ tagName, onDelete }) => {
       {onDelete && (
         <div
           className="okp4-dataverse-portal-tag-icon"
-          onClick={handleDelete}
+          onClick={onDelete}
           role="button"
           tabIndex={0}
           title={t('actions.delete')}
