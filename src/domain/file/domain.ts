@@ -14,11 +14,11 @@ import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
 import type { File } from './entity'
 import type { Command, FileId, StoreFileInput, StoreFilesInput } from './command'
-import { ResourceConflictError, ResourceNotFoundError } from './command'
 import type { ForgetType } from '@/util/type'
 import { isDevMode } from '@/util/env.util'
 import type { FileDescriptor, Query } from './query'
 import type { Eq } from 'fp-ts/lib/Eq'
+import { ResourceConflictError, ResourceNotFoundError } from '@/shared/error'
 
 export type State = {
   data: File[]
