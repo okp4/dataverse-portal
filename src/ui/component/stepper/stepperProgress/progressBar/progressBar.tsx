@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
-import type { StepStatus } from '../../useStepper'
+import type { StepStatus } from '@/ui/hook/useStepper'
 import './progressBar.scss'
 
 type ProgressBarState = 'active' | StepStatus
