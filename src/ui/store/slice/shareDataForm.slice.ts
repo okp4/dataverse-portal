@@ -10,6 +10,8 @@ import { contramap as eqContramap } from 'fp-ts/Eq'
 
 export type FormItemId = string
 
+export type FormItemType = 'text' | 'numeric' | 'date' | 'select'
+
 export type FormItemValue = string | string[] | number | DatePickerValue
 export type DatePickerValue = {
   from?: string
@@ -18,6 +20,7 @@ export type DatePickerValue = {
 
 export type FormItem = Readonly<{
   id: FormItemId
+  type: FormItemType
   label: string
   value: FormItemValue
   required?: boolean
