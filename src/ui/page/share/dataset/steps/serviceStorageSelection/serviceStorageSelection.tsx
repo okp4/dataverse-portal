@@ -35,6 +35,7 @@ export const ServiceStorageSelection: FC = () => {
   const [selectedService, setSelectedService] = useState<DataverseItemDetails | null>(null)
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
+  const serviceContainerRef = useRef<HTMLDivElement | null>(null)
   const dispatchNotification = useDispatchNotification()
 
   const {
@@ -109,14 +110,19 @@ export const ServiceStorageSelection: FC = () => {
     O.map(handleServicesError)(error()())
   }, [error, handleServicesError])
 
-  // TODO: fix headers scroll bug before enabling this
-  // useEffect(() => {
-  //   if (selectedService)
-  //     selectedServiceRef.current?.scrollIntoView({
-  //       behavior: 'smooth',
-  //       block: 'center'
-  //     })
-  // }, [selectedService])
+  useEffect(() => {
+    if (!selectedServiceRef.current || !serviceContainerRef.current) return
+
+    const scrollTop = serviceContainerRef.current.scrollTop
+    // offsetTop is relative to the offsetParent,
+    // which is the closest ancestor in the DOM tree with position: relative
+    const offsetTop = selectedServiceRef.current.offsetTop
+
+    serviceContainerRef.current.scrollBy({
+      top: offsetTop - scrollTop,
+      behavior: 'smooth'
+    })
+  }, [selectedServiceRef, serviceContainerRef, selectedService])
 
   useEffect(() => {
     setLanguage(currentLng)()
@@ -148,77 +154,80 @@ export const ServiceStorageSelection: FC = () => {
           rightTabLabel={t('share:share.dataset.external')}
         />
       </div>
-      <SearchBar
-        onSearch={handleServiceSearch}
-        placeholder={t('share:share.dataset.serviceStorageSearch')}
-        value={byPropertyFilter()()}
-      />
-      <div
-        className={classNames('okp4-dataverse-portal-share-dataset-page-services-container', {
-          detailed: !!selectedService
-        })}
-        id="scrollable-container"
-      >
-        <InfiniteScroll
-          dataLength={dataverse()().length}
-          hasMore={hasNext()()}
-          loader={dataverse()().length && <LottieLoader animationData={threeDots} />}
-          next={loadDataverse()}
-          scrollThreshold={0.91}
-          scrollableTarget="scrollable-container"
+      <div className="okp4-dataverse-portal-share-dataset-page-service-selection-search-container">
+        <SearchBar
+          onSearch={handleServiceSearch}
+          placeholder={t('share:share.dataset.serviceStorageSearch')}
+          value={byPropertyFilter()()}
+        />
+        <div
+          className={classNames('okp4-dataverse-portal-share-dataset-page-services-container', {
+            detailed: !!selectedService
+          })}
+          id="scrollable-container"
+          ref={serviceContainerRef}
         >
-          <div className="okp4-dataverse-portal-share-dataset-page-services">
-            {!dataverse()().length && isLoading()()
-              ? loadingDataverseCards(12)
-              : dataverse()().map(({ id, properties }) => {
-                  const publisher = properties.find(p => p.property === 'publisher')?.value ?? ''
-                  const publisherDescription = `${t('metadata:publisher')} **${publisher}**`
-                  const isServiceSelected = selectedService?.id === id
-                  return (
-                    <DataverseItemCard
-                      button={
-                        <Button
-                          className={classNames({ 'selected-button': isServiceSelected })}
-                          label={t(isServiceSelected ? 'selected' : 'select')}
-                          onClick={handleSelect(id)}
-                        />
-                      }
-                      className={classNames('okp4-dataverse-portal-share-dataset-page-service', {
-                        selected: isServiceSelected
-                      })}
-                      key={id}
-                      label={properties.find(p => p.property === 'title')?.value ?? ''}
-                      ref={isServiceSelected ? selectedServiceRef : undefined}
-                      topic={publisherDescription}
-                      type={
-                        properties
-                          .find(p => p.property === 'type')
-                          ?.value.toLowerCase() as DataverseItem
-                      }
-                    />
-                  )
-                })}
-          </div>
-        </InfiniteScroll>
+          <InfiniteScroll
+            dataLength={dataverse()().length}
+            hasMore={hasNext()()}
+            loader={dataverse()().length && <LottieLoader animationData={threeDots} />}
+            next={loadDataverse()}
+            scrollThreshold={0.91}
+            scrollableTarget="scrollable-container"
+          >
+            <div className="okp4-dataverse-portal-share-dataset-page-services">
+              {!dataverse()().length && isLoading()()
+                ? loadingDataverseCards(12)
+                : dataverse()().map(({ id, properties }) => {
+                    const publisher = properties.find(p => p.property === 'publisher')?.value ?? ''
+                    const publisherDescription = `${t('metadata:publisher')} **${publisher}**`
+                    const isServiceSelected = selectedService?.id === id
+                    return (
+                      <DataverseItemCard
+                        button={
+                          <Button
+                            className={classNames({ 'selected-button': isServiceSelected })}
+                            label={t(isServiceSelected ? 'selected' : 'select')}
+                            onClick={handleSelect(id)}
+                          />
+                        }
+                        className={classNames('okp4-dataverse-portal-share-dataset-page-service', {
+                          selected: isServiceSelected
+                        })}
+                        key={id}
+                        label={properties.find(p => p.property === 'title')?.value ?? ''}
+                        ref={isServiceSelected ? selectedServiceRef : undefined}
+                        topic={publisherDescription}
+                        type={
+                          properties
+                            .find(p => p.property === 'type')
+                            ?.value.toLowerCase() as DataverseItem
+                        }
+                      />
+                    )
+                  })}
+            </div>
+          </InfiniteScroll>
 
-        {!dataverse()().length && !isLoading()() && (
-          <NoResultFound
-            className="okp4-dataverse-portal-service-search-no-result-wrapper"
-            iconName="large-magnifier-with-cross"
-          />
+          {!dataverse()().length && !isLoading()() && (
+            <NoResultFound
+              className="okp4-dataverse-portal-service-search-no-result-wrapper"
+              iconName="large-magnifier-with-cross"
+            />
+          )}
+        </div>
+        {!!selectedService && (
+          <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">
+            <div className="okp4-dataverse-portal-share-dataset-page-service-details-scroll-container">
+              <DetailedDataverseItem
+                data={selectedService}
+                metadata={serviceGeneralMetadata}
+                onClose={handleClose}
+              />
+            </div>
+          </div>
         )}
       </div>
-      {!!selectedService && (
-        <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">
-          <div className="okp4-dataverse-portal-share-dataset-page-service-details-scroll-container">
-            <DetailedDataverseItem
-              data={selectedService}
-              metadata={serviceGeneralMetadata}
-              onClose={handleClose}
-            />
-          </div>
-        </div>
-      )}
     </div>
   )
 }

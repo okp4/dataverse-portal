@@ -33,7 +33,7 @@
   @content;
 }
 
-@mixin grid-item($colStart, $colEnd, $rowStart, $rowEnd) {
+@mixin grid-item($colStart: auto, $colEnd: auto, $rowStart: auto, $rowEnd: auto) {
   grid-column-start: $colStart;
   grid-column-end: $colEnd;
   grid-row-start: $rowStart;
