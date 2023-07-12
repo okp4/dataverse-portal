@@ -6,8 +6,8 @@ import { useAppStore } from '@/ui/store/index'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
-import { DropDown } from '@/ui/component/dropDown/dropDown'
-import type { Option, SubOption } from '@/ui/component/dropDown/dropDown'
+import { Accordion } from '@/ui/component/accordion/accordion'
+import type { Option, SubOption } from '@/ui/component/accordion/accordion'
 import type { SectionDTO, SubSectionDTO } from './mockedData'
 
 type GovernanceWithNavigationProps = {
@@ -68,7 +68,7 @@ export const GovernanceNavigation: FC<GovernanceWithNavigationProps> = ({
   return (
     <nav className="okp4-dataverse-portal-governance-page-navigation">
       {isTablet || isMobile ? (
-        <DropDown onChange={handleSelect} options={options} value={selectedOption} />
+        <Accordion onChange={handleSelect} options={options} value={selectedOption} />
       ) : (
         <ul className="okp4-dataverse-portal-governance-page-navigation-section-list">
           {sections.map(({ title: sectionTitle, contains: subsections, id: sectionId }) => {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
 import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import { Icon } from '@/ui/component/icon/icon'
-import './dropDown.scss'
+import './accordion.scss'
 
 export type SubOption = Omit<Option, 'subOptions'> & { parentOptionValue: string }
 
@@ -14,25 +14,25 @@ export type Option = {
   subOptions?: SubOption[]
 }
 
-type DropDownMenu = {
+type AccordionMenu = {
   label: string
   menuOptions: Option[]
 }
 
-type DropDownProps = {
+type AccordionProps = {
   options: Option[]
   onChange: (selectedOption: string, selectedSubOption?: string) => void
   value: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
+export const Accordion: FC<AccordionProps> = ({ options, onChange, value }) => {
   const { t } = useTranslation('common')
   const [menuOpened, setMenuOpened] = useState<boolean>(false)
   const [focusedMenuIndex, setFocusedMenuIndex] = useState<number>(0)
-  const [dropDownMenus, setDropDownMenus] = useState<DropDownMenu[]>([])
+  const [accordionMenus, setAccordionMenus] = useState<AccordionMenu[]>([])
   const menuContainerRef = useRef<HTMLDivElement | null>(null)
-  const dropDownMenusRefs = useRef<HTMLDivElement[]>([])
+  const accordionMenusRefs = useRef<HTMLDivElement[]>([])
 
   const toggleMenu = useCallback(() => {
     setMenuOpened(!menuOpened)
@@ -53,16 +53,16 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
   )
 
   const slideMenu = useCallback(
-    (menuIndex: number, nextMenu?: DropDownMenu) => {
-      dropDownMenusRefs.current[menuIndex].scrollIntoView({
+    (menuIndex: number, nextMenu?: AccordionMenu) => {
+      accordionMenusRefs.current[menuIndex].scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
         inline: 'center'
       })
-      nextMenu && setDropDownMenus([dropDownMenus[0], nextMenu])
+      nextMenu && setAccordionMenus([accordionMenus[0], nextMenu])
       setFocusedMenuIndex(menuIndex)
     },
-    [dropDownMenus]
+    [accordionMenus]
   )
 
   const handleSubOptionClick = useCallback(
@@ -92,40 +92,41 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
   )
 
   const assignMenuRef = useCallback(
-    (index: number) => (ref: HTMLDivElement) => (dropDownMenusRefs.current[index] = ref),
+    (index: number) => (ref: HTMLDivElement) => (accordionMenusRefs.current[index] = ref),
     []
   )
 
-  const dropDownTitle = useMemo(
-    () => (dropDownMenus.length ? dropDownMenus[focusedMenuIndex].label : value),
-    [focusedMenuIndex, dropDownMenus, value]
+  const accordionTitle = useMemo(
+    () => (accordionMenus.length ? accordionMenus[focusedMenuIndex].label : value),
+    [focusedMenuIndex, accordionMenus, value]
   )
 
-  const dropDownSlidingMenus = dropDownMenus.length === 1 ? [...dropDownMenus, null] : dropDownMenus
+  const accordionSlidingMenus =
+    accordionMenus.length === 1 ? [...accordionMenus, null] : accordionMenus
 
   useEffect(() => {
-    setDropDownMenus([{ label: value, menuOptions: options }])
+    setAccordionMenus([{ label: value, menuOptions: options }])
     setFocusedMenuIndex(0)
   }, [menuOpened, options, value])
 
   return (
-    <div className="okp4-dataverse-portal-drop-down-menu-main">
-      {menuOpened && <div className="okp4-dataverse-portal-drop-down-menu-blur" />}
-      <div className="okp4-dataverse-portal-drop-down-menu-container" ref={menuContainerRef}>
+    <div className="okp4-dataverse-portal-accordion-menu-main">
+      {menuOpened && <div className="okp4-dataverse-portal-accordion-menu-blur" />}
+      <div className="okp4-dataverse-portal-accordion-menu-container" ref={menuContainerRef}>
         <div
-          className={classnames('okp4-dataverse-portal-drop-down-menu-item selected', {
+          className={classnames('okp4-dataverse-portal-accordion-menu-item selected', {
             'menu-opened': menuOpened
           })}
           onClick={toggleMenu}
         >
-          <p>{dropDownTitle}</p>
+          <p>{accordionTitle}</p>
           <Icon name="chevron-sharp" />
         </div>
         {menuOpened && (
-          <div className="okp4-dataverse-portal-drop-down-menus-container">
-            {dropDownSlidingMenus.map((menu, index) => (
+          <div className="okp4-dataverse-portal-accordion-menus-container">
+            {accordionSlidingMenus.map((menu, index) => (
               <div
-                className={classnames('okp4-dataverse-portal-drop-down-menu-options-container', {
+                className={classnames('okp4-dataverse-portal-accordion-menu-options-container', {
                   focused: index === focusedMenuIndex
                 })}
                 key={index}
@@ -133,7 +134,7 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
               >
                 {index !== 0 && (
                   <div
-                    className="okp4-dataverse-portal-drop-down-menu-item back-button"
+                    className="okp4-dataverse-portal-accordion-menu-item back-button"
                     onClick={backToPreviousMenu(index)}
                   >
                     <Icon name="arrow-left" />
@@ -145,7 +146,7 @@ export const DropDown: FC<DropDownProps> = ({ options, onChange, value }) => {
 
                   return (
                     <div
-                      className="okp4-dataverse-portal-drop-down-menu-item option"
+                      className="okp4-dataverse-portal-accordion-menu-item option"
                       key={option.value}
                       onClick={
                         option.subOptions
