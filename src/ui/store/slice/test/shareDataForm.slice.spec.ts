@@ -18,6 +18,7 @@ describe('Considering the ShareDataFormSlice', () => {
   const initialForm1: Form = [
     {
       id: '1',
+      type: 'text',
       label: 'title',
       value: ''
     }
@@ -25,6 +26,7 @@ describe('Considering the ShareDataFormSlice', () => {
   const initialForm2: Form = [
     {
       id: '2',
+      type: 'select',
       label: 'tags',
       value: []
     }
@@ -32,6 +34,7 @@ describe('Considering the ShareDataFormSlice', () => {
   const initialForm3: Form = [
     {
       id: '3',
+      type: 'numeric',
       label: 'fees',
       value: 0
     }
@@ -39,6 +42,7 @@ describe('Considering the ShareDataFormSlice', () => {
   const initialForm4: Form = [
     {
       id: '4',
+      type: 'date',
       label: 'date',
       value: {}
     }
@@ -51,38 +55,18 @@ describe('Considering the ShareDataFormSlice', () => {
   const formItemPayload4 = { id: '4', value: { from: '2023-02-01T00:00:00.000Z' } }
 
   // Expected forms
-  const expectedForm1: Form = [{ ...formItemPayload1, label: 'title' }]
-  const expectedForm2: Form = [{ ...formItemPayload2, label: 'tags' }]
-  const expectedForm3: Form = [{ ...formItemPayload3, label: 'fees' }]
-  const expectedForm4: Form = [{ ...formItemPayload4, label: 'date' }]
+  const expectedForm1: Form = [{ ...formItemPayload1, label: 'title', type: 'text' }]
+  const expectedForm2: Form = [{ ...formItemPayload2, label: 'tags', type: 'select' }]
+  const expectedForm3: Form = [{ ...formItemPayload3, label: 'fees', type: 'numeric' }]
+  const expectedForm4: Form = [{ ...formItemPayload4, label: 'date', type: 'date' }]
 
   // Expected form items
-  const expectedFormItem1: FormItem = {
-    id: '1',
-    label: 'title',
-    value: ''
-  }
-  const expectedUpdatedFormItem1: FormItem = {
-    id: '1',
-    label: 'title',
-    value: 'foo'
-  }
-
-  const expectedFormItem2: FormItem = {
-    id: '2',
-    label: 'tags',
-    value: ['foo', 'bar']
-  }
-
-  const expectedFormItem3: FormItem = {
-    id: '3',
-    label: 'fees',
-    value: 777
-  }
-
+  const expectedFormItem1: FormItem = initialForm1[0]
+  const expectedUpdatedFormItem1: FormItem = { ...initialForm1[0], value: 'foo' }
+  const expectedFormItem2: FormItem = { ...initialForm2[0], value: ['foo', 'bar'] }
+  const expectedFormItem3: FormItem = { ...initialForm3[0], value: 777 }
   const expectedFormItem4: FormItem = {
-    id: '4',
-    label: 'date',
+    ...initialForm4[0],
     value: { from: '2023-02-01T00:00:00.000Z' }
   }
 
