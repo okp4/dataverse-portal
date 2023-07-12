@@ -2,11 +2,11 @@
 import * as FileDomain from '@/domain/file/domain'
 import type { StoreApi } from 'zustand'
 import type { StoreFileInput, StoreFilesInput } from '../command'
-import { ResourceConflictError, ShowFileError } from '../command'
 import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
+import { ResourceConflictError, ShowFileError } from '@/shared/error'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
