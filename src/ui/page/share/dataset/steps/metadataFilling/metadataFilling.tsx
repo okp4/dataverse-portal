@@ -1,7 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import uuid from 'short-uuid'
 import * as O from 'fp-ts/Option'
 import * as IOE from 'fp-ts/IOEither'
 import { pipe } from 'fp-ts/lib/function'
@@ -70,10 +69,19 @@ export const MetadataFilling: FC = () => {
     [setFormItemValue]
   )
 
+  const formItemValue = useCallback(
+    (id: string): string =>
+      O.match(
+        () => '',
+        (it: FormItem) => it.value as string
+      )(formItemById(id)()),
+    [formItemById]
+  )
+
   const datasetForm: DatasetForm = useMemo(
     () => [
       {
-        id: uuid.generate(),
+        id: 'input-field-1',
         type: 'text',
         label: 'title',
         value: '',
@@ -87,17 +95,14 @@ export const MetadataFilling: FC = () => {
                 label={t('share.metadataFilling.datasetTitle')}
                 onChange={handleChange(id)}
                 required
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-2',
         type: 'text',
         label: 'publisher',
         value: '',
@@ -110,17 +115,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.publisher')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-3',
         type: 'text',
         label: 'creator',
         value: '',
@@ -133,17 +135,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.creator')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-4',
         type: 'text',
         label: 'description',
         value: '',
@@ -156,17 +155,14 @@ export const MetadataFilling: FC = () => {
                 label={t('share.metadataFilling.description')}
                 multiline
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-5',
         type: 'text',
         label: 'format',
         value: [],
@@ -179,17 +175,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.formatSelection')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-6',
         type: 'text',
         label: 'license',
         value: [],
@@ -202,17 +195,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.licenceSelection')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-7',
         type: 'text',
         label: 'topic',
         value: [],
@@ -225,17 +215,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.topicSelection')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-8',
         type: 'text',
         label: 'geographicalCoverage',
         value: [],
@@ -248,17 +235,14 @@ export const MetadataFilling: FC = () => {
                 id={id}
                 label={t('share.metadataFilling.geographicalCoverageSelection')}
                 onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
+                value={formItemValue(id)}
               />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-9',
         type: 'text',
         label: 'tags',
         value: [],
@@ -267,21 +251,13 @@ export const MetadataFilling: FC = () => {
           return (
             <div className="okp4-dataverse-portal-share-data-metadata-filling">
               <p>{t('share.metadataFilling.tags')}</p>
-              <Field
-                id={id}
-                label={'tags'}
-                onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
-              />
+              <Field id={id} label={'tags'} onChange={handleChange(id)} value={formItemValue(id)} />
             </div>
           )
         }
       },
       {
-        id: uuid.generate(),
+        id: 'input-field-10',
         type: 'text',
         label: 'fee',
         value: 0,
@@ -289,21 +265,13 @@ export const MetadataFilling: FC = () => {
         renderFormItem: (id): JSX.Element => {
           return (
             <div className="okp4-dataverse-portal-share-data-metadata-filling fee">
-              <Field
-                id={id}
-                label={'fee'}
-                onChange={handleChange(id)}
-                value={O.match(
-                  () => '',
-                  (it: FormItem) => it.value as string
-                )(formItemById(id)())}
-              />
+              <Field id={id} label={'fee'} onChange={handleChange(id)} value={formItemValue(id)} />
             </div>
           )
         }
       }
     ],
-    [formItemById, handleChange, t]
+    [formItemValue, handleChange, t]
   )
 
   const mapForm = (form: DatasetForm): initFormPayload => {
@@ -330,9 +298,9 @@ export const MetadataFilling: FC = () => {
 
   useEffect(() => {
     const initialForm = mapForm(datasetForm)
-    initForm(initialForm)()
-    // pipe(initialForm, initForm(initialForm)(), IOE.mapLeft(handleFormError))
-  }, [datasetForm, handleFormError, initForm])
+    pipe(initialForm, initForm, IOE.mapLeft(handleFormError))()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datasetForm])
 
   return (
     <div className="okp4-dataverse-portal-share-data-metadata-filling-container">
