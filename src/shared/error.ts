@@ -1,15 +1,15 @@
 import type { Show } from 'fp-ts/lib/Show'
 
-export const ResourceConflictError = (resourceIds: string[]) =>
+export const ResourceAlreadyExistsError = (resourceIds: string[]) =>
   ({
-    _tag: 'resource-conflict',
+    _tag: 'resource-already-exists',
     resourceIds
   } as const)
 
 /**
- *  Error when an id of a resource to be stored already exists in memory.
+ *  Error when an id of a resource to be stored already exists in the domain.
  */
-export type ResourceConflictError = ReturnType<typeof ResourceConflictError>
+export type ResourceAlreadyExistsError = ReturnType<typeof ResourceAlreadyExistsError>
 
 export const ResourceNotFoundError = (resourceId: string) =>
   ({
@@ -18,16 +18,16 @@ export const ResourceNotFoundError = (resourceId: string) =>
   } as const)
 
 /**
- *  Error when the id of a resource is not found in memory.
+ *  Error when the id of a resource is not found in the domain.
  */
 export type ResourceNotFoundError = ReturnType<typeof ResourceNotFoundError>
 
-export type ResourceError = ResourceConflictError | ResourceNotFoundError
+export type ResourceError = ResourceAlreadyExistsError | ResourceNotFoundError
 
 export const ShowFileError: Show<ResourceError> = {
   show: (error: ResourceError): string => {
     switch (error._tag) {
-      case 'resource-conflict': {
+      case 'resource-already-exists': {
         return `Error ${
           error._tag
         }: Failed to store resource with conflicting IDs [${error.resourceIds.join(', ')}].`

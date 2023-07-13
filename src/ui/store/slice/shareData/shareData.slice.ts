@@ -12,7 +12,7 @@ import * as B from 'fp-ts/boolean'
 import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
 import { contramap as eqContramap } from 'fp-ts/Eq'
-import { ResourceConflictError, ResourceNotFoundError } from '@/shared/error'
+import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
 
 export type DatePickerValue = {
   from?: string
@@ -40,7 +40,7 @@ export type initFormPayload = initFormItem[]
 export type ShareDataSlice = {
   shareData: {
     form: Form
-    initForm: (payload: initFormPayload) => IOEither<ResourceConflictError, void>
+    initForm: (payload: initFormPayload) => IOEither<ResourceAlreadyExistsError, void>
     setFormItemValue: (payload: SetFormItemValuePayload) => IOEither<ResourceNotFoundError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
   }
@@ -54,8 +54,8 @@ const eqFormItem: Eq<{ id: string }> = pipe(
 
 const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
-const resourceConflictError = (resourceIds: FormItemId[]): ResourceConflictError =>
-  ResourceConflictError(resourceIds)
+const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyExistsError =>
+  ResourceAlreadyExistsError(resourceIds)
 
 const isInitFormPayloadUniq = (payload: initFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
@@ -81,12 +81,12 @@ const mapFormIds = (form: Form): FormItemId[] => A.map((formItem: FormItem) => f
 
 const initFormInvariant =
   (initForm: initFormPayload) =>
-  (state: Form): E.Either<ResourceConflictError, initFormPayload> =>
+  (state: Form): E.Either<ResourceAlreadyExistsError, initFormPayload> =>
     pipe(
       initForm,
-      E.fromPredicate(flow(isInitFormIdUniq(state)), flow(mapFormIds, resourceConflictError)),
+      E.fromPredicate(flow(isInitFormIdUniq(state)), flow(mapFormIds, resourceAlreadyExistsError)),
       E.flatMap(
-        flow(E.fromPredicate(isInitFormPayloadUniq, flow(mapFormIds, resourceConflictError)))
+        flow(E.fromPredicate(isInitFormPayloadUniq, flow(mapFormIds, resourceAlreadyExistsError)))
       )
     )
 

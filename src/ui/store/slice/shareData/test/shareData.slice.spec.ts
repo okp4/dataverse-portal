@@ -12,7 +12,7 @@ import type {
   ShareDataSlice
 } from '../shareData.slice'
 import * as O from 'fp-ts/Option'
-import { ResourceNotFoundError, ShowFileError, ResourceConflictError } from '@/shared/error'
+import { ResourceNotFoundError, ShowFileError, ResourceAlreadyExistsError } from '@/shared/error'
 import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/Either'
 import * as App from '../../../appStore'
@@ -29,7 +29,7 @@ type Data = {
   expectedForm: Form
   expectedFormItem: FormItem
   resourceNotFoundError?: ResourceNotFoundError
-  resourceConflictError?: ResourceConflictError
+  resourceAlreadyExistsError?: ResourceAlreadyExistsError
 }
 
 const initStore = (): Store => {
@@ -113,10 +113,10 @@ describe('Considering the ShareDataSlice', () => {
   }
 
   describe.each`
-    initialForm     | formItemPayload     | id           | expectedForm     | expectedFormItem                    | resourceNotFoundError                         | resourceConflictError
+    initialForm     | formItemPayload     | id           | expectedForm     | expectedFormItem                    | resourceNotFoundError                         | resourceAlreadyExistsError
     ${undefined}    | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}                                  | ${undefined}
     ${initialForm1} | ${undefined}        | ${undefined} | ${initialForm1}  | ${O.none}                           | ${undefined}                                  | ${undefined}
-    ${initialForm5} | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}                                  | ${ResourceConflictError(['5', '5'])}
+    ${initialForm5} | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}                                  | ${ResourceAlreadyExistsError(['5', '5'])}
     ${initialForm1} | ${undefined}        | ${'1'}       | ${initialForm1}  | ${O.some(expectedFormItem1)}        | ${undefined}                                  | ${undefined}
     ${initialForm1} | ${formItemPayload1} | ${'1'}       | ${expectedForm1} | ${O.some(expectedUpdatedFormItem1)} | ${undefined}                                  | ${undefined}
     ${initialForm2} | ${formItemPayload2} | ${undefined} | ${expectedForm2} | ${O.none}                           | ${undefined}                                  | ${undefined}
@@ -134,7 +134,7 @@ describe('Considering the ShareDataSlice', () => {
       expectedForm,
       expectedFormItem,
       resourceNotFoundError,
-      resourceConflictError
+      resourceAlreadyExistsError
     }: Data) => {
       describe('When setting formItem value after intialization', () => {
         const { store } = initStore()
@@ -146,18 +146,15 @@ describe('Considering the ShareDataSlice', () => {
             const result = store.getState().shareData.initForm(initialForm)()
             expect(result).toBeEither()
 
-            if (resourceConflictError) {
+            if (resourceAlreadyExistsError) {
               expect(result).toBeLeft()
-              expect(result).toEqualLeft(resourceConflictError)
+              expect(result).toEqualLeft(resourceAlreadyExistsError)
 
-              const message = pipe(
-                result,
-                E.getOrElseW(e => ShowFileError.show(e))
-              )
+              const message = pipe(result, E.getOrElseW(ShowFileError.show))
               expect(message).toStrictEqual(
                 `Error ${
-                  resourceConflictError._tag
-                }: Failed to store resource with conflicting IDs [${resourceConflictError.resourceIds.join(
+                  resourceAlreadyExistsError._tag
+                }: Failed to store resource with conflicting IDs [${resourceAlreadyExistsError.resourceIds.join(
                   ', '
                 )}].`
               )
@@ -173,10 +170,7 @@ describe('Considering the ShareDataSlice', () => {
               expect(result).toBeLeft()
               expect(result).toEqualLeft(resourceNotFoundError)
 
-              const message = pipe(
-                result,
-                E.getOrElseW(e => ShowFileError.show(e))
-              )
+              const message = pipe(result, E.getOrElseW(ShowFileError.show))
               expect(message).toStrictEqual(
                 `Error ${resourceNotFoundError._tag}: Failed to handle resource with ID '${resourceNotFoundError.resourceId}' since it does not exist.`
               )
