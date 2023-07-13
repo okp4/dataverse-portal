@@ -3,15 +3,24 @@ import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import uuid from 'short-uuid'
 import * as O from 'fp-ts/Option'
+import * as IOE from 'fp-ts/IOEither'
+import { pipe } from 'fp-ts/lib/function'
 import type {
-  Form,
   FormItem,
   FormItemType,
-  FormItemValue
+  FormItemValue,
+  initFormPayload
 } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
-import './metadataFilling.scss'
+import {
+  type ResourceNotFoundError,
+  type ResourceAlreadyExistsError,
+  ShowFileError
+} from '@/shared/error'
 import { Field } from '@/ui/component/field/field'
+import type { NotificationType } from '@/ui/component/notification/notification'
+import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
+import './metadataFilling.scss'
 
 type DatasetFormItem = {
   id: string
@@ -25,8 +34,27 @@ type DatasetFormItem = {
 
 type DatasetForm = DatasetFormItem[]
 
+type NotificationData = {
+  title: string
+  type: NotificationType
+}
+
+type FormError = ResourceNotFoundError | ResourceAlreadyExistsError
+
+const formErrorData = (error: FormError): NotificationData => {
+  switch (error._tag) {
+    case 'resource-not-found':
+    case 'resource-already-exists':
+      return {
+        title: 'notification:error.problem',
+        type: 'error'
+      }
+  }
+}
+
 export const MetadataFilling: FC = () => {
   const { t } = useTranslation('share')
+  const dispatchNotification = useDispatchNotification()
   const { initForm, setFormItemValue, formItemById } = useAppStore(state => ({
     initForm: state.shareData.initForm,
     setFormItemValue: state.shareData.setFormItemValue,
@@ -278,7 +306,7 @@ export const MetadataFilling: FC = () => {
     [formItemById, handleChange, t]
   )
 
-  const mapForm = (form: DatasetForm): Form => {
+  const mapForm = (form: DatasetForm): initFormPayload => {
     return form.map(formItem => ({
       id: formItem.id,
       type: formItem.type,
@@ -288,10 +316,23 @@ export const MetadataFilling: FC = () => {
     }))
   }
 
+  const handleFormError = useCallback(
+    (error: FormError) => {
+      const { title, type } = formErrorData(error)
+      console.error(ShowFileError.show(error))
+      dispatchNotification({
+        type: type,
+        titleKey: title
+      })
+    },
+    [dispatchNotification]
+  )
+
   useEffect(() => {
     const initialForm = mapForm(datasetForm)
     initForm(initialForm)()
-  }, [datasetForm, initForm])
+    // pipe(initialForm, initForm(initialForm)(), IOE.mapLeft(handleFormError))
+  }, [datasetForm, handleFormError, initForm])
 
   return (
     <div className="okp4-dataverse-portal-share-data-metadata-filling-container">
