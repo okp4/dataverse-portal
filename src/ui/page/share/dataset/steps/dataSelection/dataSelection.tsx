@@ -9,17 +9,13 @@ import { FilePicker } from '@/ui/component/filePicker/filePicker'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { useFileStore } from '@/ui/store'
-import {
-  ShowFileError,
-  type FileError,
-  type FileId,
-  type StoreFilesInput
-} from '@/domain/file/command'
+import { type FileId, type StoreFilesInput } from '@/domain/file/command'
 import './dataSelection.scss'
 import {
   useDispatchNotification,
   type DispatchNotificationInput
 } from '@/ui/hook/useDispatchNotification'
+import { ShowFileError, type ResourceError } from '@/shared/error'
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
@@ -31,7 +27,7 @@ export const DataSelection: FC = () => {
   const dispatchNotification = useDispatchNotification()
 
   const handleFileError = useCallback(
-    (error: FileError) => {
+    (error: ResourceError) => {
       const notificationInput: DispatchNotificationInput = {
         type: 'error',
         titleKey: 'error.selectionFailed',

@@ -41,8 +41,8 @@
           {
             "target": "./src/domain",
             "from": ".",
-            "except": ["./src/domain", "./src/util", "./node_modules"],
-            "message": "Package 'domain' is not allowed to import from any path except 'util' or itself."
+            "except": ["./src/domain", "./src/util", "./src/shared", "./node_modules"],
+            "message": "Package 'domain' is not allowed to import from any path except 'util', 'shared' or itself."
           },
           {
             "target": "./src/ui",

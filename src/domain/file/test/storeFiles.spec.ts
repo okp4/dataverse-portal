@@ -2,11 +2,11 @@
 import * as FileDomain from '@/domain/file/domain'
 import type { StoreApi } from 'zustand'
 import type { StoreFileInput, StoreFilesInput } from '../command'
-import { ResourceConflictError, ShowFileError } from '../command'
 import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
+import { ResourceAlreadyExistsError, ShowFileError } from '@/shared/error'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
@@ -16,7 +16,7 @@ type Data = {
   filesToStore: StoreFilesInput
   preloadedState: FileDomain.Options
   expectedFilesDescriptor: FilesDescriptor
-  error?: ResourceConflictError
+  error?: ResourceAlreadyExistsError
 }
 
 const initStore = (initialState?: FileDomain.Options): InitialProps => {
@@ -72,8 +72,8 @@ describe('Store files in memory', () => {
     ${{ initialState: { data: [file1] } }} | ${[]}                           | ${expectFilesDescriptor([file1])}        | ${undefined}
     ${undefined}                           | ${[fileToStore1]}               | ${expectFilesDescriptor([file1])}        | ${undefined}
     ${undefined}                           | ${[fileToStore1, fileToStore2]} | ${expectFilesDescriptor([file1, file2])} | ${undefined}
-    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${ResourceConflictError([fileToStore3.id])}
-    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${ResourceConflictError([fileToStore1.id, fileToStore3.id])}
+    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${ResourceAlreadyExistsError([fileToStore3.id])}
+    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${ResourceAlreadyExistsError([fileToStore1.id, fileToStore3.id])}
   `(
     `Given that there are $filesToStore.length file(s) to store`,
     ({ preloadedState, filesToStore, expectedFilesDescriptor, error }: Data): void => {

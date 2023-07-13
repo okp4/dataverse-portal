@@ -42,7 +42,6 @@
     "@radix-ui/react-toast": "^1.1.4",
     "@relmify/jest-fp-ts": "^2.1.1",
     "@swc/jest": "^0.2.26",
-    "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.2",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",

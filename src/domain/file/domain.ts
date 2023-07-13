@@ -14,11 +14,11 @@ import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
 import type { File } from './entity'
 import type { Command, FileId, StoreFileInput, StoreFilesInput } from './command'
-import { ResourceConflictError, ResourceNotFoundError } from './command'
 import type { ForgetType } from '@/util/type'
 import { isDevMode } from '@/util/env.util'
 import type { FileDescriptor, Query } from './query'
 import type { Eq } from 'fp-ts/lib/Eq'
+import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
 
 export type State = {
   data: File[]
@@ -37,8 +37,8 @@ const eqFile: Eq<{ id: string }> = pipe(
   eqContramap(it => it.id)
 )
 
-const resourceConflictError = (resourceIds: FileId[]): ResourceConflictError =>
-  ResourceConflictError(resourceIds)
+const resourceAlreadyExistsError = (resourceIds: FileId[]): ResourceAlreadyExistsError =>
+  ResourceAlreadyExistsError(resourceIds)
 const resourceNotFoundError = (resourceId: FileId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
 
@@ -64,14 +64,14 @@ const removeFileInvariant =
 
 const storeFilesInvariant =
   (files: StoreFilesInput) =>
-  (state: File[]): E.Either<ResourceConflictError, StoreFilesInput> =>
+  (state: File[]): E.Either<ResourceAlreadyExistsError, StoreFilesInput> =>
     pipe(
       files,
       E.fromPredicate(
         flow(isStoreFilesIdUniq(state)),
         flow(
           A.map(x => x.id),
-          resourceConflictError
+          resourceAlreadyExistsError
         )
       ),
       E.flatMap(
@@ -80,7 +80,7 @@ const storeFilesInvariant =
             isStoreFilesPayloadUniq,
             flow(
               A.map(x => x.id),
-              resourceConflictError
+              resourceAlreadyExistsError
             )
           )
         )
