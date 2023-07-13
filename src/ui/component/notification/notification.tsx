@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useMemo, useCallback } from 'react'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Toast } from '@/ui/component/toast/toast'
 import { toEffectfulObject } from '@/util/effect'

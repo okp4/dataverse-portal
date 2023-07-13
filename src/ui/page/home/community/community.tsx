@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { shallow } from 'zustand/shallow'
 import { Icon } from '@/ui/component/icon/icon'
 import { useStatsAggregate } from '@/domain/stats/aggregate'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import '../i18n/index'
 import './community.scss'
 
