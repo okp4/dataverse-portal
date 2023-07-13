@@ -10,7 +10,7 @@
     padding-top: 34px;
 
     @include use-breakpoints(('desktop')) {
-      @include grid-container($colGutter: 34px, $rowGutter: 22px);
+      @include grid-container($colGutter: 34px, $rowGutter: 26px);
     }
 
     h2 {
@@ -23,43 +23,60 @@
     }
 
     .okp4-dataverse-portal-share-dataset-summary-left {
-      @include bi-column-item(left);
-      min-height: 460px;
+      @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
+      max-height: 690px;
+      background-color: themed('article-background');
+      border-radius: 12px;
+      padding: 15px 10px;
+
+      @include use-breakpoints(('desktop')) {
+        @include bi-column-item(left);
+        max-height: 490px;
+      }
 
       .okp4-dataverse-portal-share-dataset-summary-text {
-        background-color: themed('article-background');
         height: 100%;
         overflow: auto;
-        border-radius: 12px;
 
         p {
           @include noto-sans(400);
           color: themed('text');
-          padding: 18px;
+          padding: 3px 8px;
         }
       }
     }
 
     .okp4-dataverse-portal-share-dataset-summary-right {
-      @include bi-column-item(right);
-      @include columns-with-gap(30px);
+      @include grid-item($colStart: 6, $colEnd: 13, $rowStart: auto, $rowEnd: auto);
+      @include columns-with-gap(130px);
       justify-content: space-between;
-      min-height: 500px;
+      // min-height: 690px;
+
+      @include use-breakpoints(('desktop')) {
+        @include bi-column-item(right);
+        @include columns-with-gap(30px);
+        // min-height: 510px;
+      }
 
       .okp4-dataverse-portal-share-dataset-summary-file-list {
         overflow: auto;
         margin: 0;
         padding-right: 14px;
+        max-height: 430px;
+
+        @include use-breakpoints(('desktop')) {
+          max-height: 360px;
+        }
       }
     }
 
     .okp4-dataverse-portal-share-dataset-summary-certify {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-        display: inline-flex;
-        gap: 10px;
+      display: inline-flex;
+      gap: 10px;
       @include noto-sans(400);
       color: themed('text');
-        margin-top: 8px;
+      margin-top: 8px;
       line-height: 22px;
     }
   }
