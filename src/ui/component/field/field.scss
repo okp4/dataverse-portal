@@ -1,0 +1,183 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+
+
+.okp4-dataverse-portal-field-main {
+  $transition-duration: 400ms;
+  $input-gap: 6px;
+  @include with-theme {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: $input-gap;
+    background-color: themed('input-background');
+    border: 1px solid rgba(themed('input-border'), 0.12);
+    border-radius: 6px;
+    padding: 18px 0 0 18px;
+    transition: border-color $transition-duration ease-in-out;
+
+    &.focus {
+      outline: none;
+      border-color: themed('primary-color-variant-1');
+      background-color: themed('input-background-focused');
+    }
+
+    &.disabled {
+      background-color: themed('input-background-disabled');
+      border-color: rgba(24, 28, 73, 0.06);
+      cursor: not-allowed;
+    }
+
+    &.error {
+      border-color: themed('error');
+    }
+    
+    .okp4-dataverse-portal-field-input {
+      flex: 1;
+      box-sizing: border-box;
+      overflow-y: auto;
+      background-color: transparent;
+      border: 0;
+      border-radius: 6px;
+      width: 100%;
+      padding: 0 0 7px;
+      @include noto-sans(400);
+      font-size: 16px;
+      line-height: 22px;
+      color: themed('text');
+      outline: none;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+
+      &.resizable {
+        resize: vertical;
+      }
+
+      &[type='number'] {
+        appearance: textfield;
+      }
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        appearance: none;
+      }
+    }
+
+    .okp4-dataverse-portal-field-left-element,
+    .okp4-dataverse-portal-field-right-element {
+      flex-shrink: 0;
+      pointer-events: none;
+      transform: translateY(calc(-25%));
+      
+      svg {
+        width: 22px;
+        height: 22px;
+
+        * {
+          transition: fill $transition-duration ease-in-out;
+          fill: themed('input-label-shrinked');
+        }
+      }
+
+      &.error {
+        svg {
+          * {
+            fill: themed('error');
+          }
+        }
+      }
+    }
+
+    .okp4-dataverse-portal-field-right-element {
+      @include noto-sans(400);
+      font-size: 16px;
+      transition: color $transition-duration ease-in-out;
+      color: rgba(themed('text'), 0.4);
+      margin-right: 18px;
+      
+      &.focus {
+        color: themed('primary-color-variant-1');
+      }
+    }
+
+    .okp4-dataverse-portal-field-label {
+      position: absolute;
+      @include noto-sans(400);
+      font-size: 16px;
+      line-height: 22px;
+      color: rgba(themed('text'), 0.6);
+      top: 14px;
+      left: 18px;
+      pointer-events: none;
+      transform-origin: 0 0;
+      transition: transform $transition-duration, color $transition-duration;
+      transition-timing-function: ease-in-out;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+
+      &.disabled {
+        color: themed('input-label-disabled');
+        border-color: rgba(24, 28, 73, 0.06);
+        @include noto-sans(700);
+      }
+
+      &.with-left-element {
+        left: calc(40px + $input-gap);
+      }
+
+      &.focus, &.filled {
+        transform: translateY(-30%) scale(0.6);
+        color: themed('input-label-shrinked');
+      }
+    }
+
+    .okp4-dataverse-portal-field-error {
+      position: absolute;
+      bottom: -17px;
+      left: 17px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 1;
+      width: calc(100% - 17px);
+      
+      .okp4-dataverse-portal-field-error-message {
+        box-sizing: border-box;
+        @include noto-sans(400);
+        font-size: 10px;
+        line-height: 14px;
+        color: themed('text');
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+
+      svg {
+        flex-shrink: 0;
+        width: 12px;
+        height: 12px;
+
+        path {
+          fill: themed('error');
+        }
+      }
+    }
+  }
+}
