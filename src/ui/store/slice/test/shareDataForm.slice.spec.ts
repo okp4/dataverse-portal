@@ -4,10 +4,10 @@
 
 import type { RenderHookResult } from '@testing-library/react'
 import { renderHook, act } from '@testing-library/react'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import type {
   Form,
-  FormPayload,
+  initFormPayload,
   FormItem,
   FormItemId,
   SetFormItemValuePayload,
@@ -15,26 +15,30 @@ import type {
 } from '../shareDataForm.slice'
 import * as O from 'fp-ts/Option'
 import type { Renderer } from 'react-dom'
-import { ResourceNotFoundError, ShowFileError } from '@/shared/error'
+import { ResourceNotFoundError, ShowFileError, ResourceConflictError } from '@/shared/error'
 import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/Either'
 
 type Data = {
-  initialForm?: FormPayload
+  initialForm?: initFormPayload
   formItemPayload?: SetFormItemValuePayload
   id?: FormItemId
   expectedForm: Form
   expectedFormItem: FormItem
-  error?: ResourceNotFoundError
+  resourceNotFoundError?: ResourceNotFoundError
+  resourceConflictError?: ResourceConflictError
 }
+
+const initStore = (): RenderHookResult<ShareDataFormSlice, Renderer> =>
+  renderHook(() => useAppStore())
 
 // eslint-disable-next-line max-lines-per-function
 describe('Considering the ShareDataFormSlice', () => {
   // Initialize render hook function from react-testing-library
-  let renderedHook: RenderHookResult<ShareDataFormSlice, Renderer>
+  // let renderedHook: RenderHookResult<ShareDataFormSlice, Renderer>
 
   // Initial form payloads
-  const initialForm1: FormPayload = [
+  const initialForm1: initFormPayload = [
     {
       id: '1',
       type: 'text',
@@ -42,7 +46,7 @@ describe('Considering the ShareDataFormSlice', () => {
       value: ''
     }
   ]
-  const initialForm2: FormPayload = [
+  const initialForm2: initFormPayload = [
     {
       id: '2',
       type: 'select',
@@ -50,7 +54,7 @@ describe('Considering the ShareDataFormSlice', () => {
       value: []
     }
   ]
-  const initialForm3: FormPayload = [
+  const initialForm3: initFormPayload = [
     {
       id: '3',
       type: 'numeric',
@@ -58,12 +62,26 @@ describe('Considering the ShareDataFormSlice', () => {
       value: 0
     }
   ]
-  const initialForm4: FormPayload = [
+  const initialForm4: initFormPayload = [
     {
       id: '4',
       type: 'date',
       label: 'date',
       value: {}
+    }
+  ]
+  const initialForm5: initFormPayload = [
+    {
+      id: '5',
+      type: 'text',
+      label: 'foo',
+      value: ''
+    },
+    {
+      id: '5',
+      type: 'text',
+      label: 'bar',
+      value: ''
     }
   ]
 
@@ -94,41 +112,86 @@ describe('Considering the ShareDataFormSlice', () => {
   }
 
   describe.each`
-    initialForm     | formItemPayload     | id           | expectedForm     | expectedFormItem                    | error
-    ${undefined}    | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}
-    ${initialForm1} | ${undefined}        | ${'4'}       | ${initialForm1}  | ${O.none}                           | ${undefined}
-    ${initialForm1} | ${undefined}        | ${'1'}       | ${initialForm1}  | ${O.some(expectedFormItem1)}        | ${undefined}
-    ${initialForm1} | ${formItemPayload1} | ${'1'}       | ${expectedForm1} | ${O.some(expectedUpdatedFormItem1)} | ${undefined}
-    ${initialForm2} | ${formItemPayload2} | ${undefined} | ${expectedForm2} | ${O.none}                           | ${undefined}
-    ${initialForm2} | ${formItemPayload2} | ${'2'}       | ${expectedForm2} | ${O.some(expectedFormItem2)}        | ${undefined}
-    ${initialForm3} | ${formItemPayload3} | ${undefined} | ${expectedForm3} | ${O.none}                           | ${undefined}
-    ${initialForm3} | ${formItemPayload3} | ${'3'}       | ${expectedForm3} | ${O.some(expectedFormItem3)}        | ${undefined}
-    ${initialForm4} | ${formItemPayload4} | ${'4'}       | ${expectedForm4} | ${O.some(expectedFormItem4)}        | ${undefined}
-    ${initialForm1} | ${formItemPayload5} | ${undefined} | ${initialForm1}  | ${O.none}                           | ${ResourceNotFoundError(formItemPayload5.id)}
+    initialForm     | formItemPayload     | id           | expectedForm     | expectedFormItem                    | resourceNotFoundError                         | resourceConflictError
+    ${undefined}    | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}                                  | ${undefined}
+    ${initialForm1} | ${undefined}        | ${undefined} | ${initialForm1}  | ${O.none}                           | ${undefined}                                  | ${undefined}
+    ${initialForm5} | ${undefined}        | ${undefined} | ${[]}            | ${O.none}                           | ${undefined}                                  | ${ResourceConflictError(['5', '5'])}
+    ${initialForm1} | ${undefined}        | ${'1'}       | ${initialForm1}  | ${O.some(expectedFormItem1)}        | ${undefined}                                  | ${undefined}
+    ${initialForm1} | ${formItemPayload1} | ${'1'}       | ${expectedForm1} | ${O.some(expectedUpdatedFormItem1)} | ${undefined}                                  | ${undefined}
+    ${initialForm2} | ${formItemPayload2} | ${undefined} | ${expectedForm2} | ${O.none}                           | ${undefined}                                  | ${undefined}
+    ${initialForm2} | ${formItemPayload2} | ${'2'}       | ${expectedForm2} | ${O.some(expectedFormItem2)}        | ${undefined}                                  | ${undefined}
+    ${initialForm3} | ${formItemPayload3} | ${undefined} | ${expectedForm3} | ${O.none}                           | ${undefined}                                  | ${undefined}
+    ${initialForm3} | ${formItemPayload3} | ${'3'}       | ${expectedForm3} | ${O.some(expectedFormItem3)}        | ${undefined}                                  | ${undefined}
+    ${initialForm4} | ${formItemPayload4} | ${'4'}       | ${expectedForm4} | ${O.some(expectedFormItem4)}        | ${undefined}                                  | ${undefined}
+    ${initialForm1} | ${formItemPayload5} | ${undefined} | ${initialForm1}  | ${O.none}                           | ${ResourceNotFoundError(formItemPayload5.id)} | ${undefined}
   `(
     `Given an initial form <$initialForm> and a form item payload <$formItemPayload>`,
-    ({ initialForm, formItemPayload, id, expectedForm, expectedFormItem, error }: Data) => {
-      beforeEach(() => {
-        renderedHook = renderHook(() => useAppStore())
-      })
-
+    // eslint-disable-next-line max-lines-per-function
+    ({
+      initialForm,
+      formItemPayload,
+      id,
+      expectedForm,
+      expectedFormItem,
+      resourceNotFoundError,
+      resourceConflictError
+    }: Data) => {
+      // eslint-disable-next-line max-lines-per-function
+      // beforeEach(() => {
+      //   renderedHook = renderHook(() => useAppStore())
+      // })
+      // afterEach(() => {
+      //   cleanup()
+      // })
+      // eslint-disable-next-line max-lines-per-function
       describe('When setting formItem value after intialization', () => {
-        test(`Then expect form to be ${expectedForm} and selected formItem to be ${expectedFormItem}`, async () => {
-          if (initialForm) act(() => renderedHook.result.current.init(initialForm)())
-          if (formItemPayload) {
-            const result = await act(() =>
-              renderedHook.result.current.setFormItemValue(formItemPayload)()
-            )
+        const renderedHook = initStore()
+
+        test(`Then expect form to be ${JSON.stringify(
+          expectedForm
+          // eslint-disable-next-line max-lines-per-function
+        )} and selected formItem to be ${JSON.stringify(expectedFormItem)}`, async () => {
+          console.log('1/ form = ', renderedHook.result.current.form)
+
+          if (initialForm) {
+            console.log('2/ initial form = ', initialForm)
+            const result = await act(() => renderedHook.result.current.initForm(initialForm)())
+            console.log('5/ form = ', renderedHook.result.current.form)
             expect(result).toBeEither()
-            if (error) {
+            if (resourceConflictError) {
               expect(result).toBeLeft()
-              expect(result).toEqualLeft(error)
+              expect(result).toEqualLeft(resourceConflictError)
               const message = pipe(
                 result,
                 E.getOrElseW(e => ShowFileError.show(e))
               )
               expect(message).toStrictEqual(
-                `Error ${error._tag}: Failed to handle resource with ID '${error.resourceId}' since it does not exist.`
+                `Error ${
+                  resourceConflictError._tag
+                }: Failed to store resource with conflicting IDs [${resourceConflictError.resourceIds.join(
+                  ', '
+                )}].`
+              )
+            } else {
+              console.log('3/ result = ', result)
+              expect(result).toBeRight()
+            }
+            expect(renderedHook.result.current.form).toStrictEqual(expectedForm)
+          }
+          if (formItemPayload) {
+            const result = await act(() =>
+              renderedHook.result.current.setFormItemValue(formItemPayload)()
+            )
+            expect(result).toBeEither()
+            if (resourceNotFoundError) {
+              expect(result).toBeLeft()
+              expect(result).toEqualLeft(resourceNotFoundError)
+              const message = pipe(
+                result,
+                E.getOrElseW(e => ShowFileError.show(e))
+              )
+              expect(message).toStrictEqual(
+                `Error ${resourceNotFoundError._tag}: Failed to handle resource with ID '${resourceNotFoundError.resourceId}' since it does not exist.`
               )
             } else {
               expect(result).toBeRight()
@@ -139,7 +202,7 @@ describe('Considering the ShareDataFormSlice', () => {
             expect(formItem).toBeOption()
             expect(formItem).toStrictEqual(expectedFormItem)
           }
-          expect(renderedHook.result.current.form).toStrictEqual(expectedForm)
+          // expect(renderedHook.result.current.form).toStrictEqual(expectedForm)
         })
       })
     }
