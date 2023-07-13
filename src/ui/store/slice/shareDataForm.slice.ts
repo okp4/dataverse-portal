@@ -10,8 +10,9 @@ import type { Eq } from 'fp-ts/lib/Eq'
 import * as S from 'fp-ts/string'
 import * as B from 'fp-ts/boolean'
 import * as E from 'fp-ts/Either'
+import * as N from 'fp-ts/number'
 import { contramap as eqContramap } from 'fp-ts/Eq'
-import { ResourceNotFoundError } from '@/shared/error'
+import { ResourceConflictError, ResourceNotFoundError } from '@/shared/error'
 
 export type FormItemId = string
 
@@ -35,11 +36,12 @@ export type SetFormItemValuePayload = { id: FormItemId; value: FormItemValue }
 
 export type Form = FormItem[]
 
-export type FormPayload = Form
+export type initFormItem = FormItem
+export type initFormPayload = initFormItem[]
 
 export type ShareDataFormSlice = {
   form: Form
-  init: (payload: FormPayload) => IOEither<void, Error>
+  initForm: (payload: initFormPayload) => IOEither<ResourceConflictError, void>
   setFormItemValue: (payload: SetFormItemValuePayload) => IOEither<ResourceNotFoundError, void>
   formItemById: (id: FormItemId) => IOOption<FormItem>
 }
@@ -52,6 +54,18 @@ const eqFormItem: Eq<{ id: string }> = pipe(
 
 const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
+const resourceConflictError = (resourceIds: FormItemId[]): ResourceConflictError =>
+  ResourceConflictError(resourceIds)
+
+const isInitFormPayloadUniq = (payload: initFormPayload): boolean =>
+  N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
+
+const isInitFormIdUniq =
+  (initForm: initFormPayload) =>
+  (state: Form): boolean =>
+    !A.some((formItem: FormItem) =>
+      A.some((initFormItem: initFormItem) => initFormItem.id === formItem.id)(initForm)
+    )(state)
 
 const formIdExists =
   (state: Form) =>
@@ -63,6 +77,31 @@ const setFormItemValueInvariant =
   (state: Form): E.Either<ResourceNotFoundError, FormItemId> =>
     pipe(formItemId, E.fromPredicate(flow(formIdExists(state)), resourceNotFoundError))
 
+const initFormInvariant =
+  (initForm: initFormPayload) =>
+  (state: Form): E.Either<ResourceConflictError, initFormPayload> =>
+    pipe(
+      initForm,
+      E.fromPredicate(
+        flow(isInitFormIdUniq(state)),
+        flow(
+          A.map(x => x.id),
+          resourceConflictError
+        )
+      ),
+      E.flatMap(
+        flow(
+          E.fromPredicate(
+            isInitFormPayloadUniq,
+            flow(
+              A.map(x => x.id),
+              resourceConflictError
+            )
+          )
+        )
+      )
+    )
+
 export const createShareDataFormSlice: StateCreator<
   ShareDataFormSlice,
   [],
@@ -70,10 +109,31 @@ export const createShareDataFormSlice: StateCreator<
   ShareDataFormSlice
 > = (set, get) => ({
   form: [],
-  init: (form: Form) => () => {
-    set(() => ({
-      form
-    }))
+  initForm: (payload: initFormPayload) => {
+    return pipe(
+      payload,
+      A.isEmpty,
+      B.match(
+        () => {
+          return pipe(
+            IOE.fromIO(() => get().form),
+            IOE.flatMap(
+              flow(
+                initFormInvariant(payload),
+                IOE.fromEither,
+                IOE.chainIOK(form => () => {
+                  set(() => ({
+                    form: form
+                  }))
+                  console.log('get form ==>', get().form)
+                })
+              )
+            )
+          )
+        },
+        () => IOE.of(undefined)
+      )
+    )
   },
   formItemById: (id: FormItemId) =>
     pipe(
