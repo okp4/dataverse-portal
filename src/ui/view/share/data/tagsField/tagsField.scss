@@ -1,0 +1,33 @@
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-tags-field-main {
+  @include with-theme() {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    max-height: 86px;
+    overflow-y: auto;
+    width: 100%;
+    border-radius: 10px;
+    background-color: themed('card');
+
+    .okp4-dataverse-portal-tags-field-input {
+      @include noto-sans(400);
+      color: themed('text');
+      background-color: transparent;
+      border: 0;
+      width: 167px;
+      min-height: 34px;
+      outline: 0;
+
+      &::placeholder {
+        @include noto-sans(400);
+        color: rgba(themed('text'), 0.6);
+        font-size: 16px;
+      }
+    }
+  }
+}
