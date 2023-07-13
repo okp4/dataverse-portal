@@ -26,10 +26,9 @@
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
 
       h3 {
-        @include noto-sans(700);
+        @include noto-sans(400);
         font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.4px;
+        line-height: 22px;
         color: themed('text');
         margin-bottom: 16px;
       }
