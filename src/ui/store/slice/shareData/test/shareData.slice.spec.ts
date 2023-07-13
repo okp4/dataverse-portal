@@ -1,23 +1,26 @@
 /**
  * @jest-environment jsdom
  */
+/* eslint-disable max-lines-per-function */
 
-import type { RenderHookResult } from '@testing-library/react'
-import { renderHook, act } from '@testing-library/react'
-import { useAppStore } from '@/ui/store/index'
 import type {
   Form,
   initFormPayload,
   FormItem,
   FormItemId,
   SetFormItemValuePayload,
-  ShareDataFormSlice
-} from '../shareDataForm.slice'
+  ShareDataSlice
+} from '../shareData.slice'
 import * as O from 'fp-ts/Option'
-import type { Renderer } from 'react-dom'
 import { ResourceNotFoundError, ShowFileError, ResourceConflictError } from '@/shared/error'
 import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/Either'
+import * as App from '../../../appStore'
+import type { StoreApi } from 'zustand'
+
+type Store = Readonly<{
+  store: StoreApi<ShareDataSlice>
+}>
 
 type Data = {
   initialForm?: initFormPayload
@@ -29,14 +32,12 @@ type Data = {
   resourceConflictError?: ResourceConflictError
 }
 
-const initStore = (): RenderHookResult<ShareDataFormSlice, Renderer> =>
-  renderHook(() => useAppStore())
+const initStore = (): Store => {
+  const store = App.storeFactory()
+  return { store }
+}
 
-// eslint-disable-next-line max-lines-per-function
-describe('Considering the ShareDataFormSlice', () => {
-  // Initialize render hook function from react-testing-library
-  // let renderedHook: RenderHookResult<ShareDataFormSlice, Renderer>
-
+describe('Considering the ShareDataSlice', () => {
   // Initial form payloads
   const initialForm1: initFormPayload = [
     {
@@ -126,7 +127,6 @@ describe('Considering the ShareDataFormSlice', () => {
     ${initialForm1} | ${formItemPayload5} | ${undefined} | ${initialForm1}  | ${O.none}                           | ${ResourceNotFoundError(formItemPayload5.id)} | ${undefined}
   `(
     `Given an initial form <$initialForm> and a form item payload <$formItemPayload>`,
-    // eslint-disable-next-line max-lines-per-function
     ({
       initialForm,
       formItemPayload,
@@ -136,31 +136,20 @@ describe('Considering the ShareDataFormSlice', () => {
       resourceNotFoundError,
       resourceConflictError
     }: Data) => {
-      // eslint-disable-next-line max-lines-per-function
-      // beforeEach(() => {
-      //   renderedHook = renderHook(() => useAppStore())
-      // })
-      // afterEach(() => {
-      //   cleanup()
-      // })
-      // eslint-disable-next-line max-lines-per-function
       describe('When setting formItem value after intialization', () => {
-        const renderedHook = initStore()
+        const { store } = initStore()
 
         test(`Then expect form to be ${JSON.stringify(
           expectedForm
-          // eslint-disable-next-line max-lines-per-function
         )} and selected formItem to be ${JSON.stringify(expectedFormItem)}`, async () => {
-          console.log('1/ form = ', renderedHook.result.current.form)
-
           if (initialForm) {
-            console.log('2/ initial form = ', initialForm)
-            const result = await act(() => renderedHook.result.current.initForm(initialForm)())
-            console.log('5/ form = ', renderedHook.result.current.form)
+            const result = store.getState().shareData.initForm(initialForm)()
             expect(result).toBeEither()
+
             if (resourceConflictError) {
               expect(result).toBeLeft()
               expect(result).toEqualLeft(resourceConflictError)
+
               const message = pipe(
                 result,
                 E.getOrElseW(e => ShowFileError.show(e))
@@ -173,19 +162,17 @@ describe('Considering the ShareDataFormSlice', () => {
                 )}].`
               )
             } else {
-              console.log('3/ result = ', result)
               expect(result).toBeRight()
             }
-            expect(renderedHook.result.current.form).toStrictEqual(expectedForm)
           }
           if (formItemPayload) {
-            const result = await act(() =>
-              renderedHook.result.current.setFormItemValue(formItemPayload)()
-            )
+            const result = store.getState().shareData.setFormItemValue(formItemPayload)()
             expect(result).toBeEither()
+
             if (resourceNotFoundError) {
               expect(result).toBeLeft()
               expect(result).toEqualLeft(resourceNotFoundError)
+
               const message = pipe(
                 result,
                 E.getOrElseW(e => ShowFileError.show(e))
@@ -197,12 +184,14 @@ describe('Considering the ShareDataFormSlice', () => {
               expect(result).toBeRight()
             }
           }
+
           if (id) {
-            const formItem = renderedHook.result.current.formItemById(id)()
+            const formItem = store.getState().shareData.formItemById(id)()
             expect(formItem).toBeOption()
             expect(formItem).toStrictEqual(expectedFormItem)
           }
-          // expect(renderedHook.result.current.form).toStrictEqual(expectedForm)
+
+          expect(store.getState().shareData.form).toStrictEqual(expectedForm)
         })
       })
     }
