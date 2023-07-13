@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { type FC } from 'react'
 import { Community } from './community/community'
 import { Interact } from './interact/interact'
 import { Explore } from './explore/explore'
