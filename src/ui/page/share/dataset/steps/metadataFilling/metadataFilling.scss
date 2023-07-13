@@ -1,0 +1,95 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-share-data-metadata-filling-container {
+  @include with-theme() {
+    @include twelve-column-layout;
+    @include grid-container($colGutter: 48px, $rowGutter: 22px);
+    grid-template-rows: auto auto 1fr;
+    height: 100%;
+    padding-top: 34px;
+
+    @include use-breakpoints(('desktop')) {
+      @include grid-container($colGutter: 34px, $rowGutter: 22px);
+    }
+
+    h2 {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+      @include noto-sans(700);
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 0.4px;
+      color: themed('text');
+    }
+
+    .okp4-dataverse-portal-share-data-metadata-filling-description {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+
+      h3 {
+        @include noto-sans(700);
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.4px;
+        color: themed('text');
+      }
+    }
+
+    .okp4-dataverse-portal-share-data-metadata-filling-form-container {
+      @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+      @include grid-container($colsNb: 12, $colsSize: 1fr, $colGutter: 48px, $rowGutter: 22px);
+      overflow-y: auto;
+
+      .okp4-dataverse-portal-share-data-metadata-filling-form-part {
+        &.left {
+          @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
+          @include grid-container($colsNb: 2, $colGutter: 20px, $rowGutter: 16px);
+          grid-template-rows: 42px 42px 214px 67px 67px;
+        }
+
+        &.right {
+          @include grid-item($colStart: 6, $colEnd: 11, $rowStart: auto, $rowEnd: auto);
+          @include grid-container($colsNb: 1, $colGutter: 0, $rowGutter: 16px);
+          grid-template-rows: 65px 65px 65px 205px;
+        }
+
+        p {
+          @include noto-sans(700);
+          color: themed('text');
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+
+      .okp4-dataverse-portal-share-data-metadata-filling {
+        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+
+        &.publisher {
+          @include grid-item($colStart: 1, $colEnd: 2, $rowStart: auto, $rowEnd: auto);
+        }
+
+        &.creator {
+          @include grid-item($colStart: 2, $colEnd: 3, $rowStart: auto, $rowEnd: auto);
+        }
+
+        &.description {
+          .okp4-dataverse-portal-field-main {
+            height: 100%;
+          }
+        }
+
+        &.fee {
+          align-self: end;
+        }
+      }
+    }
+  }
+
+  .okp4-dataverse-portal-share-data-metadata-filling-horizontal-inputs-container {
+    @include rows-with-gap(20px);
+  }
+
+  .okp4-dataverse-portal-share-data-metadata-filling-vertical-inputs-container {
+    @include columns-with-gap(8px);
+  }
+}
