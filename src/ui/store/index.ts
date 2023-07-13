@@ -2,6 +2,7 @@ import * as Notification from '@/domain/notification/aggregate'
 import * as Wallet from '@/domain/wallet/domain'
 import * as Dataverse from '@/domain/dataverse/domain'
 import * as File from '@/domain/file/domain'
+import * as App from './appStore'
 
 import type { StoreApi } from 'zustand'
 import { useStore } from 'zustand'
@@ -25,3 +26,6 @@ export const useDataverseStore = createStoreHook(dataverseStore)
 
 const fileStore = File.storeFactory()
 export const useFileStore = createStoreHook(fileStore)
+
+const appStore = App.storeFactory()
+export const useAppStore = createStoreHook(appStore)
