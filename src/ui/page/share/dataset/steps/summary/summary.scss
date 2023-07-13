@@ -55,8 +55,11 @@
 
     .okp4-dataverse-portal-share-dataset-summary-certify {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+        display: inline-flex;
+        gap: 10px;
       @include noto-sans(400);
       color: themed('text');
+        margin-top: 8px;
       line-height: 22px;
     }
   }

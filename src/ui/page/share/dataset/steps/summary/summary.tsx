@@ -1,11 +1,11 @@
 /* eslint-disable max-lines-per-function */
-import { type FC, useState } from 'react'
+import { type FC, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFileStore } from '@/ui/store'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
-import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
+import { Checkbox } from '@/ui/component/checkbox/checkbox'
 import './summary.scss'
 
 export const Summary: FC = () => {
@@ -17,6 +17,8 @@ export const Summary: FC = () => {
   const certificationStatement = t('share:share.dataset.summaryCertify')
 
   const [isChecked, setChecked] = useState<boolean>(false)
+
+  const handleCheckedChange = useCallback(() => setChecked(s => !s), [])
 
   const items: Item[] = files()().map(({ id, name }) => ({
     content: <p>{name}</p>,
@@ -67,14 +69,12 @@ export const Summary: FC = () => {
         <KnowFee />
       </div>
       <p className="okp4-dataverse-portal-share-dataset-summary-certify">
-        <DynamicCheckbox
+        <Checkbox
           checked={isChecked}
-          highlightedTerm={''}
-          key={certificationStatement}
-          name={certificationStatement}
-          onCheckedChange={setChecked}
+          onCheckedChange={handleCheckedChange}
           value={certificationStatement}
         />
+        <label htmlFor={certificationStatement}>{certificationStatement}</label>
       </p>
     </div>
   )
