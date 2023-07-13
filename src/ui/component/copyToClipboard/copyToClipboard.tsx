@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import type { FC } from 'react'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import { Icon } from '@/ui/component/icon/icon'
 import classNames from 'classnames'
 import { useCopyToClipboard } from '@/ui/hook/useCopyToClipboard'

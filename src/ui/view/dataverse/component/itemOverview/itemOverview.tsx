@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Tags } from '@/ui/view/dataverse/component//tags/tags'
 import { Icon } from '@/ui/component/icon/icon'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import './itemOverview.scss'
 
 type ItemOverviewProps = {

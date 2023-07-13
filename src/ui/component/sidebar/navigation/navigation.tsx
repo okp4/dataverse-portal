@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { routes } from '@/ui/routes'
 import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import './navigation.scss'
 
 type NavigationItem = {

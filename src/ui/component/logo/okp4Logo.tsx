@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import { ReactComponent as Okp4FullLogoDark } from '@/ui/asset/logo/okp4-full-logo-dark.svg'
 import { ReactComponent as Okp4FullLogoLight } from '@/ui/asset/logo/okp4-full-logo-light.svg'
 import { ReactComponent as Okp4LogoDark } from '@/ui/asset/logo/okp4-logo-dark.svg'

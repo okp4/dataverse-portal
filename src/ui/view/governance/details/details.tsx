@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store/index'
 import { Button } from '@/ui/component/button/button'
 import type {
   ArticleDTO,
