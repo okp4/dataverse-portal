@@ -3,7 +3,9 @@
 @import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-tags-field-main {
+  $tag-height: 28px;
   @include with-theme() {
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -14,19 +16,46 @@
     border-radius: 10px;
     background-color: themed('card');
 
-    .okp4-dataverse-portal-tags-field-input {
-      @include noto-sans(400);
-      color: themed('text');
-      background-color: transparent;
-      border: 0;
-      width: 167px;
-      min-height: 34px;
-      outline: 0;
+    .okp4-dataverse-portal-tag-main {
+      min-height: $tag-height;
+    }
 
-      &::placeholder {
+    .okp4-dataverse-portal-tags-field {
+      position: relative;
+      height: $tag-height;
+
+      &-placeholder {
+        visibility: visible;
+        @include rows-with-gap(4px);
+        align-items: center;
+        pointer-events: none;
+        height: inherit;
         @include noto-sans(400);
         color: rgba(themed('text'), 0.6);
         font-size: 16px;
+        line-height: 22px;
+
+        &-action {
+          padding: 0 4px;
+          border-radius: 2px;
+          background-color: themed('tags-field-input-action-background');
+        }
+
+        &.hidden {
+          visibility: hidden;
+        }
+      }
+
+      &-input {
+        position: absolute;
+        inset: 0;
+        @include noto-sans(400);
+        font-size: 16px;
+        line-height: 22px;
+        color: themed('text');
+        background-color: transparent;
+        border: 0;
+        outline: 0;
       }
     }
   }
