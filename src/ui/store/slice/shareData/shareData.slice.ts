@@ -13,6 +13,7 @@ import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
 import { contramap as eqContramap } from 'fp-ts/Eq'
 import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
+import type { IO } from 'fp-ts/lib/IO'
 
 export type DatePickerValue = {
   from?: string
@@ -43,6 +44,7 @@ export type ShareDataSlice = {
     initForm: (payload: initFormPayload) => IOEither<ResourceAlreadyExistsError, void>
     setFormItemValue: (payload: SetFormItemValuePayload) => IOEither<ResourceNotFoundError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
+    isFormInitialized: () => IO<boolean>
   }
 }
 
@@ -165,6 +167,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
             ),
           () => IOE.of(undefined)
         )
-      )
+      ),
+    isFormInitialized: () => () => get().shareData.form.length > 0
   }
 })
