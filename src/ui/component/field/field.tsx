@@ -12,6 +12,7 @@ type FieldProps = {
   error?: string
   required?: boolean
   disabled?: boolean
+  readonly?: boolean
   multiline?: boolean
   resizable?: boolean
   leftElement?: JSX.Element
@@ -28,6 +29,7 @@ export const Field: FC<FieldProps> = ({
   error,
   required = false,
   disabled = false,
+  readonly = false,
   multiline = false,
   resizable = false,
   leftElement,
@@ -46,7 +48,8 @@ export const Field: FC<FieldProps> = ({
   )
 
   const textFieldClassNames = classNames(
-    { filled: value },
+    { filled: readonly || value },
+    { readonly },
     { error },
     { focus: focused },
     { disabled },
@@ -63,6 +66,7 @@ export const Field: FC<FieldProps> = ({
     onBlur: handleBlur,
     onChange: handleChange,
     onFocus: handleFocus,
+    readOnly: readonly,
     required,
     ref: textInputRef,
     value

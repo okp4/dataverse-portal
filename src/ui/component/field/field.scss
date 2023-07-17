@@ -30,6 +30,10 @@
       border-color: rgba(24, 28, 73, 0.06);
       cursor: not-allowed;
     }
+    
+    &.readonly {
+      cursor: not-allowed;
+    }
 
     &.error {
       border-color: themed('error');
@@ -56,7 +60,7 @@
         outline: none;
       }
 
-      &:disabled {
+      &:disabled, &:read-only {
         cursor: not-allowed;
       }
 
