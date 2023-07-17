@@ -54,10 +54,11 @@ const formErrorData = (error: FormError): NotificationData => {
 export const MetadataFilling: FC = () => {
   const { t } = useTranslation('share')
   const dispatchNotification = useDispatchNotification()
-  const { initForm, setFormItemValue, formItemById } = useAppStore(state => ({
+  const { initForm, setFormItemValue, formItemById, isFormInitialized } = useAppStore(state => ({
     initForm: state.shareData.initForm,
     setFormItemValue: state.shareData.setFormItemValue,
-    formItemById: state.shareData.formItemById
+    formItemById: state.shareData.formItemById,
+    isFormInitialized: state.shareData.isFormInitialized
   }))
 
   const formSides = ['left', 'right']
@@ -295,12 +296,13 @@ export const MetadataFilling: FC = () => {
     },
     [dispatchNotification]
   )
-
   useEffect(() => {
-    const initialForm = mapForm(datasetForm)
-    pipe(initialForm, initForm, IOE.mapLeft(handleFormError))()
+    if (!isFormInitialized()()) {
+      const initialForm = mapForm(datasetForm)
+      pipe(initialForm, initForm, IOE.mapLeft(handleFormError))()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [datasetForm])
+  }, [datasetForm, initForm, isFormInitialized])
 
   return (
     <div className="okp4-dataverse-portal-share-data-metadata-filling-container">
