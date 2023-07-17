@@ -68,7 +68,7 @@
     "jest-fetch-mock": "^3.0.3",
     "postcss": "^8.4.25",
     "prettier": "^2.8.8",
-    "react-i18next": "^13.0.1",
+    "react-i18next": "^13.0.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lottie": "^1.2.3",
     "sass": "^1.63.6",
