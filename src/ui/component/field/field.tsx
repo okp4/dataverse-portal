@@ -5,7 +5,7 @@ import './field.scss'
 
 type FieldProps = {
   id: string
-  label: string
+  label?: string
   onChange: (value: string) => void
   value?: string
   type?: 'text' | 'number'
@@ -95,12 +95,16 @@ export const Field: FC<FieldProps> = ({
           {rightElement}
         </div>
       )}
+
+      {label && (
       <label
         className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
         htmlFor={id}
       >
         {required ? label + '*' : label}
       </label>
+      )}
+
       {error && (
         <p className="okp4-dataverse-portal-field-error">
           <Icon name="info-light" />
