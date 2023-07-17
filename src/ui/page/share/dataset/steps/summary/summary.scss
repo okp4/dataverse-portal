@@ -23,6 +23,7 @@
     }
 
     .okp4-dataverse-portal-share-dataset-summary-left {
+      box-sizing: border-box;
       @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
       max-height: 690px;
       background-color: themed('article-background');
@@ -32,6 +33,14 @@
       @include use-breakpoints(('desktop')) {
         @include bi-column-item(left);
         max-height: 490px;
+      }
+
+      @media (min-height: 851px) and (max-height: 1024px) {
+        max-height: 470px;
+      }
+
+      @media (max-height: 850px) {
+        max-height: 350px;
       }
 
       .okp4-dataverse-portal-share-dataset-summary-text {
@@ -47,15 +56,22 @@
     }
 
     .okp4-dataverse-portal-share-dataset-summary-right {
+      box-sizing: border-box;
       @include grid-item($colStart: 6, $colEnd: 13, $rowStart: auto, $rowEnd: auto);
-      @include columns-with-gap(130px);
+      @include columns-with-gap(136px);
       justify-content: space-between;
-      // min-height: 690px;
-
+      
       @include use-breakpoints(('desktop')) {
         @include bi-column-item(right);
         @include columns-with-gap(30px);
-        // min-height: 510px;
+      }
+
+      @media (min-height: 851px) and (max-height: 1024px) {
+        max-height: 470px;
+      }
+
+      @media (max-height: 850px) {
+        max-height: 350px;
       }
 
       .okp4-dataverse-portal-share-dataset-summary-file-list {

@@ -9,6 +9,7 @@
 
 .okp4-dataverse-portal-share-data-know-fee-main {
   @include with-theme {
+    flex-shrink: 0;
     border-radius: 12px;
     height: 128px;
     color: themed('text');
@@ -23,7 +24,8 @@
 
     p {
       @include noto-sans(400);
-      margin: 18px 21px;
+      box-sizing: border-box;
+      padding: 18px 21px;
     }
   }
 }
