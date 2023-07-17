@@ -43,6 +43,7 @@
       border: 0;
       border-radius: 6px;
       width: 100%;
+      height: inherit;
       padding: 0 0 7px;
       @include noto-sans(400);
       font-size: 16px;
