@@ -10,6 +10,7 @@ type FieldProps = {
   value?: string
   type?: 'text' | 'number'
   error?: string
+  placeholder?: string
   required?: boolean
   disabled?: boolean
   readonly?: boolean
@@ -27,6 +28,7 @@ export const Field: FC<FieldProps> = ({
   value,
   type = 'text',
   error,
+  placeholder,
   required = false,
   disabled = false,
   readonly = false,
@@ -69,7 +71,8 @@ export const Field: FC<FieldProps> = ({
     readOnly: readonly,
     required,
     ref: textInputRef,
-    value
+    value,
+    placeholder
   }
 
   return (
@@ -97,12 +100,12 @@ export const Field: FC<FieldProps> = ({
       )}
 
       {label && (
-      <label
-        className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
-        htmlFor={id}
-      >
-        {required ? label + '*' : label}
-      </label>
+        <label
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
+          htmlFor={id}
+        >
+          {required ? label + '*' : label}
+        </label>
       )}
 
       {error && (
