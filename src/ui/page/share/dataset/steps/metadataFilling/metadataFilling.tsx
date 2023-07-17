@@ -3,7 +3,8 @@ import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as O from 'fp-ts/Option'
 import * as IOE from 'fp-ts/IOEither'
-import { pipe } from 'fp-ts/lib/function'
+import * as S from 'fp-ts/string'
+import { flow, pipe } from 'fp-ts/lib/function'
 import type {
   FormItem,
   FormItemType,
@@ -70,10 +71,12 @@ export const MetadataFilling: FC = () => {
 
   const formItemFieldValue = useCallback(
     (id: string): string =>
-      O.match(
-        () => '',
-        (it: FormItem) => it.value as string
-      )(formItemById(id)()),
+      flow(
+        formItemById(id),
+        O.map(({ value }: FormItem) => value),
+        O.chain(O.fromPredicate(S.isString)),
+        O.getOrElse(() => '')
+      )(),
     [formItemById]
   )
 
