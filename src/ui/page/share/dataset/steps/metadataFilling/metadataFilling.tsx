@@ -99,7 +99,7 @@ export const MetadataFilling: FC = () => {
         value: '',
         required: true,
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id1}>
             <Field
               id={id1}
               label={t('share.metadataFilling.datasetTitle')}
@@ -119,7 +119,7 @@ export const MetadataFilling: FC = () => {
         label: 'publisher',
         value: '',
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling publisher">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling publisher" key={id2}>
             <Field
               id={id2}
               label={t('share.metadataFilling.publisher')}
@@ -139,7 +139,7 @@ export const MetadataFilling: FC = () => {
         label: 'creator',
         value: '',
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling creator">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling creator" key={id3}>
             <Field
               id={id3}
               label={t('share.metadataFilling.creator')}
@@ -159,7 +159,7 @@ export const MetadataFilling: FC = () => {
         label: 'description',
         value: '',
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling description">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling description" key={id4}>
             <Field
               id={id4}
               label={t('share.metadataFilling.description')}
@@ -179,7 +179,7 @@ export const MetadataFilling: FC = () => {
         label: 'format',
         value: [],
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p>{t('share.metadataFilling.format')}</p>
             <Field
               id={id5}
@@ -199,7 +199,7 @@ export const MetadataFilling: FC = () => {
         label: 'license',
         value: [],
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p>{t('share.metadataFilling.license')}</p>
             <Field
               id={id6}
@@ -219,7 +219,7 @@ export const MetadataFilling: FC = () => {
         label: 'topic',
         value: [],
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p>{t('share.metadataFilling.topic')}</p>
             <Field
               id={id7}
@@ -239,7 +239,7 @@ export const MetadataFilling: FC = () => {
         label: 'geographicalCoverage',
         value: [],
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p>{t('share.metadataFilling.geographicalCoverage')}</p>
             <Field
               id={id8}
@@ -259,7 +259,7 @@ export const MetadataFilling: FC = () => {
         label: 'tags',
         value: [],
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
             <Field
               id={id9}
@@ -279,7 +279,7 @@ export const MetadataFilling: FC = () => {
         label: 'fee',
         value: 0,
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling fee">
+          <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
             <Field
               id={id10}
               label={'fee'}
