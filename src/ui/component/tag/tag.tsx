@@ -6,19 +6,20 @@ import classNames from 'classnames'
 
 type TagProps = {
   tagName: string
-  className?: string
+  classes?: { main?: string; name?: string; icon?: string }
   onDelete?: () => void
 }
 
-export const Tag: FC<TagProps> = ({ tagName, onDelete, className }) => {
+export const Tag: FC<TagProps> = ({ tagName, onDelete, classes }) => {
   const { t } = useTranslation('common')
+  const { main, name, icon } = classes ?? {}
 
   return (
-    <div className={classNames('okp4-dataverse-portal-tag-main', className)}>
-      <div className="okp4-dataverse-portal-tag-name">{tagName}</div>
+    <div className={classNames('okp4-dataverse-portal-tag-main', main)}>
+      <div className={classNames('okp4-dataverse-portal-tag-name', name)}>{tagName}</div>
       {onDelete && (
         <div
-          className="okp4-dataverse-portal-tag-icon"
+          className={classNames('okp4-dataverse-portal-tag-icon', icon)}
           onClick={onDelete}
           role="button"
           tabIndex={0}
