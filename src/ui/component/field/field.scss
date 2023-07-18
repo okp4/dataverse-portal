@@ -166,6 +166,11 @@
       &.filled {
         transform: translateY(-30%) scale(0.6);
         color: themed('input-label-shrinked');
+
+        &.with-placeholder {
+          transform: none;
+          color: themed('input-label-top');
+        }
       }
     }
 
