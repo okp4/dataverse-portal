@@ -1,6 +1,6 @@
 import { useCallback, type FC, useState } from 'react'
 import classNames from 'classnames'
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Tag } from '@/ui/component/tag/tag'
 import '../i18n/index'
 import './tagsField.scss'
@@ -14,6 +14,7 @@ type TagsFieldProps = {
 // eslint-disable-next-line max-lines-per-function
 export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
   const [inputValue, setInputValue] = useState('')
+  const { t } = useTranslation('shareData')
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +58,7 @@ export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
             components={{
               span: <span className="okp4-dataverse-portal-tags-field-placeholder-action" />
             }}
-            i18nKey="shareData:typePressEnter"
+            i18nKey={t('typePressEnter')}
           />
         </span>
         <input
