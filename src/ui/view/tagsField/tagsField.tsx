@@ -2,7 +2,7 @@ import { useCallback, type FC, useState } from 'react'
 import classNames from 'classnames'
 import { Trans, useTranslation } from 'react-i18next'
 import { Tag } from '@/ui/component/tag/tag'
-import '../i18n/index'
+import './i18n/index'
 import './tagsField.scss'
 
 type TagsFieldProps = {
@@ -14,7 +14,7 @@ type TagsFieldProps = {
 // eslint-disable-next-line max-lines-per-function
 export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
   const [inputValue, setInputValue] = useState('')
-  const { t } = useTranslation('shareData')
+  const { t } = useTranslation('tagsField')
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
