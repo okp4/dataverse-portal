@@ -13,26 +13,26 @@ type TagsFieldProps = {
 
 // eslint-disable-next-line max-lines-per-function
 export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
-  const [value, setValue] = useState('')
+  const [inputValue, setInputValue] = useState('')
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value)
+      setInputValue(event.target.value)
     },
-    [setValue]
+    [setInputValue]
   )
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
-        const tag = event.currentTarget.value.trim()
+        const tag = inputValue.trim()
         if (tag) {
           addTag(tag)
-          setValue('')
+          setInputValue('')
         }
       }
     },
-    [addTag]
+    [addTag, inputValue]
   )
 
   const handleDelete = useCallback(
@@ -49,13 +49,15 @@ export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
       ))}
       <div className="okp4-dataverse-portal-tags-field">
         <span
-          className={classNames('okp4-dataverse-portal-tags-field-placeholder', { hidden: value })}
+          className={classNames('okp4-dataverse-portal-tags-field-placeholder', {
+            hidden: inputValue
+          })}
         >
           <Trans
             components={{
               span: <span className="okp4-dataverse-portal-tags-field-placeholder-action" />
             }}
-            i18nKey="shareData:type-press-enter"
+            i18nKey="shareData:typePressEnter"
           />
         </span>
         <input
@@ -63,7 +65,7 @@ export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           type="text"
-          value={value}
+          value={inputValue}
         />
       </div>
     </div>

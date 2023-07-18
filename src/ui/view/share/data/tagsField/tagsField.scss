@@ -24,7 +24,7 @@
       position: relative;
       height: $tag-height;
 
-      &-placeholder {
+      .okp4-dataverse-portal-tags-field-placeholder {
         visibility: visible;
         @include rows-with-gap(4px);
         align-items: center;
@@ -35,7 +35,7 @@
         font-size: 16px;
         line-height: 22px;
 
-        &-action {
+        .okp4-dataverse-portal-tags-field-placeholder-action {
           padding: 0 4px;
           border-radius: 2px;
           background-color: themed('tags-field-input-action-background');
@@ -46,7 +46,7 @@
         }
       }
 
-      &-input {
+      .okp4-dataverse-portal-tags-field-input {
         position: absolute;
         inset: 0;
         @include noto-sans(400);
