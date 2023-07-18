@@ -67,6 +67,10 @@
         resize: vertical;
       }
 
+      &.with-placeholder {
+        justify-content: center;
+      }
+
       &[type='number'] {
         appearance: textfield;
       }
@@ -148,21 +152,21 @@
         left: calc(40px + $input-gap);
       }
 
+      &.with-placeholder {
+        @include noto-sans(700);
+        font-size: 14px;
+        line-height: 24px;
+        color: themed('input-label-top');
+        position: absolute;
+        top: -30px;
+        left: 0;
+      }
+
       &.focus,
       &.filled {
         transform: translateY(-30%) scale(0.6);
         color: themed('input-label-shrinked');
       }
-    }
-
-    .okp4-dataverse-portal-field-label-top {
-      position: absolute;
-      @include noto-sans(700);
-      font-size: 16px;
-      line-height: 22px;
-      color: themed('input-label-top');
-      top: 0;
-      left: 18px;
     }
 
     .okp4-dataverse-portal-field-error {

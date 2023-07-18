@@ -57,7 +57,8 @@ export const Field: FC<FieldProps> = ({
     { disabled },
     { resizable },
     { 'with-left-element': leftElement },
-    { 'with-right-element': rightElement }
+    { 'with-right-element': rightElement },
+    { 'with-placeholder': placeholder }
   )
 
   const textFieldInputProps = {
@@ -99,22 +100,13 @@ export const Field: FC<FieldProps> = ({
         </div>
       )}
 
-      {label && placeholder ? (
+      {label && (
         <label
-          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label-top')}
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
           htmlFor={id}
         >
           {required ? label + '*' : label}
         </label>
-      ) : (
-        label && (
-          <label
-            className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
-            htmlFor={id}
-          >
-            {required ? label + '*' : label}
-          </label>
-        )
       )}
 
       {error && (
