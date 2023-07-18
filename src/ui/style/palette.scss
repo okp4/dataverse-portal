@@ -134,7 +134,7 @@ $input-background-dark: #242433;
 $input-background-light: #f2f6f9;
 $input-border-light: $primary-variant-1;
 $input-border-dark: #f2f6f9;
-$input-label-shrinked-light: #809FB9;
+$input-label-shrinked-light: #809fb9;
 $input-label-shrinked-dark: rgba(255, 255, 255, 0.6);
 $input-background-focused-light: rgba(0, 64, 115, 0.08);
 $input-background-focused-dark: #242433;
@@ -142,6 +142,10 @@ $input-background-disabled-light: $background-disabled;
 $input-background-disabled-dark: #494955;
 $input-label-disabled-light: $secondary-disabled;
 $input-label-disabled-dark: #242433;
+$input-label-placeholder-dark: rgba(178, 179, 194, 0.6);
+$input-label-placeholder-light: rgba(0, 64, 115, 0.6);
+$input-label-top-dark: #ffffff;
+$input-label-top-light: #004073;
 
 // tags field
 $tags-field-input-action-background-light: rgba(0, 64, 115, 0.08);

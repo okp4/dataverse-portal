@@ -2,8 +2,6 @@
 @import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
 
-
-
 .okp4-dataverse-portal-field-main {
   $transition-duration: 400ms;
   $input-gap: 6px;
@@ -30,7 +28,7 @@
       border-color: rgba(24, 28, 73, 0.06);
       cursor: not-allowed;
     }
-    
+
     &.readonly {
       cursor: not-allowed;
     }
@@ -38,7 +36,7 @@
     &.error {
       border-color: themed('error');
     }
-    
+
     .okp4-dataverse-portal-field-input {
       flex: 1;
       box-sizing: border-box;
@@ -60,7 +58,8 @@
         outline: none;
       }
 
-      &:disabled, &:read-only {
+      &:disabled,
+      &:read-only {
         cursor: not-allowed;
       }
 
@@ -78,12 +77,19 @@
       }
     }
 
+    input::placeholder {
+      color: themed('input-label-placeholder');
+      font-size: 16px;
+      position: absolute;
+      top: -5px;
+    }
+
     .okp4-dataverse-portal-field-left-element,
     .okp4-dataverse-portal-field-right-element {
       flex-shrink: 0;
       pointer-events: none;
       transform: translateY(calc(-25%));
-      
+
       svg {
         width: 22px;
         height: 22px;
@@ -109,7 +115,7 @@
       transition: color $transition-duration ease-in-out;
       color: rgba(themed('text'), 0.4);
       margin-right: 18px;
-      
+
       &.focus {
         color: themed('primary-color-variant-1');
       }
@@ -142,10 +148,21 @@
         left: calc(40px + $input-gap);
       }
 
-      &.focus, &.filled {
+      &.focus,
+      &.filled {
         transform: translateY(-30%) scale(0.6);
         color: themed('input-label-shrinked');
       }
+    }
+
+    .okp4-dataverse-portal-field-label-top {
+      position: absolute;
+      @include noto-sans(700);
+      font-size: 16px;
+      line-height: 22px;
+      color: themed('input-label-top');
+      top: 0;
+      left: 18px;
     }
 
     .okp4-dataverse-portal-field-error {
@@ -157,7 +174,7 @@
       gap: 5px;
       z-index: 1;
       width: calc(100% - 17px);
-      
+
       .okp4-dataverse-portal-field-error-message {
         box-sizing: border-box;
         @include noto-sans(400);

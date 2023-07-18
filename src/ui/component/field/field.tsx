@@ -99,13 +99,22 @@ export const Field: FC<FieldProps> = ({
         </div>
       )}
 
-      {label && (
+      {label && placeholder ? (
         <label
-          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label-top')}
           htmlFor={id}
         >
           {required ? label + '*' : label}
         </label>
+      ) : (
+        label && (
+          <label
+            className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
+            htmlFor={id}
+          >
+            {required ? label + '*' : label}
+          </label>
+        )
       )}
 
       {error && (
