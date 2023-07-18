@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
-import { useAppStore } from '@/ui/store/appStore'
+import { useAppStore } from '@/ui/store'
 import './knowFee.scss'
 
 export const KnowFee: FC = () => {
