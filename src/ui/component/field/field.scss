@@ -2,22 +2,24 @@
 @import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
 
-
-
 .okp4-dataverse-portal-field-main {
   $transition-duration: 400ms;
-  $input-gap: 6px;
   @include with-theme {
     box-sizing: border-box;
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: $input-gap;
+    gap: 6px;
     background-color: themed('input-background');
     border: 1px solid rgba(themed('input-border'), 0.12);
     border-radius: 6px;
-    padding: 18px 0 0 18px;
+    padding: 14px 0 0 12px;
+    min-height: 42px;
     transition: border-color $transition-duration ease-in-out;
+    
+    &.with-placeholder {
+      padding: 8px 0 8px 12px;
+    }
 
     &.focus {
       outline: none;
@@ -31,20 +33,22 @@
       cursor: not-allowed;
     }
 
+    &.readonly {
+      cursor: not-allowed;
+    }
+
     &.error {
       border-color: themed('error');
     }
-    
+
     .okp4-dataverse-portal-field-input {
       flex: 1;
       box-sizing: border-box;
-      overflow-y: auto;
       background-color: transparent;
       border: 0;
-      border-radius: 6px;
+      border-radius: 0 0 6px 6px;
       width: 100%;
-      height: inherit;
-      padding: 0 0 7px;
+      padding: 0;
       @include noto-sans(400);
       font-size: 16px;
       line-height: 22px;
@@ -56,7 +60,8 @@
         outline: none;
       }
 
-      &:disabled {
+      &:disabled,
+      &:read-only {
         cursor: not-allowed;
       }
 
@@ -74,12 +79,22 @@
       }
     }
 
+    textarea.okp4-dataverse-portal-field-input {
+      height: inherit;
+      overflow-y: auto;
+    }
+
+    input::placeholder {
+      color: themed('input-label-placeholder');
+      font-size: 16px;
+    }
+
     .okp4-dataverse-portal-field-left-element,
     .okp4-dataverse-portal-field-right-element {
       flex-shrink: 0;
       pointer-events: none;
       transform: translateY(calc(-25%));
-      
+
       svg {
         width: 22px;
         height: 22px;
@@ -88,6 +103,10 @@
           transition: fill $transition-duration ease-in-out;
           fill: themed('input-label-shrinked');
         }
+      }
+
+      &.with-placeholder {
+        transform: none;
       }
 
       &.error {
@@ -105,7 +124,7 @@
       transition: color $transition-duration ease-in-out;
       color: rgba(themed('text'), 0.4);
       margin-right: 18px;
-      
+
       &.focus {
         color: themed('primary-color-variant-1');
       }
@@ -117,8 +136,8 @@
       font-size: 16px;
       line-height: 22px;
       color: rgba(themed('text'), 0.6);
-      top: 14px;
-      left: 18px;
+      top: 8px;
+      left: 12px;
       pointer-events: none;
       transform-origin: 0 0;
       transition: transform $transition-duration, color $transition-duration;
@@ -135,12 +154,27 @@
       }
 
       &.with-left-element {
-        left: calc(40px + $input-gap);
+        left: 40px;
       }
 
-      &.focus, &.filled {
-        transform: translateY(-30%) scale(0.6);
+      &.with-placeholder {
+        @include noto-sans(700);
+        font-size: 14px;
+        line-height: 24px;
+        color: themed('input-label-top');
+        top: -30px;
+        left: 0;
+      }
+
+      &.focus,
+      &.filled {
+        transform: translateY(-25%) scale(0.6);
         color: themed('input-label-shrinked');
+
+        &.with-placeholder {
+          transform: none;
+          color: themed('input-label-top');
+        }
       }
     }
 
@@ -153,7 +187,7 @@
       gap: 5px;
       z-index: 1;
       width: calc(100% - 17px);
-      
+
       .okp4-dataverse-portal-field-error-message {
         box-sizing: border-box;
         @include noto-sans(400);

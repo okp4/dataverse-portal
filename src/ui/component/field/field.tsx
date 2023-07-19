@@ -5,13 +5,15 @@ import './field.scss'
 
 type FieldProps = {
   id: string
-  label: string
+  label?: string
   onChange: (value: string) => void
   value?: string
   type?: 'text' | 'number'
   error?: string
+  placeholder?: string
   required?: boolean
   disabled?: boolean
+  readonly?: boolean
   multiline?: boolean
   resizable?: boolean
   leftElement?: JSX.Element
@@ -26,8 +28,10 @@ export const Field: FC<FieldProps> = ({
   value,
   type = 'text',
   error,
+  placeholder,
   required = false,
   disabled = false,
+  readonly = false,
   multiline = false,
   resizable = false,
   leftElement,
@@ -46,13 +50,15 @@ export const Field: FC<FieldProps> = ({
   )
 
   const textFieldClassNames = classNames(
-    { filled: value },
+    { filled: readonly || value },
+    { readonly },
     { error },
     { focus: focused },
     { disabled },
     { resizable },
     { 'with-left-element': leftElement },
-    { 'with-right-element': rightElement }
+    { 'with-right-element': rightElement },
+    { 'with-placeholder': placeholder }
   )
 
   const textFieldInputProps = {
@@ -63,9 +69,11 @@ export const Field: FC<FieldProps> = ({
     onBlur: handleBlur,
     onChange: handleChange,
     onFocus: handleFocus,
+    readOnly: readonly,
     required,
     ref: textInputRef,
-    value
+    value,
+    placeholder
   }
 
   return (
@@ -91,12 +99,16 @@ export const Field: FC<FieldProps> = ({
           {rightElement}
         </div>
       )}
-      <label
-        className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
-        htmlFor={id}
-      >
-        {required ? label + '*' : label}
-      </label>
+
+      {label && (
+        <label
+          className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-label')}
+          htmlFor={id}
+        >
+          {required ? label + '*' : label}
+        </label>
+      )}
+
       {error && (
         <p className="okp4-dataverse-portal-field-error">
           <Icon name="info-light" />
