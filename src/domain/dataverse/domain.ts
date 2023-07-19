@@ -16,6 +16,7 @@ import type { Dataverse } from './entity'
 import type { DataversePort } from './port'
 import type {
   ByPropertyFilterInput,
+  ByServiceCategoryFilter,
   ByTypeFilterInput,
   Command,
   DataverseElementType
@@ -97,7 +98,7 @@ export const storeFactory = (
             limit: 20,
             hasNext: false,
             error: O.none,
-            filters: { byType: 'all', byProperty: null },
+            filters: { byType: 'all', byProperty: null, byServiceCategory: O.none },
             language: 'en'
           }))
         ),
@@ -237,6 +238,28 @@ export const storeFactory = (
               filters: {
                 ...state.data.filters,
                 byProperty: null
+              }
+            }
+          })),
+        setByServiceCategoryFilter: (newFilter: ByServiceCategoryFilter) => () =>
+          set(state => ({
+            data: {
+              ...state.data,
+              dataverse: [],
+              filters: {
+                ...state.data.filters,
+                byServiceCategory: newFilter
+              }
+            }
+          })),
+        resetByServiceCategoryFilter: () => () =>
+          set(state => ({
+            data: {
+              ...state.data,
+              dataverse: [],
+              filters: {
+                ...state.data.filters,
+                byServiceCategory: O.none
               }
             }
           }))

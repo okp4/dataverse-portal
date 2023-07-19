@@ -10,7 +10,9 @@ export type ByPropertyFilterInput = {
   property: FilterProperty
   value: string
 }
-export type ByServiceCategoryFilter = Option<string>
+
+export type ServiceCategoryVocab = 'Storage'
+export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>
 
 export type Command = {
   // Load the dataverse elements from outside
@@ -21,7 +23,7 @@ export type Command = {
   setByTypeFilter: (newFilter: ByTypeFilterInput) => IO<void>
   // Filter the dataverse by an enumerated property
   setByPropertyFilter: (newFilter: ByPropertyFilterInput) => IO<void>
-  // Filter the dataverse by a service category name
+  // Filter the dataverse by a service category controlled vocabulary
   setByServiceCategoryFilter: (newFilter: ByServiceCategoryFilter) => IO<void>
   // Reset the by type filter
   resetByTypeFilter: () => IO<void>
