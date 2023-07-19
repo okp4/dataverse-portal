@@ -1,19 +1,20 @@
 /* eslint-disable max-lines-per-function */
+import { flow, pipe } from 'fp-ts/lib/function'
+import { contramap as eqContramap } from 'fp-ts/Eq'
+import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
 import type { StateCreator } from 'zustand'
-import * as A from 'fp-ts/Array'
 import type { IOEither } from 'fp-ts/IOEither'
+import type { IOOption } from 'fp-ts/IOOption'
+import type { Eq } from 'fp-ts/lib/Eq'
+import type IO from 'fp-ts/IO'
+import * as A from 'fp-ts/Array'
 import * as IOE from 'fp-ts/IOEither'
 import * as IOO from 'fp-ts/IOOption'
-import type { IOOption } from 'fp-ts/IOOption'
-import { flow, pipe } from 'fp-ts/lib/function'
-import type { Eq } from 'fp-ts/lib/Eq'
 import * as S from 'fp-ts/string'
 import * as B from 'fp-ts/boolean'
 import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
-import { contramap as eqContramap } from 'fp-ts/Eq'
-import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
-import type { IO } from 'fp-ts/lib/IO'
+import * as O from 'fp-ts/Option'
 
 export type DatePickerValue = {
   from?: string
@@ -38,13 +39,17 @@ export type SetFormItemValuePayload = { id: FormItemId; value: FormItemValue }
 export type initFormItem = FormItem
 export type initFormPayload = initFormItem[]
 
+export type storageServiceId = string
+
 export type ShareDataSlice = {
   shareData: {
     form: Form
+    storageServiceId: O.Option<storageServiceId>
     initForm: (payload: initFormPayload) => IOEither<ResourceAlreadyExistsError, void>
     setFormItemValue: (payload: SetFormItemValuePayload) => IOEither<ResourceNotFoundError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
-    isFormInitialized: () => IO<boolean>
+    isFormInitialized: () => IO.IO<boolean>
+    setStorageServiceId: (id: O.Option<storageServiceId>) => IO.IO<void>
   }
 }
 
@@ -98,6 +103,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
 ) => ({
   shareData: {
     form: [],
+    storageServiceId: O.none,
     initForm: (payload: initFormPayload) =>
       pipe(
         payload,
@@ -168,6 +174,8 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
           () => IOE.of(undefined)
         )
       ),
-    isFormInitialized: () => () => get().shareData.form.length > 0
+    isFormInitialized: () => () => get().shareData.form.length > 0,
+    setStorageServiceId: (id: O.Option<storageServiceId>) => () =>
+      set(state => ({ shareData: { ...state.shareData, storageServiceId: id } }))
   }
 })
