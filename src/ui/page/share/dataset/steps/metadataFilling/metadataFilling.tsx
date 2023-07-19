@@ -1,10 +1,10 @@
 /* eslint-disable max-lines-per-function */
 import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import * as O from 'fp-ts/Option'
+import * as IOO from 'fp-ts/IOOption'
 import * as IOE from 'fp-ts/IOEither'
 import * as S from 'fp-ts/string'
-import { flow, pipe } from 'fp-ts/lib/function'
+import { apply, flow, pipe } from 'fp-ts/lib/function'
 import type {
   FormItem,
   FormItemType,
@@ -72,11 +72,12 @@ export const MetadataFilling: FC = () => {
   const formItemFieldValue = useCallback(
     (id: string): string =>
       flow(
-        formItemById(id),
-        O.map(({ value }: FormItem) => value),
-        O.chain(O.fromPredicate(S.isString)),
-        O.getOrElse(() => '')
-      )(),
+        formItemById,
+        IOO.map(({ value }: FormItem) => value),
+        IOO.flatMap(IOO.fromPredicate(S.isString)),
+        IOO.getOrElse(() => () => ''),
+        apply(null)
+      )(id),
     [formItemById]
   )
 
