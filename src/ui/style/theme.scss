@@ -74,6 +74,7 @@ $themes: (
     input-label-disabled :$input-label-disabled-light,
     input-background-focused :$input-background-focused-light,
     input-background-disabled :$input-background-disabled-light,
+    tags-field-input-action-background: $tags-field-input-action-background-light,
   ),
   dark: (
     primary-color: $primary,
@@ -147,6 +148,7 @@ $themes: (
     input-label-disabled :$input-label-disabled-dark,
     input-background-focused :$input-background-focused-dark,
     input-background-disabled :$input-background-disabled-dark,
+    tags-field-input-action-background: $tags-field-input-action-background-dark,
   )
 );
 
