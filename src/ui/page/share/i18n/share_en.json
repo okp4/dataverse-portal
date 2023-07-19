@@ -15,6 +15,23 @@
       "title": "I share a service",
       "description": "Easily share your service in the dataverse"
     },
-    "soonAvailable": "Soon available"
+    "soonAvailable": "Soon available",
+    "metadataFilling": {
+      "stepTitle": "Fill in the metadata",
+      "stepDescription": "Please complete the dataset metadata for reference purposes. It is highly discouraged to include personal data in the metadata due to its immutability once stored in the blockchain, which does not comply with GDPR regulations.",
+      "datasetTitle": "Dataset title",
+      "publisher": "Publisher",
+      "creator": "Creator",
+      "description": "Description",
+      "format": "Format:",
+      "formatSelection": "Select format",
+      "license": "License:",
+      "licenceSelection": "Select license",
+      "topic": "Topic:",
+      "topicSelection": "Select topic",
+      "geographicalCoverage": "Geographical coverage:",
+      "geographicalCoverageSelection": "Select geographical coverage",
+      "tags": "Tags"
+    }
   }
 }

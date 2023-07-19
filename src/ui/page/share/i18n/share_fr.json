@@ -15,6 +15,23 @@
       "title": "Je partage un service",
       "description": "Partagez facilement votre service dans le dataverse"
     },
-    "soonAvailable": "Bientôt disponible"
+    "soonAvailable": "Bientôt disponible",
+    "metadataFilling": {
+      "stepTitle": "Renseigner les métadonnées",
+      "stepDescription": "Saisir les métadonnées de l'ensemble de données à référencer. Il est fortement déconseillé d'utiliser des données personnelles dans les métadonnées, car elles sont immuables une fois dans la blockchain et ne sont pas conformes au RGPD.",
+      "datasetTitle": "Titre du jeu de données",
+      "publisher": "Éditeur",
+      "creator": "Créateur",
+      "description": "Description",
+      "format": "Format :",
+      "formatSelection": "Sélectionner le format",
+      "license": "License :",
+      "licenceSelection": "Sélectionner la license",
+      "topic": "Sujet :",
+      "topicSelection": "Sélectionner le sujet",
+      "geographicalCoverage": "Chemie géographique :",
+      "geographicalCoverageSelection": "Sélectionner la couverture géographique",
+      "tags": "Tags"
+    }
   }
 }
