@@ -4,6 +4,8 @@
 
 .okp4-dataverse-portal-dropdown-main {
   @include with-theme {
+    position: relative;
+
     .okp4-dataverse-portal-dropdown-trigger {
       background-color: themed('dropdown-background');
       border: 1px solid themed('dropdown-border');
@@ -18,6 +20,10 @@
       border-radius: 6px;
       background-color: themed('dropdown-content-background');
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.14);
+
+      &.dropup {
+        flex-direction: column-reverse;
+      }
 
       .okp4-dataverse-portal-dropdown-options-list {
         --checkbox-height: 32px;

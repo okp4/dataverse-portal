@@ -53,7 +53,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
           className={classNames(
             'okp4-dataverse-portal-collapsible-trigger-icon',
             {
-              flipped: openState
+              flipped: contentClassName?.includes('dropup') ? !openState : openState
             },
             `${triggerClassName}-icon`
           )}

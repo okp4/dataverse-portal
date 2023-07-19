@@ -1,11 +1,13 @@
 import type { FC } from 'react'
-import { useMemo, useCallback, useState } from 'react'
+import { useMemo, useCallback, useState, useRef } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
 import { Tag } from '@/ui/component/tag/tag'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import classNames from 'classnames'
+import { useDropDirection } from '@/ui/hook/useDropDirection'
 import './dropDown.scss'
 
 type SelectionItemType = 'checkbox'
@@ -56,7 +58,7 @@ const DropDownInput: FC<DropDownInputProps> = ({ value, onChange, placeholder })
           )}
         </div>
       ) : (
-        <p className="okp4-dataverse-portal-dropdown-input-placeholder">{placeholder}</p>
+        <span className="okp4-dataverse-portal-dropdown-input-placeholder">{placeholder}</span>
       )}
     </div>
   )
@@ -149,11 +151,15 @@ export const DropDown: FC<DropDownProps> = ({
     [options, searchTerm, maxSearchResults]
   )
 
+  const dropDownRef = useRef<HTMLDivElement | null>(null)
+
+  const dropup = useDropDirection(dropDownRef)
+
   return (
-    <div className="okp4-dataverse-portal-dropdown-main">
+    <div className="okp4-dataverse-portal-dropdown-main" ref={dropDownRef}>
       <Collapsible
         content={
-          <div className="okp4-dataverse-portal-dropdown-content">
+          <div className={classNames('okp4-dataverse-portal-dropdown-content', { dropup })}>
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
             <DropDownOptions
               foundOptions={foundOptions}
@@ -164,6 +170,7 @@ export const DropDown: FC<DropDownProps> = ({
             />
           </div>
         }
+        contentClassName={classNames({ dropup })}
         iconName="chevron-sharp"
         trigger={<DropDownInput onChange={handleChange} placeholder={placeholder} value={value} />}
         triggerClassName="okp4-dataverse-portal-dropdown-trigger"

@@ -6,14 +6,14 @@
     justify-content: center;
     align-items: center;
     transition: transform 200ms ease-out;
-    
+
     &.flipped {
       transform: rotate(180deg);
     }
 
     path {
-      fill: themed("text");
-      stroke: themed("text");
+      fill: themed('text');
+      stroke: themed('text');
     }
   }
 }
@@ -28,7 +28,16 @@
 }
 
 .okp4-dataverse-portal-collapsible-content {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
+
+  &.dropup {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    transform: translateY(-102.5%);
+  }
 }
 
 .okp4-dataverse-portal-collapsible-content[data-state='open'] {
