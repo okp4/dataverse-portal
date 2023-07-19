@@ -1,6 +1,6 @@
 import { useCallback, type FC, useState } from 'react'
 import classNames from 'classnames'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { Tag } from '@/ui/component/tag/tag'
 import './i18n/index'
 import './tagsField.scss'
@@ -54,12 +54,8 @@ export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
             hidden: inputValue
           })}
         >
-          <Trans
-            components={{
-              span: <span className="okp4-dataverse-portal-tags-field-placeholder-action" />
-            }}
-            i18nKey={t('typePressEnter')}
-          />
+          {t('typeAndPress')}
+          <span className="okp4-dataverse-portal-tags-field-placeholder-action">{t('enter')}</span>
         </span>
         <input
           className="okp4-dataverse-portal-tags-field-input"
