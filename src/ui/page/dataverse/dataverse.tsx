@@ -437,6 +437,86 @@ export const dataverseItems: DataverseItemDetails[] = [
     type: 'service',
     label: 'Storage',
     description: 'Data storage service'
+  },
+  {
+    id: '03230ce7-d8cb-410e-919e-19c480c1dd75',
+    type: 'service',
+    label: 'Clever Cloud Data Storage',
+    description: 'Data storage service'
+  },
+  {
+    id: '06fd0de2-8be8-436d-9d91-3aa5972c2209',
+    type: 'service',
+    label: 'Google Cloud Storage',
+    description:
+      'Cloud Storage is a managed service for storing unstructured data. Store any amount of data and retrieve it whenever you want.'
+  },
+  {
+    id: '455d0f5e-6279-42e2-9290-e0507210f5dd',
+    type: 'service',
+    label: 'Kodo',
+    description:
+      "Qiniu Cloud's object storage (KODO), a completely independent-researched core technology which is proven by repeated customer experience has occupied absolute leading market leader position. KODO can be widely applied to mass data management."
+  },
+  {
+    id: '4a7c09eb-62b4-4f32-a5e3-aea123a4b923',
+    type: 'service',
+    label: 'Amazon S3',
+    description:
+      'Amazon Simple Storage Service (Amazon S3) is an object storage service that delivers industry-leading scalability, data availability, security and performance.'
+  },
+  {
+    id: '57b76dd7-25d9-4fad-87e0-b228faf97e8b',
+    type: 'service',
+    label: 'IBM Cloud Object Storage',
+    description:
+      'IBM Cloud Object Storage, with its global presence and flexible resilience options, supports exponential data growth for your cloud-native workloads with best-in-class cost optimization, robust data security and easy-to-use data governance.'
+  },
+  {
+    id: '60ac66b6-ed76-4504-bdde-de5901d2b482',
+    type: 'service',
+    label: 'Dropbox',
+    description: 'Dropbox is an online service for storing and sharing copies of local files.'
+  },
+  {
+    id: '803cd033-2eed-4db7-847b-f46715a42a70',
+    type: 'service',
+    label: 'Mega',
+    description: 'File hosting service.'
+  },
+  {
+    id: '9c8809bd-de56-4003-bee4-4bcfbc4cb603',
+    type: 'service',
+    label: 'Microsoft Azure Blob Storage',
+    description:
+      'The Azure Blob Storage service lets you create datalakes to meet your analysis needs, and provides you with storage space to build powerful native Cloud and mobile applications.'
+  },
+  {
+    id: 'b866c23e-40aa-4597-9387-b4af649b77db',
+    type: 'service',
+    label: 'Deutsche Telekom Cloud Object Storage',
+    description: 'Data storage service'
+  },
+  {
+    id: 'bca4aaa0-6c8d-497c-ba1f-9a7116a4ebf0',
+    type: 'service',
+    label: 'IONOS S3 Object Storage',
+    description:
+      'IONOS S3 Object Storage facilitates digital transformation: store and manage data of varying volumes, easily and affordably.'
+  },
+  {
+    id: 'f5ee2a3a-07e4-453c-a1a4-e721f1e2fa20',
+    type: 'service',
+    label: 'IPFS',
+    description:
+      'IPFS is a decentralized protocol designed to facilitate the storage, sharing, and retrieval of files on a global scale'
+  },
+  {
+    id: 'bca4aaa0-6c8d-497c-ba1f-9a7116a4ebf0',
+    type: 'service',
+    label: 'IONOS S3 Object Storage',
+    description:
+      'IONOS S3 Object Storage facilitates digital transformation: store and manage data of varying volumes, easily and affordably.'
   }
 ]
 
