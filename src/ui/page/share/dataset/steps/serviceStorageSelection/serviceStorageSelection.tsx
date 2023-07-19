@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import classNames from 'classnames'
 import * as O from 'fp-ts/Option'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
-import { useDataverseStore } from '@/ui/store'
+import { useAppStore, useDataverseStore } from '@/ui/store'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
 import { Button } from '@/ui/component/button/button'
 import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
@@ -32,11 +32,14 @@ export const getResourceDetails = (id: string): DataverseItemDetails | undefined
 export const ServiceStorageSelection: FC = () => {
   const { t } = useTranslation(['common', 'share', 'publisher'])
   const [activeTab, setActiveTab] = useState<Tab>('left')
-  const [selectedService, setSelectedService] = useState<DataverseItemDetails | null>(null)
   const currentLng = activeLanguageWithDefault().lng
   const selectedServiceRef = useRef<HTMLDivElement | null>(null)
   const serviceContainerRef = useRef<HTMLDivElement | null>(null)
   const dispatchNotification = useDispatchNotification()
+  const { setStorageServiceId, storageServiceId } = useAppStore(store => ({
+    storageServiceId: store.shareData.storageServiceId,
+    setStorageServiceId: store.shareData.setStorageServiceId
+  }))
 
   const {
     loadDataverse,
@@ -66,11 +69,11 @@ export const ServiceStorageSelection: FC = () => {
 
   const handleServiceSearch = useCallback(
     (searchTearm: string) => {
-      setSelectedService(null)
+      setStorageServiceId(O.none)()
       setByPropertyFilter({ property: 'title', value: searchTearm })()
       loadDataverse()()
     },
-    [loadDataverse, setByPropertyFilter]
+    [loadDataverse, setByPropertyFilter, setStorageServiceId]
   )
 
   const handleSelect = useCallback(
@@ -78,15 +81,15 @@ export const ServiceStorageSelection: FC = () => {
       const resourceDetails = getResourceDetails(id)
 
       if (resourceDetails && isService(resourceDetails)) {
-        setSelectedService(resourceDetails)
+        setStorageServiceId(O.some(id))()
       }
     },
-    []
+    [setStorageServiceId]
   )
 
   const handleClose = useCallback(() => {
-    setSelectedService(null)
-  }, [])
+    setStorageServiceId(O.none)()
+  }, [setStorageServiceId])
 
   const handleDetailsEscape = useCallback(
     (event: KeyboardEvent) => {
@@ -122,7 +125,7 @@ export const ServiceStorageSelection: FC = () => {
       top: offsetTop - scrollTop,
       behavior: 'smooth'
     })
-  }, [selectedServiceRef, serviceContainerRef, selectedService])
+  }, [selectedServiceRef, serviceContainerRef, storageServiceId])
 
   useEffect(() => {
     setLanguage(currentLng)()
@@ -162,7 +165,7 @@ export const ServiceStorageSelection: FC = () => {
         />
         <div
           className={classNames('okp4-dataverse-portal-share-dataset-page-services-container', {
-            detailed: !!selectedService
+            detailed: O.isSome(storageServiceId)
           })}
           id="scrollable-container"
           ref={serviceContainerRef}
@@ -181,7 +184,7 @@ export const ServiceStorageSelection: FC = () => {
                 : dataverse()().map(({ id, properties }) => {
                     const publisher = properties.find(p => p.property === 'publisher')?.value ?? ''
                     const publisherDescription = `${t('metadata:publisher')} **${publisher}**`
-                    const isServiceSelected = selectedService?.id === id
+                    const isServiceSelected = O.getOrElse(() => '')(storageServiceId) === id
                     return (
                       <DataverseItemCard
                         button={
@@ -216,17 +219,20 @@ export const ServiceStorageSelection: FC = () => {
             />
           )}
         </div>
-        {!!selectedService && (
-          <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">
-            <div className="okp4-dataverse-portal-share-dataset-page-service-details-scroll-container">
-              <DetailedDataverseItem
-                data={selectedService}
-                metadata={serviceGeneralMetadata}
-                onClose={handleClose}
-              />
+        {O.match(
+          () => undefined,
+          (storageServiceId: string) => (
+            <div className="okp4-dataverse-portal-share-dataset-page-service-details-container">
+              <div className="okp4-dataverse-portal-share-dataset-page-service-details-scroll-container">
+                <DetailedDataverseItem
+                  data={getResourceDetails(storageServiceId) as DataverseItemDetails}
+                  metadata={serviceGeneralMetadata}
+                  onClose={handleClose}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )
+        )(storageServiceId)}
       </div>
     </div>
   )
