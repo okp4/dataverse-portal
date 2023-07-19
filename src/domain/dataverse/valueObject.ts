@@ -11,9 +11,13 @@ export type ByPropertyFilter = {
   value: string
 } | null
 
+type ServiceCategoryVocab = 'Storage'
+export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>
+
 type DataverseQueryFilters = {
   byType: ByTypeQueryFilter
   byProperty: ByPropertyFilter
+  byServiceCategory: ByServiceCategoryFilter
 }
 
 export type DataverseQuery = {
