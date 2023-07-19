@@ -1,4 +1,4 @@
-import { type FC, type ChangeEvent, useCallback, useState, useRef } from 'react'
+import { type FC, type ChangeEvent, useCallback, useState, useRef, type ReactNode } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
@@ -17,7 +17,7 @@ type FieldProps = {
   multiline?: boolean
   resizable?: boolean
   leftElement?: JSX.Element
-  rightElement?: JSX.Element
+  rightElement?: ReactNode
 }
 
 // eslint-disable-next-line max-lines-per-function

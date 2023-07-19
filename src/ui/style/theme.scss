@@ -75,8 +75,8 @@ $themes: (
     input-background-focused: $input-background-focused-light,
     input-background-disabled: $input-background-disabled-light,
     input-label-placeholder: $input-label-placeholder-light,
-    input-label-top: $input-label-top-light tags-field-input-action-background:
-      $tags-field-input-action-background-light
+    input-label-top: $input-label-top-light,
+    tags-field-input-action-background: $tags-field-input-action-background-light
   ),
   dark: (
     primary-color: $primary,
@@ -151,8 +151,8 @@ $themes: (
     input-background-focused: $input-background-focused-dark,
     input-background-disabled: $input-background-disabled-dark,
     input-label-placeholder: $input-label-placeholder-dark,
-    input-label-top: $input-label-top-dark tags-field-input-action-background:
-      $tags-field-input-action-background-dark
+    input-label-top: $input-label-top-dark,
+    tags-field-input-action-background: $tags-field-input-action-background-dark
   )
 );
 

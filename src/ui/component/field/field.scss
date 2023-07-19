@@ -4,18 +4,22 @@
 
 .okp4-dataverse-portal-field-main {
   $transition-duration: 400ms;
-  $input-gap: 6px;
   @include with-theme {
     box-sizing: border-box;
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: $input-gap;
+    gap: 6px;
     background-color: themed('input-background');
     border: 1px solid rgba(themed('input-border'), 0.12);
     border-radius: 6px;
-    padding: 18px 0 0 18px;
+    padding: 14px 0 0 12px;
+    min-height: 42px;
     transition: border-color $transition-duration ease-in-out;
+    
+    &.with-placeholder {
+      padding: 8px 0 8px 12px;
+    }
 
     &.focus {
       outline: none;
@@ -40,13 +44,11 @@
     .okp4-dataverse-portal-field-input {
       flex: 1;
       box-sizing: border-box;
-      overflow-y: auto;
       background-color: transparent;
       border: 0;
-      border-radius: 6px;
+      border-radius: 0 0 6px 6px;
       width: 100%;
-      height: inherit;
-      padding: 0 0 7px;
+      padding: 0;
       @include noto-sans(400);
       font-size: 16px;
       line-height: 22px;
@@ -67,10 +69,6 @@
         resize: vertical;
       }
 
-      &.with-placeholder {
-        justify-content: center;
-      }
-
       &[type='number'] {
         appearance: textfield;
       }
@@ -81,11 +79,14 @@
       }
     }
 
+    textarea.okp4-dataverse-portal-field-input {
+      height: inherit;
+      overflow-y: auto;
+    }
+
     input::placeholder {
       color: themed('input-label-placeholder');
       font-size: 16px;
-      position: absolute;
-      top: -5px;
     }
 
     .okp4-dataverse-portal-field-left-element,
@@ -102,6 +103,10 @@
           transition: fill $transition-duration ease-in-out;
           fill: themed('input-label-shrinked');
         }
+      }
+
+      &.with-placeholder {
+        transform: none;
       }
 
       &.error {
@@ -131,8 +136,8 @@
       font-size: 16px;
       line-height: 22px;
       color: rgba(themed('text'), 0.6);
-      top: 14px;
-      left: 18px;
+      top: 8px;
+      left: 12px;
       pointer-events: none;
       transform-origin: 0 0;
       transition: transform $transition-duration, color $transition-duration;
@@ -149,7 +154,7 @@
       }
 
       &.with-left-element {
-        left: calc(40px + $input-gap);
+        left: 40px;
       }
 
       &.with-placeholder {
@@ -157,14 +162,13 @@
         font-size: 14px;
         line-height: 24px;
         color: themed('input-label-top');
-        position: absolute;
         top: -30px;
         left: 0;
       }
 
       &.focus,
       &.filled {
-        transform: translateY(-30%) scale(0.6);
+        transform: translateY(-25%) scale(0.6);
         color: themed('input-label-shrinked');
 
         &.with-placeholder {
