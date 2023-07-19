@@ -49,7 +49,9 @@ export const ServiceStorageSelection: FC = () => {
     setLanguage,
     error,
     resetByTypeFilter,
-    resetByPropertyFilter
+    resetByPropertyFilter,
+    setByServiceCategoryFilter,
+    resetByServiceCategoryFilter
   } = useDataverseStore(state => ({
     loadDataverse: state.loadDataverse,
     dataverse: state.dataverse,
@@ -61,7 +63,9 @@ export const ServiceStorageSelection: FC = () => {
     setByTypeFilter: state.setByTypeFilter,
     error: state.error,
     resetByTypeFilter: state.resetByTypeFilter,
-    resetByPropertyFilter: state.resetByPropertyFilter
+    resetByPropertyFilter: state.resetByPropertyFilter,
+    setByServiceCategoryFilter: state.setByServiceCategoryFilter,
+    resetByServiceCategoryFilter: state.resetByServiceCategoryFilter
   }))
 
   const handleServiceSearch = useCallback(
@@ -127,10 +131,12 @@ export const ServiceStorageSelection: FC = () => {
   useEffect(() => {
     setLanguage(currentLng)()
     setByTypeFilter('Service')()
+    setByServiceCategoryFilter(O.some('Storage'))()
     loadDataverse()()
     return () => {
       resetByPropertyFilter()()
       resetByTypeFilter()()
+      resetByServiceCategoryFilter()()
     }
   }, [
     currentLng,
@@ -138,7 +144,9 @@ export const ServiceStorageSelection: FC = () => {
     setByTypeFilter,
     setLanguage,
     resetByTypeFilter,
-    resetByPropertyFilter
+    resetByPropertyFilter,
+    setByServiceCategoryFilter,
+    resetByServiceCategoryFilter
   ])
 
   return (
