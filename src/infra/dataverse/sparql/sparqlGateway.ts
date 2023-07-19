@@ -21,7 +21,7 @@ export const sparqlGateway: DataversePort = {
     language: string,
     limit: number,
     offset: number,
-    { byType, byProperty }: RetrieveDataverseQueryFilters
+    { byType, byProperty, byServiceCategory }: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
     const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
@@ -31,6 +31,8 @@ export const sparqlGateway: DataversePort = {
     const byPropertyFilter = (filter: ByPropertyQueryFilter): string =>
       `contains(lcase(str(?${filter?.property})), "${filter?.value.toLowerCase()}" )`
 
+    const byServiceCategoryFilter = O.getOrElse(() => '')(byServiceCategory)
+
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -39,6 +41,7 @@ export const sparqlGateway: DataversePort = {
       PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
       PREFIX zoneMetadata: <https://ontology.okp4.space/metadata/zone/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX svccat: <https://ontology.okp4.space/thesaurus/service-category/> 
       SELECT DISTINCT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
         {
@@ -56,6 +59,7 @@ export const sparqlGateway: DataversePort = {
         }
         ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}
         ${byProperty?.property ? `FILTER ( ${byPropertyFilter(byProperty)} )` : ''}
+        ${O.isSome(byServiceCategory) ? `FILTER ( ?topic = svccat:${byServiceCategoryFilter})` : ''}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
