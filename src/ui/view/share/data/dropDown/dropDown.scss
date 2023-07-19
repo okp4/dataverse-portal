@@ -8,6 +8,7 @@
       background-color: themed('dropdown-background');
       border: 1px solid themed('dropdown-border');
       border-radius: 6px;
+      padding-left: 10px;
     }
 
     .okp4-dataverse-portal-dropdown-content {
@@ -22,6 +23,19 @@
         --checkbox-height: 32px;
         --checkbox-gap: 6px;
         --visible-checkboxes: 3;
+
+        &[data-visible-items='4'] {
+          --visible-checkboxes: 4;
+        }
+
+        &[data-visible-items='5'] {
+          --visible-checkboxes: 5;
+        }
+
+        &[data-visible-items='6'] {
+          --visible-checkboxes: 6;
+        }
+
         @include columns-with-gap(var(--checkbox-gap));
         height: calc(
           var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) *
@@ -29,6 +43,10 @@
         );
         overflow-y: auto;
         padding-right: 8px;
+
+        .checked {
+          background: none;
+        }
       }
 
       .okp4-dataverse-portal-dropdown-no-results-wrapper {
@@ -51,11 +69,11 @@
       line-height: 22px;
       white-space: nowrap;
 
-      &-selection {
+      .okp4-dataverse-portal-dropdown-header-selection {
         display: flex;
         gap: 10px;
 
-        &-item {
+        .okp4-dataverse-portal-dropdown-header-selection-item {
           color: themed('dropdown-tags-color');
           background-color: themed('dropdown-tags-background');
           height: 6px;

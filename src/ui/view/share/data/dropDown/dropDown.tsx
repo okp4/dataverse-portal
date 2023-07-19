@@ -3,23 +3,26 @@ import { useMemo, useCallback, useState } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
-import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
-import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
-
+import { OptionsList } from './components/optionsList'
+import { Header } from './components/header'
 import './dropDown.scss'
-import { Tag } from '@/ui/component/tag/tag'
 
 type SelectionItemType = 'checkbox'
 
-type DropDownProps = {
+export type DropDownProps = {
   placeholder: string
   value: string[]
   options: string[]
   searchPlaceholder: string
   selectionType: SelectionItemType
-  maxSearchResults?: number
   onChange: (value: string[]) => void
+  visibleItems?: 4 | 5 | 6
+  maxSearchResults?: number
 }
+
+const {
+  dropDown: { dropDownMaxSearchResults }
+} = APP_ENV
 
 // eslint-disable-next-line max-lines-per-function
 export const DropDown: FC<DropDownProps> = ({
@@ -29,7 +32,8 @@ export const DropDown: FC<DropDownProps> = ({
   onChange,
   searchPlaceholder,
   selectionType,
-  maxSearchResults = APP_ENV.dropDownMaxSearchResults
+  maxSearchResults = dropDownMaxSearchResults,
+  visibleItems
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
 
@@ -40,7 +44,7 @@ export const DropDown: FC<DropDownProps> = ({
     [setSearchTerm]
   )
 
-  const handleSelectedChange = useCallback(
+  const handleChange = useCallback(
     (v: string) => () => {
       if (value.includes(v)) {
         onChange(value.filter(val => val !== v))
@@ -66,58 +70,18 @@ export const DropDown: FC<DropDownProps> = ({
         content={
           <div className="okp4-dataverse-portal-dropdown-content">
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
-            <div className="okp4-dataverse-portal-dropdown-options-list">
-              {foundOptions.length ? (
-                foundOptions.map(v => {
-                  switch (selectionType) {
-                    case 'checkbox':
-                      return (
-                        <DynamicCheckbox
-                          checked={value.includes(v)}
-                          highlightedTerm={searchTerm}
-                          key={v}
-                          name={v}
-                          onCheckedChange={handleSelectedChange(v)}
-                          value={v}
-                        />
-                      )
-                  }
-                })
-              ) : (
-                <NoResultFound
-                  className="okp4-dataverse-portal-dropdown-no-results-wrapper"
-                  iconName="large-magnifier-with-cross"
-                />
-              )}
-            </div>
+            <OptionsList
+              foundOptions={foundOptions}
+              handleChange={handleChange}
+              searchTerm={searchTerm}
+              selectionType={selectionType}
+              value={value}
+              visibleItems={visibleItems}
+            />
           </div>
         }
         iconName="chevron-sharp"
-        open
-        trigger={
-          <div className="okp4-dataverse-portal-dropdown-header">
-            {value.length ? (
-              <div className="okp4-dataverse-portal-dropdown-header-selection">
-                {value.slice(0, APP_ENV.dropDownTagsDisplayLimit).map(v => (
-                  <Tag
-                    classes={{ main: 'okp4-dataverse-portal-dropdown-header-selection-item' }}
-                    key={v}
-                    onDelete={handleSelectedChange(v)}
-                    tagName={v}
-                  />
-                ))}
-                {value.length > APP_ENV.dropDownTagsDisplayLimit && (
-                  <Tag
-                    classes={{ main: 'okp4-dataverse-portal-dropdown-header-selection-item' }}
-                    tagName={`+${String(value.length)}`}
-                  />
-                )}
-              </div>
-            ) : (
-              <p className="okp4-dataverse-portal-dropdown-header-placeholder">{placeholder}</p>
-            )}
-          </div>
-        }
+        trigger={<Header handleChange={handleChange} placeholder={placeholder} value={value} />}
         triggerClassName="okp4-dataverse-portal-dropdown-trigger"
       />
     </div>
