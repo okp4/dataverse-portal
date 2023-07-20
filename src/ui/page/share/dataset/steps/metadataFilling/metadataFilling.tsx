@@ -17,6 +17,7 @@ import { ShowFileError } from '@/shared/error'
 import { Field } from '@/ui/component/field/field'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
+import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
 
 type DatasetFormItem = {
@@ -67,6 +68,33 @@ export const MetadataFilling: FC = () => {
       setFormItemValue({ id, value })()
     },
     [setFormItemValue]
+  )
+
+  const tagsFieldValue = useCallback(
+    (id: string): string[] =>
+      flow(
+        formItemById,
+        IOO.map(({ value }: FormItem) => value),
+        IOO.flatMap(IOO.fromPredicate(Array.isArray)),
+        IOO.getOrElseW(() => () => []),
+        apply(null)
+      )(id),
+    [formItemById]
+  )
+
+  const addTag = useCallback(
+    (id: string) => (value: string) => {
+      setFormItemValue({ id, value: [...tagsFieldValue(id), value] })()
+    },
+    [setFormItemValue, tagsFieldValue]
+  )
+
+  const removeTag = useCallback(
+    (id: string) => (value: string) => {
+      const updatedtags = tagsFieldValue(id).filter(tag => tag !== value)
+      setFormItemValue({ id, value: updatedtags })()
+    },
+    [setFormItemValue, tagsFieldValue]
   )
 
   const formItemFieldValue = useCallback(
@@ -256,18 +284,13 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id9,
-        type: 'text',
+        type: 'select',
         label: 'tags',
         value: [],
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
-            <Field
-              id={id9}
-              label={'tags'}
-              onChange={handleFieldValueChange(id9)}
-              value={formItemFieldValue(id9)}
-            />
+            <TagsField addTag={addTag(id9)} removeTag={removeTag(id9)} tags={tagsFieldValue(id9)} />
           </div>
         ),
         style: {
@@ -294,7 +317,7 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [formItemFieldValue, handleFieldValueChange, t])
+  }, [addTag, formItemFieldValue, handleFieldValueChange, removeTag, t, tagsFieldValue])
 
   const mapForm = (form: DatasetForm): initFormPayload => {
     return form.map(formItem => ({
