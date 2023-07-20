@@ -5,7 +5,7 @@ import type { Option } from 'fp-ts/Option'
 export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
-type ServiceCategoryVocab = 'Storage'
+export type ServiceCategoryVocab = 'Storage'
 export type ByServiceCategoryQueryFilter = Option<ServiceCategoryVocab>
 
 type FilterQueryProperty = 'title'
