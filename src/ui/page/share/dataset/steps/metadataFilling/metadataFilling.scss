@@ -44,12 +44,20 @@
           @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
           @include grid-container($colsNb: 2, $colGutter: 20px, $rowGutter: 16px);
           grid-template-rows: 42px 42px 214px 67px 67px;
+
+          @include use-breakpoints(('desktop')) {
+            @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
+          }
         }
 
         &.right {
           @include grid-item($colStart: 6, $colEnd: 11, $rowStart: auto, $rowEnd: auto);
           @include grid-container($colsNb: 1, $colGutter: 0, $rowGutter: 16px);
           grid-template-rows: 65px 65px 65px 205px;
+
+          @include use-breakpoints(('desktop')) {
+            @include grid-item($colStart: 7, $colEnd: 13, $rowStart: auto, $rowEnd: auto);
+          }
         }
 
         p {
@@ -57,6 +65,7 @@
           color: themed('text');
           font-size: 14px;
           line-height: 20px;
+          margin-bottom: 8px;
         }
       }
 
