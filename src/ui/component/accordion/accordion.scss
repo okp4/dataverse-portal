@@ -2,9 +2,9 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-.okp4-dataverse-portal-drop-down-menu-main {
+.okp4-dataverse-portal-accordion-menu-main {
   @include with-theme {
-    .okp4-dataverse-portal-drop-down-menu-blur {
+    .okp4-dataverse-portal-accordion-menu-blur {
       position: absolute;
       top: 0;
       height: 100%;
@@ -13,12 +13,12 @@
       z-index: 100;
     }
 
-    .okp4-dataverse-portal-drop-down-menu-container {
+    .okp4-dataverse-portal-accordion-menu-container {
       width: 100%;
       position: relative;
       z-index: 100;
 
-      .okp4-dataverse-portal-drop-down-menu-item {
+      .okp4-dataverse-portal-accordion-menu-item {
         @include noto-sans(700);
         display: flex;
         justify-content: space-between;
@@ -32,9 +32,9 @@
         &.selected {
           @include noto-sans(400);
           margin-bottom: 4px;
-          background-color: themed('drop-down-menu-selected-background');
+          background-color: themed('accordion-menu-selected-background');
 
-          border: 1px solid themed('drop-down-menu-selected-border');
+          border: 1px solid themed('accordion-menu-selected-border');
 
           svg {
             path {
@@ -43,7 +43,7 @@
           }
 
           &.menu-opened {
-            background-color: themed('drop-down-menu-menu-background');
+            background-color: themed('accordion-menu-menu-background');
 
             svg {
               transform: rotate(180deg);
@@ -100,7 +100,7 @@
         }
       }
 
-      .okp4-dataverse-portal-drop-down-menus-container {
+      .okp4-dataverse-portal-accordion-menus-container {
         display: flex;
         position: absolute;
         z-index: 1;
@@ -109,7 +109,7 @@
         border-radius: 6px;
         padding-bottom: 10px;
 
-        .okp4-dataverse-portal-drop-down-menu-options-container {
+        .okp4-dataverse-portal-accordion-menu-options-container {
           display: flex;
           flex-direction: column;
           flex-shrink: 0;
@@ -121,16 +121,13 @@
           box-sizing: border-box;
           border-radius: 6px;
           padding: 10px;
-          background-color: themed('drop-down-menu-menu-background');
+          background-color: themed('accordion-menu-menu-background');
 
           &.focused {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
           }
 
-          @include scrollbars(
-            $foreground-color: transparent,
-            $background-color: transparent,
-          )
+          @include scrollbars($foreground-color: transparent, $background-color: transparent);
         }
       }
     }

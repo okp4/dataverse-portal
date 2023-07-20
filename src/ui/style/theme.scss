@@ -53,9 +53,9 @@ $themes: (
     paragraph-background: $paragraph-background-light,
     log-out-menu: $error,
     disabled-checkbox-background: $disabled-checkbox-background,
-    drop-down-menu-menu-background: $text-dark,
-    drop-down-menu-selected-background: $background-light-variant-1,
-    drop-down-menu-selected-border: rgba($primary-variant-1, 0.12),
+    accordion-menu-menu-background: $text-dark,
+    accordion-menu-selected-background: $background-light-variant-1,
+    accordion-menu-selected-border: rgba($primary-variant-1, 0.12),
     tab-active-background: $tab-active-background,
     tab-disabled-background: $tab-disabled-background,
     tab-disabled-text: $tab-disabled-text,
@@ -76,7 +76,12 @@ $themes: (
     input-background-disabled: $input-background-disabled-light,
     input-label-placeholder: $input-label-placeholder-light,
     input-label-top: $input-label-top-light,
-    tags-field-input-action-background: $tags-field-input-action-background-light
+    tags-field-input-action-background: $tags-field-input-action-background-light,
+    dropdown-background: $dropdown-background-light,
+    dropdown-border: $dropdown-border-light,
+    dropdown-tags-color: $dropdown-tags-color,
+    dropdown-tags-background: $dropdown-tags-background,
+    dropdown-content-background: $dropdown-content-background-light
   ),
   dark: (
     primary-color: $primary,
@@ -129,9 +134,9 @@ $themes: (
     paragraph-background: $paragraph-background-dark,
     log-out-menu: $error,
     disabled-checkbox-background: $disabled-checkbox-background,
-    drop-down-menu-menu-background: $card-dark,
-    drop-down-menu-selected-background: $card-dark,
-    drop-down-menu-selected-border: transparent,
+    accordion-menu-menu-background: $card-dark,
+    accordion-menu-selected-background: $card-dark,
+    accordion-menu-selected-border: transparent,
     tab-active-background: $tab-active-background,
     tab-disabled-background: $tab-disabled-background,
     tab-disabled-text: $tab-disabled-text,
@@ -152,7 +157,12 @@ $themes: (
     input-background-disabled: $input-background-disabled-dark,
     input-label-placeholder: $input-label-placeholder-dark,
     input-label-top: $input-label-top-dark,
-    tags-field-input-action-background: $tags-field-input-action-background-dark
+    tags-field-input-action-background: $tags-field-input-action-background-dark,
+    dropdown-background: $dropdown-background-dark,
+    dropdown-border: $dropdown-background-dark,
+    dropdown-tags-color: $dropdown-tags-color,
+    dropdown-tags-background: $dropdown-tags-background,
+    dropdown-content-background: $dropdown-content-background-dark
   )
 );
 

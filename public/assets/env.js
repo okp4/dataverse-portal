@@ -73,5 +73,6 @@ const APP_ENV = {
       rest: 'https://api.devnet.staging.okp4.network:443/rpc',
       ...sharedChainConf
     }
-  ]
+  ],
+  dropDown: { maxDisplayedSearchResults: 10, maxDisplayedTags: 4 }
 }

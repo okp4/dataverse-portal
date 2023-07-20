@@ -50,9 +50,13 @@ export const Collapsible: FC<CollapsibleProps> = ({
       >
         {trigger}
         <div
-          className={classNames('okp4-dataverse-portal-collapsible-trigger-icon', {
-            flipped: openState
-          })}
+          className={classNames(
+            'okp4-dataverse-portal-collapsible-trigger-icon',
+            {
+              flipped: openState
+            },
+            `${triggerClassName}-icon`
+          )}
         >
           <Icon name={iconName} />
         </div>
