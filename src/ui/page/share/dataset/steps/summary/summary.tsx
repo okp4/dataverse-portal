@@ -66,7 +66,7 @@ export const Summary: FC = () => {
           classes={{ main: 'okp4-dataverse-portal-share-dataset-summary-file-list' }}
           items={items}
         />
-        <KnowFee />
+        <KnowFee label={t('share:share.dataset.knowFee')} readonly />
       </div>
       <p className="okp4-dataverse-portal-share-dataset-summary-certify">
         <Checkbox
