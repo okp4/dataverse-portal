@@ -81,7 +81,8 @@ $themes: (
     dropdown-border: $dropdown-border-light,
     dropdown-tags-color: $dropdown-tags-color,
     dropdown-tags-background: $dropdown-tags-background,
-    dropdown-content-background: $dropdown-content-background-light
+    dropdown-content-background: $dropdown-content-background-light,
+    share-dataset-summary-title: $share-dataset-summary-title-light
   ),
   dark: (
     primary-color: $primary,
@@ -162,7 +163,8 @@ $themes: (
     dropdown-border: $dropdown-background-dark,
     dropdown-tags-color: $dropdown-tags-color,
     dropdown-tags-background: $dropdown-tags-background,
-    dropdown-content-background: $dropdown-content-background-dark
+    dropdown-content-background: $dropdown-content-background-dark,
+    share-dataset-summary-title: $share-dataset-summary-title-dark
   )
 );
 
