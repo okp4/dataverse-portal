@@ -37,24 +37,24 @@ export const sparqlGateway: DataversePort = {
       PREFIX core: <https://ontology.okp4.space/core/>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX serviceMetadata: <https://ontology.okp4.space/metadata/service/>
-      PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
-      PREFIX zoneMetadata: <https://ontology.okp4.space/metadata/zone/>
+      PREFIX servicemetadata: <https://ontology.okp4.space/metadata/service/>
+      PREFIX datasetmetadata: <https://ontology.okp4.space/metadata/dataset/>
+      PREFIX zonemetadata: <https://ontology.okp4.space/metadata/zone/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX svccat: <https://ontology.okp4.space/thesaurus/service-category/> 
       SELECT DISTINCT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
         {
           ?id rdf:type core:Service .
-          ?metadata rdf:type serviceMetadata:GeneralMetadata .
+          ?metadata rdf:type servicemetadata:GeneralMetadata .
           ?metadata core:hasCategory ?topic .
         } UNION {
           ?id rdf:type core:Dataset .
-          ?metadata rdf:type datasetMetadata:GeneralMetadata .
+          ?metadata rdf:type datasetmetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         } UNION {          
           ?id rdf:type core:Zone .
-          ?metadata rdf:type zoneMetadata:GeneralMetadata .
+          ?metadata rdf:type zonemetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         }
         ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}
