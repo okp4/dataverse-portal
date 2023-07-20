@@ -6,7 +6,7 @@ import './field.scss'
 type FieldProps = {
   id: string
   label?: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
   value?: string
   type?: 'text' | 'number'
   error?: string
@@ -44,7 +44,7 @@ export const Field: FC<FieldProps> = ({
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-      onChange(e.target.value)
+      onChange?.(e.target.value)
     },
     [onChange]
   )
@@ -67,7 +67,7 @@ export const Field: FC<FieldProps> = ({
     id,
     name: id,
     onBlur: handleBlur,
-    onChange: handleChange,
+    ...(onChange && { onChange: handleChange }),
     onFocus: handleFocus,
     readOnly: readonly,
     required,
