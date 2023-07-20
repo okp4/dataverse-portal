@@ -7,7 +7,7 @@
     @include grid-container($colGutter: 48px, $rowGutter: 22px);
     grid-template-rows: auto 1fr 1fr;
     height: 100%;
-    padding-top: 34px;
+    padding: 34px 10px 0 0;
     box-sizing: border-box;
     overflow-y: auto;
 
@@ -30,11 +30,11 @@
       max-height: 690px;
       background-color: themed('article-background');
       border-radius: 12px;
-      padding: 15px 10px;
+      padding: 15px 10px 15px 18px;
 
       @include use-breakpoints(('desktop')) {
         @include bi-column-item(left);
-        max-height: 490px;
+        max-height: 520px;
       }
 
       .okp4-dataverse-portal-share-dataset-summary-text-container {
@@ -53,9 +53,9 @@
           }
 
           span {
-          @include noto-sans(400);
+            @include noto-sans(400);
             padding-bottom: 14px;
-          color: themed('text');
+            color: themed('text');
             line-height: 22px;
             font-size: 16px;
             max-width: 500px;

@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { type FC, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useFileStore } from '@/ui/store'
+import { useFileStore, useAppStore } from '@/ui/store'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
 import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
@@ -14,10 +14,9 @@ export const Summary: FC = () => {
     files: state.filesDescriptor
   }))
 
-  const certificationStatement = t('share:share.dataset.summaryCertify')
+  const certifyText = t('share:share.dataset.summaryCertify')
 
   const [isChecked, setChecked] = useState<boolean>(false)
-
   const handleCheckedChange = useCallback(() => setChecked(s => !s), [])
 
   const items: Item[] = files()().map(({ id, name }) => ({
@@ -55,12 +54,8 @@ export const Summary: FC = () => {
         <KnowFee label={t('share:share.dataset.knowFee')} readonly />
       </div>
       <p className="okp4-dataverse-portal-share-dataset-summary-certify">
-        <Checkbox
-          checked={isChecked}
-          onCheckedChange={handleCheckedChange}
-          value={certificationStatement}
-        />
-        <label htmlFor={certificationStatement}>{certificationStatement}</label>
+        <Checkbox checked={isChecked} onCheckedChange={handleCheckedChange} value={certifyText} />
+        <label htmlFor={certifyText}>{certifyText}</label>
       </p>
     </div>
   )
