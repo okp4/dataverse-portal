@@ -1,5 +1,6 @@
 import type { Task } from 'fp-ts/Task'
 import type { IO } from 'fp-ts/IO'
+import type { Option } from 'fp-ts/Option'
 
 type FilterProperty = 'title'
 
@@ -10,6 +11,9 @@ export type ByPropertyFilterInput = {
   value: string
 }
 
+export type ServiceCategoryVocab = 'Storage'
+export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>
+
 export type Command = {
   // Load the dataverse elements from outside
   loadDataverse: () => Task<void>
@@ -19,8 +23,12 @@ export type Command = {
   setByTypeFilter: (newFilter: ByTypeFilterInput) => IO<void>
   // Filter the dataverse by an enumerated property
   setByPropertyFilter: (newFilter: ByPropertyFilterInput) => IO<void>
+  // Filter the dataverse by a service category controlled vocabulary
+  setByServiceCategoryFilter: (newFilter: ByServiceCategoryFilter) => IO<void>
   // Reset the by type filter
   resetByTypeFilter: () => IO<void>
   // Reset the by property filter
   resetByPropertyFilter: () => IO<void>
+  // Reset the by service category filter
+  resetByServiceCategoryFilter: () => IO<void>
 }

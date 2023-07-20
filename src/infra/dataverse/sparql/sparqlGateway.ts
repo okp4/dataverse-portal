@@ -8,8 +8,7 @@ import type {
   DataversePort,
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult,
-  DataverseElementType,
-  ByPropertyQueryFilter
+  DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import { createAbortableFetch } from '@/util/fetch/fetch'
@@ -21,41 +20,57 @@ export const sparqlGateway: DataversePort = {
     language: string,
     limit: number,
     offset: number,
-    { byType, byProperty }: RetrieveDataverseQueryFilters
+    { byType, byProperty, byServiceCategory }: RetrieveDataverseQueryFilters
   ): TE.TaskEither<Error, RetrieveDataverseResult> => {
     const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
     const byTypeFilter = (filters: DataverseElementType[]): string =>
       flow(A.map(buildStrExpression), a => a.join(' || '))(filters)
 
-    const byPropertyFilter = (filter: ByPropertyQueryFilter): string =>
-      `contains(lcase(str(?${filter?.property})), "${filter?.value.toLowerCase()}" )`
+    const byPropertyFilter = (): string =>
+      pipe(
+        byProperty,
+        O.map(
+          filter =>
+            `FILTER ( contains(lcase(str(?${filter.property})), "${filter.value.toLowerCase()}" ) )`
+        ),
+        O.getOrElse(() => '')
+      )
+
+    const byServiceCategoryFilter = (): string =>
+      pipe(
+        byServiceCategory,
+        O.map(filter => `FILTER ( ?topic = svccat:${filter} )`),
+        O.getOrElse(() => '')
+      )
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX serviceMetadata: <https://ontology.okp4.space/metadata/service/>
-      PREFIX datasetMetadata: <https://ontology.okp4.space/metadata/dataset/>
-      PREFIX zoneMetadata: <https://ontology.okp4.space/metadata/zone/>
+      PREFIX servicemetadata: <https://ontology.okp4.space/metadata/service/>
+      PREFIX datasetmetadata: <https://ontology.okp4.space/metadata/dataset/>
+      PREFIX zonemetadata: <https://ontology.okp4.space/metadata/zone/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX svccat: <https://ontology.okp4.space/thesaurus/service-category/> 
       SELECT DISTINCT ?id ?metadata ?title ?type ?publisher ?topic (COALESCE(?filteredPrefLabel, ?fallbackPrefLabel) as ?prefLabel)
       WHERE {
         {
           ?id rdf:type core:Service .
-          ?metadata rdf:type serviceMetadata:GeneralMetadata .
+          ?metadata rdf:type servicemetadata:GeneralMetadata .
           ?metadata core:hasCategory ?topic .
         } UNION {
           ?id rdf:type core:Dataset .
-          ?metadata rdf:type datasetMetadata:GeneralMetadata .
+          ?metadata rdf:type datasetmetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         } UNION {          
           ?id rdf:type core:Zone .
-          ?metadata rdf:type zoneMetadata:GeneralMetadata .
+          ?metadata rdf:type zonemetadata:GeneralMetadata .
           ?metadata core:hasTopic ?topic .
         }
         ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}
-        ${byProperty?.property ? `FILTER ( ${byPropertyFilter(byProperty)} )` : ''}
+        ${byPropertyFilter()}
+        ${byServiceCategoryFilter()}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
