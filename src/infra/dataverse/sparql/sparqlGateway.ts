@@ -8,9 +8,7 @@ import type {
   DataversePort,
   RetrieveDataverseQueryFilters,
   RetrieveDataverseResult,
-  DataverseElementType,
-  ByPropertyQueryFilter,
-  ServiceCategoryVocab
+  DataverseElementType
 } from '@/domain/dataverse/port'
 import { getURILastElement } from '@/util/util'
 import { createAbortableFetch } from '@/util/fetch/fetch'
@@ -29,11 +27,22 @@ export const sparqlGateway: DataversePort = {
     const byTypeFilter = (filters: DataverseElementType[]): string =>
       flow(A.map(buildStrExpression), a => a.join(' || '))(filters)
 
-    const byPropertyFilter = (filter: ByPropertyQueryFilter): string =>
-      `contains(lcase(str(?${filter?.property})), "${filter?.value.toLowerCase()}" )`
+    const byPropertyFilter = (): string =>
+      pipe(
+        byProperty,
+        O.map(
+          filter =>
+            `FILTER ( contains(lcase(str(?${filter.property})), "${filter.value.toLowerCase()}" ) )`
+        ),
+        O.getOrElse(() => '')
+      )
 
-    const byServiceCategoryFilter = (svcVocab: ServiceCategoryVocab): string =>
-      `FILTER ( ?topic = svccat:${svcVocab})`
+    const byServiceCategoryFilter = (): string =>
+      pipe(
+        byServiceCategory,
+        O.map(filter => `FILTER ( ?topic = svccat:${filter} )`),
+        O.getOrElse(() => '')
+      )
 
     const query = `
       PREFIX core: <https://ontology.okp4.space/core/>
@@ -60,12 +69,8 @@ export const sparqlGateway: DataversePort = {
           ?metadata core:hasTopic ?topic .
         }
         ${byType === 'all' ? '' : `FILTER ( ${byTypeFilter(byType)} )`}
-        ${byProperty?.property ? `FILTER ( ${byPropertyFilter(byProperty)} )` : ''}
-        ${pipe(
-          byServiceCategory,
-          O.map(byServiceCategoryFilter),
-          O.getOrElse(() => '')
-        )}
+        ${byPropertyFilter()}
+        ${byServiceCategoryFilter()}
         ?id rdf:type ?type .
         ?type rdf:type owl:Class .
         ?metadata core:describes ?id .
