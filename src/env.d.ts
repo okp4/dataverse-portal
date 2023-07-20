@@ -79,7 +79,7 @@ declare const APP_ENV: {
   sparql: Record<'endpoint', string>
   chains: ChainInfo[]
   dropDown: {
-    dropDownMaxSearchResults: number
-    dropDownTagsDisplayLimit: number
+    maxDisplayedTags: number
+    maxDisplayedSearchResults: number
   }
 }

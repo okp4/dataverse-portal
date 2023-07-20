@@ -74,5 +74,5 @@ const APP_ENV = {
       ...sharedChainConf
     }
   ],
-  dropDown: { dropDownMaxSearchResults: 10, dropDownTagsDisplayLimit: 4 }
+  dropDown: { maxDisplayedSearchResults: 10, maxDisplayedTags: 4 }
 }

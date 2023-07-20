@@ -22,24 +22,12 @@
       .okp4-dataverse-portal-dropdown-options-list {
         --checkbox-height: 32px;
         --checkbox-gap: 6px;
-        --visible-checkboxes: 3;
-
-        &[data-visible-items='4'] {
-          --visible-checkboxes: 4;
-        }
-
-        &[data-visible-items='5'] {
-          --visible-checkboxes: 5;
-        }
-
-        &[data-visible-items='6'] {
-          --visible-checkboxes: 6;
-        }
+        --visible-checkboxes: 6;
 
         @include columns-with-gap(var(--checkbox-gap));
-        height: calc(
-          var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) *
-            (var(--visible-checkboxes))
+        height: min-content;
+        max-height: calc(
+          (var(--checkbox-height) + var(--checkbox-gap)) * var(--visible-checkboxes)
         );
         overflow-y: auto;
         padding-right: 8px;
@@ -54,10 +42,11 @@
         display: flex;
         justify-content: center;
         height: inherit;
+        min-height: calc((var(--checkbox-height) + var(--checkbox-gap)) * 3);
       }
     }
 
-    .okp4-dataverse-portal-dropdown-header {
+    .okp4-dataverse-portal-dropdown-input {
       display: flex;
       align-items: center;
       height: 42px;
@@ -69,11 +58,11 @@
       line-height: 22px;
       white-space: nowrap;
 
-      .okp4-dataverse-portal-dropdown-header-selection {
+      .okp4-dataverse-portal-dropdown-input-selection {
         display: flex;
         gap: 10px;
 
-        .okp4-dataverse-portal-dropdown-header-selection-item {
+        .okp4-dataverse-portal-dropdown-input-selection-item {
           color: themed('dropdown-tags-color');
           background-color: themed('dropdown-tags-background');
           height: 6px;
