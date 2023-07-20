@@ -52,6 +52,57 @@ const formErrorData = (error: ResourceError): NotificationData => {
   }
 }
 
+const licenseOptions: string[] = [
+  'CC-BY-4_0',
+  'CC-BY-NC-4_0',
+  'CC-BY-SA-4_0',
+  'CC0-1_0',
+  'LO-FR-1_0',
+  'LO-FR-2_0',
+  'ODC-BY-1_0',
+  'ODbL-1_0',
+  'OGL-Canada-2_0',
+  'OGL-UK-1_0',
+  'OGL-UK-2_0',
+  'OGL-UK-3_0',
+  'PDDL-1_0',
+  'dli-model-use',
+  'geogratis'
+]
+
+const formatOptions: string[] = [
+  'PDF document',
+  'Microsoft Excel spreadsheet',
+  'Microsoft PowerPoint presentation',
+  'CSV',
+  'Microsoft Word document',
+  'MP3 audio',
+  'JPEG image',
+  'README document',
+  'MPEG video'
+]
+
+const geographicalCoverage: string[] = [
+  'World',
+  'Asia',
+  'Europe',
+  'Africa',
+  'Americas',
+  'Oceania',
+  'France',
+  'United Kingdom of Great Britain and Northern Ireland',
+  'Germany',
+  'China, Hong Kong Special Administrative Region',
+  'Spain',
+  'Italy',
+  'Finland',
+  'United States of America',
+  'Russian Federation',
+  'Japan',
+  'Senegal',
+  'Benin'
+]
+
 export const MetadataFilling: FC = () => {
   const { t } = useTranslation('share')
   const dispatchNotification = useDispatchNotification()
