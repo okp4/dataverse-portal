@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import * as IOO from 'fp-ts/IOOption'
 import * as IOE from 'fp-ts/IOEither'
 import * as S from 'fp-ts/string'
+import * as A from 'fp-ts/Array'
 import { apply, flow, pipe } from 'fp-ts/lib/function'
 import type {
   FormItem,
@@ -84,15 +85,15 @@ export const MetadataFilling: FC = () => {
 
   const addTag = useCallback(
     (id: string) => (value: string) => {
-      setFormItemValue({ id, value: [...tagsFieldValue(id), value] })()
+      setFormItemValue({ id, value: A.append(value)(tagsFieldValue(id)) })()
     },
     [setFormItemValue, tagsFieldValue]
   )
 
   const removeTag = useCallback(
     (id: string) => (value: string) => {
-      const updatedtags = tagsFieldValue(id).filter(tag => tag !== value)
-      setFormItemValue({ id, value: updatedtags })()
+      const filterPredicate = (tag: string): boolean => tag !== value
+      setFormItemValue({ id, value: A.filter(filterPredicate)(tagsFieldValue(id)) })()
     },
     [setFormItemValue, tagsFieldValue]
   )
