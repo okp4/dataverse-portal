@@ -9,10 +9,10 @@ export type ServiceCategoryVocab = 'Storage'
 export type ByServiceCategoryQueryFilter = Option<ServiceCategoryVocab>
 
 type FilterQueryProperty = 'title'
-export type ByPropertyQueryFilter = {
+export type ByPropertyQueryFilter = Option<{
   property: FilterQueryProperty
   value: string
-} | null
+}>
 
 export type RetrieveDataverseQueryFilters = {
   byType: ByTypeQueryFilter

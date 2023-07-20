@@ -6,10 +6,10 @@ type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
 type FilterProperty = 'title'
-export type ByPropertyFilter = {
+export type ByPropertyFilter = Option<{
   property: FilterProperty
   value: string
-} | null
+}>
 
 type ServiceCategoryVocab = 'Storage'
 export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>

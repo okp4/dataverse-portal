@@ -98,7 +98,7 @@ export const storeFactory = (
             limit: 20,
             hasNext: false,
             error: O.none,
-            filters: { byType: 'all', byProperty: null, byServiceCategory: O.none },
+            filters: { byType: 'all', byProperty: O.none, byServiceCategory: O.none },
             language: 'en'
           }))
         ),
@@ -112,11 +112,8 @@ export const storeFactory = (
             () => get().data.filters.byProperty,
             IO.map(
               flow(
-                O.fromNullable,
-                O.match(
-                  () => '',
-                  filter => filter.value
-                )
+                O.map(f => f.value),
+                O.getOrElse(() => '')
               )
             )
           ),
@@ -212,8 +209,8 @@ export const storeFactory = (
                   newFilter.value,
                   S.isEmpty,
                   B.match(
-                    () => newFilter,
-                    () => null
+                    () => O.some(newFilter),
+                    () => O.none
                   )
                 )
               }
@@ -237,7 +234,7 @@ export const storeFactory = (
               dataverse: [],
               filters: {
                 ...state.data.filters,
-                byProperty: null
+                byProperty: O.none
               }
             }
           })),
