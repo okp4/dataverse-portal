@@ -24,7 +24,7 @@ export const KnowFee: FC<KnowFeeProps> = ({ readonly = false, label }) => {
           placeholder="0"
           readonly={readonly}
           rightElement={<span>KNOW</span>}
-          value={String(fee?.value)}
+          value={String(fee?.value ?? 0)}
         />
       </div>
     </div>

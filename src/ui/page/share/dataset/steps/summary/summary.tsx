@@ -16,7 +16,7 @@ export const Summary: FC = () => {
 
   const certifyText = t('share:share.dataset.summaryCertify')
 
-  const [isChecked, setChecked] = useState<boolean>(false)
+  const [isChecked, setChecked] = useState(false)
   const handleCheckedChange = useCallback(() => setChecked(s => !s), [])
 
   const items: Item[] = files()().map(({ id, name }) => ({
