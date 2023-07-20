@@ -25,12 +25,16 @@
       "description": "Description",
       "format": "Format:",
       "formatSelection": "Select format",
+      "formatSearch": "Search format",
       "license": "License:",
-      "licenceSelection": "Select license",
+      "licenseSelection": "Select license",
+      "licenseSearch": "Search license",
       "topic": "Topic:",
       "topicSelection": "Select topic",
+      "topicSearch": "Search topic",
       "geographicalCoverage": "Geographical coverage:",
       "geographicalCoverageSelection": "Select geographical coverage",
+      "geographicalCoverageSearch": "Search geographical coverage",
       "tags": "Tags"
     }
   }

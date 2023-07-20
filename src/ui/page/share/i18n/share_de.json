@@ -25,12 +25,16 @@
       "description": "Beschreibung",
       "format": "Format:",
       "formatSelection": "Format auswählen",
+      "formatSearch": "Format suchen",
       "license": "Lizenz:",
-      "licenceSelection": "Lizenz auswählen",
+      "licenseSelection": "Lizenz auswählen",
+      "licenseSearch": "Lizenz suchen",
       "topic": "Thema :",
       "topicSelection": "Thema auswählen",
+      "topicSearch": "Thema suchen",
       "geographicalCoverage": "Geografische Abdeckung:",
-      "geographicalCoverageSelection": "Wählen Sie die geografische Abdeckung",
+      "geographicalCoverageSelection": "Geografische Abdeckung auswählen",
+      "geographicalCoverageSearch": "Geografische Abdeckung suchen",
       "tags": "Tags"
     }
   }

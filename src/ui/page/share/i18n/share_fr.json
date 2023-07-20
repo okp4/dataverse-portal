@@ -25,12 +25,16 @@
       "description": "Description",
       "format": "Format :",
       "formatSelection": "Sélectionner le format",
+      "formatSearch": "Rechercher un format",
       "license": "License :",
-      "licenceSelection": "Sélectionner la license",
+      "licenseSelection": "Sélectionner la license",
+      "licenseSearch": "Rechercher une license",
       "topic": "Sujet :",
       "topicSelection": "Sélectionner le sujet",
-      "geographicalCoverage": "Chemie géographique :",
+      "topicSearch": "Rechercher un sujet",
+      "geographicalCoverage": "Couverture géographique :",
       "geographicalCoverageSelection": "Sélectionner la couverture géographique",
+      "geographicalCoverageSearch": "Rechercher une couverture géographique",
       "tags": "Tags"
     }
   }
