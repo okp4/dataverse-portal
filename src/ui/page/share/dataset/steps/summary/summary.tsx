@@ -4,14 +4,16 @@ import { useTranslation } from 'react-i18next'
 import { useFileStore, useAppStore } from '@/ui/store'
 import { type Item, List } from '@/ui/component/list/list'
 import { Icon } from '@/ui/component/icon/icon'
-import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 import { Checkbox } from '@/ui/component/checkbox/checkbox'
 import './summary.scss'
 import { Tag } from '@/ui/component/tag/tag'
 import classNames from 'classnames'
+import { Field } from '@/ui/component/field/field'
+import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 
 export const Summary: FC = () => {
   const { t } = useTranslation('share')
+
   const { files } = useFileStore(state => ({
     files: state.filesDescriptor
   }))
@@ -35,6 +37,7 @@ export const Summary: FC = () => {
   const formItems = useAppStore(state => state.shareData.form)
   const filteredformItems = formItems.filter(item => item.label !== 'fee')
   const tagItemsLabels: string[] = ['format', 'license', 'topic', 'geographicalCoverage', 'tags']
+  const fee = formItems.find(item => item.label === 'fee')
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-summary-container">
@@ -73,7 +76,17 @@ export const Summary: FC = () => {
           classes={{ main: 'okp4-dataverse-portal-share-dataset-summary-file-list' }}
           items={items}
         />
-        <KnowFee label={t('share:share.dataset.knowFee')} readonly />
+        <KnowFee
+          field={
+            <Field
+              id="know-fee"
+              placeholder="0"
+              readonly
+              rightElement={<span>KNOW</span>}
+              value={String(fee?.value ?? 0)}
+            />
+          }
+        />
       </div>
       <p className="okp4-dataverse-portal-share-dataset-summary-certify">
         <Checkbox checked={isChecked} onCheckedChange={handleCheckedChange} value={certifyText} />

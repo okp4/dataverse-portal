@@ -43,6 +43,7 @@
 
         .okp4-dataverse-portal-share-dataset-summary-item {
           @include columns-with-gap(6px);
+          padding-bottom: 14px;
 
           .okp4-dataverse-portal-share-dataset-summary-item-title {
             @include noto-sans(700);
@@ -54,7 +55,6 @@
 
           .okp4-dataverse-portal-share-dataset-summary-item-text {
             @include noto-sans(400);
-            padding-bottom: 14px;
             color: themed('text');
             line-height: 22px;
             font-size: 16px;
@@ -102,13 +102,12 @@
         @include use-breakpoints(('desktop')) {
           max-height: 360px;
         }
-      }
+      }      
     }
 
     .okp4-dataverse-portal-share-dataset-summary-certify {
       @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
       @include noto-sans(400);
-      cursor: pointer;
       display: inline-flex;
       gap: 10px;
       color: themed('text');

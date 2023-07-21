@@ -1,32 +1,25 @@
-import type { FC } from 'react'
+import type { FC, ReactElement } from 'react'
 import classNames from 'classnames'
 import { useAppStore } from '@/ui/store'
-import { Field } from '@/ui/component/field/field'
+import type { Field } from '@/ui/component/field/field'
 import './knowFee.scss'
+import { useTranslation } from 'react-i18next'
 
 type KnowFeeProps = {
-  readonly?: boolean
-  label: string
+  field: ReactElement<typeof Field>
 }
 
-export const KnowFee: FC<KnowFeeProps> = ({ readonly = false, label }) => {
-  const theme = useAppStore(store => store.theme)
+export const KnowFee: FC<KnowFeeProps> = ({ field }) => {
+  const { t } = useTranslation('share')
 
-  const formItems = useAppStore(state => state.shareData.form)
-  const fee = formItems.find(item => item.label === 'fee')
+  const theme = useAppStore(store => store.theme)
 
   return (
     <div className={classNames('okp4-dataverse-portal-share-data-know-fee-main', theme)}>
-      <p>{label}</p>
-      <div className="okp4-dataverse-portal-share-data-know-fee-field">
-        <Field
-          id="know-fee"
-          placeholder="0"
-          readonly={readonly}
-          rightElement={<span>KNOW</span>}
-          value={String(fee?.value ?? 0)}
-        />
-      </div>
+      <label className="okp4-dataverse-portal-share-data-know-fee-label">
+        {t('share:share.dataset.knowFee')}
+      </label>
+      <div className="okp4-dataverse-portal-share-data-know-fee-field">{field}</div>
     </div>
   )
 }
