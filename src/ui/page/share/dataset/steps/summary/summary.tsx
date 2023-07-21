@@ -73,7 +73,10 @@ export const Summary: FC = () => {
       </div>
       <div className="okp4-dataverse-portal-share-dataset-summary-right">
         <List
-          classes={{ main: 'okp4-dataverse-portal-share-dataset-summary-file-list' }}
+          classes={{
+            main: 'okp4-dataverse-portal-share-dataset-summary-file-list',
+            container: 'okp4-dataverse-portal-share-dataset-summary-file-list-container'
+          }}
           items={items}
         />
         <KnowFee
