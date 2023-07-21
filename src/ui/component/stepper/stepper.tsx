@@ -2,13 +2,14 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { type FC } from 'react'
 import type { Optional } from '@/util/type'
 import { StepperProgress } from './stepperProgress/stepperProgress'
-import type { Step, UseStepper } from './useStepper'
-import { useStepper } from './useStepper'
+import type { Step, UseStepper } from '../../hook/useStepper'
+import { useStepper } from '@/ui/hook/useStepper'
 import { StepperActions } from './stepperActions/stepperActions'
 import './stepper.scss'
 
 export type StepElement = Optional<Omit<Step, 'order'>, 'status'> & {
   content: JSX.Element
+  onValidate?: () => boolean
 }
 
 type StepperProps = {
@@ -44,6 +45,7 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
       </TransitionGroup>
 
       <StepperActions
+        isActiveStepValid={activeStepElement.onValidate?.() ?? true}
         isFirstStep={activeStep.order === 0}
         isLastStep={activeStep.order === steps.length - 1}
         nextStep={nextStep}

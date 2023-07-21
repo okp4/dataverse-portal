@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import type { Step, StepId } from '../useStepper'
-import { findStep } from '../useStepper'
+import type { Step, StepId } from '@/ui/hook/useStepper'
+import { findStep } from '@/ui/hook/useStepper'
 import type { ProgressBarTransition } from './progressBar/progressBar'
 import { ProgressBar } from './progressBar/progressBar'
 import './stepperProgress.scss'

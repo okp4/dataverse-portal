@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { type FC } from 'react'
+import { useCallback, type FC } from 'react'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/ui/component/button/button'
@@ -10,16 +10,27 @@ type StepperActionsProps = {
   isFirstStep: boolean
   isLastStep: boolean
   nextStep: () => void
-  previousStep: () => void
+  previousStep: (isActiveStepValid: boolean) => void
+  isActiveStepValid: boolean
 }
 
 export const StepperActions: FC<StepperActionsProps> = ({
   nextStep,
   previousStep,
   isFirstStep,
-  isLastStep
+  isLastStep,
+  isActiveStepValid
 }) => {
   const { t } = useTranslation('common')
+
+  const handleNextButtonClick = useCallback(() => {
+    if (!isActiveStepValid) return
+    nextStep()
+  }, [isActiveStepValid, nextStep])
+
+  const handlePreviousButtonClick = useCallback(() => {
+    previousStep(isActiveStepValid)
+  }, [isActiveStepValid, previousStep])
 
   return (
     <div className="okp4-dataverse-portal-stepper-actions-main">
@@ -31,7 +42,7 @@ export const StepperActions: FC<StepperActionsProps> = ({
           startIcon: <Icon name="forward" />
         }}
         label={t('actions.previous')}
-        onClick={previousStep}
+        onClick={handlePreviousButtonClick}
         variant="tertiary"
       />
       <Button
@@ -39,15 +50,15 @@ export const StepperActions: FC<StepperActionsProps> = ({
           'okp4-dataverse-portal-stepper-actions-button',
           { hidden: isLastStep },
           {
-            disabled: false // TODO: add validation
+            disabled: !isActiveStepValid
           }
         )}
-        disabled={false} // TODO: add validation
+        disabled={!isActiveStepValid}
         icons={{
           endIcon: <Icon name="forward" />
         }}
         label={t('actions.next')}
-        onClick={nextStep}
+        onClick={handleNextButtonClick}
         size="small"
         variant="tertiary"
       />
