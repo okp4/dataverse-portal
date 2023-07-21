@@ -19,6 +19,7 @@ import { Field } from '@/ui/component/field/field'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
+import { DropDown } from '@/ui/view/share/data/dropDown/dropDown'
 import './metadataFilling.scss'
 
 type DatasetFormItem = {
@@ -71,36 +72,49 @@ const licenseOptions: string[] = [
 ]
 
 const formatOptions: string[] = [
-  'PDF document',
+  'CSV',
+  'JPEG image',
   'Microsoft Excel spreadsheet',
   'Microsoft PowerPoint presentation',
-  'CSV',
   'Microsoft Word document',
+  'MPEG video',
   'MP3 audio',
-  'JPEG image',
-  'README document',
-  'MPEG video'
+  'PDF document',
+  'README document'
 ]
 
-const geographicalCoverage: string[] = [
-  'World',
-  'Asia',
-  'Europe',
+const geographicalCoverageOptions: string[] = [
   'Africa',
   'Americas',
-  'Oceania',
-  'France',
-  'United Kingdom of Great Britain and Northern Ireland',
-  'Germany',
+  'Asia',
+  'Benin',
   'China, Hong Kong Special Administrative Region',
-  'Spain',
-  'Italy',
+  'Europe',
   'Finland',
-  'United States of America',
-  'Russian Federation',
+  'France',
+  'Germany',
+  'Italy',
   'Japan',
+  'Oceania',
+  'Russian Federation',
   'Senegal',
-  'Benin'
+  'Spain',
+  'United Kingdom of Great Britain and Northern Ireland',
+  'United States of America',
+  'World'
+]
+
+const topicOptions: string[] = [
+  'Agriculture, food, environment and forestry',
+  'Biology, geology and chemistry',
+  'Business and purchase',
+  'DeFi and Crypto',
+  'Energy',
+  'Health',
+  'Industry, mobility and engineering',
+  'Logistics, retail, supply chain and eCommerce',
+  'Marketing and Customer Behavior',
+  'Other'
 ]
 
 export const MetadataFilling: FC = () => {
@@ -122,7 +136,7 @@ export const MetadataFilling: FC = () => {
     [setFormItemValue]
   )
 
-  const tagsFieldValue = useCallback(
+  const selectValue = useCallback(
     (id: string): string[] =>
       flow(
         formItemById,
@@ -134,19 +148,26 @@ export const MetadataFilling: FC = () => {
     [formItemById]
   )
 
+  const onSelectChange = useCallback(
+    (id: string) => (value: string[]) => {
+      setFormItemValue({ id, value })()
+    },
+    [setFormItemValue]
+  )
+
   const addTag = useCallback(
     (id: string) => (value: string) => {
-      setFormItemValue({ id, value: A.append(value)(tagsFieldValue(id)) })()
+      setFormItemValue({ id, value: A.append(value)(selectValue(id)) })()
     },
-    [setFormItemValue, tagsFieldValue]
+    [setFormItemValue, selectValue]
   )
 
   const removeTag = useCallback(
     (id: string) => (value: string) => {
       const filterPredicate = (tag: string): boolean => tag !== value
-      setFormItemValue({ id, value: A.filter(filterPredicate)(tagsFieldValue(id)) })()
+      setFormItemValue({ id, value: A.filter(filterPredicate)(selectValue(id)) })()
     },
-    [setFormItemValue, tagsFieldValue]
+    [setFormItemValue, selectValue]
   )
 
   const formItemFieldValue = useCallback(
@@ -262,11 +283,13 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p>{t('share.metadataFilling.format')}</p>
-            <Field
-              id={id5}
-              label={t('share.metadataFilling.formatSelection')}
-              onChange={handleFieldValueChange(id5)}
-              value={formItemFieldValue(id5)}
+            <DropDown
+              onChange={onSelectChange(id5)}
+              options={formatOptions}
+              placeholder={t('share.metadataFilling.formatSelection')}
+              searchPlaceholder={t('share.metadataFilling.formatSearch')}
+              selectionType="checkbox"
+              value={selectValue(id5)}
             />
           </div>
         ),
@@ -282,11 +305,13 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p>{t('share.metadataFilling.license')}</p>
-            <Field
-              id={id6}
-              label={t('share.metadataFilling.licenceSelection')}
-              onChange={handleFieldValueChange(id6)}
-              value={formItemFieldValue(id6)}
+            <DropDown
+              onChange={onSelectChange(id6)}
+              options={licenseOptions}
+              placeholder={t('share.metadataFilling.licenseSelection')}
+              searchPlaceholder={t('share.metadataFilling.licenseSearch')}
+              selectionType="checkbox"
+              value={selectValue(id6)}
             />
           </div>
         ),
@@ -302,11 +327,13 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p>{t('share.metadataFilling.topic')}</p>
-            <Field
-              id={id7}
-              label={t('share.metadataFilling.topicSelection')}
-              onChange={handleFieldValueChange(id7)}
-              value={formItemFieldValue(id7)}
+            <DropDown
+              onChange={onSelectChange(id7)}
+              options={topicOptions}
+              placeholder={t('share.metadataFilling.topicSelection')}
+              searchPlaceholder={t('share.metadataFilling.topicSearch')}
+              selectionType="checkbox"
+              value={selectValue(id7)}
             />
           </div>
         ),
@@ -322,11 +349,13 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p>{t('share.metadataFilling.geographicalCoverage')}</p>
-            <Field
-              id={id8}
-              label={t('share.metadataFilling.geographicalCoverageSelection')}
-              onChange={handleFieldValueChange(id8)}
-              value={formItemFieldValue(id8)}
+            <DropDown
+              onChange={onSelectChange(id8)}
+              options={geographicalCoverageOptions}
+              placeholder={t('share.metadataFilling.geographicalCoverageSelection')}
+              searchPlaceholder={t('share.metadataFilling.geographicalCoverageSearch')}
+              selectionType="checkbox"
+              value={selectValue(id8)}
             />
           </div>
         ),
@@ -342,7 +371,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
-            <TagsField addTag={addTag(id9)} removeTag={removeTag(id9)} tags={tagsFieldValue(id9)} />
+            <TagsField addTag={addTag(id9)} removeTag={removeTag(id9)} tags={selectValue(id9)} />
           </div>
         ),
         style: {
@@ -369,7 +398,15 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [addTag, formItemFieldValue, handleFieldValueChange, removeTag, t, tagsFieldValue])
+  }, [
+    t,
+    handleFieldValueChange,
+    formItemFieldValue,
+    onSelectChange,
+    selectValue,
+    addTag,
+    removeTag
+  ])
 
   const mapForm = (form: DatasetForm): initFormPayload => {
     return form.map(formItem => ({
