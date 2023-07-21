@@ -9,6 +9,7 @@ import './stepper.scss'
 
 export type StepElement = Optional<Omit<Step, 'order'>, 'status'> & {
   content: JSX.Element
+  onValidate?: () => boolean
 }
 
 type StepperProps = {
@@ -44,6 +45,7 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
       </TransitionGroup>
 
       <StepperActions
+        isActiveStepValid={activeStepElement.onValidate?.() ?? true}
         isFirstStep={activeStep.order === 0}
         isLastStep={activeStep.order === steps.length - 1}
         nextStep={nextStep}
