@@ -6,10 +6,8 @@
   @include with-theme {
     @include grid-container($colGutter: 48px, $rowGutter: 22px);
     grid-template-rows: auto 1fr 1fr;
-    height: 100%;
     padding: 34px 10px 0 0;
     box-sizing: border-box;
-    overflow-y: auto;
 
     @include use-breakpoints(('desktop')) {
       @include grid-container($colGutter: 34px, $rowGutter: 26px);
@@ -34,7 +32,15 @@
 
       @include use-breakpoints(('desktop')) {
         @include bi-column-item(left);
-        max-height: 520px;
+        max-height: max(520px, 60vh);
+      }
+      
+      @media (min-height: 800px) and (max-height: 900px) {
+        max-height: 420px;
+      }
+
+      @media (max-height: 799px) {
+        max-height: 320px;
       }
 
       .okp4-dataverse-portal-share-dataset-summary-item-container {
@@ -97,10 +103,14 @@
         overflow: auto;
         margin: 0;
         padding-right: 14px;
-        max-height: 430px;
+        max-height: 360px;
 
-        @include use-breakpoints(('desktop')) {
-          max-height: 360px;
+        @media (min-height: 800px) and (max-height: 900px) {
+          max-height: 260px;
+        }
+
+        @media (max-height: 799px) {
+          max-height: 160px;
         }
       }      
     }
