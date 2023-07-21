@@ -16,7 +16,7 @@ type Data = {
   fileToRemove: FileId
   preloadedState: FileDomain.Options
   expectedFilesDescriptor: FilesDescriptor
-  expectedHasStoredFile: boolean
+  expectedHasStoredFiles: boolean
   error?: ResourceNotFoundError
 }
 
@@ -59,19 +59,19 @@ describe('Remove a file from memory', () => {
     }))
 
   describe.each`
-    preloadedState                                | fileToRemove     | expectedFilesDescriptor           | expectedHasStoredFile | error
-    ${undefined}                                  | ${''}            | ${[]}                             | ${false}              | ${undefined}
-    ${{ initialState: { data: [file1] } }}        | ${''}            | ${expectFilesDescriptor([file1])} | ${true}               | ${undefined}
-    ${{ initialState: { data: [file1] } }}        | ${fileToRemove1} | ${[]}                             | ${false}              | ${undefined}
-    ${{ initialState: { data: [file1, file2] } }} | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${true}               | ${undefined}
-    ${{ initialState: { data: [file1] } }}        | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${true}               | ${ResourceNotFoundError(fileToRemove2)}
+    preloadedState                                | fileToRemove     | expectedFilesDescriptor           | expectedHasStoredFiles | error
+    ${undefined}                                  | ${''}            | ${[]}                             | ${false}               | ${undefined}
+    ${{ initialState: { data: [file1] } }}        | ${''}            | ${expectFilesDescriptor([file1])} | ${true}                | ${undefined}
+    ${{ initialState: { data: [file1] } }}        | ${fileToRemove1} | ${[]}                             | ${false}               | ${undefined}
+    ${{ initialState: { data: [file1, file2] } }} | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${true}                | ${undefined}
+    ${{ initialState: { data: [file1] } }}        | ${fileToRemove2} | ${expectFilesDescriptor([file1])} | ${true}                | ${ResourceNotFoundError(fileToRemove2)}
   `(
     `Given that there are a file to remove with a given id <$fileToRemove>`,
     ({
       preloadedState,
       fileToRemove,
       expectedFilesDescriptor,
-      expectedHasStoredFile,
+      expectedHasStoredFiles,
       error
     }: Data): void => {
       const { store } = initStore(preloadedState)
@@ -82,7 +82,7 @@ describe('Remove a file from memory', () => {
         )}`, () => {
           const result = store.getState().removeFile(fileToRemove)()
           expect(store.getState().filesDescriptor()()).toStrictEqual(expectedFilesDescriptor)
-          expect(store.getState().hasStoredFile()()).toBe(expectedHasStoredFile)
+          expect(store.getState().hasStoredFiles()()).toBe(expectedHasStoredFiles)
           expect(result).toBeEither()
           if (error) {
             expect(result).toBeLeft()

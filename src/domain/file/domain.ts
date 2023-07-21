@@ -153,7 +153,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
             )
           ),
         filesDescriptor: () => () => pipe(get().data, A.map(mapFileToFileDescriptor)),
-        hasStoredFile: () => () => !!get().data.length
+        hasStoredFiles: () => () => !!get().data.length
       })),
       {
         anonymousActionType: 'Aggregate',

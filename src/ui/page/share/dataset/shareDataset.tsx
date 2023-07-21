@@ -15,8 +15,8 @@ export const ShareDataset: FC = () => {
   const { storageServiceId } = useAppStore(store => ({
     storageServiceId: store.shareData.storageServiceId
   }))
-  const { hasStoredFile } = useFileStore(store => ({
-    hasStoredFile: store.hasStoredFile
+  const { hasStoredFiles } = useFileStore(store => ({
+    hasStoredFiles: store.hasStoredFiles
   }))
 
   const storageServiceSelection: StepElement = {
@@ -27,7 +27,7 @@ export const ShareDataset: FC = () => {
   const dataSelection: StepElement = {
     id: 'step2',
     content: <DataSelection />,
-    validate: () => hasStoredFile()()
+    validate: () => hasStoredFiles()()
   }
   const metadataFilling: StepElement = { id: 'step3', content: <MetadataFilling /> }
 
