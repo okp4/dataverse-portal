@@ -7,15 +7,14 @@ import { Icon } from '@/ui/component/icon/icon'
 import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 import { Checkbox } from '@/ui/component/checkbox/checkbox'
 import './summary.scss'
-import type { FormItemValue } from '@/ui/store/slice/shareData/shareData.slice'
+import { Tag } from '@/ui/component/tag/tag'
+import classNames from 'classnames'
 
 export const Summary: FC = () => {
   const { t } = useTranslation('share')
   const { files } = useFileStore(state => ({
     files: state.filesDescriptor
   }))
-
-  const certifyText = t('share:share.dataset.summaryCertify')
 
   const [isChecked, setChecked] = useState(false)
   const handleCheckedChange = useCallback(() => setChecked(s => !s), [])
@@ -31,36 +30,42 @@ export const Summary: FC = () => {
     )
   }))
 
+  const certifyText = t('share:share.dataset.summaryCertify')
+
   const formItems = useAppStore(state => state.shareData.form)
   const filteredformItems = formItems.filter(item => item.label !== 'fee')
-
-  const renderFormItemValue = (value: FormItemValue): React.ReactNode => {
-    switch (typeof value) {
-      case 'string':
-        return value
-      case 'number':
-        return value.toString()
-      case 'object':
-        if (Array.isArray(value)) {
-          return value.join(', ')
-        }
-        break
-      default:
-        return null
-    }
-  }
+  const tagItemsLabels: string[] = ['format', 'license', 'topic', 'geographicalCoverage', 'tags']
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-summary-container">
       <h2>{t('share:share.dataset.summary')}</h2>
       <div className="okp4-dataverse-portal-share-dataset-summary-left">
-        <div className="okp4-dataverse-portal-share-dataset-summary-text-container">
-          {filteredformItems.map(({ label, value }, index) => (
-            <div className="okp4-dataverse-portal-share-dataset-summary-text" key={index}>
-              <h3>{label.replace(/([A-Z])/g, ' $1')}</h3>
-              <span>{renderFormItemValue(value)}</span>
-            </div>
-          ))}
+        <div className="okp4-dataverse-portal-share-dataset-summary-item-container">
+          {filteredformItems.map(({ label, value }, index) => {
+            return (
+              <div className="okp4-dataverse-portal-share-dataset-summary-item" key={index}>
+                <h3 className="okp4-dataverse-portal-share-dataset-summary-item-title">
+                  {label.replace(/([A-Z])/g, ' $1')}
+                </h3>
+                {tagItemsLabels.includes(label) && Array.isArray(value) ? (
+                  <div
+                    className={classNames(
+                      'okp4-dataverse-portal-share-dataset-summary-item-list',
+                      `${label}-label`
+                    )}
+                  >
+                    {[...new Set(value)].map(tag => (
+                      <Tag key={tag} tagName={tag} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+                    {value.toString()}
+                  </p>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
       <div className="okp4-dataverse-portal-share-dataset-summary-right">
