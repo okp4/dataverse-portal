@@ -24,7 +24,7 @@ export type Step = {
   id: StepId
   order: number
   status: StepStatus
-  onValidate?: () => boolean
+  validate?: () => boolean
 }
 
 export const findStep = (steps: Step[], stepId?: StepId): Step =>
