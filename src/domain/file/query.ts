@@ -15,4 +15,6 @@ export type FilesDescriptor = FileDescriptor[]
 export type Query = {
   // Get the base properties of in memory files.
   filesDescriptor: () => IO<FilesDescriptor>
+  // Tell if, at least, one file is stored
+  hasStoredFiles: () => IO<boolean>
 }

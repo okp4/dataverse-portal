@@ -16,6 +16,7 @@ type Data = {
   filesToStore: StoreFilesInput
   preloadedState: FileDomain.Options
   expectedFilesDescriptor: FilesDescriptor
+  expectedHasStoredFiles: boolean
   error?: ResourceAlreadyExistsError
 }
 
@@ -67,16 +68,22 @@ describe('Store files in memory', () => {
     }))
 
   describe.each`
-    preloadedState                         | filesToStore                    | expectedFilesDescriptor                  | error
-    ${undefined}                           | ${[]}                           | ${[]}                                    | ${undefined}
-    ${{ initialState: { data: [file1] } }} | ${[]}                           | ${expectFilesDescriptor([file1])}        | ${undefined}
-    ${undefined}                           | ${[fileToStore1]}               | ${expectFilesDescriptor([file1])}        | ${undefined}
-    ${undefined}                           | ${[fileToStore1, fileToStore2]} | ${expectFilesDescriptor([file1, file2])} | ${undefined}
-    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${ResourceAlreadyExistsError([fileToStore3.id])}
-    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${ResourceAlreadyExistsError([fileToStore1.id, fileToStore3.id])}
+    preloadedState                         | filesToStore                    | expectedFilesDescriptor                  | expectedHasStoredFiles | error
+    ${undefined}                           | ${[]}                           | ${[]}                                    | ${false}               | ${undefined}
+    ${{ initialState: { data: [file1] } }} | ${[]}                           | ${expectFilesDescriptor([file1])}        | ${true}                | ${undefined}
+    ${undefined}                           | ${[fileToStore1]}               | ${expectFilesDescriptor([file1])}        | ${true}                | ${undefined}
+    ${undefined}                           | ${[fileToStore1, fileToStore2]} | ${expectFilesDescriptor([file1, file2])} | ${true}                | ${undefined}
+    ${{ initialState: { data: [file1] } }} | ${[fileToStore3]}               | ${expectFilesDescriptor([file1])}        | ${true}                | ${ResourceAlreadyExistsError([fileToStore3.id])}
+    ${undefined}                           | ${[fileToStore1, fileToStore3]} | ${[]}                                    | ${false}               | ${ResourceAlreadyExistsError([fileToStore1.id, fileToStore3.id])}
   `(
     `Given that there are $filesToStore.length file(s) to store`,
-    ({ preloadedState, filesToStore, expectedFilesDescriptor, error }: Data): void => {
+    ({
+      preloadedState,
+      filesToStore,
+      expectedFilesDescriptor,
+      expectedHasStoredFiles,
+      error
+    }: Data): void => {
       const { store } = initStore(preloadedState)
 
       describe('When storing files', () => {
@@ -85,6 +92,7 @@ describe('Store files in memory', () => {
         )}`, () => {
           const result = store.getState().storeFiles(filesToStore)()
           expect(store.getState().filesDescriptor()()).toStrictEqual(expectedFilesDescriptor)
+          expect(store.getState().hasStoredFiles()()).toBe(expectedHasStoredFiles)
           expect(result).toBeEither()
           if (error) {
             expect(result).toBeLeft()
