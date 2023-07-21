@@ -8,6 +8,7 @@ import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/d
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import classNames from 'classnames'
 import { useDropDirection } from '@/ui/hook/useDropDirection'
+import { useOnClickOutside } from '@/ui/hook/useOnClickOutside'
 import './dropDown.scss'
 
 type SelectionItemType = 'checkbox'
@@ -122,7 +123,11 @@ export const DropDown: FC<DropDownProps> = ({
   selectionType,
   maxSearchResults = maxDisplayedSearchResults
 }) => {
+  const dropDownRef = useRef<HTMLDivElement | null>(null)
+
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const [isOpen, setIsOpen] = useState(false)
+  const direction = useDropDirection(dropDownRef)
 
   const handleSearch = useCallback(
     (searchTerm: string) => {
@@ -143,6 +148,17 @@ export const DropDown: FC<DropDownProps> = ({
     [value, onChange]
   )
 
+  const handleClickOutside = useCallback(() => {
+    setIsOpen(false)
+  }, [setIsOpen])
+
+  const toggleDropDown = useCallback(
+    (isOpen: boolean) => {
+      setIsOpen(isOpen)
+    },
+    [setIsOpen]
+  )
+
   const foundOptions = useMemo(
     () =>
       searchTerm.trim() === ''
@@ -151,15 +167,13 @@ export const DropDown: FC<DropDownProps> = ({
     [options, searchTerm, maxSearchResults]
   )
 
-  const dropDownRef = useRef<HTMLDivElement | null>(null)
-
-  const dropup = useDropDirection(dropDownRef)
+  useOnClickOutside<HTMLDivElement>(dropDownRef, handleClickOutside)
 
   return (
     <div className="okp4-dataverse-portal-dropdown-main" ref={dropDownRef}>
       <Collapsible
         content={
-          <div className={classNames('okp4-dataverse-portal-dropdown-content', { dropup })}>
+          <div className={classNames('okp4-dataverse-portal-dropdown-content', direction)}>
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
             <DropDownOptions
               foundOptions={foundOptions}
@@ -170,8 +184,10 @@ export const DropDown: FC<DropDownProps> = ({
             />
           </div>
         }
-        contentClassName={classNames({ dropup })}
+        contentClassName={classNames(direction)}
         iconName="chevron-sharp"
+        onOpenChange={toggleDropDown}
+        open={isOpen}
         trigger={<DropDownInput onChange={handleChange} placeholder={placeholder} value={value} />}
         triggerClassName="okp4-dataverse-portal-dropdown-trigger"
       />

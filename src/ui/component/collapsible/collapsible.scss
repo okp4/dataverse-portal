@@ -36,7 +36,7 @@
     position: absolute;
     top: 0;
     width: 100%;
-    transform: translateY(-102.5%);
+    transform: translateY(calc(-100% - 8px));
   }
 }
 
