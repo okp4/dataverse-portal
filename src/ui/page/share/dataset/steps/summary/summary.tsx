@@ -7,6 +7,7 @@ import { Icon } from '@/ui/component/icon/icon'
 import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 import { Checkbox } from '@/ui/component/checkbox/checkbox'
 import './summary.scss'
+import type { FormItemValue } from '@/ui/store/slice/shareData/shareData.slice'
 
 export const Summary: FC = () => {
   const { t } = useTranslation('share')
@@ -33,6 +34,22 @@ export const Summary: FC = () => {
   const formItems = useAppStore(state => state.shareData.form)
   const filteredformItems = formItems.filter(item => item.label !== 'fee')
 
+  const renderFormItemValue = (value: FormItemValue): React.ReactNode => {
+    switch (typeof value) {
+      case 'string':
+        return value
+      case 'number':
+        return value.toString()
+      case 'object':
+        if (Array.isArray(value)) {
+          return value.join(', ')
+        }
+        break
+      default:
+        return null
+    }
+  }
+
   return (
     <div className="okp4-dataverse-portal-share-dataset-summary-container">
       <h2>{t('share:share.dataset.summary')}</h2>
@@ -41,7 +58,7 @@ export const Summary: FC = () => {
           {filteredformItems.map(({ label, value }, index) => (
             <div className="okp4-dataverse-portal-share-dataset-summary-text" key={index}>
               <h3>{label.replace(/([A-Z])/g, ' $1')}</h3>
-              <span>{value.toString()}</span>
+              <span>{renderFormItemValue(value)}</span>
             </div>
           ))}
         </div>
