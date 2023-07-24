@@ -9,7 +9,8 @@
       "external": "Un stockage externe",
       "serviceStorageSearch": "Rechercher un service de stockage",
       "select": "Sélectionnez vos données",
-      "selectDescription": "Sélectionnez le jeu de données que vous souhaitez télécharger dans le service de stockage."
+      "selectDescription": "Sélectionnez le jeu de données que vous souhaitez télécharger dans le service de stockage.",
+      "knowFee": "Redevances liées à l'utilisation des données"
     },
     "service": {
       "title": "Je partage un service",

@@ -1,0 +1,37 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins';
+
+@mixin background-image($theme) {
+  background: themed('article-background') right / contain
+    url('@/ui/asset/images/know-token-#{$theme}.webp') no-repeat;
+}
+
+.okp4-dataverse-portal-share-data-know-fee-main {
+  @include with-theme {
+    flex-shrink: 0;
+    border-radius: 12px;
+    height: 128px;
+    color: themed('text');
+    
+    &.dark {
+      @include background-image('dark');
+    }
+    
+    &.light {
+      @include background-image('light');
+    }
+    
+    .okp4-dataverse-portal-share-data-know-fee-label {
+      display: block;
+      @include noto-sans(400);
+      box-sizing: border-box;
+      padding: 18px 21px;
+    }
+    
+    .okp4-dataverse-portal-share-data-know-fee-field {
+      width: 250px;
+      padding-left: 21px;
+    }
+  }
+}
