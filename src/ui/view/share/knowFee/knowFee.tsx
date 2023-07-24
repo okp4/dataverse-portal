@@ -1,12 +1,11 @@
-import type { FC, ReactElement } from 'react'
+import type { FC } from 'react'
 import classNames from 'classnames'
 import { useAppStore } from '@/ui/store'
-import type { Field } from '@/ui/component/field/field'
 import './knowFee.scss'
 
 type KnowFeeProps = {
   label: string
-  field: ReactElement<typeof Field>
+  field: JSX.Element
 }
 
 export const KnowFee: FC<KnowFeeProps> = ({ field, label }) => {
