@@ -16,25 +16,53 @@ import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
 import * as O from 'fp-ts/Option'
 
-export type DatePickerValue = {
-  from?: string
-  to?: string
+export type I18nString = {
+  language: string
+  value: string
 }
 
-export type FormItemId = string
-export type FormItemType = 'text' | 'numeric' | 'date' | 'select'
-export type FormItemValue = string | string[] | number | DatePickerValue
+export type SelectPickerValue = {
+  label: I18nString[]
+  value: string
+}
 
-export type FormItem = Readonly<{
+export type I18nTextFieldValue = I18nString[]
+
+export type FormItemId = string
+export type FormItemBaseProperties = Readonly<{
   id: FormItemId
-  type: FormItemType
-  label: string
-  value: FormItemValue
+  title: string
   required?: boolean
 }>
-export type Form = FormItem[]
 
-export type SetFormItemValuePayload = { id: FormItemId; value: FormItemValue }
+export type I18NTextField = FormItemBaseProperties & {
+  type: 'i18n-text'
+  value: O.Option<I18nTextFieldValue>
+}
+
+export type TextField = FormItemBaseProperties & {
+  type: 'text'
+  value: O.Option<string>
+}
+
+export type NumericField = FormItemBaseProperties & {
+  type: 'numeric'
+  value: O.Option<number>
+}
+
+export type TagField = FormItemBaseProperties & {
+  type: 'tag'
+  value: O.Option<string[]>
+}
+
+export type SelectPicker = FormItemBaseProperties & {
+  type: 'select'
+  value: O.Option<SelectPickerValue[]>
+}
+
+export type FormItem = I18NTextField | TextField | NumericField | TagField | SelectPicker
+
+export type Form = FormItem[]
 
 export type initFormItem = FormItem
 export type initFormPayload = initFormItem[]
@@ -46,7 +74,6 @@ export type ShareDataSlice = {
     form: Form
     storageServiceId: O.Option<storageServiceId>
     initForm: (payload: initFormPayload) => IOEither<ResourceAlreadyExistsError, void>
-    setFormItemValue: (payload: SetFormItemValuePayload) => IOEither<ResourceNotFoundError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
     isFormInitialized: () => IO.IO<boolean>
     setStorageServiceId: (id: O.Option<storageServiceId>) => IO.IO<void>
