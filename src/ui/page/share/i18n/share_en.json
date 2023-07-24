@@ -9,7 +9,8 @@
       "external": "An external storage",
       "serviceStorageSearch": "Search a storage service",
       "select": "Select your Data",
-      "selectDescription": "Select the dataset that you want to upload into the storage service."
+      "selectDescription": "Select the dataset that you want to upload into the storage service.",
+      "knowFee": "Fees set for the use of the dataset"
     },
     "service": {
       "title": "I share a service",
