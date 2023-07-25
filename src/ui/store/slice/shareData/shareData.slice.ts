@@ -73,7 +73,9 @@ export type ShareDataSlice = {
   shareData: {
     form: Form
     storageServiceId: O.Option<StorageServiceId>
-    initForm: (payload: InitFormPayload) => IOEither<ResourceAlreadyExistsError, void>
+    initForm: (
+      payload: InitFormPayload
+    ) => IOEither<PayloadIsEmptyError | ResourceAlreadyExistsError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
     isFormInitialized: () => IO.IO<boolean>
     setStorageServiceId: (id: O.Option<StorageServiceId>) => IO.IO<void>
@@ -90,6 +92,9 @@ const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
 const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyExistsError =>
   ResourceAlreadyExistsError(resourceIds)
+
+const emptyPayloadError = (payload: InitFormPayload): PayloadIsEmptyError =>
+  PayloadIsEmptyError(payload)
 
 const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
@@ -135,7 +140,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
       pipe(
         payload,
         A.isEmpty,
-        B.match(
+        B.matchW(
           () =>
             pipe(
               IOE.fromIO(() => get().shareData.form),
@@ -155,7 +160,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
                 )
               )
             ),
-          () => IOE.of(undefined)
+          () => IOE.left(emptyPayloadError(payload))
         )
       ),
     formItemById: (id: FormItemId) =>
