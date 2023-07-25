@@ -64,19 +64,19 @@ export type FormItem = I18NTextField | TextField | NumericField | TagField | Sel
 
 export type Form = FormItem[]
 
-export type initFormItem = FormItem
-export type initFormPayload = initFormItem[]
+export type InitFormItem = FormItem
+export type InitFormPayload = InitFormItem[]
 
-export type storageServiceId = string
+export type StorageServiceId = string
 
 export type ShareDataSlice = {
   shareData: {
     form: Form
-    storageServiceId: O.Option<storageServiceId>
-    initForm: (payload: initFormPayload) => IOEither<ResourceAlreadyExistsError, void>
+    storageServiceId: O.Option<StorageServiceId>
+    initForm: (payload: InitFormPayload) => IOEither<ResourceAlreadyExistsError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
     isFormInitialized: () => IO.IO<boolean>
-    setStorageServiceId: (id: O.Option<storageServiceId>) => IO.IO<void>
+    setStorageServiceId: (id: O.Option<StorageServiceId>) => IO.IO<void>
   }
 }
 
@@ -91,14 +91,14 @@ const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
 const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyExistsError =>
   ResourceAlreadyExistsError(resourceIds)
 
-const isInitFormPayloadUniq = (payload: initFormPayload): boolean =>
+const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
 
 const isInitFormIdUniq =
-  (payload: initFormPayload) =>
+  (payload: InitFormPayload) =>
   (state: Form): boolean =>
     !A.some((formItem: FormItem) =>
-      A.some((initFormItem: initFormItem) => initFormItem.id === formItem.id)(payload)
+      A.some((initFormItem: InitFormItem) => initFormItem.id === formItem.id)(payload)
     )(state)
 
 const formIdExists =
@@ -114,8 +114,8 @@ const setFormItemValueInvariant =
 const mapFormIds = (form: Form): FormItemId[] => A.map((formItem: FormItem) => formItem.id)(form)
 
 const initFormInvariant =
-  (initForm: initFormPayload) =>
-  (state: Form): E.Either<ResourceAlreadyExistsError, initFormPayload> =>
+  (initForm: InitFormPayload) =>
+  (state: Form): E.Either<ResourceAlreadyExistsError, InitFormPayload> =>
     pipe(
       initForm,
       E.fromPredicate(flow(isInitFormIdUniq(state)), flow(mapFormIds, resourceAlreadyExistsError)),
@@ -131,7 +131,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
   shareData: {
     form: [],
     storageServiceId: O.none,
-    initForm: (payload: initFormPayload) =>
+    initForm: (payload: InitFormPayload) =>
       pipe(
         payload,
         A.isEmpty,
@@ -202,7 +202,7 @@ export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDat
         )
       ),
     isFormInitialized: () => () => get().shareData.form.length > 0,
-    setStorageServiceId: (id: O.Option<storageServiceId>) => () =>
+    setStorageServiceId: (id: O.Option<StorageServiceId>) => () =>
       set(state => ({ shareData: { ...state.shareData, storageServiceId: id } }))
   }
 })

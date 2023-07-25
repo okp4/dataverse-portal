@@ -10,7 +10,7 @@ import type {
   FormItem,
   FormItemType,
   FormItemValue,
-  initFormPayload
+  InitFormPayload
 } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
@@ -320,7 +320,7 @@ export const MetadataFilling: FC = () => {
     ]
   }, [addTag, formItemFieldValue, handleFieldValueChange, removeTag, t, tagsFieldValue])
 
-  const mapForm = (form: DatasetForm): initFormPayload => {
+  const mapForm = (form: DatasetForm): InitFormPayload => {
     return form.map(formItem => ({
       id: formItem.id,
       type: formItem.type,
