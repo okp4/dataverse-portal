@@ -1,29 +1,14 @@
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect } from 'react'
+import { useDebounce } from './useDebounce'
 
-type ResizeCallback = () => void
-
-export const useWindowResize = (callback: ResizeCallback): void => {
-  const [resizeTimer, setResizeTimer] = useState<NodeJS.Timeout | null>(null)
-
-  const debouncedResize = useCallback((): void => {
-    if (resizeTimer) {
-      clearTimeout(resizeTimer)
-    }
-
-    const newTimer = setTimeout(callback, 500)
-
-    setResizeTimer(newTimer)
-  }, [resizeTimer, callback])
+export const useWindowResize = (callback: () => void): void => {
+  const debouncedValue = useDebounce<() => void>(callback)
 
   useEffect(() => {
-    window.addEventListener('resize', debouncedResize)
+    window.addEventListener('resize', debouncedValue)
 
     return (): void => {
-      window.removeEventListener('resize', debouncedResize)
-
-      if (resizeTimer) {
-        clearTimeout(resizeTimer)
-      }
+      window.removeEventListener('resize', debouncedValue)
     }
-  }, [callback, debouncedResize, resizeTimer])
+  }, [callback, debouncedValue])
 }
