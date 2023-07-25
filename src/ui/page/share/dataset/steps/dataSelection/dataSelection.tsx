@@ -15,7 +15,7 @@ import {
   useDispatchNotification,
   type DispatchNotificationInput
 } from '@/ui/hook/useDispatchNotification'
-import { ShowFileError, type ResourceError } from '@/shared/error'
+import { ShowResourceError, type ResourceError } from '@/shared/error/resource'
 
 export const DataSelection: FC = () => {
   const { t } = useTranslation('share')
@@ -33,7 +33,7 @@ export const DataSelection: FC = () => {
         titleKey: 'error.selectionFailed',
         messageKey: 'error.selectionError'
       }
-      console.error(ShowFileError.show(error))
+      console.error(ShowResourceError.show(error))
       dispatchNotification(notificationInput)
     },
     [dispatchNotification]

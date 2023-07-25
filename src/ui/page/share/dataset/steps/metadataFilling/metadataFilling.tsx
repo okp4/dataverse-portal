@@ -13,8 +13,8 @@ import type {
   initFormPayload
 } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
-import type { ResourceError } from '@/shared/error'
-import { ShowFileError } from '@/shared/error'
+import type { ResourceError } from '@/shared/error/resource'
+import { ShowResourceError } from '@/shared/error/resource'
 import { Field } from '@/ui/component/field/field'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
@@ -333,7 +333,7 @@ export const MetadataFilling: FC = () => {
   const handleFormError = useCallback(
     (error: ResourceError) => {
       const { title, type } = formErrorData(error)
-      console.error(ShowFileError.show(error))
+      console.error(ShowResourceError.show(error))
       dispatchNotification({
         type: type,
         titleKey: title

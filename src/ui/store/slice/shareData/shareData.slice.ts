@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { flow, pipe } from 'fp-ts/lib/function'
 import { contramap as eqContramap } from 'fp-ts/Eq'
-import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
+import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error/resource'
 import type { StateCreator } from 'zustand'
 import type { IOEither } from 'fp-ts/IOEither'
 import type { IOOption } from 'fp-ts/IOOption'
