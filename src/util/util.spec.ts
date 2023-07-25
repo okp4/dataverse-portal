@@ -1,4 +1,4 @@
-import { getURILastElement, isError, isSubstringOf } from './util'
+import { getURILastElement, isEmptyOrEndsWithDot, isError, isSubstringOf } from './util'
 import * as O from 'fp-ts/Option'
 
 type Data = {
@@ -70,5 +70,19 @@ describe('isError guard function', () => {
         expect(result).toStrictEqual(expectedResult)
       })
     })
+  })
+})
+
+describe('isEmptyOrEndsWithDot', () => {
+  it('returns none when the string is neither empty nor ends with a dot', () => {
+    expect(isEmptyOrEndsWithDot('123')).toEqual(O.none)
+  })
+
+  it('returns some when the string is empty', () => {
+    expect(isEmptyOrEndsWithDot('')).toEqual(O.some(''))
+  })
+
+  it('returns some when the string ends with a dot', () => {
+    expect(isEmptyOrEndsWithDot('123.')).toEqual(O.some('123.'))
   })
 })
