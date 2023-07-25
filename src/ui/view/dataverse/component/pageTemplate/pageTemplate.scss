@@ -36,7 +36,7 @@ $colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4')
       @include bi-column-item('right');
 
       @include use-breakpoints(('mobile', 'tablet')) {
-        margin-top: 27px;
+        margin-top: 24px;
       }
     }
   }
