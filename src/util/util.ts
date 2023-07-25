@@ -37,3 +37,7 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
   pipe(source, S.toLowerCase, S.includes(S.toLowerCase(substring)))
 
 export const isError = (value: unknown): value is Error => value instanceof Error
+
+// Escapes all special characters in a string that have significance in a regular expression,
+// allowing the string to be used safely in a RegExp constructor.
+export const escapeRegExp = (s: string): string => s.replace(/[\^$.*+?()|[\]{}\\]/g, '\\$&')
