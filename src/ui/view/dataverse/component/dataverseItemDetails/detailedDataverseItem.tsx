@@ -2,9 +2,7 @@ import type { FC } from 'react'
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/Array'
 import classNames from 'classnames'
-import { isZone } from '@/ui/page/dataverse/zone/zone'
 import { GeneralMetadataList } from '@/ui/view/dataverse/component/generalMetadata/generalMetadata'
-import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import { SummaryMetadata } from '@/ui/view/dataverse/component/summaryMetadata/summaryMetadata'
 import ItemOverview from '@/ui/view/dataverse/component/itemOverview/itemOverview'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
@@ -67,7 +65,6 @@ export const DetailedDataverseItem: FC<DetailedDataverseItemProps> = ({
       />
       <GeneralMetadataList metadata={generalMetadataWithIcon} />
       <SummaryMetadata metadata={metadata} />
-      {isZone(data) && <GovernanceDescription description={data.governance.description} />}
     </div>
   )
 }

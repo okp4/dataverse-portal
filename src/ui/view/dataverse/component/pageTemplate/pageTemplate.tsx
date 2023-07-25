@@ -6,6 +6,8 @@ import { BackButton } from '@/ui/view/dataverse/component/backButton/backButton'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { DetailedDataverseItem } from '@/ui/view/dataverse/component/dataverseItemDetails/detailedDataverseItem'
 import { renderItemTypeColor } from '@/ui/common'
+import { isZone } from '@/ui/page/dataverse/zone/zone'
+import { GovernanceDescription } from '@/ui/view/dataverse/component/governanceDescription/governanceDescription'
 import './pageTemplate.scss'
 
 type PageTemplateProps = {
@@ -29,6 +31,9 @@ const PageTemplate: FC<PageTemplateProps> = ({ data, metadata }) => {
           {t(`resources.${data.type}`)}
         </h3>
         <DetailedDataverseItem data={data} metadata={metadata} />
+      </div>
+      <div className="okp4-dataverse-portal-dataverse-page-template-right-side-wrapper">
+        {isZone(data) && <GovernanceDescription description={data.governance.description} />}
       </div>
     </div>
   )
