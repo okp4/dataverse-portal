@@ -28,9 +28,9 @@
       "formatSelection": "Sélectionner le format",
       "license": "License :",
       "licenceSelection": "Sélectionner la license",
-      "topic": "Sujet :",
-      "topicSelection": "Sélectionner le sujet",
-      "geographicalCoverage": "Chemie géographique :",
+      "topic": "Thème :",
+      "topicSelection": "Sélectionner le thème",
+      "geographicalCoverage": "Couverture géographique :",
       "geographicalCoverageSelection": "Sélectionner la couverture géographique",
       "tags": "Tags"
     }
