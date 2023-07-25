@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
 
-type FieldProps = {
+export type FieldProps = {
   id: string
   label?: string
   onChange?: (value: string) => void

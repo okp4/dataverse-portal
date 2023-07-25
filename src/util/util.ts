@@ -1,4 +1,4 @@
-import type * as O from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
 import * as A from 'fp-ts/Array'
 import * as T from 'fp-ts/Task'
 import * as S from 'fp-ts/string'
@@ -41,3 +41,9 @@ export const isError = (value: unknown): value is Error => value instanceof Erro
 // Escapes all special characters in a string that have significance in a regular expression,
 // allowing the string to be used safely in a RegExp constructor.
 export const escapeRegExp = (s: string): string => s.replace(/[\^$.*+?()|[\]{}\\]/g, '\\$&')
+
+export const isEmptyOrEndsWithDot = (s: string): O.Option<string> =>
+  pipe(
+    s,
+    O.fromPredicate(s => S.isEmpty(s) || s.endsWith('.'))
+  )
