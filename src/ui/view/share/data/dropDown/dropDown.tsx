@@ -148,11 +148,11 @@ export const DropDown: FC<DropDownProps> = ({
     [value, onChange]
   )
 
-  const handleClickOutside = useCallback(() => {
+  const closeDropDown = useCallback(() => {
     setIsOpen(false)
   }, [setIsOpen])
 
-  const toggleDropDown = useCallback(
+  const openDropDown = useCallback(
     (isOpen: boolean) => {
       setIsOpen(isOpen)
     },
@@ -167,7 +167,7 @@ export const DropDown: FC<DropDownProps> = ({
     [options, searchTerm, maxSearchResults]
   )
 
-  useOnClickOutside<HTMLDivElement>(dropDownRef, handleClickOutside)
+  useOnClickOutside<HTMLDivElement>(dropDownRef, closeDropDown)
 
   return (
     <div className="okp4-dataverse-portal-dropdown-main" ref={dropDownRef}>
@@ -186,7 +186,7 @@ export const DropDown: FC<DropDownProps> = ({
         }
         contentClassName={classNames(direction)}
         iconName="chevron-sharp"
-        onOpenChange={toggleDropDown}
+        onOpenChange={openDropDown}
         open={isOpen}
         trigger={<DropDownInput onChange={handleChange} placeholder={placeholder} value={value} />}
         triggerClassName="okp4-dataverse-portal-dropdown-trigger"
