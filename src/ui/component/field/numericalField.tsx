@@ -8,9 +8,7 @@ import { isValidNumberFieldFormat } from '@/util/field/field'
 import { formatLocalizedNumber } from '@/util/i18n/i18n'
 import { endsZeroDotted } from '@/util/util'
 
-type NumericalFieldProps = FieldProps & {
-  onChange: (value: string) => void
-}
+type NumericalFieldProps = FieldProps & Required<Pick<FieldProps, 'onChange'>>
 
 const coinDecimal = APP_ENV.chains[0].feeCurrencies[0].coinDecimals
 
