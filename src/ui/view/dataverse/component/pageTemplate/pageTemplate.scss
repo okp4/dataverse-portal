@@ -31,5 +31,13 @@ $colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4')
         }
       }
     }
+
+    .okp4-dataverse-portal-dataverse-page-template-right-side-wrapper {
+      @include bi-column-item('right');
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        margin-top: 24px;
+      }
+    }
   }
 }
