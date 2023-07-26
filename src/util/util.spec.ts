@@ -1,4 +1,4 @@
-import { getURILastElement, isError, isSubstringOf } from './util'
+import { getURILastElement, isError, isSubstringOf, endsZeroDotted } from './util'
 import * as O from 'fp-ts/Option'
 
 type Data = {
@@ -70,5 +70,23 @@ describe('isError guard function', () => {
         expect(result).toStrictEqual(expectedResult)
       })
     })
+  })
+})
+
+describe('endsZeroDotted', () => {
+  it('returns true for strings ending with dot followed by zeroes', () => {
+    expect(endsZeroDotted('12.00')).toBe(true)
+    expect(endsZeroDotted('12.040')).toBe(true)
+    expect(endsZeroDotted('120.400')).toBe(true)
+  })
+
+  it('returns false for strings without dot followed by zeroes', () => {
+    expect(endsZeroDotted('12')).toBe(false)
+    expect(endsZeroDotted('12.4')).toBe(false)
+    expect(endsZeroDotted('120.104')).toBe(false)
+  })
+
+  it('returns false for empty string', () => {
+    expect(endsZeroDotted('')).toBe(false)
   })
 })
