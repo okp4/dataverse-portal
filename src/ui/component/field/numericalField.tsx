@@ -5,7 +5,6 @@ import { pipe, flow } from 'fp-ts/function'
 import type { FieldProps } from '@/ui/component/field/field'
 import { Field } from '@/ui/component/field/field'
 import { isValidNumberFieldFormat } from '@/util/field/field'
-import { isEmptyOrEndsWithDot } from '@/util/util'
 import { formatLocalizedNumber } from '@/util/i18n/i18n'
 
 type NumericalFieldProps = FieldProps & {
@@ -53,7 +52,7 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
         O.map(validValue =>
           pipe(
             validValue,
-            isEmptyOrEndsWithDot,
+            O.fromPredicate(s => S.isEmpty(s) || s.endsWith('.')),
             O.map(flow(onChange)),
             O.getOrElse(() =>
               pipe(validValue, parseFloat, formatLocalizedNumber(intlFormatConfig), onChange)
