@@ -1,10 +1,12 @@
 import { none, some } from 'fp-ts/Option'
-import { isValidNumberFieldFormat } from '@/util/field/field'
+import { numberFormatValidator } from '@/util/field/field'
 
 describe('Field utility functions', () => {
-  describe('isValidNumberFieldFormat', () => {
-    const config = { thousandSeparator: ' ', decimalSeparator: '.', decimalLimit: 2 }
-    const validate = isValidNumberFieldFormat(config)
+  describe('numberFormatValidator', () => {
+    const thousandSeparator = ' '
+    const decimalSeparator = '.'
+    const decimalLimit = 2
+    const validate = numberFormatValidator(thousandSeparator, decimalSeparator, decimalLimit)
 
     it('returns none when the string contains several occurences of a decimal separator', () => {
       expect(validate('123.123.123')).toEqual(none)
