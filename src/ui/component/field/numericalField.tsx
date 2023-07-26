@@ -6,6 +6,7 @@ import type { FieldProps } from '@/ui/component/field/field'
 import { Field } from '@/ui/component/field/field'
 import { isValidNumberFieldFormat } from '@/util/field/field'
 import { formatLocalizedNumber } from '@/util/i18n/i18n'
+import { endsZeroDotted } from '@/util/util'
 
 type NumericalFieldProps = FieldProps & {
   onChange: (value: string) => void
@@ -52,7 +53,7 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
         O.map(validValue =>
           pipe(
             validValue,
-            O.fromPredicate(s => S.isEmpty(s) || s.endsWith('.')),
+            O.fromPredicate(s => S.isEmpty(s) || s.endsWith('.') || endsZeroDotted(s)),
             O.map(flow(onChange)),
             O.getOrElse(() =>
               pipe(validValue, parseFloat, formatLocalizedNumber(intlFormatConfig), onChange)
