@@ -38,8 +38,19 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
 
 export const isError = (value: unknown): value is Error => value instanceof Error
 
-export const escapeRegExp = (str?: string): string => {
-  const regExp = /[\\^"'$.*+?()[\]{}|]/g
-  const regExpFromSource = RegExp(regExp.source)
-  return str && regExpFromSource.test(str) ? str.replace(regExp, '\\$&') : str ?? ''
+export const escapeSparqlStr = (str?: string): string => {
+  const sparqlEscapeRegExp = /[\t\n\r\b\f"'\\]/g
+
+  const escapeCharactersMap = new Map([
+    ['\t', '\\t'],
+    ['\n', '\\n'],
+    ['\r', '\\r'],
+    ['\b', '\\b'],
+    ['\f', '\\f'],
+    ['"', '\\"'],
+    ["'", "\\'"],
+    ['\\', '\\\\']
+  ])
+
+  return str ? str.replace(sparqlEscapeRegExp, char => escapeCharactersMap.get(char) as string) : ''
 }
