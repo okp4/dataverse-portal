@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import * as O from 'fp-ts/Option'
 import * as S from 'fp-ts/string'
 import { pipe, flow } from 'fp-ts/function'
@@ -18,14 +18,23 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
   const thousandSeparator = '\u202F' // narrow no-break space
   const decimalSeparator = '.'
 
-  const formatLocalizedNumber = localizedNumberFormatter(
-    'fr-FR',
-    {
-      useGrouping: true,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: coinDecimal
-    },
-    decimalSeparator
+  const formatLocalizedNumber = useMemo(
+    () =>
+      localizedNumberFormatter(
+        'fr-FR',
+        {
+          useGrouping: true,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: coinDecimal
+        },
+        decimalSeparator
+      ),
+    []
+  )
+
+  const validateNumberFormat = useMemo(
+    () => numberFormatValidator(thousandSeparator, decimalSeparator, coinDecimal),
+    []
   )
 
   const handleInputChange = useCallback(
@@ -34,7 +43,7 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
         value,
         S.replace(',', decimalSeparator),
         S.replace(new RegExp(thousandSeparator, 'g'), ''),
-        numberFormatValidator(thousandSeparator, decimalSeparator, coinDecimal),
+        validateNumberFormat,
         O.map(validValue =>
           pipe(
             validValue,
@@ -45,7 +54,7 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
         )
       )
     },
-    [onChange, formatLocalizedNumber]
+    [onChange, formatLocalizedNumber, validateNumberFormat]
   )
 
   return <Field {...props} onChange={handleInputChange} value={value} />
