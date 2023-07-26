@@ -75,26 +75,29 @@ describe('isError guard function', () => {
 
 describe('escapeSparqlStr', () => {
   describe.each`
-    arg             | expectedResult
-    ${undefined}    | ${''}
-    ${'\t'}         | ${'\\t'}
-    ${'\n'}         | ${'\\n'}
-    ${'\r'}         | ${'\\r'}
-    ${'\b'}         | ${'\\b'}
-    ${'\f'}         | ${'\\f'}
-    ${'"'}          | ${'\\"'}
-    ${"'"}          | ${"\\'"}
-    ${'\\'}         | ${'\\\\'}
-    ${'foo\nbar'}   | ${'foo\\nbar'}
-    ${'foo\n'}      | ${'foo\\n'}
-    ${'\nfoo'}      | ${'\\nfoo'}
-    ${'foo"bar'}    | ${'foo\\"bar'}
-    ${"foo'bar"}    | ${"foo\\'bar"}
-    ${'foo\\bar'}   | ${'foo\\\\bar'}
-    ${'\\u00a0'}    | ${'\\\\u00a0'}
-    ${'\u00a0'}     | ${' '}
-    ${'\u005Cbar'}  | ${'\\\\bar'}
-    ${'\\u005Cbar'} | ${'\\\\u005Cbar'}
+    arg                    | expectedResult
+    ${undefined}           | ${''}
+    ${'\t'}                | ${'\\t'}
+    ${'\n'}                | ${'\\n'}
+    ${'\r'}                | ${'\\r'}
+    ${'\b'}                | ${'\\b'}
+    ${'\f'}                | ${'\\f'}
+    ${'"'}                 | ${'\\"'}
+    ${"'"}                 | ${"\\'"}
+    ${'\\'}                | ${'\\\\'}
+    ${'foo\nbar'}          | ${'foo\\nbar'}
+    ${'foo\n'}             | ${'foo\\n'}
+    ${'\nfoo'}             | ${'\\nfoo'}
+    ${'foo"bar'}           | ${'foo\\"bar'}
+    ${"foo'bar"}           | ${"foo\\'bar"}
+    ${'foo\\bar'}          | ${'foo\\\\bar'}
+    ${'foo\t\tbar\n\nbaz'} | ${'foo\\t\\tbar\\n\\nbaz'}
+    ${'/foo^?*bar$baz+'}   | ${'/foo^?*bar$baz+'}
+    ${'\\...🧪✌🏾'}         | ${'\\\\...🧪✌🏾'}
+    ${'\\u00a0'}           | ${'\\\\u00a0'}
+    ${'\u00a0'}            | ${' '}
+    ${'\u005Cbar'}         | ${'\\\\bar'}
+    ${'\\u005Cbar'}        | ${'\\\\u005Cbar'}
   `('When given argument <"$arg">', ({ arg, expectedResult }) => {
     it(`returns ${expectedResult}`, () => {
       expect(escapeSparqlStr(arg)).toBe(expectedResult)
