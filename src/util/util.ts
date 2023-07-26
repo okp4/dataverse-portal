@@ -1,4 +1,4 @@
-import type * as O from 'fp-ts/Option'
+import * as O from 'fp-ts/Option'
 import * as A from 'fp-ts/Array'
 import * as T from 'fp-ts/Task'
 import * as S from 'fp-ts/string'
@@ -39,18 +39,28 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
 export const isError = (value: unknown): value is Error => value instanceof Error
 
 export const escapeSparqlStr = (str?: string): string => {
-  const sparqlEscapeRegExp = /[\t\n\r\b\f"'\\]/g
+  const escapeCharactersMap: Record<string, string> = {
+    '\t': '\\t',
+    '\n': '\\n',
+    '\r': '\\r',
+    '\b': '\\b',
+    '\f': '\\f',
+    '"': '\\"',
+    "'": "\\'",
+    '\\': '\\\\'
+  }
 
-  const escapeCharactersMap = new Map([
-    ['\t', '\\t'],
-    ['\n', '\\n'],
-    ['\r', '\\r'],
-    ['\b', '\\b'],
-    ['\f', '\\f'],
-    ['"', '\\"'],
-    ["'", "\\'"],
-    ['\\', '\\\\']
-  ])
-
-  return str ? str.replace(sparqlEscapeRegExp, char => escapeCharactersMap.get(char) as string) : ''
+  return pipe(
+    str,
+    O.fromNullable,
+    O.map(s =>
+      pipe(
+        s,
+        Array.from,
+        A.map((char: string) => escapeCharactersMap[char] || char),
+        (chars: string[]) => chars.join('')
+      )
+    ),
+    O.getOrElse(() => '')
+  )
 }
