@@ -4,9 +4,8 @@ import * as S from 'fp-ts/string'
 import { pipe, flow } from 'fp-ts/function'
 import type { FieldProps } from '@/ui/component/field/field'
 import { Field } from '@/ui/component/field/field'
-import { numberFormatValidator } from '@/util/field/field'
 import { formatLocalizedNumber } from '@/util/i18n/i18n'
-import { endsZeroDotted } from '@/util/util'
+import { endsZeroDotted, numberFormatValidator } from '@/util/util'
 
 type NumericalFieldProps = FieldProps & Required<Pick<FieldProps, 'onChange'>>
 
