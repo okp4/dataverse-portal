@@ -13,7 +13,14 @@ import type {
 import { escapeSparqlStr, getURILastElement } from '@/util/util'
 import { createAbortableFetch } from '@/util/fetch/fetch'
 import type { SparqlBinding, SparqlResult } from './dto'
-const { abortRequest, fetchWithAbort } = createAbortableFetch()
+import { fetchWithSparql, serializeFetchResponse } from '@/infra/shared/sparql.util'
+import type {
+  HTTPNetworkError,
+  NetworkUnspecifiedError,
+  NetworkRequestAbortedError
+} from '@/shared/network'
+import type { ResponseToJsonSerializationError } from '@/shared/serialize'
+const { abortRequest } = createAbortableFetch()
 
 export const sparqlGateway: DataversePort = {
   retrieveDataverse: (
@@ -21,7 +28,13 @@ export const sparqlGateway: DataversePort = {
     limit: number,
     offset: number,
     { byType, byProperty, byServiceCategory }: RetrieveDataverseQueryFilters
-  ): TE.TaskEither<Error, RetrieveDataverseResult> => {
+  ): TE.TaskEither<
+    | HTTPNetworkError
+    | NetworkRequestAbortedError
+    | NetworkUnspecifiedError
+    | ResponseToJsonSerializationError,
+    RetrieveDataverseResult
+  > => {
     const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`
 
     const byTypeFilter = (filters: DataverseElementType[]): string =>
@@ -90,43 +103,6 @@ export const sparqlGateway: DataversePort = {
       OFFSET ${offset}
 `
 
-    const fetchHeaders: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        accept: 'application/sparql-results+json'
-      },
-      body: `query=${encodeURIComponent(query)}`
-    }
-
-    const fetchDataverse = (): TE.TaskEither<Error, Response> =>
-      TE.tryCatch(
-        async () => {
-          const resp = await fetchWithAbort(APP_ENV.sparql['endpoint'], fetchHeaders)
-          if (!resp.ok) {
-            throw new Error(
-              `Oops.. A ${resp.status} HTTP error occurred with the following message: ${resp.statusText} `
-            )
-          }
-          return resp
-        },
-        reason =>
-          reason instanceof Error
-            ? reason
-            : new Error(`Oops.. Something went wrong fetching ontology: ${JSON.stringify(reason)}`)
-      )
-
-    const serializeResponse = (response: Response): TE.TaskEither<Error, SparqlResult> =>
-      TE.tryCatch(
-        async () => response.json(),
-        reason =>
-          reason instanceof Error
-            ? reason
-            : new Error(
-                `Oops.. Something went wrong serializing sparql response: ${JSON.stringify(reason)}`
-              )
-      )
-
     const splitBindingId = (b: SparqlBinding): O.Option<[SparqlBinding, string]> =>
       pipe(
         b.id.value,
@@ -169,8 +145,9 @@ export const sparqlGateway: DataversePort = {
       )
 
     return pipe(
-      fetchDataverse(),
-      TE.chain(serializeResponse),
+      query,
+      fetchWithSparql,
+      TE.chainW(serializeFetchResponse<SparqlResult>),
       TE.map(mapDtoToEntity),
       TE.map(r => ({
         data: A.takeLeft(limit)(r),
