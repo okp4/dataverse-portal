@@ -48,7 +48,7 @@ export const escapeRegExp = (s: string): string => s.replace(/[\^$.*+?()|[\]{}\\
  * @param {string} s - The string to be tested.
  * @returns {boolean} - Returns `true` if the string ends with a decimal separator followed by one or more zeros, and `false` otherwise.
  */
-export const endsZeroDotted = (s: string): boolean => /[.,]\d*0+$/.test(s)
+export const endsWithDecimalSeparatorAndZeros = (s: string): boolean => /[.,]\d*0+$/.test(s)
 
 /**
  * Returns a function that checks if a string s is a valid number format.
@@ -69,6 +69,7 @@ export const numberFormatValidator =
         decimalSeparator
       )}\\d{0,${decimalLimit}})?)$`
     )
+
     return pipe(
       s,
       O.fromPredicate(s => regex.test(s))

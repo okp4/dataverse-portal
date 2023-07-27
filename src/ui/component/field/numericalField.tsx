@@ -9,7 +9,7 @@ import {
   localizedNumberFormatter,
   thousandSeparatorForLocale
 } from '@/util/i18n/i18n'
-import { endsZeroDotted, escapeRegExp, numberFormatValidator } from '@/util/util'
+import { endsWithDecimalSeparatorAndZeros, escapeRegExp, numberFormatValidator } from '@/util/util'
 
 type NumericalFieldProps = FieldProps &
   Required<Pick<FieldProps, 'onChange'>> & {
@@ -70,7 +70,7 @@ export const NumericalField: React.FC<NumericalFieldProps> = props => {
               s =>
                 S.isEmpty(s) ||
                 s.endsWith(decimalSeparator ?? decimalSeparatorForLocale(locale)) ||
-                endsZeroDotted(s)
+                endsWithDecimalSeparatorAndZeros(s)
             ),
             O.map(flow(onChange)),
             O.getOrElse(() =>

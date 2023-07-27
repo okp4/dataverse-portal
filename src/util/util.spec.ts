@@ -3,7 +3,7 @@ import {
   getURILastElement,
   isError,
   isSubstringOf,
-  endsZeroDotted,
+  endsWithDecimalSeparatorAndZeros,
   numberFormatValidator
 } from './util'
 
@@ -79,21 +79,21 @@ describe('isError guard function', () => {
   })
 })
 
-describe('endsZeroDotted', () => {
+describe('endsWithDecimalSeparatorAndZeros', () => {
   it('returns true for strings ending with dot followed by zeroes', () => {
-    expect(endsZeroDotted('12.00')).toBe(true)
-    expect(endsZeroDotted('12.040')).toBe(true)
-    expect(endsZeroDotted('120.400')).toBe(true)
+    expect(endsWithDecimalSeparatorAndZeros('12.00')).toBe(true)
+    expect(endsWithDecimalSeparatorAndZeros('12.040')).toBe(true)
+    expect(endsWithDecimalSeparatorAndZeros('120.400')).toBe(true)
   })
 
   it('returns false for strings without dot followed by zeroes', () => {
-    expect(endsZeroDotted('12')).toBe(false)
-    expect(endsZeroDotted('12.4')).toBe(false)
-    expect(endsZeroDotted('120.104')).toBe(false)
+    expect(endsWithDecimalSeparatorAndZeros('12')).toBe(false)
+    expect(endsWithDecimalSeparatorAndZeros('12.4')).toBe(false)
+    expect(endsWithDecimalSeparatorAndZeros('120.104')).toBe(false)
   })
 
   it('returns false for empty string', () => {
-    expect(endsZeroDotted('')).toBe(false)
+    expect(endsWithDecimalSeparatorAndZeros('')).toBe(false)
   })
 })
 
