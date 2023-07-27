@@ -108,3 +108,10 @@ export const escapeRegExp = (s: string): string => s.replace(/[\^$.*+?()|[\]{}\\
 
 export const createIntermediateNumericPattern = (separator: string): RegExp =>
   new RegExp(`${escapeRegExp(separator)}(\\d*0+){0,1}$`)
+export const extractErrorMessage = (error: unknown): string =>
+  pipe(
+    error,
+    O.fromPredicate(isError),
+    O.map(o => o.message),
+    O.getOrElse(() => JSON.stringify(error))
+  )
