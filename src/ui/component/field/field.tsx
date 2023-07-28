@@ -1,8 +1,9 @@
-import { type FC, type ChangeEvent, useCallback, useState, useRef } from 'react'
+import { type FC, type ChangeEvent, useCallback, useState } from 'react'
 import classNames from 'classnames'
 import type { NumericFormatProps } from 'react-number-format'
 import { NumericFormat } from 'react-number-format'
 import { Icon } from '@/ui/component/icon/icon'
+import { omit } from '@/util/util'
 import './field.scss'
 
 type InputProps = Omit<NumericFormatProps, 'type'> & {
@@ -24,6 +25,17 @@ type FieldProps = InputProps & {
   leftElement?: JSX.Element
   rightElement?: JSX.Element
 }
+
+type NonInputKeys = keyof Omit<FieldProps, keyof InputProps>
+const nonInputKeys: NonInputKeys[] = [
+  'label',
+  'type',
+  'error',
+  'multiline',
+  'resizable',
+  'leftElement',
+  'rightElement'
+]
 
 // eslint-disable-next-line max-lines-per-function
 export const Field: FC<FieldProps> = props => {
@@ -81,7 +93,7 @@ export const Field: FC<FieldProps> = props => {
   }
 
   const numericInputProps = {
-    ...props,
+    ...omit(props, nonInputKeys),
     ...textFieldInputProps
   }
 
