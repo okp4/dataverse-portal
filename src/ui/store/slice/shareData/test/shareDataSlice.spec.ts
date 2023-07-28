@@ -7,6 +7,7 @@ import * as App from '@/ui/store/appStore'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
 import * as E from 'fp-ts/Either'
+import type { AppOptions } from '@/ui/store/appStore'
 
 type Data1 = {
   initialFormPayload?: InitFormPayload
@@ -14,19 +15,24 @@ type Data1 = {
   expectIsFormInitialized: boolean
   expectedIsEmptyPayloadError?: PayloadIsEmptyError
   expectedAlreadyExistsError?: ResourceAlreadyExistsError
+  preloadedState?: AppOptions
 }
 
 type Data2 = {
   serviceStorageIdPayload: O.Option<StorageServiceId>
   expectedServiceStorageId: O.Option<StorageServiceId>
   expectedIsEmptyPayloadError?: PayloadIsEmptyError
+  preloadedState?: AppOptions
 }
 
 type Store = Readonly<{
   store: StoreApi<ShareDataSlice>
 }>
 
-const initStore = (): Store => ({ store: App.storeFactory() })
+const initStore = (initialState?: AppOptions): Store => {
+  const store = App.storeFactory(initialState)
+  return { store }
+}
 
 // eslint-disable-next-line max-lines-per-function
 describe('Given the share data slice', () => {
@@ -40,14 +46,47 @@ describe('Given the share data slice', () => {
     { id: '1', title: 'author', required: true, type: 'text', value: O.none }
   ]
 
-  //expected forms
+  // expected forms
   const expectedForm1: Form = initialFormPayload1
 
+  // already existant form
+  const existantForm1: Form = [
+    {
+      id: '1',
+      title: 'fee',
+      required: true,
+      type: 'numeric',
+      value: O.some(3)
+    }
+  ]
+
+  // preloaded states
+  const preloadedStateWithForm: AppOptions = {
+    initialState: {
+      shareData: {
+        initialState: {
+          data: { form: existantForm1, storageServiceId: O.none }
+        }
+      }
+    }
+  }
+
+  const preloadedStateWithServicestorageId1: AppOptions = {
+    initialState: {
+      shareData: {
+        initialState: {
+          data: { form: [], storageServiceId: O.some('1') }
+        }
+      }
+    }
+  }
+
   describe.each`
-    initialFormPayload     | expectedForm     | expectIsFormInitialized | expectedIsEmptyPayloadError | expectedAlreadyExistsError
-    ${[]}                  | ${[]}            | ${false}                | ${PayloadIsEmptyError([])}  | ${undefined}
-    ${initialFormPayload2} | ${[]}            | ${false}                | ${undefined}                | ${ResourceAlreadyExistsError(['1', '1'])}
-    ${initialFormPayload1} | ${expectedForm1} | ${true}                 | ${undefined}                | ${undefined}
+    preloadedState            | initialFormPayload     | expectedForm     | expectIsFormInitialized | expectedIsEmptyPayloadError | expectedAlreadyExistsError
+    ${[]}                     | ${[]}                  | ${[]}            | ${false}                | ${PayloadIsEmptyError([])}  | ${undefined}
+    ${[]}                     | ${initialFormPayload2} | ${[]}            | ${false}                | ${undefined}                | ${ResourceAlreadyExistsError(['1', '1'])}
+    ${[]}                     | ${initialFormPayload1} | ${expectedForm1} | ${true}                 | ${undefined}                | ${undefined}
+    ${preloadedStateWithForm} | ${initialFormPayload1} | ${expectedForm1} | ${true}                 | ${undefined}                | ${ResourceAlreadyExistsError(['1'])}
   `(
     'Given an initial form payload <$initialFormPayload>',
     ({
@@ -55,10 +94,11 @@ describe('Given the share data slice', () => {
       expectedForm,
       expectIsFormInitialized,
       expectedIsEmptyPayloadError,
-      expectedAlreadyExistsError
+      expectedAlreadyExistsError,
+      preloadedState
     }: Data1) => {
       describe('When initializing a form', () => {
-        const { store } = initStore()
+        const { store } = initStore(preloadedState)
 
         test(`Then expect initialized form to be ${JSON.stringify(expectedForm)}`, () => {
           if (initialFormPayload) {
@@ -104,15 +144,22 @@ describe('Given the share data slice', () => {
   )
 
   describe.each`
-    serviceStorageIdPayload | expectedServiceStorageId | expectedIsEmptyPayloadError
-    ${O.none}               | ${O.none}                | ${undefined}
-    ${O.some('3')}          | ${O.some('3')}           | ${undefined}
-    ${O.some('')}           | ${O.none}                | ${PayloadIsEmptyError('')}
+    preloadedState                         | serviceStorageIdPayload | expectedServiceStorageId | expectedIsEmptyPayloadError
+    ${undefined}                           | ${O.none}               | ${O.none}                | ${undefined}
+    ${undefined}                           | ${O.some('3')}          | ${O.some('3')}           | ${undefined}
+    ${undefined}                           | ${O.some('')}           | ${O.none}                | ${PayloadIsEmptyError('')}
+    ${preloadedStateWithServicestorageId1} | ${O.some('2')}          | ${O.some('2')}           | ${undefined}
+    ${preloadedStateWithServicestorageId1} | ${O.some('')}           | ${O.some('1')}           | ${PayloadIsEmptyError('')}
   `(
     'Given an initial storage service id payload <$serviceStorageIdPayload>',
-    ({ serviceStorageIdPayload, expectedServiceStorageId, expectedIsEmptyPayloadError }: Data2) => {
+    ({
+      serviceStorageIdPayload,
+      expectedServiceStorageId,
+      expectedIsEmptyPayloadError,
+      preloadedState
+    }: Data2) => {
       describe('When calling set method with this payload', () => {
-        const { store } = initStore()
+        const { store } = initStore(preloadedState)
         const setStorageIdResult = store
           .getState()
           .shareData.setStorageServiceId(serviceStorageIdPayload)()

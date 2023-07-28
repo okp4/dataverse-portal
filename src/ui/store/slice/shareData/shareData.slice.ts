@@ -129,85 +129,34 @@ const initFormInvariant =
       )
     )
 
-export const createShareDataSlice: StateCreator<ShareDataSlice, [], [], ShareDataSlice> = (
-  set,
-  get
-) => ({
-  shareData: {
-    form: [],
-    storageServiceId: O.none,
-    initForm: (payload: InitFormPayload) =>
-      pipe(
-        payload,
-        A.isEmpty,
-        B.matchW(
-          () =>
-            pipe(
-              IOE.fromIO(() => get().shareData.form),
-              IOE.flatMap(
-                flow(
-                  initFormInvariant(payload),
-                  IOE.fromEither,
-                  IOE.chainIOK(
-                    form => () =>
-                      set(state => ({
-                        shareData: {
-                          ...state.shareData,
-                          form
-                        }
-                      }))
-                  )
-                )
-              )
-            ),
-          () => IOE.left(emptyPayloadError(payload))
-        )
-      ),
-    formItemById: (id: FormItemId) =>
-      pipe(
-        IOO.fromIO(() => get().shareData.form),
-        IOO.chainOptionK(flow(A.findFirst(formItem => eqFormItem.equals(formItem, { id }))))
-      ),
-    setFormItemValue: ({ id, value }: SetFormItemValuePayload) =>
-      pipe(
-        id,
-        S.isEmpty,
-        B.match(
-          () =>
-            pipe(
-              IOE.fromIO(() => get().shareData.form),
-              IOE.flatMap(
-                flow(
-                  setFormItemValueInvariant(id),
-                  IOE.fromEither,
-                  IOE.chainIOK(
-                    formItemId => () =>
-                      set(state => ({
-                        shareData: {
-                          ...state.shareData,
-                          form: pipe(
-                            state.shareData.form,
-                            A.map(formItem =>
-                              pipe(
-                                eqFormItem.equals(formItem, { id: formItemId }),
-                                B.match(
-                                  () => formItem,
-                                  () => ({ ...formItem, value })
-                                )
-                              )
-                            )
-                          )
-                        }
-                      }))
-                  )
-                )
-              )
-            ),
-          () => IOE.of(undefined)
-        )
-      ),
-    isFormInitialized: () => () => get().shareData.form.length > 0,
-    setStorageServiceId: (id: O.Option<StorageServiceId>) => () =>
-      set(state => ({ shareData: { ...state.shareData, storageServiceId: id } }))
+export type ShareDataState = {
+  data: {
+    form: Form
+    storageServiceId: O.Option<StorageServiceId>
   }
-})
+}
+
+export type ShareDataOptions = {
+  initialState: ShareDataState
+}
+
+type ShareDataStateCreator = ({
+  initialState
+}?: Partial<ShareDataOptions>) => StateCreator<ShareDataSlice, [], [], ShareDataSlice>
+
+export const createShareDataSlice: ShareDataStateCreator =
+  ({ initialState } = {}) =>
+  (set, get) => ({
+    shareData: {
+      form: pipe(
+        initialState,
+        O.fromNullable,
+        O.map(it => it.data.form),
+        O.getOrElse<Form>(() => [])
+      ),
+      storageServiceId: pipe(
+        initialState,
+        O.fromNullable,
+        O.map(it => it.data.storageServiceId),
+        O.getOrElse<O.Option<StorageServiceId>>(() => O.none)
+      ),
