@@ -37,3 +37,11 @@ export const isSubstringOf = (substring: string, source: string): boolean =>
   pipe(source, S.toLowerCase, S.includes(S.toLowerCase(substring)))
 
 export const isError = (value: unknown): value is Error => value instanceof Error
+
+export const omit = <T extends string | number | symbol>(
+  props: Partial<Record<T, unknown>>,
+  omitProps: T[]
+): Partial<Record<T, unknown>> =>
+  Object.fromEntries(
+    Object.entries(props).filter(([key]) => !omitProps.includes(key as T))
+  ) as Partial<Record<T, unknown>>
