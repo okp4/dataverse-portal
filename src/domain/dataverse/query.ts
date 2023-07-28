@@ -1,5 +1,4 @@
 import type { IO } from 'fp-ts/lib/IO'
-import type { IOOption } from 'fp-ts/lib/IOOption'
 
 export type DataverseElementId = string
 export type DataverseElement = {
@@ -14,8 +13,6 @@ export type DataverseElementMetadata = {
 
 export type Dataverse = DataverseElement[]
 
-export type DataverseQueryError = Error
-
 export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
@@ -26,8 +23,6 @@ export type Query = {
   isLoading: () => IO<boolean>
   // Tell if there is more elements to retrieve from the dataverse
   hasNext: () => IO<boolean>
-  // Return the error that may have occurred while retrieving the dataverse
-  error: () => IOOption<DataverseQueryError>
   // Return the dataverse by type filter
   byTypeFilter: () => IO<ByTypeQueryFilter>
   // Return the dataverse filter value according to the property

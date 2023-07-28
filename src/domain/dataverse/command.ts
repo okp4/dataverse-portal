@@ -1,6 +1,12 @@
-import type { Task } from 'fp-ts/Task'
+import type { TaskEither } from 'fp-ts/TaskEither'
 import type { IO } from 'fp-ts/IO'
 import type { Option } from 'fp-ts/Option'
+import type {
+  HTTPNetworkError,
+  NetworkRequestAbortedError,
+  NetworkUnspecifiedError
+} from '@/shared/network'
+import type { ResponseToJsonSerializationError } from '@/shared/serialize'
 
 type FilterProperty = 'title'
 
@@ -14,9 +20,15 @@ export type ByPropertyFilterInput = {
 export type ServiceCategoryVocab = 'Storage'
 export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>
 
+export type LoadDataverseError =
+  | HTTPNetworkError
+  | NetworkUnspecifiedError
+  | ResponseToJsonSerializationError
+  | NetworkRequestAbortedError
+
 export type Command = {
   // Load the dataverse elements from outside
-  loadDataverse: () => Task<void>
+  loadDataverse: () => TaskEither<LoadDataverseError, void>
   // Set the language in which the dataverse should be translated to.
   setLanguage: (newLng: string) => IO<void>
   // Filter the dataverse by one or multiple element types
