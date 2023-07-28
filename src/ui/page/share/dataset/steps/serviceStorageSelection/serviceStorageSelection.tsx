@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import classNames from 'classnames'
 import * as O from 'fp-ts/Option'
+import { pipe } from 'fp-ts/lib/function'
+import * as TE from 'fp-ts/TaskEither'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { useAppStore, useDataverseStore } from '@/ui/store'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
@@ -21,9 +23,13 @@ import { dataverseItems } from '@/ui/page/dataverse/dataverse'
 import type { DataverseItemDetails } from '@/ui/page/dataverse/dataverse'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import type { DispatchNotificationInput } from '@/ui/hook/useDispatchNotification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
+import type { LoadDataverseError } from '@/domain/dataverse/command'
+import { ShowNetworkError } from '@/shared/network'
+import { ShowSerializationError } from '@/shared/serialize'
 
 export const getResourceDetails = (id: string): DataverseItemDetails | undefined =>
   dataverseItems.find(dataverseItem => dataverseItem.id === id)
@@ -50,7 +56,6 @@ export const ServiceStorageSelection: FC = () => {
     isLoading,
     hasNext,
     setLanguage,
-    error,
     resetByTypeFilter,
     resetByPropertyFilter,
     setByServiceCategoryFilter,
@@ -64,20 +69,48 @@ export const ServiceStorageSelection: FC = () => {
     byPropertyFilter: state.byPropertyFilter,
     setByPropertyFilter: state.setByPropertyFilter,
     setByTypeFilter: state.setByTypeFilter,
-    error: state.error,
     resetByTypeFilter: state.resetByTypeFilter,
     resetByPropertyFilter: state.resetByPropertyFilter,
     setByServiceCategoryFilter: state.setByServiceCategoryFilter,
     resetByServiceCategoryFilter: state.resetByServiceCategoryFilter
   }))
 
+  const handleLoadDataverseError = useCallback(
+    (error: LoadDataverseError): void => {
+      console.log('here')
+      const message: DispatchNotificationInput = {
+        action: 'refresh',
+        messageKey: 'error.processing',
+        titleKey: 'error.problem',
+        type: 'error'
+      }
+
+      switch (error._tag) {
+        case 'network-request-aborted':
+          break
+        case 'json-response-serialization':
+          console.error(ShowSerializationError.show(error))
+          return dispatchNotification(message)
+        case 'network-http':
+        case 'network-unspecified':
+          console.error(ShowNetworkError.show(error))
+          return dispatchNotification(message)
+      }
+    },
+    [dispatchNotification]
+  )
+
+  const retrieveDataverse = useCallback((): void => {
+    pipe(loadDataverse(), TE.mapLeft(handleLoadDataverseError))()
+  }, [handleLoadDataverseError, loadDataverse])
+
   const handleServiceSearch = useCallback(
     (searchTearm: string) => {
       setStorageServiceId(O.none)()
       setByPropertyFilter({ property: 'title', value: searchTearm })()
-      loadDataverse()()
+      retrieveDataverse()
     },
-    [loadDataverse, setByPropertyFilter, setStorageServiceId]
+    [retrieveDataverse, setByPropertyFilter, setStorageServiceId]
   )
 
   const handleSelect = useCallback(
@@ -104,19 +137,6 @@ export const ServiceStorageSelection: FC = () => {
 
   useOnKeyboard(handleDetailsEscape)
 
-  const handleServicesError = useCallback(() => {
-    dispatchNotification({
-      type: 'error',
-      titleKey: 'error.problem',
-      messageKey: 'error.processing',
-      action: 'refresh'
-    })
-  }, [dispatchNotification])
-
-  useEffect(() => {
-    O.map(handleServicesError)(error()())
-  }, [error, handleServicesError])
-
   useEffect(() => {
     if (!selectedServiceRef.current || !serviceContainerRef.current) return
 
@@ -135,15 +155,15 @@ export const ServiceStorageSelection: FC = () => {
     setLanguage(currentLng)()
     setByTypeFilter('Service')()
     setByServiceCategoryFilter(O.some('Storage'))()
-    loadDataverse()()
+    retrieveDataverse()
     return () => {
       resetByPropertyFilter()()
       resetByTypeFilter()()
       resetByServiceCategoryFilter()()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentLng,
-    loadDataverse,
     setByTypeFilter,
     setLanguage,
     resetByTypeFilter,
