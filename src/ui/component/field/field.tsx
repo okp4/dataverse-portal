@@ -1,19 +1,24 @@
 import { type FC, type ChangeEvent, useCallback, useState, useRef } from 'react'
 import classNames from 'classnames'
+import type { NumericFormatProps } from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
 
-type FieldProps = {
+type InputProps = Omit<NumericFormatProps, 'type'> & {
   id: string
-  label?: string
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   value?: string
-  type?: 'text' | 'number'
-  error?: string
   placeholder?: string
   required?: boolean
   disabled?: boolean
   readonly?: boolean
+}
+
+type FieldProps = InputProps & {
+  label?: string
+  type?: 'text' | 'numeric'
+  error?: string
   multiline?: boolean
   resizable?: boolean
   leftElement?: JSX.Element
@@ -21,22 +26,23 @@ type FieldProps = {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const Field: FC<FieldProps> = ({
-  id,
-  label,
-  onChange,
-  value,
-  type = 'text',
-  error,
-  placeholder,
-  required = false,
-  disabled = false,
-  readonly = false,
-  multiline = false,
-  resizable = false,
-  leftElement,
-  rightElement
-}) => {
+export const Field: FC<FieldProps> = props => {
+  const {
+    id,
+    label,
+    onChange,
+    value,
+    type = 'text',
+    error,
+    placeholder,
+    required = false,
+    disabled = false,
+    readonly = false,
+    multiline = false,
+    resizable = false,
+    leftElement,
+    rightElement
+  } = props
   const [focused, setFocused] = useState(false)
   const handleFocus = useCallback((): void => setFocused(true), [])
   const handleBlur = useCallback((): void => setFocused(false), [])
@@ -74,6 +80,11 @@ export const Field: FC<FieldProps> = ({
     placeholder
   }
 
+  const numericInputProps = {
+    ...props,
+    ...textFieldInputProps
+  }
+
   return (
     <div className={classNames(textFieldClassNames, 'okp4-dataverse-portal-field-main')}>
       {leftElement && (
@@ -84,10 +95,12 @@ export const Field: FC<FieldProps> = ({
         </div>
       )}
 
-      {multiline ? (
+      {type === 'numeric' ? (
+        <NumericFormat {...numericInputProps} type="text" />
+      ) : multiline ? (
         <textarea {...textFieldInputProps} />
       ) : (
-        <input {...textFieldInputProps} type={type} />
+        <input {...textFieldInputProps} />
       )}
 
       {rightElement && (
