@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import type { ChangeEvent } from 'react'
 import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as IOO from 'fp-ts/IOOption'
@@ -65,8 +66,8 @@ export const MetadataFilling: FC = () => {
   const formSides = ['left', 'right']
 
   const handleFieldValueChange = useCallback(
-    (id: string) => (value: string) => {
-      setFormItemValue({ id, value })()
+    (id: string) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormItemValue({ id, value: event.target.value })()
     },
     [setFormItemValue]
   )
