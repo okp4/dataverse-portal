@@ -13,7 +13,7 @@ export type ResponseToJsonSerializationError = ReturnType<typeof ResponseToJsonS
 
 export type SerializationError = ResponseToJsonSerializationError
 
-export const ShowFileError: Show<SerializationError> = {
+export const ShowSerializationError: Show<SerializationError> = {
   show: (error: SerializationError): string => {
     switch (error._tag) {
       case 'json-response-serialization': {

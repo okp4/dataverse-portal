@@ -3,13 +3,15 @@ import type { Show } from 'fp-ts/lib/Show'
 type HTTPNetworkErrorCtx = Readonly<{
   errorCode: number
   reason: string
+  rawMessage: string
 }>
 
-export const HTTPNetworkError = ({ errorCode, reason }: HTTPNetworkErrorCtx) =>
+export const HTTPNetworkError = ({ errorCode, reason, rawMessage }: HTTPNetworkErrorCtx) =>
   ({
     _tag: 'network-http',
     errorCode,
-    reason
+    reason,
+    rawMessage
   } as const)
 
 /**
@@ -41,11 +43,11 @@ export type NetworkRequestAbortedError = ReturnType<typeof NetworkRequestAborted
 
 export type NetworkError = HTTPNetworkError | NetworkUnspecifiedError | NetworkRequestAbortedError
 
-export const ShowFileError: Show<NetworkError> = {
+export const ShowNetworkError: Show<NetworkError> = {
   show: (error: NetworkError): string => {
     switch (error._tag) {
       case 'network-http': {
-        return `Error ${error._tag}: An HTTP network error occurred with the following code <${error.errorCode}> and the following reason <${error.reason}>`
+        return `Error ${error._tag}: An HTTP network error occurred with a <${error.errorCode}> code and the following reason <${error.reason}>. See raw message: <${error.rawMessage}>`
       }
       case 'network-unspecified': {
         return `Error ${error._tag}: An unspecified HTTP network error occurred with the following reason <${error.reason}>`
