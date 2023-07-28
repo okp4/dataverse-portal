@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import type { ChangeEvent } from 'react'
 import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as IOO from 'fp-ts/IOOption'
@@ -98,9 +99,16 @@ export const MetadataFilling: FC = () => {
 
   const formSides = ['left', 'right']
 
+  const handleTagsFieldValueChange = useCallback(
+    (id: string) => (tag: string) => {
+      setFormItemValue(id, tag)()
+    },
+    [setFormItemValue]
+  )
+
   const handleFieldValueChange = useCallback(
-    (id: string) => (value: string) => {
-      setFormItemValue(id, value)()
+    (id: string) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormItemValue(id, event.target.value)()
     },
     [setFormItemValue]
   )
@@ -335,8 +343,8 @@ export const MetadataFilling: FC = () => {
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
             <TagsField
-              addTag={handleFieldValueChange(id9)}
-              removeTag={handleFieldValueChange(id9)}
+              addTag={handleTagsFieldValueChange(id9)}
+              removeTag={handleTagsFieldValueChange(id9)}
               tags={multiValuesField(id9)}
             />
           </div>
@@ -355,7 +363,7 @@ export const MetadataFilling: FC = () => {
             <Field
               id={id10}
               label={'fee'}
-              onChange={handleNumericValueChange(id10)}
+              onChange={handleFieldValueChange(id10)}
               value={singleValueField(id10)}
             />
           </div>
