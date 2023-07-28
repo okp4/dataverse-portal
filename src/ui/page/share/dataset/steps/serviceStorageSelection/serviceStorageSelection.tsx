@@ -77,7 +77,6 @@ export const ServiceStorageSelection: FC = () => {
 
   const handleLoadDataverseError = useCallback(
     (error: LoadDataverseError): void => {
-      console.log('here')
       const message: DispatchNotificationInput = {
         action: 'refresh',
         messageKey: 'error.processing',

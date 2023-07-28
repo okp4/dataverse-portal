@@ -33,7 +33,8 @@ export const fetchWithSparql = (
     async () => {
       const resp = await fetchWithAbort(APP_ENV.sparql['endpoint'], sparqlFetchHeaders(query))
       if (!resp.ok) {
-        throw HTTPNetworkError({ errorCode: resp.status, reason: resp.statusText })
+        const rawMessage = await resp.text()
+        throw HTTPNetworkError({ errorCode: resp.status, reason: resp.statusText, rawMessage })
       }
       return resp
     },
