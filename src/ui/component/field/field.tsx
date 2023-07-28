@@ -40,7 +40,6 @@ export const Field: FC<FieldProps> = ({
   const [focused, setFocused] = useState(false)
   const handleFocus = useCallback((): void => setFocused(true), [])
   const handleBlur = useCallback((): void => setFocused(false), [])
-  const textInputRef = useRef(null)
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -71,7 +70,6 @@ export const Field: FC<FieldProps> = ({
     onFocus: handleFocus,
     readOnly: readonly,
     required,
-    ref: textInputRef,
     value,
     placeholder
   }
