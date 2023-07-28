@@ -30,13 +30,13 @@ export const sparqlGateway: DataversePort = {
     const byPropertyFilter = (): string =>
       pipe(
         byProperty,
-        O.map(
+        O.match(
+          () => '',
           filter =>
             `FILTER ( contains(lcase(str(?${filter.property})), "${escapeSparqlStr(
               filter.value.toLowerCase()
             )}" ) )`
-        ),
-        O.getOrElse(() => '')
+        )
       )
 
     const byServiceCategoryFilter = (): string =>
