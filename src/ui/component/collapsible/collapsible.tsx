@@ -15,6 +15,8 @@ type CollapsibleProps = {
   triggerClassName?: string
   iconName?: IconName
   onOpenChange?: (isOpened: boolean) => void
+  floatingContent?: boolean
+  contentExpandDirection?: 'up' | 'down'
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -26,7 +28,9 @@ export const Collapsible: FC<CollapsibleProps> = ({
   rootClassName,
   triggerClassName,
   iconName = 'chevron',
-  onOpenChange
+  onOpenChange,
+  floatingContent = false,
+  contentExpandDirection = 'down'
 }) => {
   const [triggerInitWidth, setTriggerInitWidth] = useState<number>(0)
   const [isOpen, setIsOpen] = useState(open)
@@ -40,7 +44,11 @@ export const Collapsible: FC<CollapsibleProps> = ({
 
   return (
     <RCollapsible.Root
-      className={rootClassName}
+      className={classNames(
+        'okp4-dataverse-portal-collapsible-main',
+        rootClassName,
+        contentExpandDirection
+      )}
       onOpenChange={onOpenChange ?? setIsOpen}
       open={openState}
     >
@@ -52,9 +60,7 @@ export const Collapsible: FC<CollapsibleProps> = ({
         <div
           className={classNames(
             'okp4-dataverse-portal-collapsible-trigger-icon',
-            {
-              flipped: contentClassName?.includes('dropup') ? !openState : openState
-            },
+            { flipped: openState },
             `${triggerClassName}-icon`
           )}
         >
@@ -62,7 +68,10 @@ export const Collapsible: FC<CollapsibleProps> = ({
         </div>
       </RCollapsible.Trigger>
       <RCollapsible.Content
-        className={classNames('okp4-dataverse-portal-collapsible-content', contentClassName)}
+        className={classNames('okp4-dataverse-portal-collapsible-content', contentClassName, {
+          floating: floatingContent,
+          [`floating-${contentExpandDirection}`]: floatingContent
+        })}
         style={{
           // Copying the behaviour of the Radix-ui collapsible, for the slide animations
           ['--okp4-collapsible-trigger-initial-width' as string]: `${triggerInitWidth}px`

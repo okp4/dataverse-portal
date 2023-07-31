@@ -1,5 +1,14 @@
 @import '@/ui/style/theme.scss';
 
+.okp4-dataverse-portal-collapsible-main {
+  display: flex;
+  flex-direction: column;
+
+  &.up {
+    flex-direction: column-reverse;
+  }
+}
+
 .okp4-dataverse-portal-collapsible-trigger-icon {
   @include with-theme {
     display: flex;
@@ -28,27 +37,33 @@
 }
 
 .okp4-dataverse-portal-collapsible-content {
-  position: relative;
-  z-index: 1;
   overflow: hidden;
-
-  &.dropup {
-    position: absolute;
+  
+  &.floating-up {
     top: 0;
-    width: 100%;
-    transform: translateY(calc(-100% - 8px));
+    transform: translateY(-100%);
   }
+  
+  &.floating-down {
+    top: 100%;
+  }
+
+  &.floating {
+    position: absolute;
+    z-index: 1;
+  }
+  
 }
 
 .okp4-dataverse-portal-collapsible-content[data-state='open'] {
-  animation: slideDown 300ms ease-out;
+  animation: expand 300ms ease-out;
 }
 
 .okp4-dataverse-portal-collapsible-content[data-state='closed'] {
-  animation: slideUp 300ms ease-out;
+  animation: collapse 300ms ease-out;
 }
 
-@keyframes slideDown {
+@keyframes expand {
   from {
     height: 0;
     width: var(--okp4-collapsible-trigger-initial-width);
@@ -60,7 +75,7 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes collapse {
   from {
     height: var(--radix-collapsible-content-height);
     width: var(--radix-collapsible-content-width);
