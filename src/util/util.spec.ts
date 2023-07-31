@@ -1,4 +1,4 @@
-import { getURILastElement, isError, isSubstringOf } from './util'
+import { getURILastElement, isError, isSubstringOf, escapeSparqlStr } from './util'
 import * as O from 'fp-ts/Option'
 
 type Data = {
@@ -69,6 +69,38 @@ describe('isError guard function', () => {
       test('Then, the result is as expected', () => {
         expect(result).toStrictEqual(expectedResult)
       })
+    })
+  })
+})
+
+describe('escapeSparqlStr', () => {
+  describe.each`
+    arg                    | expectedResult
+    ${undefined}           | ${''}
+    ${'\t'}                | ${'\\t'}
+    ${'\n'}                | ${'\\n'}
+    ${'\r'}                | ${'\\r'}
+    ${'\b'}                | ${'\\b'}
+    ${'\f'}                | ${'\\f'}
+    ${'"'}                 | ${'\\"'}
+    ${"'"}                 | ${"\\'"}
+    ${'\\'}                | ${'\\\\'}
+    ${'foo\nbar'}          | ${'foo\\nbar'}
+    ${'foo\n'}             | ${'foo\\n'}
+    ${'\nfoo'}             | ${'\\nfoo'}
+    ${'foo"bar'}           | ${'foo\\"bar'}
+    ${"foo'bar"}           | ${"foo\\'bar"}
+    ${'foo\\bar'}          | ${'foo\\\\bar'}
+    ${'foo\t\tbar\n\nbaz'} | ${'foo\\t\\tbar\\n\\nbaz'}
+    ${'/foo^?*bar$baz+'}   | ${'/foo^?*bar$baz+'}
+    ${'\\...🧪✌🏾'}         | ${'\\\\...🧪✌🏾'}
+    ${'\\u00a0'}           | ${'\\\\u00a0'}
+    ${'\u00a0'}            | ${' '}
+    ${'\u005Cbar'}         | ${'\\\\bar'}
+    ${'\\u005Cbar'}        | ${'\\\\u005Cbar'}
+  `('When given argument <"$arg">', ({ arg, expectedResult }) => {
+    it(`returns ${expectedResult}`, () => {
+      expect(escapeSparqlStr(arg)).toBe(expectedResult)
     })
   })
 })

@@ -10,7 +10,7 @@ import type {
   RetrieveDataverseResult,
   DataverseElementType
 } from '@/domain/dataverse/port'
-import { getURILastElement } from '@/util/util'
+import { escapeSparqlStr, getURILastElement } from '@/util/util'
 import { createAbortableFetch } from '@/util/fetch/fetch'
 import type { SparqlBinding, SparqlResult } from './dto'
 const { abortRequest, fetchWithAbort } = createAbortableFetch()
@@ -30,11 +30,13 @@ export const sparqlGateway: DataversePort = {
     const byPropertyFilter = (): string =>
       pipe(
         byProperty,
-        O.map(
+        O.match(
+          () => '',
           filter =>
-            `FILTER ( contains(lcase(str(?${filter.property})), "${filter.value.toLowerCase()}" ) )`
-        ),
-        O.getOrElse(() => '')
+            `FILTER ( contains(lcase(str(?${filter.property})), "${escapeSparqlStr(
+              filter.value.toLowerCase()
+            )}" ) )`
+        )
       )
 
     const byServiceCategoryFilter = (): string =>
