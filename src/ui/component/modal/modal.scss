@@ -9,21 +9,42 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); // Semi-transparent black overlay
+    background-color: rgba(0, 0, 0, 0.6000000238418579);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
 
-    .okp4-dataverse-portal-modal-content {
+    .okp4-dataverse-portal-modal-dialog {
       background: themed('modal-background');
-      overflow-y: auto;
       border-radius: 12px;
-      box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.06); //?
-      padding: 19px 33px;
-      width: 292px;
-      max-height: 655px;
-      color: themed('text');
-      @include columns-with-gap(30px);
+      box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.06);
+      padding: 30px 12px 19px 33px;
+      width: 313px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+
+      @include use-breakpoints(('mobile', 'tablet')) {
+        width: 307px;
+      }
+
+      .okp4-dataverse-portal-modal-wrapper {
+        max-height: 605px;
+        overflow-y: auto;
+
+        .okp4-dataverse-portal-modal-content {
+          color: themed('text');
+          @include columns-with-gap(30px);
+          padding-right: 14px;
+        }
+      }
+
+      .okp4-dataverse-portal-modal-button {
+        margin-top: 40px;
+        width: 120px;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { type ReactNode, type FC, useCallback } from 'react'
+import { type ReactNode, type FC, useCallback, useEffect } from 'react'
 import classNames from 'classnames'
 import { Button } from '@/ui/component/button/button'
 import './modal.scss'
@@ -16,17 +16,18 @@ type ModalProps = {
   }
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const Modal: FC<ModalProps> = ({
   isOpen,
   onClose,
   closeOnEsc = true,
-  isCentered = false,
+  isCentered = true,
   motionPreset,
   children,
   classes
 }) => {
   const handleKeyPress = useCallback(
-    (event: React.KeyboardEvent) => {
+    (event: { key: string }) => {
       if (closeOnEsc && event.key === 'Escape') {
         onClose()
       }
@@ -38,24 +39,49 @@ export const Modal: FC<ModalProps> = ({
     onClose()
   }, [onClose])
 
-  return isOpen ? (
-    <div
-      className={classNames('okp4-dataverse-portal-modal-main', classes?.overlay)}
-      onClick={handleOverlayClick}
-    >
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      handleKeyPress(event)
+    }
+
+    if (isOpen && closeOnEsc) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      if (closeOnEsc) {
+        document.removeEventListener('keydown', handleKeyDown)
+      }
+    }
+  }, [closeOnEsc, handleKeyPress, isOpen])
+
+  return (
+    isOpen && (
       <div
-        className={classNames(
-          'okp4-dataverse-portal-modal-content',
-          classes?.main,
-          isCentered,
-          motionPreset
-        )}
-        onKeyDown={handleKeyPress}
-        role="dialog" //?
+        className={classNames('okp4-dataverse-portal-modal-main', classes?.overlay)}
+        onClick={handleOverlayClick}
       >
-        {children}
-        <Button label="Close" onClick={onClose} variant="outlined-tertiary" />
+        <div
+          className={classNames(
+            'okp4-dataverse-portal-modal-dialog',
+            classes?.main,
+            isCentered,
+            motionPreset
+          )}
+          onKeyDown={handleKeyPress}
+          role="dialog" //?
+        >
+          <div className="okp4-dataverse-portal-modal-wrapper">
+            <div className="okp4-dataverse-portal-modal-content">{children}</div>
+          </div>
+          <Button
+            className="okp4-dataverse-portal-modal-button"
+            label="Close"
+            onClick={onClose}
+            variant="outlined-secondary"
+          />
+        </div>
       </div>
-    </div>
-  ) : null
+    )
+  )
 }
