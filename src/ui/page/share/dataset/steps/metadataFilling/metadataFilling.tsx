@@ -14,7 +14,7 @@ import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
 import { ShowResourceError } from '@/shared/error/resource'
 import { ShowPayloadError, type PayloadError } from '@/shared/error/payload'
-import { Field } from '@/ui/component/field/field'
+import { TextField } from '@/ui/component/field/textField'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
@@ -181,7 +181,7 @@ export const MetadataFilling: FC = () => {
         required: true,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id1}>
-            <Field
+            <TextField
               id={id1}
               label={t('share.metadataFilling.datasetTitle')}
               onChange={handleFieldValueChange(id1)}
@@ -201,7 +201,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling publisher" key={id2}>
-            <Field
+            <TextField
               id={id2}
               label={t('share.metadataFilling.publisher')}
               onChange={handleFieldValueChange(id2)}
@@ -221,7 +221,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling creator" key={id3}>
-            <Field
+            <TextField
               id={id3}
               label={t('share.metadataFilling.creator')}
               onChange={handleFieldValueChange(id3)}
@@ -241,7 +241,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling description" key={id4}>
-            <Field
+            <TextField
               id={id4}
               label={t('share.metadataFilling.description')}
               multiline
@@ -262,7 +262,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p>{t('share.metadataFilling.format')}</p>
-            <Field
+            <TextField
               id={id5}
               label={t('share.metadataFilling.formatSelection')}
               onChange={handleFieldValueChange(id5)}
@@ -282,7 +282,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p>{t('share.metadataFilling.license')}</p>
-            <Field
+            <TextField
               id={id6}
               label={t('share.metadataFilling.licenceSelection')}
               onChange={handleFieldValueChange(id6)}
@@ -302,7 +302,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p>{t('share.metadataFilling.topic')}</p>
-            <Field
+            <TextField
               id={id7}
               label={t('share.metadataFilling.topicSelection')}
               onChange={handleFieldValueChange(id7)}
@@ -322,7 +322,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p>{t('share.metadataFilling.geographicalCoverage')}</p>
-            <Field
+            <TextField
               id={id8}
               label={t('share.metadataFilling.geographicalCoverageSelection')}
               onChange={handleFieldValueChange(id8)}
@@ -360,7 +360,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
-            <Field
+            <TextField
               id={id10}
               label={'fee'}
               onChange={handleFieldValueChange(id10)}

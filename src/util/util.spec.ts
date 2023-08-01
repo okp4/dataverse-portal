@@ -1,12 +1,5 @@
 import * as O from 'fp-ts/Option'
-import {
-  getURILastElement,
-  isError,
-  isSubstringOf,
-  escapeSparqlStr,
-  omit,
-  updateItemById
-} from './util'
+import { getURILastElement, isError, isSubstringOf, escapeSparqlStr, updateItemById } from './util'
 import type { Item } from './util'
 
 type Data = {
@@ -162,30 +155,4 @@ describe('Given the updateItemById function,', () => {
       })
     }
   )
-})
-
-describe('omit function', () => {
-  it('returns an object with the specified properties omitted', () => {
-    const obj = { a: 1, b: 2, c: 3 }
-    const result = omit(obj, ['b', 'c'])
-    expect(result).toEqual({ a: 1 })
-  })
-
-  it('returns the same object when there are no properties to omit', () => {
-    const obj = { a: 1, b: 2, c: 3 }
-    const result = omit(obj, [])
-    expect(result).toEqual(obj)
-  })
-
-  it('returns an empty object when all properties are omitted', () => {
-    const obj = { a: 1, b: 2, c: 3 }
-    const result = omit(obj, ['a', 'b', 'c'])
-    expect(result).toEqual({})
-  })
-
-  it('does not mutate the original object', () => {
-    const obj = { a: 1, b: 2, c: 3 }
-    omit(obj, ['a'])
-    expect(obj).toEqual({ a: 1, b: 2, c: 3 })
-  })
 })

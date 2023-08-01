@@ -85,11 +85,3 @@ export const updateItemById = <T extends Item>(id: string, items: T[], updatedIt
     O.getOrElse(() => items)
   )
 }
-
-export const omit = <T extends string | number | symbol>(
-  props: Partial<Record<T, unknown>>,
-  omitProps: T[]
-): Partial<Record<T, unknown>> =>
-  Object.fromEntries(
-    Object.entries(props).filter(([key]) => !omitProps.includes(key as T))
-  ) as Partial<Record<T, unknown>>
