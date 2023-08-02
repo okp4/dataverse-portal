@@ -1,6 +1,7 @@
-import { type ReactNode, type FC, useCallback, useEffect } from 'react'
+import { type ReactNode, type FC, useCallback, useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import classNames from 'classnames'
-import { Button } from '@/ui/component/button/button'
+import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import './modal.scss'
 
 type ModalProps = {
@@ -8,7 +9,7 @@ type ModalProps = {
   onClose: () => void
   closeOnEsc?: boolean
   isCentered?: boolean
-  motionPreset?: string
+  motionPreset?: 'zoom' | 'none'
   children?: ReactNode
   classes?: {
     main?: string
@@ -22,66 +23,62 @@ export const Modal: FC<ModalProps> = ({
   onClose,
   closeOnEsc = true,
   isCentered = true,
-  motionPreset,
+  motionPreset = 'zoom',
   children,
   classes
 }) => {
-  const handleKeyPress = useCallback(
-    (event: { key: string }) => {
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
       if (closeOnEsc && event.key === 'Escape') {
         onClose()
       }
     },
-    [closeOnEsc, onClose]
+    [onClose, closeOnEsc]
   )
+
+  useOnKeyboard(handleEscape)
 
   const handleOverlayClick = useCallback(() => {
     onClose()
   }, [onClose])
 
+  const containerElement = document.getElementById('modal')
+
+  const prevIsOpenRef = useRef(isOpen)
+
+  const [isClosing, setIsClosing] = useState(false)
+
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      handleKeyPress(event)
+    if (prevIsOpenRef.current && !isOpen) {
+      setIsClosing(true)
+      const timeoutId = setTimeout(() => {
+        setIsClosing(false)
+      }, 200)
+      return () => clearTimeout(timeoutId)
     }
-
-    if (isOpen && closeOnEsc) {
-      document.addEventListener('keydown', handleKeyDown)
-    }
-
-    return () => {
-      if (closeOnEsc) {
-        document.removeEventListener('keydown', handleKeyDown)
-      }
-    }
-  }, [closeOnEsc, handleKeyPress, isOpen])
+    prevIsOpenRef.current = isOpen
+  }, [isOpen])
 
   return (
-    isOpen && (
+    isOpen &&
+    containerElement &&
+    createPortal(
       <div
         className={classNames('okp4-dataverse-portal-modal-main', classes?.overlay)}
         onClick={handleOverlayClick}
       >
         <div
-          className={classNames(
-            'okp4-dataverse-portal-modal-dialog',
-            classes?.main,
-            isCentered,
-            motionPreset
-          )}
-          onKeyDown={handleKeyPress}
-          role="dialog" //?
+          className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main, isCentered, {
+            zoom: motionPreset === 'zoom',
+            open: isOpen,
+            closing: isClosing
+          })}
+          role="dialog"
         >
-          <div className="okp4-dataverse-portal-modal-wrapper">
-            <div className="okp4-dataverse-portal-modal-content">{children}</div>
-          </div>
-          <Button
-            className="okp4-dataverse-portal-modal-button"
-            label="Close"
-            onClick={onClose}
-            variant="outlined-secondary"
-          />
+          <div className="okp4-dataverse-portal-modal-content">{children}</div>
         </div>
-      </div>
+      </div>,
+      containerElement
     )
   )
 }

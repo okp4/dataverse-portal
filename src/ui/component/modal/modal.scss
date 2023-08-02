@@ -20,31 +20,55 @@
       border-radius: 12px;
       box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.06);
       padding: 30px 12px 19px 33px;
-      width: 313px;
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 2;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 
-      @include use-breakpoints(('mobile', 'tablet')) {
-        width: 307px;
+      .okp4-dataverse-portal-modal-content {
+        @include columns-with-gap(30px);
+        color: themed('text');
+        padding-right: 14px;
       }
 
-      .okp4-dataverse-portal-modal-wrapper {
-        max-height: 605px;
-        overflow-y: auto;
-
-        .okp4-dataverse-portal-modal-content {
-          color: themed('text');
-          @include columns-with-gap(30px);
-          padding-right: 14px;
+      &.zoom {
+        &.open {
+          animation: zoomIn 2s ease-in-out;
         }
       }
 
-      .okp4-dataverse-portal-modal-button {
-        margin-top: 40px;
-        width: 120px;
+      &.zoom {
+        &:not(.open) {
+          animation: zoomOut 2s ease-in-out;
+        }
       }
     }
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
   }
 }
