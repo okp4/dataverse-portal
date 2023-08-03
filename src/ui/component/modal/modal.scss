@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 999;
 
     .okp4-dataverse-portal-modal-dialog {
       background: themed('modal-background');
@@ -24,51 +24,32 @@
       flex-direction: column;
       align-items: center;
       z-index: 2;
-      opacity: 1;
-      transform: scale(1);
-      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 
       .okp4-dataverse-portal-modal-content {
-        @include columns-with-gap(30px);
         color: themed('text');
         padding-right: 14px;
-      }
-
-      &.zoom {
-        &.open {
-          animation: zoomIn 2s ease-in-out;
-        }
-      }
-
-      &.zoom {
-        &:not(.open) {
-          animation: zoomOut 2s ease-in-out;
-        }
       }
     }
   }
 }
 
-@keyframes zoomIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.zoom-transition-enter .okp4-dataverse-portal-modal-dialog {
+  opacity: 0;
+  transform: scale(0.9);
 }
 
-@keyframes zoomOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.zoom-transition-enter-active .okp4-dataverse-portal-modal-dialog {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.2s;
+}
 
-  100% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
+.zoom-transition-exit .okp4-dataverse-portal-modal-dialog {
+  opacity: 1;
+}
+
+.zoom-transition-exit-active .okp4-dataverse-portal-modal-dialog {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.2s;
 }
