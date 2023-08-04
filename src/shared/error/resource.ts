@@ -23,22 +23,7 @@ export const ResourceNotFoundError = (resourceId: string) =>
 
 export type ResourceNotFoundError = ReturnType<typeof ResourceNotFoundError>
 
-export const ResourceWrongValueError = (value: unknown) =>
-  ({
-    _tag: 'resource-wrong-value',
-    value
-  } as const)
-
-/**
- *  Error when the value of a resource is inconsistent.
- */
-
-export type ResourceWrongValueError = ReturnType<typeof ResourceWrongValueError>
-
-export type ResourceError =
-  | ResourceAlreadyExistsError
-  | ResourceNotFoundError
-  | ResourceWrongValueError
+export type ResourceError = ResourceAlreadyExistsError | ResourceNotFoundError
 
 export const ShowResourceError: Show<ResourceError> = {
   show: (error: ResourceError): string => {
@@ -50,9 +35,6 @@ export const ShowResourceError: Show<ResourceError> = {
       }
       case 'resource-not-found': {
         return `Error ${error._tag}: Failed to handle resource with ID '${error.resourceId}' since it does not exist.`
-      }
-      case 'resource-wrong-value': {
-        return `Error ${error._tag}: Failed to handle resource with value '${error.value}' since it an inconsistent one.`
       }
     }
   }

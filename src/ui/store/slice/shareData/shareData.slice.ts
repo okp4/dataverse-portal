@@ -1,16 +1,13 @@
 /* eslint-disable max-lines-per-function */
 import { flow, pipe } from 'fp-ts/lib/function'
 import { contramap as eqContramap } from 'fp-ts/Eq'
-import {
-  ResourceAlreadyExistsError,
-  ResourceNotFoundError,
-  ResourceWrongValueError
-} from '@/shared/error/resource'
+import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error/resource'
 import { PayloadIsEmptyError } from '@/shared/error/payload'
 import type { StateCreator } from 'zustand'
 import type { IOEither } from 'fp-ts/IOEither'
 import type { IOOption } from 'fp-ts/IOOption'
 import type { Eq } from 'fp-ts/lib/Eq'
+import type { Show } from 'fp-ts/lib/Show'
 import type IO from 'fp-ts/IO'
 import * as A from 'fp-ts/Array'
 import * as IOE from 'fp-ts/IOEither'
@@ -80,6 +77,26 @@ export type SetFormItemValuePayload = {
   value: string | number | I18nStringPayload
 }
 
+export const FormItemWrongTypeError = (type: unknown) =>
+  ({
+    _tag: 'form-item-wrong-type',
+    type
+  } as const)
+
+export type FormItemWrongTypeError = ReturnType<typeof FormItemWrongTypeError>
+
+export type FormError = FormItemWrongTypeError
+
+export const ShowFormError: Show<FormError> = {
+  show: (error: FormError): string => {
+    switch (error._tag) {
+      case 'form-item-wrong-type': {
+        return `Error ${error._tag}: Failed to handle form item with type '${error.type}' since it is an inconsistent one.`
+      }
+    }
+  }
+}
+
 export type ShareDataSlice = {
   shareData: {
     form: Form
@@ -93,7 +110,7 @@ export type ShareDataSlice = {
     setFormItemValue: (
       id: string,
       value: string | number | I18nStringPayload
-    ) => IOEither<ResourceNotFoundError | PayloadIsEmptyError | ResourceWrongValueError, void>
+    ) => IOEither<ResourceNotFoundError | PayloadIsEmptyError | FormItemWrongTypeError, void>
   }
 }
 const eqFormItemId: Eq<FormItemId> = S.Eq
@@ -113,7 +130,7 @@ const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyE
 const emptyPayloadError = (payload: string | InitFormPayload): PayloadIsEmptyError =>
   PayloadIsEmptyError(payload)
 
-const wrongValueError = (value: unknown): ResourceWrongValueError => ResourceWrongValueError(value)
+const wrongValueError = (type: unknown): FormItemWrongTypeError => FormItemWrongTypeError(type)
 
 const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
@@ -235,12 +252,12 @@ const isI18nStringPredicate = (
 
 const updateFormItem =
   (updatedValue: number | string | I18nStringPayload) =>
-  (formItem: FormItem): E.Either<ResourceWrongValueError, FormItem> => {
+  (formItem: FormItem): E.Either<FormItemWrongTypeError, FormItem> => {
     switch (formItem.type) {
       case 'i18n-text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.id)),
+          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.type)),
           E.map(i18nValue => ({
             ...formItem,
             value: mapToI18NTextField(i18nValue, formItem.value)
@@ -251,7 +268,7 @@ const updateFormItem =
       case 'text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
           E.map(textValue => ({
             ...formItem,
             value: mapToTextFieldValue(textValue)
@@ -262,7 +279,7 @@ const updateFormItem =
       case 'numeric': {
         return pipe(
           updatedValue,
-          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.id)),
+          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.type)),
           E.map(numericValue => ({
             ...formItem,
             value: mapToNumericFieldValue(numericValue)
@@ -273,7 +290,7 @@ const updateFormItem =
       case 'tag': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
           E.map(tagValue => ({
             ...formItem,
             value: mapToTagFieldValue(tagValue, formItem.value)
@@ -284,7 +301,7 @@ const updateFormItem =
       case 'select': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
           E.map(selectValue => ({
             ...formItem,
             value: mapToSelectFieldValue(selectValue, formItem.value)

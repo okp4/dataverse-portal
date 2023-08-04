@@ -3,8 +3,7 @@ import { PayloadIsEmptyError, ShowPayloadError } from '@/shared/error/payload'
 import {
   ResourceAlreadyExistsError,
   ResourceNotFoundError,
-  ShowResourceError,
-  ResourceWrongValueError
+  ShowResourceError
 } from '@/shared/error/resource'
 import type {
   Form,
@@ -15,6 +14,8 @@ import type {
   ShareDataSlice,
   StorageServiceId
 } from '../shareData.slice'
+
+import { FormItemWrongTypeError, ShowFormError } from '../shareData.slice'
 import type { StoreApi } from 'zustand'
 import * as App from '@/ui/store/appStore'
 import { pipe } from 'fp-ts/lib/function'
@@ -47,7 +48,7 @@ type Data3 = {
   expectedIsEmptyPayloadError?: PayloadIsEmptyError
   expectedAlreadyExistsError?: ResourceAlreadyExistsError
   expectedNotFoundError?: ResourceNotFoundError
-  expectedWrongValueError?: ResourceWrongValueError
+  expectedWrongValueError?: FormItemWrongTypeError
 }
 
 type Store = Readonly<{
@@ -415,7 +416,7 @@ describe('Given the share data slice', () => {
     ${preloadedStateWithFormItem(selectItemID4)}        | ${removeSelectedFromSelectFormItemPayloadID4}          | ${[expectedSelectWithRemovedSelectionFormItem4]}        | ${O.some(expectedSelectWithRemovedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${ResourceWrongValueError(numericFormItemPayloadID5.id)}
+    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.type)}
   `(
     'Given a form item payload <$formItemPayload> ',
     ({
@@ -464,12 +465,12 @@ describe('Given the share data slice', () => {
 
           if (expectedWrongValueError) {
             const message = pipe(
-              setFormItemValueResult as E.Either<ResourceWrongValueError, void>,
-              E.getOrElseW(ShowResourceError.show)
+              setFormItemValueResult as E.Either<FormItemWrongTypeError, void>,
+              E.getOrElseW(ShowFormError.show)
             )
 
             expect(message).toStrictEqual(
-              `Error ${expectedWrongValueError._tag}: Failed to handle resource with value '${expectedWrongValueError.value}' since it an inconsistent one.`
+              `Error ${expectedWrongValueError._tag}: Failed to handle form item with type '${expectedWrongValueError.type}' since it is an inconsistent one.`
             )
           }
           expect(retrievedForm).toStrictEqual(expectedForm)

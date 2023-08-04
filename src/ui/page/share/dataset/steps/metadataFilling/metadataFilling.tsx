@@ -8,7 +8,7 @@ import * as O from 'fp-ts/Option'
 import * as N from 'fp-ts/number'
 import * as I from 'fp-ts/Identity'
 import { apply, flow, pipe } from 'fp-ts/lib/function'
-import type { InitFormPayload } from '@/ui/store/slice/shareData/shareData.slice'
+import type { FormError, InitFormPayload } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
 import { ShowResourceError } from '@/shared/error/resource'
@@ -71,17 +71,18 @@ type NotificationData = {
   type: NotificationType
 }
 
-const formErrorData = (error: ResourceError | PayloadError): NotificationData | void => {
+const formErrorData = (
+  error: ResourceError | PayloadError | FormError
+): NotificationData | void => {
   switch (error._tag) {
     case 'resource-not-found':
     case 'resource-already-exists':
+    case 'payload-is-empty':
+    case 'form-item-wrong-type':
       return {
         title: 'notification:error.problem',
         type: 'error'
       }
-    case 'payload-is-empty':
-    case 'resource-wrong-value':
-      return
   }
 }
 
