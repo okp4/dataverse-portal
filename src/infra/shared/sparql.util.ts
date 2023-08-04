@@ -3,8 +3,8 @@ import {
   NetworkRequestAbortedError,
   NetworkUnspecifiedError,
   isHTTPNetworkError
-} from '@/shared/network'
-import { ResponseToJsonSerializationError } from '@/shared/serialize'
+} from '@/shared/error/network'
+import { SerializationError } from '@/shared/error/serialize'
 import { createAbortableFetch } from '@/util/fetch/fetch'
 import * as TE from 'fp-ts/TaskEither'
 import * as O from 'fp-ts/Option'
@@ -63,11 +63,11 @@ export const fetchWithSparql = (
 
 export const serializeFetchResponse = <T>(
   response: Response
-): TE.TaskEither<ResponseToJsonSerializationError, T> =>
+): TE.TaskEither<SerializationError, T> =>
   TE.tryCatch(
     async () => response.json(),
     error => {
       const message = extractErrorMessage(error)
-      return ResponseToJsonSerializationError(message)
+      return SerializationError(message)
     }
   )

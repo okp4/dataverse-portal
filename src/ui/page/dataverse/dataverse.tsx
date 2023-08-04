@@ -32,8 +32,8 @@ import { DateRangeFilter } from '@/ui/view/dataverse/component/filters/dateRange
 import { FilterLabel } from '@/ui/view/dataverse/component/filters/filter'
 import './i18n/index'
 import './dataverse.scss'
-import { ShowNetworkError } from '@/shared/network'
-import { ShowSerializationError } from '@/shared/serialize'
+import { ShowNetworkError } from '@/shared/error/network'
+import { ShowSerializationError } from '@/shared/error/serialize'
 
 type DataverseItemType = 'service' | 'zone' | 'dataset'
 type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'

@@ -608,7 +608,6 @@ export const MetadataFilling: FC = () => {
   return (
     <div className="okp4-dataverse-portal-share-data-metadata-filling-container">
       <h2>{t('share.metadataFilling.stepTitle')}</h2>
-
       <div className="okp4-dataverse-portal-share-data-metadata-filling-description">
         <h3>{t('share.metadataFilling.stepDescription')}</h3>
       </div>

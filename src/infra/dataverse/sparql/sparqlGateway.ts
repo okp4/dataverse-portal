@@ -18,8 +18,8 @@ import type {
   HTTPNetworkError,
   NetworkUnspecifiedError,
   NetworkRequestAbortedError
-} from '@/shared/network'
-import type { ResponseToJsonSerializationError } from '@/shared/serialize'
+} from '@/shared/error/network'
+import type { SerializationError } from '@/shared/error/serialize'
 const { abortRequest } = createAbortableFetch()
 
 export const sparqlGateway: DataversePort = {
@@ -29,10 +29,7 @@ export const sparqlGateway: DataversePort = {
     offset: number,
     { byType, byProperty, byServiceCategory }: RetrieveDataverseQueryFilters
   ): TE.TaskEither<
-    | HTTPNetworkError
-    | NetworkRequestAbortedError
-    | NetworkUnspecifiedError
-    | ResponseToJsonSerializationError,
+    HTTPNetworkError | NetworkRequestAbortedError | NetworkUnspecifiedError | SerializationError,
     RetrieveDataverseResult
   > => {
     const buildStrExpression = (filter: DataverseElementType): string => `?type = core:${filter}`

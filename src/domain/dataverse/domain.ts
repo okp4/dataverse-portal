@@ -23,7 +23,7 @@ import type {
 } from './command'
 import type { ByTypeQueryFilter, DataverseQuery } from './valueObject'
 import type { Query } from './query'
-import { isNetworkRequestAbortedError } from '@/shared/network'
+import { isNetworkRequestAbortedError } from '@/shared/error/network'
 
 export type State = {
   data: Dataverse & DataverseQuery
@@ -183,8 +183,8 @@ export const storeFactory = (
                     )
                   )
                 ),
-                TE.chain(r =>
-                  TE.fromIO(() =>
+                TE.chainIOK(
+                  r => () =>
                     set(state => ({
                       data: {
                         ...state.data,
@@ -193,7 +193,6 @@ export const storeFactory = (
                         dataverse: pipe(data.dataverse, A.concat(r.data))
                       }
                     }))
-                  )
                 )
               )
             )
