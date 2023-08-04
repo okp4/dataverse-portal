@@ -1,4 +1,8 @@
-import type { HTTPNetworkError, NetworkUnspecifiedError } from '@/shared/error/network'
+import type {
+  HTTPNetworkError,
+  NetworkRequestAbortedError,
+  NetworkUnspecifiedError
+} from '@/shared/error/network'
 import type { SerializationError } from '@/shared/error/serialize'
 import type { TaskEither } from 'fp-ts/TaskEither'
 import type { VocabularyElement } from './entity'
@@ -11,6 +15,7 @@ export type RetrieveVocabularyError =
   | HTTPNetworkError
   | NetworkUnspecifiedError
   | SerializationError
+  | NetworkRequestAbortedError
 
 export type VocabularyPort = {
   retrieveVocabulary: (

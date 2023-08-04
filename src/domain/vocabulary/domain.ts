@@ -11,7 +11,6 @@ import * as RTE from 'fp-ts/ReaderTaskEither'
 import * as O from 'fp-ts/Option'
 import type { Query, VocabularyDescriptorType } from './query'
 import { isDevMode } from '@/util/env.util'
-import * as I from 'fp-ts/Identity'
 import * as IOO from 'fp-ts/IOOption'
 import * as R from 'fp-ts/Record'
 import * as A from 'fp-ts/Array'
@@ -59,7 +58,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
           ),
         retrieveVocabularyByType: (type: VocabularyType) =>
           pipe(
-            RTE.asks(I.of<Deps>),
+            RTE.ask<Deps>(),
             RTE.flatMap(deps =>
               pipe(
                 RTE.fromIO(() =>
@@ -73,7 +72,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                     }
                   }))
                 ),
-                RTE.chain(() => RTE.fromIO(() => get().data.byType)),
+                RTE.chainIOK(() => () => get().data.byType),
                 RTE.chainTaskEitherK(byType =>
                   deps.vocabularyGateway.retrieveVocabulary(
                     type,

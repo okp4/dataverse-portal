@@ -659,7 +659,7 @@ const Dataverse = (): JSX.Element => {
       switch (error._tag) {
         case 'network-request-aborted':
           break
-        case 'json-response-serialization':
+        case 'serialization':
           console.error(ShowSerializationError.show(error))
           return dispatchNotification(message)
         case 'network-http':

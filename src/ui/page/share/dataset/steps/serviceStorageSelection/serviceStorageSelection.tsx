@@ -28,8 +28,8 @@ import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import '@/ui/page/share/i18n/index'
 import './serviceStorageSelection.scss'
 import type { LoadDataverseError } from '@/domain/dataverse/command'
-import { ShowNetworkError } from '@/shared/network'
-import { ShowSerializationError } from '@/shared/serialize'
+import { ShowNetworkError } from '@/shared/error/network'
+import { ShowSerializationError } from '@/shared/error/serialize'
 
 export const getResourceDetails = (id: string): DataverseItemDetails | undefined =>
   dataverseItems.find(dataverseItem => dataverseItem.id === id)
@@ -87,7 +87,7 @@ export const ServiceStorageSelection: FC = () => {
       switch (error._tag) {
         case 'network-request-aborted':
           break
-        case 'json-response-serialization':
+        case 'serialization':
           console.error(ShowSerializationError.show(error))
           return dispatchNotification(message)
         case 'network-http':

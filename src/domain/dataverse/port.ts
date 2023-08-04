@@ -5,8 +5,8 @@ import type {
   HTTPNetworkError,
   NetworkRequestAbortedError,
   NetworkUnspecifiedError
-} from '@/shared/network'
-import type { ResponseToJsonSerializationError } from '@/shared/serialize'
+} from '@/shared/error/network'
+import type { SerializationError } from '@/shared/error/serialize'
 
 export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
@@ -35,10 +35,7 @@ export type DataversePort = {
     offset: number,
     filters: RetrieveDataverseQueryFilters
   ) => TE.TaskEither<
-    | HTTPNetworkError
-    | NetworkUnspecifiedError
-    | NetworkRequestAbortedError
-    | ResponseToJsonSerializationError,
+    HTTPNetworkError | NetworkUnspecifiedError | NetworkRequestAbortedError | SerializationError,
     RetrieveDataverseResult
   >
   cancelDataverseRetrieval: () => void

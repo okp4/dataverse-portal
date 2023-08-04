@@ -1,6 +1,10 @@
 import type { ReaderTaskEither } from 'fp-ts/ReaderTaskEither'
 import type { VocabularyPort } from './port'
-import type { HTTPNetworkError, NetworkUnspecifiedError } from '@/shared/error/network'
+import type {
+  HTTPNetworkError,
+  NetworkRequestAbortedError,
+  NetworkUnspecifiedError
+} from '@/shared/error/network'
 import type { SerializationError } from '@/shared/error/serialize'
 
 export type Deps = {
@@ -15,6 +19,7 @@ export type RetrieveVocabularyError =
   | HTTPNetworkError
   | NetworkUnspecifiedError
   | SerializationError
+  | NetworkRequestAbortedError
 
 export type Command = {
   retrieveVocabularyByType: (

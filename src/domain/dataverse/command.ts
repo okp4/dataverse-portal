@@ -5,8 +5,8 @@ import type {
   HTTPNetworkError,
   NetworkRequestAbortedError,
   NetworkUnspecifiedError
-} from '@/shared/network'
-import type { ResponseToJsonSerializationError } from '@/shared/serialize'
+} from '@/shared/error/network'
+import type { SerializationError } from '@/shared/error/serialize'
 
 type FilterProperty = 'title'
 
@@ -23,7 +23,7 @@ export type ByServiceCategoryFilter = Option<ServiceCategoryVocab>
 export type LoadDataverseError =
   | HTTPNetworkError
   | NetworkUnspecifiedError
-  | ResponseToJsonSerializationError
+  | SerializationError
   | NetworkRequestAbortedError
 
 export type Command = {

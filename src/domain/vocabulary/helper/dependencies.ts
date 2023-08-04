@@ -100,9 +100,9 @@ export const withLimit =
     )
 
 export const createVocabularyDependenciesWithOptions = (
-  ...configurators: Option[]
+  ...options: Option[]
 ): E.Either<VocabularyDependenciesError, Deps> =>
-  configurators.reduce(
+  options.reduce(
     (acc: E.Either<VocabularyDependenciesError, Deps>, cur: Option) => pipe(acc, E.chain(cur)),
     E.right(Object.create(null))
   )
