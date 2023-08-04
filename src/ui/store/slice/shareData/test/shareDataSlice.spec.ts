@@ -1,7 +1,20 @@
 /* eslint-disable max-lines-per-function */
 import { PayloadIsEmptyError, ShowPayloadError } from '@/shared/error/payload'
-import { ResourceAlreadyExistsError, ShowResourceError } from '@/shared/error/resource'
-import type { Form, InitFormPayload, ShareDataSlice, StorageServiceId } from '../shareData.slice'
+import {
+  ResourceAlreadyExistsError,
+  ResourceNotFoundError,
+  ShowResourceError,
+  ResourceWrongValueError
+} from '@/shared/error/resource'
+import type {
+  Form,
+  FormItem,
+  I18nString,
+  InitFormPayload,
+  SetFormItemValuePayload,
+  ShareDataSlice,
+  StorageServiceId
+} from '../shareData.slice'
 import type { StoreApi } from 'zustand'
 import * as App from '@/ui/store/appStore'
 import { pipe } from 'fp-ts/lib/function'
@@ -25,6 +38,18 @@ type Data2 = {
   preloadedState?: AppOptions
 }
 
+type Data3 = {
+  preloadedState?: AppOptions
+  form: Form
+  formItemPayload: SetFormItemValuePayload
+  expectedForm: Form
+  expectedFormItem: FormItem
+  expectedIsEmptyPayloadError?: PayloadIsEmptyError
+  expectedAlreadyExistsError?: ResourceAlreadyExistsError
+  expectedNotFoundError?: ResourceNotFoundError
+  expectedWrongValueError?: ResourceWrongValueError
+}
+
 type Store = Readonly<{
   store: StoreApi<ShareDataSlice>
 }>
@@ -36,41 +61,136 @@ const initStore = (initialState?: AppOptions): Store => {
 
 // eslint-disable-next-line max-lines-per-function
 describe('Given the share data slice', () => {
-  // init form payloads
-  const initialFormPayload1: InitFormPayload = [
-    { id: '1', title: 'title', required: true, type: 'text', value: O.none }
-  ]
-
-  const initialFormPayload2: InitFormPayload = [
-    { id: '1', title: 'title', required: true, type: 'text', value: O.none },
-    { id: '1', title: 'author', required: true, type: 'text', value: O.none }
-  ]
-
-  // expected forms
-  const expectedForm1: Form = initialFormPayload1
-
-  // already existant form
-  const existantForm1: Form = [
-    {
-      id: '1',
-      title: 'fee',
-      required: true,
-      type: 'numeric',
-      value: O.some(3)
-    }
-  ]
-
-  // preloaded states
-  const preloadedStateWithForm: AppOptions = {
-    initialState: {
-      shareData: {
-        initialState: {
-          data: { form: existantForm1, storageServiceId: O.none }
-        }
-      }
-    }
+  // existant form items
+  const numericItemID1: FormItem = {
+    id: '1',
+    title: 'fee',
+    required: true,
+    type: 'numeric',
+    value: O.some(3)
   }
 
+  const textItemID2: FormItem = {
+    id: '2',
+    title: 'author',
+    required: false,
+    type: 'text',
+    value: O.some('okp4')
+  }
+
+  const emptyI18nTextItemID3: FormItem = {
+    id: '3',
+    title: 'description',
+    required: false,
+    type: 'i18n-text',
+    value: O.none
+  }
+
+  const i18nTextItemID3: FormItem = {
+    id: '3',
+    title: 'description',
+    required: false,
+    type: 'i18n-text',
+    value: O.some([
+      { language: 'en', value: 'Some text' },
+      { language: 'fr', value: 'Du texte' }
+    ])
+  }
+
+  const emptySelectItemID4: FormItem = {
+    id: '4',
+    title: 'country',
+    required: false,
+    type: 'select',
+    value: O.none
+  }
+
+  const selectItemID4: FormItem = {
+    id: '4',
+    title: 'country',
+    required: false,
+    type: 'select',
+    value: O.some(['sp', 'in'])
+  }
+
+  const tagItemID5: FormItem = {
+    id: '5',
+    title: 'tags',
+    required: false,
+    type: 'tag',
+    value: O.some(['Agriculture', 'Open Data', 'Dataviz'])
+  }
+
+  // init form payloads
+  const initialFormPayload1: InitFormPayload = [textItemID2]
+
+  const initialFormWithSameFormItemsIdsPayload: InitFormPayload = [
+    textItemID2,
+    { id: '2', title: 'author', required: true, type: 'text', value: O.none }
+  ]
+
+  // form items payload
+  const numericFormItemPayloadID1: SetFormItemValuePayload = {
+    id: '1',
+    value: 6
+  }
+
+  const numericFormItemPayloadID1WithZeroValue: SetFormItemValuePayload = {
+    id: '1',
+    value: 0
+  }
+
+  const numericFormItemPayloadID20: SetFormItemValuePayload = {
+    id: '20',
+    value: 6
+  }
+
+  const textFormItemPayloadID2: SetFormItemValuePayload = {
+    id: '2',
+    value: 'new text entered'
+  }
+
+  const i18nTextFormItemPayloadWithUpdatedTextID3: SetFormItemValuePayload = {
+    id: '3',
+    value: { language: 'en', value: 'Some new updated text' }
+  }
+
+  const i18nTextFormItemPayloadWithNewLanguageID3: SetFormItemValuePayload = {
+    id: '3',
+    value: { language: 'it', value: 'del nuovo testo' }
+  }
+
+  const i18nTextFormItemPayloadWithEmptyStringOnLanguageID3: SetFormItemValuePayload = {
+    id: '3',
+    value: { language: 'fr', value: '' }
+  }
+
+  const addSelectedFormItemPayloadID4: SetFormItemValuePayload = {
+    id: '4',
+    value: 'de'
+  }
+
+  const removeSelectedFromSelectFormItemPayloadID4: SetFormItemValuePayload = {
+    id: '4',
+    value: 'sp'
+  }
+
+  const addTagFormItemPayloadID5: SetFormItemValuePayload = {
+    id: '5',
+    value: 'RPG'
+  }
+
+  const removeTagFormItemPayloadID5: SetFormItemValuePayload = {
+    id: '5',
+    value: 'Open Data'
+  }
+
+  const numericFormItemPayloadID5: SetFormItemValuePayload = {
+    id: '5',
+    value: 6
+  }
+
+  // preloaded states
   const preloadedStateWithServicestorageId1: AppOptions = {
     initialState: {
       shareData: {
@@ -81,12 +201,96 @@ describe('Given the share data slice', () => {
     }
   }
 
+  const preloadedStateWithFormItem = (formItem: FormItem): AppOptions => ({
+    initialState: {
+      shareData: {
+        initialState: {
+          data: { form: [formItem], storageServiceId: O.none }
+        }
+      }
+    }
+  })
+
+  // expected formItem
+  const expectedNumericFormItem1: FormItem = {
+    id: '1',
+    title: 'fee',
+    required: true,
+    type: 'numeric',
+    value: O.some(6)
+  }
+
+  const expectedNumericFormItem1WithZeroValue: FormItem = {
+    id: '1',
+    title: 'fee',
+    required: true,
+    type: 'numeric',
+    value: O.some(0)
+  }
+
+  const expectedTextFormItem2: FormItem = {
+    ...textItemID2,
+    value: O.some(textFormItemPayloadID2.value as string)
+  }
+
+  const expectedI18nTextWithUpdatedTextFormItem3: FormItem = {
+    ...i18nTextItemID3,
+    value: O.some([
+      i18nTextFormItemPayloadWithUpdatedTextID3.value as I18nString,
+      { language: 'fr', value: 'Du texte' }
+    ])
+  }
+
+  const expectedI18nTextWithNewLanguageFormItem3: FormItem = {
+    ...i18nTextItemID3,
+    value: O.some([
+      { language: 'en', value: 'Some text' },
+      { language: 'fr', value: 'Du texte' },
+      i18nTextFormItemPayloadWithNewLanguageID3.value as I18nString
+    ])
+  }
+
+  const expectedI18nTextWithEMptyStringOnLanguageFormItem3: FormItem = {
+    ...i18nTextItemID3,
+    value: O.some([{ language: 'en', value: 'Some text' }])
+  }
+
+  const expectedI18nTextWithOneLanguageFormItem3: FormItem = {
+    ...i18nTextItemID3,
+    value: O.some([{ language: 'it', value: 'del nuovo testo' }])
+  }
+
+  const expectedSelectWithOneSelectionFormItem4: FormItem = {
+    ...selectItemID4,
+    value: O.some(['de'])
+  }
+
+  const expectedSelectWithUpdatedSelectionFormItem4: FormItem = {
+    ...selectItemID4,
+    value: O.some(['sp', 'in', 'de'])
+  }
+
+  const expectedSelectWithRemovedSelectionFormItem4: FormItem = {
+    ...selectItemID4,
+    value: O.some(['in'])
+  }
+
+  const expectedTagsWithAdditionalTagFormItem5: FormItem = {
+    ...tagItemID5,
+    value: O.some(['Agriculture', 'Open Data', 'Dataviz', 'RPG'])
+  }
+
+  const expectedTagsWithoutRemovedTagFormItem5: FormItem = {
+    ...tagItemID5,
+    value: O.some(['Agriculture', 'Dataviz'])
+  }
+
   describe.each`
-    preloadedState            | initialFormPayload     | expectedForm     | expectIsFormInitialized | expectedIsEmptyPayloadError | expectedAlreadyExistsError
-    ${[]}                     | ${[]}                  | ${[]}            | ${false}                | ${PayloadIsEmptyError([])}  | ${undefined}
-    ${[]}                     | ${initialFormPayload2} | ${[]}            | ${false}                | ${undefined}                | ${ResourceAlreadyExistsError(['1', '1'])}
-    ${[]}                     | ${initialFormPayload1} | ${expectedForm1} | ${true}                 | ${undefined}                | ${undefined}
-    ${preloadedStateWithForm} | ${initialFormPayload1} | ${expectedForm1} | ${true}                 | ${undefined}                | ${ResourceAlreadyExistsError(['1'])}
+    preloadedState                                | initialFormPayload                        | expectedForm        | expectIsFormInitialized | expectedIsEmptyPayloadError | expectedAlreadyExistsError
+    ${[]}                                         | ${[]}                                     | ${[]}               | ${false}                | ${PayloadIsEmptyError([])}  | ${undefined}
+    ${[]}                                         | ${initialFormWithSameFormItemsIdsPayload} | ${[]}               | ${false}                | ${undefined}                | ${ResourceAlreadyExistsError(['2', '2'])}
+    ${[]}                                         | ${initialFormPayload1}                    | ${[textItemID2]}    | ${true}                 | ${undefined}                | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)} | ${[numericItemID1]}                       | ${[numericItemID1]} | ${true}                 | ${undefined}                | ${ResourceAlreadyExistsError(['1'])}
   `(
     'Given an initial form payload <$initialFormPayload>',
     ({
@@ -103,6 +307,8 @@ describe('Given the share data slice', () => {
         test(`Then expect initialized form to be ${JSON.stringify(expectedForm)}`, () => {
           if (initialFormPayload) {
             const result = store.getState().shareData.initForm(initialFormPayload)()
+            expect(result).toBeEither()
+
             const { form, isFormInitialized } = store.getState().shareData
 
             if (expectedIsEmptyPayloadError) {
@@ -168,6 +374,8 @@ describe('Given the share data slice', () => {
         test(`Then, we expect service storage id to be ${JSON.stringify(
           expectedServiceStorageId
         )}`, () => {
+          expect(setStorageIdResult).toBeEither()
+
           if (expectedIsEmptyPayloadError) {
             expect(setStorageIdResult).toStrictEqualLeft(expectedIsEmptyPayloadError)
             const message = pipe(
@@ -185,6 +393,88 @@ describe('Given the share data slice', () => {
             expect(setStorageIdResult).toBeRight()
           }
           expect(serviceStorageId).toStrictEqual(expectedServiceStorageId)
+        })
+      })
+    }
+  )
+
+  describe.each`
+    preloadedState                                      | formItemPayload                                        | expectedForm                                            | expectedFormItem                                              | expectedIsEmptyPayloadError | expectedNotFoundError                                   | expectedWrongValueError
+    ${undefined}                                        | ${numericFormItemPayloadID1}                           | ${[]}                                                   | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID1.id)}  | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1WithZeroValue}              | ${[expectedNumericFormItem1WithZeroValue]}              | ${O.some(expectedNumericFormItem1WithZeroValue)}              | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1}                           | ${[expectedNumericFormItem1]}                           | ${O.some(expectedNumericFormItem1)}                           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}       | ${{ id: '', value: 10 }}                               | ${[numericItemID1]}                                     | ${O.none}                                                     | ${PayloadIsEmptyError('')}  | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID20}                          | ${[numericItemID1]}                                     | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID20.id)} | ${undefined}
+    ${preloadedStateWithFormItem(textItemID2)}          | ${textFormItemPayloadID2}                              | ${[expectedTextFormItem2]}                              | ${O.some(expectedTextFormItem2)}                              | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(emptyI18nTextItemID3)} | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithOneLanguageFormItem3]}           | ${O.some(expectedI18nTextWithOneLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithUpdatedTextID3}           | ${[expectedI18nTextWithUpdatedTextFormItem3]}           | ${O.some(expectedI18nTextWithUpdatedTextFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithNewLanguageFormItem3]}           | ${O.some(expectedI18nTextWithNewLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithEmptyStringOnLanguageID3} | ${[expectedI18nTextWithEMptyStringOnLanguageFormItem3]} | ${O.some(expectedI18nTextWithEMptyStringOnLanguageFormItem3)} | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(emptySelectItemID4)}   | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithOneSelectionFormItem4]}            | ${O.some(expectedSelectWithOneSelectionFormItem4)}            | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(selectItemID4)}        | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithUpdatedSelectionFormItem4]}        | ${O.some(expectedSelectWithUpdatedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(selectItemID4)}        | ${removeSelectedFromSelectFormItemPayloadID4}          | ${[expectedSelectWithRemovedSelectionFormItem4]}        | ${O.some(expectedSelectWithRemovedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}           | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}           | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${ResourceWrongValueError(numericFormItemPayloadID5.id)}
+  `(
+    'Given a form item payload <$formItemPayload> ',
+    ({
+      preloadedState,
+      formItemPayload,
+      expectedForm,
+      expectedFormItem,
+      expectedNotFoundError,
+      expectedIsEmptyPayloadError,
+      expectedWrongValueError
+    }: Data3) => {
+      describe('When calling set form item method with this payload', () => {
+        const { store } = initStore(preloadedState)
+        const setFormItemValueResult = store
+          .getState()
+          .shareData.setFormItemValue(formItemPayload.id, formItemPayload.value)()
+        const retrievedForm = store.getState().shareData.form
+        const retrievedFormitem = store.getState().shareData.formItemById(formItemPayload.id)()
+
+        test(`Then, we expect form item to be  ${JSON.stringify(expectedFormItem)}`, () => {
+          expect(setFormItemValueResult).toBeEither()
+
+          if (expectedNotFoundError) {
+            const message = pipe(
+              setFormItemValueResult as E.Either<ResourceNotFoundError, void>,
+              E.getOrElseW(ShowResourceError.show)
+            )
+
+            expect(message).toStrictEqual(
+              `Error ${expectedNotFoundError._tag}: Failed to handle resource with ID '${expectedNotFoundError.resourceId}' since it does not exist.`
+            )
+          }
+          if (expectedIsEmptyPayloadError) {
+            const message = pipe(
+              setFormItemValueResult as E.Either<PayloadIsEmptyError, void>,
+              E.getOrElseW(ShowPayloadError.show)
+            )
+            expect(message).toStrictEqual(
+              `Error ${
+                expectedIsEmptyPayloadError._tag
+              }: Failed to execute command with an empty payload: ${JSON.stringify(
+                expectedIsEmptyPayloadError.payload
+              )}.`
+            )
+          }
+
+          if (expectedWrongValueError) {
+            const message = pipe(
+              setFormItemValueResult as E.Either<ResourceWrongValueError, void>,
+              E.getOrElseW(ShowResourceError.show)
+            )
+
+            expect(message).toStrictEqual(
+              `Error ${expectedWrongValueError._tag}: Failed to handle resource with value '${expectedWrongValueError.value}' since it an inconsistent one.`
+            )
+          }
+          expect(retrievedForm).toStrictEqual(expectedForm)
+          expect(retrievedFormitem).toBeOption()
+          expect(retrievedFormitem).toStrictEqual(expectedFormItem)
         })
       })
     }
