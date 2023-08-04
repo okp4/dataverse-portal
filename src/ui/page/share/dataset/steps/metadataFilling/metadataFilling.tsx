@@ -4,28 +4,24 @@ import { useTranslation } from 'react-i18next'
 import * as IOO from 'fp-ts/IOOption'
 import * as IOE from 'fp-ts/IOEither'
 import * as S from 'fp-ts/string'
-import * as A from 'fp-ts/Array'
+import * as O from 'fp-ts/Option'
+import * as N from 'fp-ts/number'
+import * as I from 'fp-ts/Identity'
 import { apply, flow, pipe } from 'fp-ts/lib/function'
-import type {
-  FormItem,
-  FormItemType,
-  FormItemValue,
-  InitFormPayload
-} from '@/ui/store/slice/shareData/shareData.slice'
+import type { InitFormPayload } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
 import { ShowResourceError } from '@/shared/error/resource'
+import { ShowPayloadError, type PayloadError } from '@/shared/error/payload'
 import { Field } from '@/ui/component/field/field'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
 
-type DatasetFormItem = {
+type FormItemBaseProps = {
   id: string
-  type: FormItemType
-  label: string
-  value: FormItemValue
+  title: string
   render: () => JSX.Element
   required?: boolean
   style?: {
@@ -34,6 +30,40 @@ type DatasetFormItem = {
   }
 }
 
+type I18nString = {
+  language: string
+  value: string
+}
+
+type I18nTextFieldValue = I18nString[]
+
+type I18NTextField = FormItemBaseProps & {
+  type: 'i18n-text'
+  value: O.Option<I18nTextFieldValue>
+}
+
+export type TextField = FormItemBaseProps & {
+  type: 'text'
+  value: O.Option<string>
+}
+
+type NumericField = FormItemBaseProps & {
+  type: 'numeric'
+  value: O.Option<number>
+}
+
+type TagField = FormItemBaseProps & {
+  type: 'tag'
+  value: O.Option<string[]>
+}
+
+type SelectPicker = FormItemBaseProps & {
+  type: 'select'
+  value: O.Option<string[]>
+}
+
+type DatasetFormItem = TextField | NumericField | TagField | SelectPicker | I18NTextField
+
 type DatasetForm = DatasetFormItem[]
 
 type NotificationData = {
@@ -41,7 +71,7 @@ type NotificationData = {
   type: NotificationType
 }
 
-const formErrorData = (error: ResourceError): NotificationData => {
+const formErrorData = (error: ResourceError | PayloadError): NotificationData | void => {
   switch (error._tag) {
     case 'resource-not-found':
     case 'resource-already-exists':
@@ -49,6 +79,9 @@ const formErrorData = (error: ResourceError): NotificationData => {
         title: 'notification:error.problem',
         type: 'error'
       }
+    case 'payload-is-empty':
+    case 'resource-wrong-value':
+      return
   }
 }
 
@@ -66,47 +99,58 @@ export const MetadataFilling: FC = () => {
 
   const handleFieldValueChange = useCallback(
     (id: string) => (value: string) => {
-      setFormItemValue({ id, value })()
+      setFormItemValue(id, value)()
     },
     [setFormItemValue]
   )
 
-  const tagsFieldValue = useCallback(
-    (id: string): string[] =>
-      flow(
+  const handleNumericValueChange = useCallback(
+    (id: string) => (value: string) => {
+      !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
+    },
+    [setFormItemValue]
+  )
+
+  const numericalFieldValue = (v: DatasetFormItem['value']) => (): string =>
+    pipe(
+      v,
+      O.flatMap(O.fromPredicate(N.isNumber)),
+      O.fold(
+        () => '',
+        n => n.toString()
+      )
+    )
+
+  const singleValueField = useCallback(
+    (id: string): string =>
+      pipe(
+        id,
         formItemById,
-        IOO.map(({ value }: FormItem) => value),
-        IOO.flatMap(IOO.fromPredicate(Array.isArray)),
-        IOO.getOrElseW(() => () => []),
+        IOO.map(({ value }) => value),
+        IOO.match(
+          () => '',
+          v => pipe(v, O.chain(O.fromPredicate(S.isString)), O.getOrElse(numericalFieldValue(v)))
+        ),
         apply(null)
-      )(id),
+      ),
     [formItemById]
   )
 
-  const addTag = useCallback(
-    (id: string) => (value: string) => {
-      setFormItemValue({ id, value: A.append(value)(tagsFieldValue(id)) })()
-    },
-    [setFormItemValue, tagsFieldValue]
-  )
-
-  const removeTag = useCallback(
-    (id: string) => (value: string) => {
-      const filterPredicate = (tag: string): boolean => tag !== value
-      setFormItemValue({ id, value: A.filter(filterPredicate)(tagsFieldValue(id)) })()
-    },
-    [setFormItemValue, tagsFieldValue]
-  )
-
-  const formItemFieldValue = useCallback(
-    (id: string): string =>
-      flow(
+  const multiValuesField = useCallback(
+    (id: string): string[] =>
+      pipe(
+        id,
         formItemById,
-        IOO.map(({ value }: FormItem) => value),
-        IOO.flatMap(IOO.fromPredicate(S.isString)),
-        IOO.getOrElse(() => () => ''),
+        IOO.map(({ value }) => value),
+        IOO.match(
+          () => [],
+          flow(
+            O.flatMap(O.fromPredicate(Array.isArray)),
+            O.match(() => [], I.of)
+          )
+        ),
         apply(null)
-      )(id),
+      ),
     [formItemById]
   )
 
@@ -121,12 +165,13 @@ export const MetadataFilling: FC = () => {
     const id8 = 'input-field-8'
     const id9 = 'input-field-9'
     const id10 = 'input-field-10'
+
     return [
       {
         id: id1,
         type: 'text',
-        label: 'title',
-        value: '',
+        title: 'title',
+        value: O.none,
         required: true,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id1}>
@@ -135,7 +180,7 @@ export const MetadataFilling: FC = () => {
               label={t('share.metadataFilling.datasetTitle')}
               onChange={handleFieldValueChange(id1)}
               required
-              value={formItemFieldValue(id1)}
+              value={singleValueField(id1)}
             />
           </div>
         ),
@@ -146,15 +191,15 @@ export const MetadataFilling: FC = () => {
       {
         id: id2,
         type: 'text',
-        label: 'publisher',
-        value: '',
+        title: 'publisher',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling publisher" key={id2}>
             <Field
               id={id2}
               label={t('share.metadataFilling.publisher')}
               onChange={handleFieldValueChange(id2)}
-              value={formItemFieldValue(id2)}
+              value={singleValueField(id2)}
             />
           </div>
         ),
@@ -166,15 +211,15 @@ export const MetadataFilling: FC = () => {
       {
         id: id3,
         type: 'text',
-        label: 'creator',
-        value: '',
+        title: 'creator',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling creator" key={id3}>
             <Field
               id={id3}
               label={t('share.metadataFilling.creator')}
               onChange={handleFieldValueChange(id3)}
-              value={formItemFieldValue(id3)}
+              value={singleValueField(id3)}
             />
           </div>
         ),
@@ -186,8 +231,8 @@ export const MetadataFilling: FC = () => {
       {
         id: id4,
         type: 'text',
-        label: 'description',
-        value: '',
+        title: 'description',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling description" key={id4}>
             <Field
@@ -195,7 +240,7 @@ export const MetadataFilling: FC = () => {
               label={t('share.metadataFilling.description')}
               multiline
               onChange={handleFieldValueChange(id4)}
-              value={formItemFieldValue(id4)}
+              value={singleValueField(id4)}
             />
           </div>
         ),
@@ -206,8 +251,8 @@ export const MetadataFilling: FC = () => {
       {
         id: id5,
         type: 'text',
-        label: 'format',
-        value: [],
+        title: 'format',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p>{t('share.metadataFilling.format')}</p>
@@ -215,7 +260,7 @@ export const MetadataFilling: FC = () => {
               id={id5}
               label={t('share.metadataFilling.formatSelection')}
               onChange={handleFieldValueChange(id5)}
-              value={formItemFieldValue(id5)}
+              value={singleValueField(id5)}
             />
           </div>
         ),
@@ -226,8 +271,8 @@ export const MetadataFilling: FC = () => {
       {
         id: id6,
         type: 'text',
-        label: 'license',
-        value: [],
+        title: 'license',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p>{t('share.metadataFilling.license')}</p>
@@ -235,7 +280,7 @@ export const MetadataFilling: FC = () => {
               id={id6}
               label={t('share.metadataFilling.licenceSelection')}
               onChange={handleFieldValueChange(id6)}
-              value={formItemFieldValue(id6)}
+              value={singleValueField(id6)}
             />
           </div>
         ),
@@ -246,8 +291,8 @@ export const MetadataFilling: FC = () => {
       {
         id: id7,
         type: 'text',
-        label: 'topic',
-        value: [],
+        title: 'topic',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p>{t('share.metadataFilling.topic')}</p>
@@ -255,7 +300,7 @@ export const MetadataFilling: FC = () => {
               id={id7}
               label={t('share.metadataFilling.topicSelection')}
               onChange={handleFieldValueChange(id7)}
-              value={formItemFieldValue(id7)}
+              value={singleValueField(id7)}
             />
           </div>
         ),
@@ -266,8 +311,8 @@ export const MetadataFilling: FC = () => {
       {
         id: id8,
         type: 'text',
-        label: 'geographicalCoverage',
-        value: [],
+        title: 'geographicalCoverage',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p>{t('share.metadataFilling.geographicalCoverage')}</p>
@@ -275,7 +320,7 @@ export const MetadataFilling: FC = () => {
               id={id8}
               label={t('share.metadataFilling.geographicalCoverageSelection')}
               onChange={handleFieldValueChange(id8)}
-              value={formItemFieldValue(id8)}
+              value={singleValueField(id8)}
             />
           </div>
         ),
@@ -285,13 +330,17 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id9,
-        type: 'select',
-        label: 'tags',
-        value: [],
+        type: 'tag',
+        title: 'tags',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
-            <TagsField addTag={addTag(id9)} removeTag={removeTag(id9)} tags={tagsFieldValue(id9)} />
+            <TagsField
+              addTag={handleFieldValueChange(id9)}
+              removeTag={handleFieldValueChange(id9)}
+              tags={multiValuesField(id9)}
+            />
           </div>
         ),
         style: {
@@ -300,16 +349,16 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id10,
-        type: 'text',
-        label: 'fee',
-        value: 0,
+        type: 'numeric',
+        title: 'fee',
+        value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
             <Field
               id={id10}
               label={'fee'}
-              onChange={handleFieldValueChange(id10)}
-              value={formItemFieldValue(id10)}
+              onChange={handleNumericValueChange(id10)}
+              value={singleValueField(id10)}
             />
           </div>
         ),
@@ -318,26 +367,49 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [addTag, formItemFieldValue, handleFieldValueChange, removeTag, t, tagsFieldValue])
+  }, [t, handleFieldValueChange, singleValueField, multiValuesField, handleNumericValueChange])
 
-  const mapForm = (form: DatasetForm): InitFormPayload => {
-    return form.map(formItem => ({
-      id: formItem.id,
-      type: formItem.type,
-      label: formItem.label,
-      value: formItem.value,
-      required: formItem.required
-    }))
-  }
+  const mapForm = (form: DatasetForm): InitFormPayload =>
+    form.map(formItem => {
+      const typedFormItem = {
+        id: formItem.id,
+        title: formItem.title,
+        required: formItem.required,
+        type: formItem.type,
+        value: formItem.value
+      }
+
+      switch (formItem.type) {
+        case 'i18n-text':
+          return typedFormItem as I18NTextField
+
+        case 'text':
+          return typedFormItem as TextField
+
+        case 'numeric':
+          return typedFormItem as NumericField
+
+        case 'select':
+          return typedFormItem as SelectPicker
+
+        case 'tag':
+          return typedFormItem as TagField
+      }
+    })
 
   const handleFormError = useCallback(
-    (error: ResourceError) => {
-      const { title, type } = formErrorData(error)
-      console.error(ShowResourceError.show(error))
-      dispatchNotification({
-        type: type,
-        titleKey: title
-      })
+    (error: ResourceError | PayloadError) => {
+      console.error(
+        error._tag === 'payload-is-empty'
+          ? ShowPayloadError.show(error)
+          : ShowResourceError.show(error)
+      )
+      const notification = formErrorData(error)
+      notification &&
+        dispatchNotification({
+          type: notification.type,
+          titleKey: notification.title
+        })
     },
     [dispatchNotification]
   )
