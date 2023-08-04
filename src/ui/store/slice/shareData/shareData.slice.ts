@@ -1,7 +1,12 @@
 /* eslint-disable max-lines-per-function */
 import { flow, pipe } from 'fp-ts/lib/function'
 import { contramap as eqContramap } from 'fp-ts/Eq'
-import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error/resource'
+import {
+  ResourceAlreadyExistsError,
+  ResourceNotFoundError,
+  ResourceWrongValueError
+} from '@/shared/error/resource'
+import { PayloadIsEmptyError } from '@/shared/error/payload'
 import type { StateCreator } from 'zustand'
 import type { IOEither } from 'fp-ts/IOEither'
 import type { IOOption } from 'fp-ts/IOOption'
@@ -15,14 +20,10 @@ import * as B from 'fp-ts/boolean'
 import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
 import * as O from 'fp-ts/Option'
+import * as P from 'fp-ts/Predicate'
 
 export type I18nString = {
   language: string
-  value: string
-}
-
-export type SelectPickerValue = {
-  label: I18nString[]
   value: string
 }
 
@@ -57,7 +58,7 @@ export type TagField = FormItemBaseProperties & {
 
 export type SelectPicker = FormItemBaseProperties & {
   type: 'select'
-  value: O.Option<SelectPickerValue[]>
+  value: O.Option<string[]>
 }
 
 export type FormItem = I18NTextField | TextField | NumericField | TagField | SelectPicker
@@ -69,6 +70,16 @@ export type InitFormPayload = InitFormItem[]
 
 export type StorageServiceId = string
 
+export type I18nStringPayload = {
+  language: string
+  value: string
+}
+
+export type SetFormItemValuePayload = {
+  id: FormItemId
+  value: string | number | I18nStringPayload
+}
+
 export type ShareDataSlice = {
   shareData: {
     form: Form
@@ -78,23 +89,31 @@ export type ShareDataSlice = {
     ) => IOEither<PayloadIsEmptyError | ResourceAlreadyExistsError, void>
     formItemById: (id: FormItemId) => IOOption<FormItem>
     isFormInitialized: () => IO.IO<boolean>
-    setStorageServiceId: (id: O.Option<StorageServiceId>) => IO.IO<void>
+    setStorageServiceId: (id: O.Option<StorageServiceId>) => IOE.IOEither<PayloadIsEmptyError, void>
+    setFormItemValue: (
+      id: string,
+      value: string | number | I18nStringPayload
+    ) => IOEither<ResourceNotFoundError | PayloadIsEmptyError | ResourceWrongValueError, void>
   }
 }
-
 const eqFormItemId: Eq<FormItemId> = S.Eq
 const eqFormItem: Eq<{ id: string }> = pipe(
   eqFormItemId,
   eqContramap(it => it.id)
 )
 
+const isNotEmptyPredicate = (text: string): boolean => !S.isEmpty(text)
+
 const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
+
 const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyExistsError =>
   ResourceAlreadyExistsError(resourceIds)
 
-const emptyPayloadError = (payload: InitFormPayload): PayloadIsEmptyError =>
+const emptyPayloadError = (payload: string | InitFormPayload): PayloadIsEmptyError =>
   PayloadIsEmptyError(payload)
+
+const wrongValueError = (value: unknown): ResourceWrongValueError => ResourceWrongValueError(value)
 
 const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
@@ -106,15 +125,174 @@ const isInitFormIdUniq =
       A.some((initFormItem: InitFormItem) => initFormItem.id === formItem.id)(payload)
     )(state)
 
-const formIdExists =
+const retrieveFormItem =
   (state: Form) =>
-  (formItemId: FormItemId): boolean =>
-    A.some((formItem: FormItem) => formItem.id === formItemId)(state)
+  (formItemId: FormItemId): O.Option<FormItem> =>
+    A.findFirst((formItem: FormItem) => formItem.id === formItemId)(state)
 
 const setFormItemValueInvariant =
   (formItemId: FormItemId) =>
-  (state: Form): E.Either<ResourceNotFoundError, FormItemId> =>
-    pipe(formItemId, E.fromPredicate(flow(formIdExists(state)), resourceNotFoundError))
+  (state: Form): E.Either<ResourceNotFoundError, FormItem> =>
+    pipe(
+      formItemId,
+      retrieveFormItem(state),
+      E.fromOption(() => resourceNotFoundError(formItemId))
+    )
+
+const removeElement = (elements: string[], value: string): string[] =>
+  elements.filter(elt => elt !== value)
+
+const mapToI18NTextField = (
+  i18nUpdatedText: I18nStringPayload,
+  storedI18nTexts: I18NTextField['value']
+): I18NTextField['value'] => {
+  const isSameLanguagePredicate = (i18nText: I18nString): boolean =>
+    S.Eq.equals(i18nText.language, i18nUpdatedText.language)
+
+  const updateTranslationText = (textValues: I18nTextFieldValue): I18nTextFieldValue =>
+    pipe(
+      textValues,
+      A.map(i18n =>
+        isSameLanguagePredicate(i18n) ? { ...i18n, value: i18nUpdatedText.value } : i18n
+      )
+    )
+
+  const removeTranslationText = (textValues: I18nTextFieldValue): I18nTextFieldValue =>
+    pipe(textValues, A.filter(P.not(isSameLanguagePredicate)))
+
+  return pipe(
+    storedI18nTexts,
+    O.fold(
+      () => O.some([i18nUpdatedText]),
+      textValues =>
+        pipe(
+          textValues,
+          A.findFirst(isSameLanguagePredicate),
+          O.match(
+            () => O.some([...textValues, i18nUpdatedText]),
+            () =>
+              O.some(
+                pipe(
+                  S.isEmpty(i18nUpdatedText.value),
+                  B.match(
+                    () => updateTranslationText(textValues),
+                    () => removeTranslationText(textValues)
+                  )
+                )
+              )
+          )
+        )
+    )
+  )
+}
+
+const mapToTextFieldValue = (value: string): TextField['value'] =>
+  pipe(value, O.fromPredicate(P.not(S.isEmpty)))
+
+const mapToNumericFieldValue = (value: number): NumericField['value'] =>
+  pipe(value, O.fromPredicate(N.isNumber))
+
+const updateValues = (values: string[], value: string): O.Option<string[]> =>
+  pipe(
+    values.includes(value),
+    B.match(
+      () => O.some([...values, value]),
+      () => O.some(removeElement(values, value))
+    )
+  )
+const mapToTagFieldValue = (
+  tagValue: string,
+  storedValues: TagField['value']
+): TagField['value'] => {
+  return pipe(
+    storedValues,
+    O.fold(
+      () => O.some([tagValue]),
+      tags => updateValues(tags, tagValue)
+    )
+  )
+}
+
+const mapToSelectFieldValue = (
+  value: string,
+  storedValues: SelectPicker['value']
+): SelectPicker['value'] => {
+  return pipe(
+    storedValues,
+    O.fold(
+      () => O.some([value]),
+      options => updateValues(options, value)
+    )
+  )
+}
+
+const isI18nStringPredicate = (
+  formItemValue: number | string | I18nStringPayload
+): formItemValue is I18nStringPayload =>
+  typeof formItemValue !== 'string' &&
+  typeof formItemValue !== 'number' &&
+  'language' in formItemValue
+
+const updateFormItem =
+  (updatedValue: number | string | I18nStringPayload) =>
+  (formItem: FormItem): E.Either<ResourceWrongValueError, FormItem> => {
+    switch (formItem.type) {
+      case 'i18n-text': {
+        return pipe(
+          updatedValue,
+          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.id)),
+          E.map(i18nValue => ({
+            ...formItem,
+            value: mapToI18NTextField(i18nValue, formItem.value)
+          }))
+        )
+      }
+
+      case 'text': {
+        return pipe(
+          updatedValue,
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.map(textValue => ({
+            ...formItem,
+            value: mapToTextFieldValue(textValue)
+          }))
+        )
+      }
+
+      case 'numeric': {
+        return pipe(
+          updatedValue,
+          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.id)),
+          E.map(numericValue => ({
+            ...formItem,
+            value: mapToNumericFieldValue(numericValue)
+          }))
+        )
+      }
+
+      case 'tag': {
+        return pipe(
+          updatedValue,
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.map(tagValue => ({
+            ...formItem,
+            value: mapToTagFieldValue(tagValue, formItem.value)
+          }))
+        )
+      }
+
+      case 'select': {
+        return pipe(
+          updatedValue,
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id)),
+          E.map(selectValue => ({
+            ...formItem,
+            value: mapToSelectFieldValue(selectValue, formItem.value)
+          }))
+        )
+      }
+    }
+  }
 
 const mapFormIds = (form: Form): FormItemId[] => A.map((formItem: FormItem) => formItem.id)(form)
 
@@ -160,3 +338,91 @@ export const createShareDataSlice: ShareDataStateCreator =
         O.map(it => it.data.storageServiceId),
         O.getOrElse<O.Option<StorageServiceId>>(() => O.none)
       ),
+      initForm: (payload: InitFormPayload) =>
+        pipe(
+          payload,
+          A.isEmpty,
+          B.matchW(
+            () =>
+              pipe(
+                IOE.fromIO(() => get().shareData.form),
+                IOE.flatMap(
+                  flow(
+                    initFormInvariant(payload),
+                    IOE.fromEither,
+                    IOE.chainIOK(
+                      form => () =>
+                        set(state => ({
+                          shareData: {
+                            ...state.shareData,
+                            form
+                          }
+                        }))
+                    )
+                  )
+                )
+              ),
+            () => IOE.left(emptyPayloadError(payload))
+          )
+        ),
+      formItemById: (id: FormItemId) =>
+        pipe(
+          IOO.fromIO(() => get().shareData.form),
+          IOO.chainOptionK(flow(A.findFirst(formItem => eqFormItem.equals(formItem, { id }))))
+        ),
+      setFormItemValue: (id: string, value: number | string | I18nStringPayload) =>
+        pipe(
+          id,
+          S.isEmpty,
+          B.matchW(
+            () =>
+              pipe(
+                IOE.fromIO(() => get().shareData.form),
+                IOE.flatMap(
+                  flow(
+                    setFormItemValueInvariant(id),
+                    IOE.fromEither,
+                    IOE.chainW(
+                      flow(
+                        updateFormItem(value),
+                        IOE.fromEither,
+                        IOE.chainIOK(
+                          formItem => () =>
+                            set(state => ({
+                              shareData: {
+                                ...state.shareData,
+                                form: pipe(
+                                  state.shareData.form,
+                                  A.map(it => (S.Eq.equals(it.id, id) ? formItem : it))
+                                )
+                              }
+                            }))
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+            () => IOE.left(emptyPayloadError(id))
+          )
+        ),
+      isFormInitialized: () => () => get().shareData.form.length > 0,
+      setStorageServiceId: (id: O.Option<StorageServiceId>) =>
+        pipe(
+          id,
+          O.match(
+            () =>
+              IOE.rightIO(() =>
+                set(state => ({ shareData: { ...state.shareData, storageServiceId: O.none } }))
+              ),
+            flow(
+              IOE.fromPredicate(isNotEmptyPredicate, emptyPayloadError),
+              IOE.chainIOK(
+                () => () =>
+                  set(state => ({ shareData: { ...state.shareData, storageServiceId: id } }))
+              )
+            )
+          )
+        )
+    }
+  })
