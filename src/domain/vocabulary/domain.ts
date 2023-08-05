@@ -1,7 +1,12 @@
 /* eslint-disable max-lines-per-function */
 import type { ForgetType } from '@/util/type'
 import type { Command, Deps, VocabularyType } from './command'
-import type { Vocabulary, VocabularyByType, VocabularyState } from './entity'
+import {
+  vocabularyTypes,
+  type Vocabulary,
+  type VocabularyByType,
+  type VocabularyState
+} from './entity'
 import type { StoreApi } from 'zustand/vanilla'
 import { createStore } from 'zustand/vanilla'
 import { flow, pipe } from 'fp-ts/lib/function'
@@ -14,6 +19,7 @@ import { isDevMode } from '@/util/env.util'
 import * as IOO from 'fp-ts/IOOption'
 import * as R from 'fp-ts/Record'
 import * as A from 'fp-ts/Array'
+import * as RA from 'fp-ts/ReadonlyArray'
 
 export type State = {
   data: VocabularyState
@@ -32,12 +38,10 @@ const defaultVocabulary: Vocabulary = {
   data: []
 }
 
-const defaultVocabularyByType: VocabularyByType = {
-  area: defaultVocabulary,
-  license: defaultVocabulary,
-  'media-type': defaultVocabulary,
-  topic: defaultVocabulary
-}
+const defaultVocabularyByType: VocabularyByType = pipe(
+  vocabularyTypes,
+  RA.reduce(Object.create(null), (acc, cur) => ({ ...acc, [cur]: defaultVocabulary }))
+)
 
 export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<DomainAPI> =>
   createStore(
