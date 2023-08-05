@@ -17,6 +17,8 @@ import {
 // eslint-disable-next-line import/no-restricted-paths
 import { sparqlGateway } from '@/infra/vocabulary/sparql/sparqlGateway'
 import type { RetrieveVocabularyResult } from '../port'
+import type { Vocabulary } from '../entity'
+import { vocabularyTypes } from '../entity'
 
 type InitialProps = Readonly<{
   store: StoreApi<VocabularyDomain.DomainAPI>
@@ -39,37 +41,30 @@ const spy = jest.spyOn(sparqlGateway, 'retrieveVocabulary')
 
 describe('Retrieve vocabulary by type from a thesaurus', () => {
   // Preloaded state
+  const defaultVocabulary: Vocabulary = {
+    isLoading: false,
+    hasNext: false,
+    data: []
+  }
   const preloadedState: VocabularyDomain.Options = {
     initialState: {
       data: {
         byType: {
-          area: {
+          '<https://ontology.okp4.space/thesaurus/area>': {
             isLoading: true,
             hasNext: true,
             data: [{ id: '1', label: 'foo' }]
           },
-          license: {
-            isLoading: false,
-            hasNext: false,
-            data: []
-          },
-          'media-type': {
-            isLoading: false,
-            hasNext: false,
-            data: []
-          },
-          topic: {
-            isLoading: false,
-            hasNext: false,
-            data: []
-          }
+          ...vocabularyTypes
+            .filter(r => r !== '<https://ontology.okp4.space/thesaurus/area>')
+            .reduce((acc, cur) => ({ ...acc, [cur]: defaultVocabulary }), Object.create(null))
         }
       }
     }
   }
 
   // Commands inputs
-  const vocabularyType1: VocabularyType = 'area'
+  const vocabularyType1: VocabularyType = '<https://ontology.okp4.space/thesaurus/area>'
 
   // Queries
   const expectedVocabularyByType1: VocabularyDescriptorByType = {
