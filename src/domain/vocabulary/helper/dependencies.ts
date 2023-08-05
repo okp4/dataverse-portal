@@ -3,13 +3,29 @@ import * as S from 'fp-ts/string'
 import * as P from 'fp-ts/Predicate'
 import * as N from 'fp-ts/number'
 import * as ORD from 'fp-ts/Ord'
-import * as R from 'fp-ts/Record'
+import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import type { Show } from 'fp-ts/lib/Show'
-import type { Deps } from '../command'
 import type { VocabularyPort } from '../port'
 
-export type Option = (deps: Deps) => E.Either<VocabularyDependenciesError, Deps>
+const retrieveVocabularyDependenciesTag = 'retrieve-vocabulary-deps'
+
+type Deps = {
+  _tag: typeof retrieveVocabularyDependenciesTag
+  vocabularyGateway: VocabularyPort
+  language: string
+  limit: number
+}
+
+export type RetrieveVocabularyDependencies = Readonly<Deps>
+
+type TransientDeps = Partial<{
+  vocabularyGateway: VocabularyPort
+  language: string
+  limit: number
+}>
+
+type Option = (deps: TransientDeps) => E.Either<VocabularyDependenciesError, TransientDeps>
 
 export const LanguageEmptyError = () =>
   ({
@@ -32,18 +48,21 @@ export const NegativeLimitError = (limit: number) =>
  */
 export type NegativeLimitError = ReturnType<typeof NegativeLimitError>
 
-export const GatewayTypeError = (gateway: unknown) =>
+export const MandatoryDependenciesError = (deps: TransientDeps) =>
   ({
-    _tag: 'gateway-type',
-    gateway
+    _tag: 'mandatory-dependencies',
+    deps
   } as const)
 
 /**
- *  Error when withVocabularyGateway() function is called with a gateway that not satisfy the VocabularyPort constraint
+ *  Error when one oor more properties are missing in the created Dependencies
  */
-export type GatewayTypeError = ReturnType<typeof GatewayTypeError>
+export type MandatoryDependenciesError = ReturnType<typeof MandatoryDependenciesError>
 
-export type VocabularyDependenciesError = LanguageEmptyError | NegativeLimitError | GatewayTypeError
+export type VocabularyDependenciesError =
+  | LanguageEmptyError
+  | NegativeLimitError
+  | MandatoryDependenciesError
 
 export const ShowVocabularyDependenciesError: Show<VocabularyDependenciesError> = {
   show: (error: VocabularyDependenciesError): string => {
@@ -54,30 +73,31 @@ export const ShowVocabularyDependenciesError: Show<VocabularyDependenciesError> 
       case 'negative-limit': {
         return `Error ${error._tag}: The given limit parameter <${error.limit}> cannot be negative`
       }
-      case 'gateway-type': {
-        return `Error ${error._tag}: The given gateway parameter <${JSON.stringify(
-          error.gateway
-        )}> does not implement at least the retrieveVocabulary function`
+      case 'mandatory-dependencies': {
+        return `Error ${
+          error._tag
+        }: All properties are mandatory, but received a partial object: <${JSON.stringify(
+          error.deps
+        )}>`
       }
     }
   }
 }
 
+const depsIsRequiredTransientDeps = (deps: TransientDeps): deps is Required<TransientDeps> =>
+  'vocabularyGateway' in deps && 'limit' in deps && 'language' in deps
+
 export const withVocabularyGateway =
-  (gateway: VocabularyPort): Option =>
-  (deps: Deps) =>
-    pipe(
-      gateway,
-      E.fromPredicate((g: VocabularyPort) => R.has('retrieveVocabulary', g), GatewayTypeError),
-      E.map(vocabularyGateway => ({
-        ...deps,
-        vocabularyGateway
-      }))
-    )
+  (vocabularyGateway: VocabularyPort): Option =>
+  (deps: TransientDeps) =>
+    E.of({
+      ...deps,
+      vocabularyGateway
+    })
 
 export const withLanguage =
   (lng: string): Option =>
-  (deps: Deps) =>
+  (deps: TransientDeps) =>
     pipe(
       lng,
       E.fromPredicate(P.not(S.isEmpty), LanguageEmptyError),
@@ -89,7 +109,7 @@ export const withLanguage =
 
 export const withLimit =
   (limit: number): Option =>
-  (deps: Deps) =>
+  (deps: TransientDeps) =>
     pipe(
       limit,
       E.fromPredicate(x => ORD.gt(N.Ord)(x, 0), NegativeLimitError),
@@ -99,10 +119,30 @@ export const withLimit =
       }))
     )
 
+const validateDeps = (
+  deps: TransientDeps
+): E.Either<VocabularyDependenciesError, RetrieveVocabularyDependencies> =>
+  pipe(
+    deps,
+    O.fromPredicate(depsIsRequiredTransientDeps),
+    O.map(({ vocabularyGateway, limit, language }) => ({
+      _tag: retrieveVocabularyDependenciesTag as typeof retrieveVocabularyDependenciesTag,
+      vocabularyGateway,
+      limit,
+      language
+    })),
+
+    E.fromOption(() => MandatoryDependenciesError(deps))
+  )
+
 export const createVocabularyDependenciesWithOptions = (
   ...options: Option[]
-): E.Either<VocabularyDependenciesError, Deps> =>
-  options.reduce(
-    (acc: E.Either<VocabularyDependenciesError, Deps>, cur: Option) => pipe(acc, E.chain(cur)),
-    E.right(Object.create(null))
+): E.Either<VocabularyDependenciesError, RetrieveVocabularyDependencies> =>
+  pipe(
+    options.reduce(
+      (acc: E.Either<VocabularyDependenciesError, TransientDeps>, cur: Option) =>
+        pipe(acc, E.chain(cur)),
+      E.right({})
+    ),
+    E.chain(validateDeps)
   )
