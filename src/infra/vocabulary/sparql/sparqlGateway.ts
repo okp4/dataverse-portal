@@ -21,11 +21,10 @@ export const sparqlGateway: VocabularyPort = {
   ): TE.TaskEither<RetrieveVocabularyError, RetrieveVocabularyResult> => {
     const query = `
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-	    PREFIX thesaurus: <https://ontology.okp4.space/thesaurus/>
       SELECT ?term ?prefLabel
       WHERE {
         ?term a skos:Concept .
-        ?term skos:inScheme thesaurus:${type} .
+        ?term skos:inScheme ${type} .
         ?term skos:prefLabel ?prefLabel .
         FILTER langMatches(lang(?prefLabel),'${language}')
       }
