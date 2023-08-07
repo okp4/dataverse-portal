@@ -77,9 +77,10 @@ export type SetFormItemValuePayload = {
   value: string | number | I18nStringPayload
 }
 
-export const FormItemWrongTypeError = (type: unknown) =>
+export const FormItemWrongTypeError = (formItemId: string, type: unknown) =>
   ({
     _tag: 'form-item-wrong-type',
+    formItemId,
     type
   } as const)
 
@@ -91,7 +92,7 @@ export const ShowFormError: Show<FormError> = {
   show: (error: FormError): string => {
     switch (error._tag) {
       case 'form-item-wrong-type': {
-        return `Error ${error._tag}: Failed to handle form item with type '${error.type}' since it is an inconsistent one.`
+        return `Error ${error._tag}: Failed to handle form item with id ${error.formItemId} because its type: '${error.type}' is the wrong one.`
       }
     }
   }
@@ -127,10 +128,10 @@ const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
 const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyExistsError =>
   ResourceAlreadyExistsError(resourceIds)
 
-const emptyPayloadError = (payload: string | InitFormPayload): PayloadIsEmptyError =>
-  PayloadIsEmptyError(payload)
+const emptyPayloadError = (): PayloadIsEmptyError => PayloadIsEmptyError()
 
-const wrongValueError = (type: unknown): FormItemWrongTypeError => FormItemWrongTypeError(type)
+const wrongValueError = (formItemId: string, type: unknown): FormItemWrongTypeError =>
+  FormItemWrongTypeError(formItemId, type)
 
 const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
   N.Eq.equals(A.uniq(eqFormItem)(payload).length, payload.length)
@@ -257,7 +258,7 @@ const updateFormItem =
       case 'i18n-text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.type)),
+          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.id, formItem.type)),
           E.map(i18nValue => ({
             ...formItem,
             value: mapToI18NTextField(i18nValue, formItem.value)
@@ -268,7 +269,7 @@ const updateFormItem =
       case 'text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
           E.map(textValue => ({
             ...formItem,
             value: mapToTextFieldValue(textValue)
@@ -279,7 +280,7 @@ const updateFormItem =
       case 'numeric': {
         return pipe(
           updatedValue,
-          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.type)),
+          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.id, formItem.type)),
           E.map(numericValue => ({
             ...formItem,
             value: mapToNumericFieldValue(numericValue)
@@ -290,7 +291,7 @@ const updateFormItem =
       case 'tag': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
           E.map(tagValue => ({
             ...formItem,
             value: mapToTagFieldValue(tagValue, formItem.value)
@@ -301,7 +302,7 @@ const updateFormItem =
       case 'select': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.type)),
+          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
           E.map(selectValue => ({
             ...formItem,
             value: mapToSelectFieldValue(selectValue, formItem.value)
@@ -379,7 +380,7 @@ export const createShareDataSlice: ShareDataStateCreator =
                   )
                 )
               ),
-            () => IOE.left(emptyPayloadError(payload))
+            () => IOE.left(emptyPayloadError())
           )
         ),
       formItemById: (id: FormItemId) =>
@@ -420,7 +421,7 @@ export const createShareDataSlice: ShareDataStateCreator =
                   )
                 )
               ),
-            () => IOE.left(emptyPayloadError(id))
+            () => IOE.left(emptyPayloadError())
           )
         ),
       isFormInitialized: () => () => get().shareData.form.length > 0,

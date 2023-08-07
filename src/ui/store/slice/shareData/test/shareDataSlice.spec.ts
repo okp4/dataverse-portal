@@ -288,7 +288,7 @@ describe('Given the share data slice', () => {
 
   describe.each`
     preloadedState                                | initialFormPayload                        | expectedForm        | expectIsFormInitialized | expectedIsEmptyPayloadError | expectedAlreadyExistsError
-    ${[]}                                         | ${[]}                                     | ${[]}               | ${false}                | ${PayloadIsEmptyError([])}  | ${undefined}
+    ${[]}                                         | ${[]}                                     | ${[]}               | ${false}                | ${PayloadIsEmptyError()}    | ${undefined}
     ${[]}                                         | ${initialFormWithSameFormItemsIdsPayload} | ${[]}               | ${false}                | ${undefined}                | ${ResourceAlreadyExistsError(['2', '2'])}
     ${[]}                                         | ${initialFormPayload1}                    | ${[textItemID2]}    | ${true}                 | ${undefined}                | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)} | ${[numericItemID1]}                       | ${[numericItemID1]} | ${true}                 | ${undefined}                | ${ResourceAlreadyExistsError(['1'])}
@@ -319,11 +319,7 @@ describe('Given the share data slice', () => {
                 E.getOrElseW(ShowPayloadError.show)
               )
               expect(message).toStrictEqual(
-                `Error ${
-                  expectedIsEmptyPayloadError._tag
-                }: Failed to execute command with an empty payload: ${JSON.stringify(
-                  expectedIsEmptyPayloadError.payload
-                )}.`
+                `Error ${expectedIsEmptyPayloadError._tag}: Failed to execute command with an empty payload.`
               )
               expect(expectedAlreadyExistsError).toStrictEqual(undefined)
             } else if (expectedAlreadyExistsError) {
@@ -354,9 +350,9 @@ describe('Given the share data slice', () => {
     preloadedState                         | serviceStorageIdPayload | expectedServiceStorageId | expectedIsEmptyPayloadError
     ${undefined}                           | ${O.none}               | ${O.none}                | ${undefined}
     ${undefined}                           | ${O.some('3')}          | ${O.some('3')}           | ${undefined}
-    ${undefined}                           | ${O.some('')}           | ${O.none}                | ${PayloadIsEmptyError('')}
+    ${undefined}                           | ${O.some('')}           | ${O.none}                | ${PayloadIsEmptyError()}
     ${preloadedStateWithServicestorageId1} | ${O.some('2')}          | ${O.some('2')}           | ${undefined}
-    ${preloadedStateWithServicestorageId1} | ${O.some('')}           | ${O.some('1')}           | ${PayloadIsEmptyError('')}
+    ${preloadedStateWithServicestorageId1} | ${O.some('')}           | ${O.some('1')}           | ${PayloadIsEmptyError()}
   `(
     'Given an initial storage service id payload <$serviceStorageIdPayload>',
     ({
@@ -384,11 +380,7 @@ describe('Given the share data slice', () => {
               E.getOrElseW(ShowPayloadError.show)
             )
             expect(message).toStrictEqual(
-              `Error ${
-                expectedIsEmptyPayloadError._tag
-              }: Failed to execute command with an empty payload: ${JSON.stringify(
-                expectedIsEmptyPayloadError.payload
-              )}.`
+              `Error ${expectedIsEmptyPayloadError._tag}: Failed to execute command with an empty payload.`
             )
           } else {
             expect(setStorageIdResult).toBeRight()
@@ -404,7 +396,7 @@ describe('Given the share data slice', () => {
     ${undefined}                                        | ${numericFormItemPayloadID1}                           | ${[]}                                                   | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID1.id)}  | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1WithZeroValue}              | ${[expectedNumericFormItem1WithZeroValue]}              | ${O.some(expectedNumericFormItem1WithZeroValue)}              | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1}                           | ${[expectedNumericFormItem1]}                           | ${O.some(expectedNumericFormItem1)}                           | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(numericItemID1)}       | ${{ id: '', value: 10 }}                               | ${[numericItemID1]}                                     | ${O.none}                                                     | ${PayloadIsEmptyError('')}  | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}       | ${{ id: '', value: 10 }}                               | ${[numericItemID1]}                                     | ${O.none}                                                     | ${PayloadIsEmptyError()}    | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID20}                          | ${[numericItemID1]}                                     | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID20.id)} | ${undefined}
     ${preloadedStateWithFormItem(textItemID2)}          | ${textFormItemPayloadID2}                              | ${[expectedTextFormItem2]}                              | ${O.some(expectedTextFormItem2)}                              | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(emptyI18nTextItemID3)} | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithOneLanguageFormItem3]}           | ${O.some(expectedI18nTextWithOneLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
@@ -416,7 +408,7 @@ describe('Given the share data slice', () => {
     ${preloadedStateWithFormItem(selectItemID4)}        | ${removeSelectedFromSelectFormItemPayloadID4}          | ${[expectedSelectWithRemovedSelectionFormItem4]}        | ${O.some(expectedSelectWithRemovedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.type)}
+    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.id, tagItemID5.type)}
   `(
     'Given a form item payload <$formItemPayload> ',
     ({
@@ -455,11 +447,7 @@ describe('Given the share data slice', () => {
               E.getOrElseW(ShowPayloadError.show)
             )
             expect(message).toStrictEqual(
-              `Error ${
-                expectedIsEmptyPayloadError._tag
-              }: Failed to execute command with an empty payload: ${JSON.stringify(
-                expectedIsEmptyPayloadError.payload
-              )}.`
+              `Error ${expectedIsEmptyPayloadError._tag}: Failed to execute command with an empty payload.`
             )
           }
 
@@ -470,7 +458,7 @@ describe('Given the share data slice', () => {
             )
 
             expect(message).toStrictEqual(
-              `Error ${expectedWrongValueError._tag}: Failed to handle form item with type '${expectedWrongValueError.type}' since it is an inconsistent one.`
+              `Error ${expectedWrongValueError._tag}: Failed to handle form item with id ${expectedWrongValueError.formItemId} because its type: '${expectedWrongValueError.type}' is the wrong one.`
             )
           }
           expect(retrievedForm).toStrictEqual(expectedForm)
