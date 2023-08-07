@@ -7,7 +7,7 @@ import * as S from 'fp-ts/string'
 import * as O from 'fp-ts/Option'
 import * as N from 'fp-ts/number'
 import * as I from 'fp-ts/Identity'
-import { apply, flow, pipe } from 'fp-ts/lib/function'
+import { apply, constant, flow, pipe } from 'fp-ts/lib/function'
 import type { FormError, InitFormPayload } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
@@ -115,11 +115,9 @@ export const MetadataFilling: FC = () => {
   const numericalFieldValue = (v: DatasetFormItem['value']) => (): string =>
     pipe(
       v,
-      O.flatMap(O.fromPredicate(N.isNumber)),
-      O.fold(
-        () => '',
-        n => n.toString()
-      )
+      O.chain(O.fromPredicate(N.isNumber)),
+      O.map(N.Show.show),
+      O.getOrElse(constant(S.empty))
     )
 
   const singleValueField = useCallback(

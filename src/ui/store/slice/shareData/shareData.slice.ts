@@ -218,31 +218,26 @@ const updateValues = (values: string[], value: string): O.Option<string[]> =>
       () => O.some(removeElement(values, value))
     )
   )
-const mapToTagFieldValue = (
-  tagValue: string,
-  storedValues: TagField['value']
-): TagField['value'] => {
-  return pipe(
+const mapToTagFieldValue = (tagValue: string, storedValues: TagField['value']): TagField['value'] =>
+  pipe(
     storedValues,
     O.fold(
       () => O.some([tagValue]),
       tags => updateValues(tags, tagValue)
     )
   )
-}
 
 const mapToSelectFieldValue = (
   value: string,
   storedValues: SelectPicker['value']
-): SelectPicker['value'] => {
-  return pipe(
+): SelectPicker['value'] =>
+  pipe(
     storedValues,
     O.fold(
       () => O.some([value]),
       options => updateValues(options, value)
     )
   )
-}
 
 const isI18nStringPredicate = (
   formItemValue: number | string | I18nStringPayload
@@ -353,8 +348,7 @@ export const createShareDataSlice: ShareDataStateCreator =
       storageServiceId: pipe(
         initialState,
         O.fromNullable,
-        O.map(it => it.data.storageServiceId),
-        O.getOrElse<O.Option<StorageServiceId>>(() => O.none)
+        O.chain(it => it.data.storageServiceId)
       ),
       initForm: (payload: InitFormPayload) =>
         pipe(
