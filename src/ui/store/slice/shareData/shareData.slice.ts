@@ -18,6 +18,7 @@ import * as E from 'fp-ts/Either'
 import * as N from 'fp-ts/number'
 import * as O from 'fp-ts/Option'
 import * as P from 'fp-ts/Predicate'
+import { updateItemById } from '@/util/util'
 
 export type I18nString = {
   language: string
@@ -403,10 +404,7 @@ export const createShareDataSlice: ShareDataStateCreator =
                             set(state => ({
                               shareData: {
                                 ...state.shareData,
-                                form: pipe(
-                                  state.shareData.form,
-                                  A.map(it => (S.Eq.equals(it.id, id) ? formItem : it))
-                                )
+                                form: updateItemById(id, state.shareData.form, formItem)
                               }
                             }))
                         )

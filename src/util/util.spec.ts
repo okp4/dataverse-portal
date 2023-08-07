@@ -1,4 +1,5 @@
-import { getURILastElement, isError, isSubstringOf, escapeSparqlStr } from './util'
+import { getURILastElement, isError, isSubstringOf, escapeSparqlStr, updateItemById } from './util'
+import type { Item } from './util'
 import * as O from 'fp-ts/Option'
 
 type Data = {
@@ -103,4 +104,55 @@ describe('escapeSparqlStr', () => {
       expect(escapeSparqlStr(arg)).toBe(expectedResult)
     })
   })
+})
+
+describe('Given the updateItemById function,', () => {
+  type Data = { id: string; items: Item[]; updatedItem: Item; expectedItems: [] }
+
+  const items1 = [
+    { id: '1', value: 'value1' },
+    { id: '2', value: 'value2' },
+    { id: '3', value: 'value3' }
+  ]
+
+  const updatedItem1 = { id: 1, value: 'value1UpdatedValue1' }
+  const updatedItem2 = {
+    id: '1',
+    value: {
+      name: 'item1',
+      fee: 300,
+      options: ['option1', 'option2']
+    }
+  }
+
+  const expectedUpdatedItems1 = [
+    updatedItem1,
+    { id: '2', value: 'value2' },
+    { id: '3', value: 'value3' }
+  ]
+
+  const expectedUpdatedItems2 = [
+    { id: '1', value: 'value1' },
+    updatedItem2,
+    { id: '3', value: 'value3' }
+  ]
+
+  describe.each`
+    id           | items     | updatedItem     | expectedItems
+    ${undefined} | ${items1} | ${updatedItem1} | ${items1}
+    ${null}      | ${items1} | ${updatedItem1} | ${items1}
+    ${'110'}     | ${items1} | ${updatedItem1} | ${items1}
+    ${'1'}       | ${items1} | ${updatedItem1} | ${expectedUpdatedItems1}
+    ${'2'}       | ${items1} | ${updatedItem2} | ${expectedUpdatedItems2}
+  `(
+    `given an initial array of elements <$items1>`,
+    ({ id, items, updatedItem, expectedItems }: Data) => {
+      describe(`When updating an item by giving its id ${id}, its updated value ${updatedItem} and the items list ${items}`, () => {
+        test(`Then, the expect items are expected to be ${JSON.stringify(expectedItems)}`, () => {
+          const result = updateItemById(id, items, updatedItem)
+          expect(result).toStrictEqual(expectedItems)
+        })
+      })
+    }
+  )
 })

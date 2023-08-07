@@ -64,3 +64,24 @@ export const escapeSparqlStr = (str?: string): string => {
     RA.reduce(S.Monoid.empty, S.Monoid.concat)
   )
 }
+
+export type Item = {
+  id: string
+} & Record<string, unknown>
+
+export const findItemById = (id: string, items: Item[]): number =>
+  pipe(
+    items,
+    A.findIndex(it => S.Eq.equals(it.id, id)),
+    O.getOrElse(() => -1)
+  )
+
+export const updateItemById = <T extends Item>(id: string, items: T[], updatedItem: T): T[] => {
+  const foundIndex = findItemById(id, items)
+
+  return pipe(
+    items,
+    A.updateAt(foundIndex, updatedItem),
+    O.getOrElse(() => items)
+  )
+}
