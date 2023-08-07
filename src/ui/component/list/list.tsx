@@ -28,14 +28,14 @@ type ListProps = {
     main?: string
     container?: string
   }
-  inverted?: boolean
+  reversed?: boolean
 }
 
-export const List: FC<ListProps> = ({ items, classes, inverted }) => (
+export const List: FC<ListProps> = ({ items, classes, reversed }) => (
   <ul className={classNames('okp4-dataverse-portal-list-main', classes?.main)}>
     <TransitionGroup
       className={classNames('okp4-dataverse-portal-list-container', classes?.container, {
-        'reversed-list': inverted
+        reversed
       })}
     >
       {items.map(({ leftElement, rightElement, content, className, id, onClick }) => (

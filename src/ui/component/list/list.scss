@@ -11,8 +11,7 @@ $transition-duration: 400ms;
     @include columns-with-gap(16px);
     list-style: none;
 
-    &.reversed-list {
-      display: flex;
+    &.reversed {
       flex-direction: column-reverse;
     }
 
