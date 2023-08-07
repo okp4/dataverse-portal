@@ -11,6 +11,11 @@ $transition-duration: 400ms;
     @include columns-with-gap(16px);
     list-style: none;
 
+    &.reversed-list {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
     .okp4-dataverse-portal-list-item-main {
       @include with-theme {
         @include noto-sans(400);

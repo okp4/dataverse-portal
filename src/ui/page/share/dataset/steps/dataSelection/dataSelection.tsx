@@ -63,26 +63,24 @@ export const DataSelection: FC = () => {
     [handleFileError, removeFile]
   )
 
-  const items: Item[] = files()()
-    .map(({ id, name }) => ({
-      content: <p>{name}</p>,
-      id,
-      key: id,
-      leftElement: (
-        <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
-          <Icon name="folder-outlined" />
-        </div>
-      ),
-      rightElement: (
-        <div
-          className="okp4-dataverse-portal-share-dataset-page-file-deletion"
-          onClick={handleFileDeletion(id)}
-        >
-          <Icon name="bin" />
-        </div>
-      )
-    }))
-    .reverse()
+  const items: Item[] = files()().map(({ id, name }) => ({
+    content: <p>{name}</p>,
+    id,
+    key: id,
+    leftElement: (
+      <div className="okp4-dataverse-portal-share-dataset-page-file-icon">
+        <Icon name="folder-outlined" />
+      </div>
+    ),
+    rightElement: (
+      <div
+        className="okp4-dataverse-portal-share-dataset-page-file-deletion"
+        onClick={handleFileDeletion(id)}
+      >
+        <Icon name="bin" />
+      </div>
+    )
+  }))
 
   return (
     <div className="okp4-dataverse-portal-share-data-selection-container">
@@ -96,6 +94,7 @@ export const DataSelection: FC = () => {
       <div className="okp4-dataverse-portal-share-dataset-page-file-list-container">
         <List
           classes={{ main: 'okp4-dataverse-portal-share-dataset-page-file-list' }}
+          inverted
           items={items}
         />
       </div>
