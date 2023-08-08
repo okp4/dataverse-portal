@@ -6,7 +6,7 @@ import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { ResourceNotFoundError, ShowFileError } from '@/shared/error'
+import { ResourceNotFoundError, ShowResourceError } from '@/shared/error/resource'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
@@ -88,10 +88,7 @@ describe('Remove a file from memory', () => {
             expect(result).toBeLeft()
             expect(result).toEqualLeft(error)
 
-            const message = pipe(
-              result,
-              E.getOrElseW(e => ShowFileError.show(e))
-            )
+            const message = pipe(result, E.getOrElseW(ShowResourceError.show))
             expect(message).toStrictEqual(
               `Error ${error._tag}: Failed to handle resource with ID '${error.resourceId}' since it does not exist.`
             )

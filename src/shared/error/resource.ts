@@ -20,11 +20,12 @@ export const ResourceNotFoundError = (resourceId: string) =>
 /**
  *  Error when the id of a resource is not found in the domain.
  */
+
 export type ResourceNotFoundError = ReturnType<typeof ResourceNotFoundError>
 
 export type ResourceError = ResourceAlreadyExistsError | ResourceNotFoundError
 
-export const ShowFileError: Show<ResourceError> = {
+export const ShowResourceError: Show<ResourceError> = {
   show: (error: ResourceError): string => {
     switch (error._tag) {
       case 'resource-already-exists': {

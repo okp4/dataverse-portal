@@ -1,4 +1,4 @@
-import type { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error'
+import type { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error/resource'
 import type { IOEither } from 'fp-ts/IOEither'
 
 export type MediaType = string

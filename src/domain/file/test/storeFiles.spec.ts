@@ -6,7 +6,7 @@ import type { File } from '../entity'
 import type { FilesDescriptor } from '../query'
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { ResourceAlreadyExistsError, ShowFileError } from '@/shared/error'
+import { ResourceAlreadyExistsError, ShowResourceError } from '@/shared/error/resource'
 
 type InitialProps = Readonly<{
   store: StoreApi<FileDomain.DomainAPI>
@@ -98,10 +98,7 @@ describe('Store files in memory', () => {
             expect(result).toBeLeft()
             expect(result).toEqualLeft(error)
 
-            const message = pipe(
-              result,
-              E.getOrElseW(e => ShowFileError.show(e))
-            )
+            const message = pipe(result, E.getOrElseW(ShowResourceError.show))
             expect(message).toStrictEqual(
               `Error ${
                 error._tag
