@@ -28,12 +28,15 @@ type ListProps = {
     main?: string
     container?: string
   }
+  reversed?: boolean
 }
 
-export const List: FC<ListProps> = ({ items, classes }) => (
+export const List: FC<ListProps> = ({ items, classes, reversed }) => (
   <ul className={classNames('okp4-dataverse-portal-list-main', classes?.main)}>
     <TransitionGroup
-      className={classNames('okp4-dataverse-portal-list-container', classes?.container)}
+      className={classNames('okp4-dataverse-portal-list-container', classes?.container, {
+        reversed
+      })}
     >
       {items.map(({ leftElement, rightElement, content, className, id, onClick }) => (
         <CSSTransition classNames="transition" key={id} timeout={400}>

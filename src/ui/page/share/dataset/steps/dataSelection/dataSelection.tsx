@@ -95,6 +95,7 @@ export const DataSelection: FC = () => {
         <List
           classes={{ main: 'okp4-dataverse-portal-share-dataset-page-file-list' }}
           items={items}
+          reversed
         />
       </div>
     </div>
