@@ -10,10 +10,13 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6000000238418579);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 999;
+
+    &.centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .okp4-dataverse-portal-modal-dialog {
       background: themed('modal-background');

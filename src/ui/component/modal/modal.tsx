@@ -9,6 +9,8 @@ type ModalProps = {
   isOpen: boolean
   onClose: () => void
   closeOnEsc?: boolean
+  motionPreset?: 'zoom' | 'none'
+  isCentered?: boolean
   children?: ReactNode
   classes?: {
     main?: string
@@ -21,6 +23,8 @@ export const Modal: FC<ModalProps> = ({
   isOpen,
   onClose,
   closeOnEsc = true,
+  motionPreset = 'zoom',
+  isCentered = true,
   children,
   classes
 }) => {
@@ -45,20 +49,25 @@ export const Modal: FC<ModalProps> = ({
     containerElement &&
     createPortal(
       <CSSTransition
-        // classNames={motionPreset === 'zoom' ? 'zoom-transition' : ''}
-        className="zoom-transition"
+        classNames={motionPreset === 'zoom' ? 'zoom-transition' : ''}
         in={isOpen}
         timeout={200}
         unmountOnExit
       >
-        onClick={handleOverlayClick}
-      >
         <div
-          className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main)}
-          role="dialog"
+          className={classNames(
+            'okp4-dataverse-portal-modal-main',
+            isCentered && 'centered',
+            classes?.overlay
+          )}
+          onClick={handleOverlayClick}
         >
-          <div className="okp4-dataverse-portal-modal-content">{children}</div>
-        </div>
+          <div
+            className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main)}
+            role="dialog"
+          >
+            <div className="okp4-dataverse-portal-modal-content">{children}</div>
+          </div>
         </div>
       </CSSTransition>,
       containerElement
