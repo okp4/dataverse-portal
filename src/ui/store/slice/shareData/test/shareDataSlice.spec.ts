@@ -48,7 +48,7 @@ type Data3 = {
   expectedIsEmptyPayloadError?: PayloadIsEmptyError
   expectedAlreadyExistsError?: ResourceAlreadyExistsError
   expectedNotFoundError?: ResourceNotFoundError
-  expectedWrongValueError?: FormItemWrongTypeError
+  expectedWrongTypeError?: FormItemWrongTypeError
 }
 
 type Store = Readonly<{
@@ -392,7 +392,7 @@ describe('Given the share data slice', () => {
   )
 
   describe.each`
-    preloadedState                                      | formItemPayload                                        | expectedForm                                            | expectedFormItem                                              | expectedIsEmptyPayloadError | expectedNotFoundError                                   | expectedWrongValueError
+    preloadedState                                      | formItemPayload                                        | expectedForm                                            | expectedFormItem                                              | expectedIsEmptyPayloadError | expectedNotFoundError                                   | expectedWrongTypeError
     ${undefined}                                        | ${numericFormItemPayloadID1}                           | ${[]}                                                   | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID1.id)}  | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1WithZeroValue}              | ${[expectedNumericFormItem1WithZeroValue]}              | ${O.some(expectedNumericFormItem1WithZeroValue)}              | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1}                           | ${[expectedNumericFormItem1]}                           | ${O.some(expectedNumericFormItem1)}                           | ${undefined}                | ${undefined}                                            | ${undefined}
@@ -418,7 +418,7 @@ describe('Given the share data slice', () => {
       expectedFormItem,
       expectedNotFoundError,
       expectedIsEmptyPayloadError,
-      expectedWrongValueError
+      expectedWrongTypeError
     }: Data3) => {
       describe('When calling set form item method with this payload', () => {
         const { store } = initStore(preloadedState)
@@ -451,14 +451,14 @@ describe('Given the share data slice', () => {
             )
           }
 
-          if (expectedWrongValueError) {
+          if (expectedWrongTypeError) {
             const message = pipe(
               setFormItemValueResult as E.Either<FormItemWrongTypeError, void>,
               E.getOrElseW(ShowFormError.show)
             )
 
             expect(message).toStrictEqual(
-              `Error ${expectedWrongValueError._tag}: Failed to handle form item with id ${expectedWrongValueError.formItemId} because its type: '${expectedWrongValueError.type}' is the wrong one.`
+              `Error ${expectedWrongTypeError._tag}: Failed to handle form item with id ${expectedWrongTypeError.formItemId} because its type: '${expectedWrongTypeError.value}' is the wrong one.`
             )
           }
           expect(retrievedForm).toStrictEqual(expectedForm)

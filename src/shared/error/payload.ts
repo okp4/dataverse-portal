@@ -8,7 +8,6 @@ export const PayloadIsEmptyError = () =>
 /**
  * Error when a payload that is expected to contain data is empty.
  */
-
 export type PayloadIsEmptyError = ReturnType<typeof PayloadIsEmptyError>
 
 export type PayloadError = PayloadIsEmptyError

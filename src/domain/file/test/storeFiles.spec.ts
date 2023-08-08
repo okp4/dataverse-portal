@@ -98,10 +98,7 @@ describe('Store files in memory', () => {
             expect(result).toBeLeft()
             expect(result).toEqualLeft(error)
 
-            const message = pipe(
-              result,
-              E.getOrElseW(e => ShowResourceError.show(e))
-            )
+            const message = pipe(result, E.getOrElseW(ShowResourceError.show))
             expect(message).toStrictEqual(
               `Error ${
                 error._tag

@@ -126,9 +126,8 @@ export const MetadataFilling: FC = () => {
         id,
         formItemById,
         IOO.map(({ value }) => value),
-        IOO.match(
-          () => '',
-          v => pipe(v, O.chain(O.fromPredicate(S.isString)), O.getOrElse(numericalFieldValue(v)))
+        IOO.match(constant(S.empty), v =>
+          pipe(v, O.chain(O.fromPredicate(S.isString)), O.getOrElse(numericalFieldValue(v)))
         ),
         apply(null)
       ),
@@ -370,29 +369,32 @@ export const MetadataFilling: FC = () => {
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
     form.map(formItem => {
-      const typedFormItem = {
-        id: formItem.id,
-        title: formItem.title,
-        required: formItem.required,
-        type: formItem.type,
-        value: formItem.value
-      }
-
       switch (formItem.type) {
         case 'i18n-text':
-          return typedFormItem as I18NTextField
-
+          return {
+            ...formItem,
+            type: 'i18n-text'
+          }
         case 'text':
-          return typedFormItem as TextField
-
+          return {
+            ...formItem,
+            type: 'text'
+          }
         case 'numeric':
-          return typedFormItem as NumericField
-
+          return {
+            ...formItem,
+            type: 'numeric'
+          }
         case 'select':
-          return typedFormItem as SelectPicker
-
+          return {
+            ...formItem,
+            type: 'select'
+          }
         case 'tag':
-          return typedFormItem as TagField
+          return {
+            ...formItem,
+            type: 'tag'
+          }
       }
     })
 

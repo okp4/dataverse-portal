@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { flow, pipe } from 'fp-ts/lib/function'
+import { constant, flow, pipe } from 'fp-ts/lib/function'
 import { contramap as eqContramap } from 'fp-ts/Eq'
 import { ResourceAlreadyExistsError, ResourceNotFoundError } from '@/shared/error/resource'
 import { PayloadIsEmptyError } from '@/shared/error/payload'
@@ -82,7 +82,7 @@ export const FormItemWrongTypeError = (formItemId: string, type: unknown) =>
   ({
     _tag: 'form-item-wrong-type',
     formItemId,
-    type
+    value: type
   } as const)
 
 export type FormItemWrongTypeError = ReturnType<typeof FormItemWrongTypeError>
@@ -93,7 +93,7 @@ export const ShowFormError: Show<FormError> = {
   show: (error: FormError): string => {
     switch (error._tag) {
       case 'form-item-wrong-type': {
-        return `Error ${error._tag}: Failed to handle form item with id ${error.formItemId} because its type: '${error.type}' is the wrong one.`
+        return `Error ${error._tag}: Failed to handle form item with id ${error.formItemId} because its type: '${error.value}' is the wrong one.`
       }
     }
   }
@@ -121,7 +121,7 @@ const eqFormItem: Eq<{ id: string }> = pipe(
   eqContramap(it => it.id)
 )
 
-const isNotEmptyPredicate = (text: string): boolean => !S.isEmpty(text)
+const isNotEmpty = P.not(S.isEmpty)
 
 const resourceNotFoundError = (resourceId: FormItemId): ResourceNotFoundError =>
   ResourceNotFoundError(resourceId)
@@ -131,7 +131,7 @@ const resourceAlreadyExistsError = (resourceIds: FormItemId[]): ResourceAlreadyE
 
 const emptyPayloadError = (): PayloadIsEmptyError => PayloadIsEmptyError()
 
-const wrongValueError = (formItemId: string, type: unknown): FormItemWrongTypeError =>
+const wrongTypeError = (formItemId: string, type: unknown): FormItemWrongTypeError =>
   FormItemWrongTypeError(formItemId, type)
 
 const isInitFormPayloadUniq = (payload: InitFormPayload): boolean =>
@@ -165,19 +165,17 @@ const mapToI18NTextField = (
   i18nUpdatedText: I18nStringPayload,
   storedI18nTexts: I18NTextField['value']
 ): I18NTextField['value'] => {
-  const isSameLanguagePredicate = (i18nText: I18nString): boolean =>
+  const isSameLanguage = (i18nText: I18nString): boolean =>
     S.Eq.equals(i18nText.language, i18nUpdatedText.language)
 
   const updateTranslationText = (textValues: I18nTextFieldValue): I18nTextFieldValue =>
     pipe(
       textValues,
-      A.map(i18n =>
-        isSameLanguagePredicate(i18n) ? { ...i18n, value: i18nUpdatedText.value } : i18n
-      )
+      A.map(i18n => (isSameLanguage(i18n) ? { ...i18n, value: i18nUpdatedText.value } : i18n))
     )
 
   const removeTranslationText = (textValues: I18nTextFieldValue): I18nTextFieldValue =>
-    pipe(textValues, A.filter(P.not(isSameLanguagePredicate)))
+    pipe(textValues, A.filter(P.not(isSameLanguage)))
 
   return pipe(
     storedI18nTexts,
@@ -186,7 +184,7 @@ const mapToI18NTextField = (
       textValues =>
         pipe(
           textValues,
-          A.findFirst(isSameLanguagePredicate),
+          A.findFirst(isSameLanguage),
           O.match(
             () => O.some([...textValues, i18nUpdatedText]),
             () =>
@@ -208,8 +206,7 @@ const mapToI18NTextField = (
 const mapToTextFieldValue = (value: string): TextField['value'] =>
   pipe(value, O.fromPredicate(P.not(S.isEmpty)))
 
-const mapToNumericFieldValue = (value: number): NumericField['value'] =>
-  pipe(value, O.fromPredicate(N.isNumber))
+const mapToNumericFieldValue = (value: number): NumericField['value'] => O.some(value)
 
 const updateValues = (values: string[], value: string): O.Option<string[]> =>
   pipe(
@@ -240,7 +237,7 @@ const mapToSelectFieldValue = (
     )
   )
 
-const isI18nStringPredicate = (
+const isI18nStringPayload = (
   formItemValue: number | string | I18nStringPayload
 ): formItemValue is I18nStringPayload =>
   typeof formItemValue !== 'string' &&
@@ -254,7 +251,7 @@ const updateFormItem =
       case 'i18n-text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(isI18nStringPredicate, () => wrongValueError(formItem.id, formItem.type)),
+          E.fromPredicate(isI18nStringPayload, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(i18nValue => ({
             ...formItem,
             value: mapToI18NTextField(i18nValue, formItem.value)
@@ -265,7 +262,7 @@ const updateFormItem =
       case 'text': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
+          E.fromPredicate(S.isString, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(textValue => ({
             ...formItem,
             value: mapToTextFieldValue(textValue)
@@ -276,7 +273,7 @@ const updateFormItem =
       case 'numeric': {
         return pipe(
           updatedValue,
-          E.fromPredicate(N.isNumber, () => wrongValueError(formItem.id, formItem.type)),
+          E.fromPredicate(N.isNumber, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(numericValue => ({
             ...formItem,
             value: mapToNumericFieldValue(numericValue)
@@ -287,7 +284,7 @@ const updateFormItem =
       case 'tag': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
+          E.fromPredicate(S.isString, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(tagValue => ({
             ...formItem,
             value: mapToTagFieldValue(tagValue, formItem.value)
@@ -298,7 +295,7 @@ const updateFormItem =
       case 'select': {
         return pipe(
           updatedValue,
-          E.fromPredicate(S.isString, () => wrongValueError(formItem.id, formItem.type)),
+          E.fromPredicate(S.isString, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(selectValue => ({
             ...formItem,
             value: mapToSelectFieldValue(selectValue, formItem.value)
@@ -344,7 +341,7 @@ export const createShareDataSlice: ShareDataStateCreator =
         initialState,
         O.fromNullable,
         O.map(it => it.data.form),
-        O.getOrElse<Form>(() => [])
+        O.getOrElse<Form>(constant([]))
       ),
       storageServiceId: pipe(
         initialState,
@@ -426,7 +423,7 @@ export const createShareDataSlice: ShareDataStateCreator =
                 set(state => ({ shareData: { ...state.shareData, storageServiceId: O.none } }))
               ),
             flow(
-              IOE.fromPredicate(isNotEmptyPredicate, emptyPayloadError),
+              IOE.fromPredicate(isNotEmpty, emptyPayloadError),
               IOE.chainIOK(
                 () => () =>
                   set(state => ({ shareData: { ...state.shareData, storageServiceId: id } }))
