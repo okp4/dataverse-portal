@@ -1,4 +1,4 @@
-import { type ReactNode, type FC, useCallback } from 'react'
+import { type ReactNode, type FC, useCallback, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
@@ -28,6 +28,12 @@ export const Modal: FC<ModalProps> = ({
   children,
   classes
 }) => {
+  const containerRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    containerRef.current = document.querySelector('.okp4-dataverse-portal-main-layout')
+  }, [])
+
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
       if (closeOnEsc && event.key === 'Escape') {
@@ -43,34 +49,42 @@ export const Modal: FC<ModalProps> = ({
     onClose()
   }, [onClose])
 
-  const containerElement = document.getElementById('modal')
+  const handleDialogOnClick = useCallback((e: React.MouseEvent): void => {
+    e.stopPropagation()
+  }, [])
 
-  return (
-    containerElement &&
-    createPortal(
-      <CSSTransition
-        classNames={motionPreset === 'zoom' ? 'zoom-transition' : ''}
-        in={isOpen}
-        timeout={200}
-        unmountOnExit
+  if (!containerRef.current) {
+    return null
+  }
+
+  return createPortal(
+    <CSSTransition
+      classNames={motionPreset === 'zoom' ? 'zoom-transition' : ''}
+      in={isOpen}
+      nodeRef={containerRef}
+      timeout={200}
+      unmountOnExit
+    >
+      <div
+        className={classNames(
+          'okp4-dataverse-portal-modal-main',
+          isCentered && 'centered',
+          classes?.overlay
+        )}
+        onClick={handleOverlayClick}
       >
         <div
-          className={classNames(
-            'okp4-dataverse-portal-modal-main',
-            isCentered && 'centered',
-            classes?.overlay
-          )}
-          onClick={handleOverlayClick}
+          aria-hidden
+          aria-modal
+          className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main)}
+          onClick={handleDialogOnClick}
+          role="dialog"
+          tabIndex={-1}
         >
-          <div
-            className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main)}
-            role="dialog"
-          >
-            <div className="okp4-dataverse-portal-modal-content">{children}</div>
-          </div>
+          <div className="okp4-dataverse-portal-modal-content">{children}</div>
         </div>
-      </CSSTransition>,
-      containerElement
-    )
+      </div>
+    </CSSTransition>,
+    containerRef.current
   )
 }

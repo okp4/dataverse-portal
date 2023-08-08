@@ -9,7 +9,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6000000238418579);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 999;
 
     &.centered {
@@ -22,15 +22,10 @@
       background: themed('modal-background');
       border-radius: 12px;
       box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.06);
-      padding: 30px 12px 19px 33px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 2;
 
       .okp4-dataverse-portal-modal-content {
         color: themed('text');
-        padding-right: 14px;
+        padding: 14px;
       }
     }
   }
