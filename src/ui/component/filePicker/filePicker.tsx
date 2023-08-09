@@ -5,7 +5,6 @@ import { DragAndDrop } from '@/ui/component/dragAndDrop/dragAndDrop'
 import type { DragDropState } from '@/ui/component/dragAndDrop/dragAndDrop'
 import { DropDownButton } from '@/ui/component/dropDownButton/dropDownButton'
 import type { Option } from '@/ui/component/dropDownButton/dropDownButton'
-import { isNonEmpty } from 'fp-ts/lib/ReadonlyArray'
 import { Icon } from '@/ui/component/icon/icon'
 import { isError } from '@/util/util'
 import classNames from 'classnames'
@@ -45,34 +44,67 @@ export const FilePicker: FC<FilePickerProps> = ({
     []
   )
 
-  const toFile = useCallback(
-    (item: DataTransferItem) => {
-      try {
-        const fsEntry = item.webkitGetAsEntry()
-        const file = item.getAsFile()
+  const traverseDirectory = useCallback(
+    async (fsDirectory: FileSystemDirectoryEntry): Promise<File[]> => {
+      const files: File[] = []
+      const directoryReader = fsDirectory.createReader()
 
-        if (!fsEntry) throw new Error('Could not read item')
-        if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
+      const readDirEntries = async (): Promise<void> => {
+        const entries = await new Promise<FileSystemEntry[]>(resolve =>
+          directoryReader.readEntries(resolve)
+        )
 
-        return extractFileStream(file)
-      } catch (error: unknown) {
-        isError(error) && onError?.(error)
+        for (const entry of entries) {
+          if (entry.isFile) {
+            const fsFileEntry = entry as FileSystemFileEntry
+            const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
+            files.push(extractFileStream(file))
+          } else if (entry.isDirectory) {
+            files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
+          }
+        }
       }
+
+      await readDirEntries()
+      return files
     },
-    [extractFileStream, onError]
+    [extractFileStream]
   )
 
-  const isFileArray = useCallback(
-    (files: (File | undefined)[]): files is File[] => !files.includes(undefined),
-    []
+  const getDroppedFile = useCallback(
+    (item: DataTransferItem): File[] => {
+      const file = item.getAsFile()
+      if (!file) throw new Error('Impossible to get file.')
+      return [extractFileStream(file)]
+    },
+    [extractFileStream]
+  )
+
+  const handleDroppedItem = useCallback(
+    async (item: DataTransferItem): Promise<File[]> => {
+      try {
+        const fsEntry = item.webkitGetAsEntry()
+        if (!fsEntry) throw new Error('Impossible to get file or folder from dropped item.')
+
+        return fsEntry.isDirectory
+          ? await traverseDirectory(fsEntry as FileSystemDirectoryEntry)
+          : getDroppedFile(item)
+      } catch (error: unknown) {
+        isError(error) && onError?.(error)
+        return []
+      }
+    },
+    [traverseDirectory, getDroppedFile, onError]
   )
 
   const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      const files = Array.from(event.dataTransfer.items, toFile)
-      isNonEmpty(files) && isFileArray(files) && onFileChange(files)
+    async (event: React.DragEvent<HTMLDivElement>) => {
+      const filesPromises = Array.from(event.dataTransfer.items, handleDroppedItem)
+      const resolvedFiles = await Promise.all(filesPromises)
+      const flattenedFiles = resolvedFiles.flat()
+      flattenedFiles.length && onFileChange(flattenedFiles)
     },
-    [isFileArray, onFileChange, toFile]
+    [handleDroppedItem, onFileChange]
   )
 
   const handleFileChange = useCallback(
