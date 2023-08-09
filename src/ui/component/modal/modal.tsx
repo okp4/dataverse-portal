@@ -49,7 +49,7 @@ export const Modal: FC<ModalProps> = ({
     onClose()
   }, [onClose])
 
-  const handleDialogOnClick = useCallback((e: React.MouseEvent): void => {
+  const preventPropagation = useCallback((e: React.MouseEvent): void => {
     e.stopPropagation()
   }, [])
 
@@ -77,7 +77,7 @@ export const Modal: FC<ModalProps> = ({
           aria-hidden
           aria-modal
           className={classNames('okp4-dataverse-portal-modal-dialog', classes?.main)}
-          onClick={handleDialogOnClick}
+          onClick={preventPropagation}
           role="dialog"
           tabIndex={-1}
         >
