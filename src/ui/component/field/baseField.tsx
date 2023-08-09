@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import { type FC } from 'react'
+import type { ChangeEvent, FocusEvent, ReactNode } from 'react'
+import { useCallback, type FC } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
@@ -15,25 +15,51 @@ export type BaseFieldProps = {
   error?: string
   leftElement?: JSX.Element
   rightElement?: JSX.Element
-  children?: ReactNode
+  inputElement?: ReactNode
   className?: string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
 export const BaseField: FC<BaseFieldProps> = ({
-  id,
-  value,
   label,
-  placeholder,
-  disabled = false,
-  readOnly = false,
-  required = false,
   error,
   leftElement,
   rightElement,
-  children,
-  className
+  className,
+  inputElement,
+  ...inputProps
 }) => {
+  const {
+    id,
+    value,
+    placeholder,
+    disabled = false,
+    readOnly = false,
+    required = false,
+    onChange,
+    onFocus,
+    onBlur
+  } = inputProps
+
+  const handleFocus = useCallback(
+    (event: FocusEvent<HTMLInputElement>): void => onFocus?.(event),
+    [onFocus]
+  )
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>): void => onBlur?.(event),
+    [onBlur]
+  )
+
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      onChange?.(event)
+    },
+    [onChange]
+  )
+
   const baseFieldClassNames = classNames(
     { filled: readOnly || value },
     { readonly: readOnly },
@@ -58,7 +84,16 @@ export const BaseField: FC<BaseFieldProps> = ({
         </div>
       )}
 
-      {children}
+      {inputElement ?? (
+        <input
+          {...inputProps}
+          className="okp4-dataverse-portal-field-input"
+          name={id}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+        />
+      )}
 
       {rightElement && (
         <div

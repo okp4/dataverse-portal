@@ -39,29 +39,24 @@ export const TextField: FC<TextFieldProps> = ({
       className={classNames({ focus: focused }, { resizable })}
       {...inputProps}
       error={error}
+      inputElement={
+        multiline && (
+          <textarea
+            {...inputProps}
+            className="okp4-dataverse-portal-field-input"
+            name={id}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onFocus={handleFocus}
+          />
+        )
+      }
       label={label}
       leftElement={leftElement}
+      onBlur={handleBlur}
+      onChange={handleChange}
+      onFocus={handleFocus}
       rightElement={rightElement}
-    >
-      {multiline ? (
-        <textarea
-          {...inputProps}
-          className="okp4-dataverse-portal-field-input"
-          name={id}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
-        />
-      ) : (
-        <input
-          {...inputProps}
-          className="okp4-dataverse-portal-field-input"
-          name={id}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
-        />
-      )}
-    </BaseField>
+    />
   )
 }

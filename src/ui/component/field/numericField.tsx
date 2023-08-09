@@ -34,18 +34,19 @@ export const NumericField: FC<NumericFieldProps> = ({
       className={classNames({ focus: focused })}
       {...inputProps}
       error={error}
+      inputElement={
+        <NumericFormat
+          {...inputProps}
+          className="okp4-dataverse-portal-field-input"
+          name={id}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+        />
+      }
       label={label}
       leftElement={leftElement}
       rightElement={rightElement}
-    >
-      <NumericFormat
-        {...inputProps}
-        className="okp4-dataverse-portal-field-input"
-        name={id}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onFocus={handleFocus}
-      />
-    </BaseField>
+    />
   )
 }
