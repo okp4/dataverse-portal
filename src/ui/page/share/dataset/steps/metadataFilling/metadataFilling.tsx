@@ -19,6 +19,7 @@ import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
+import { NumericField } from '@/ui/component/field/numericField'
 
 type FormItemBaseProps = {
   id: string
@@ -114,7 +115,8 @@ export const MetadataFilling: FC = () => {
   )
 
   const handleNumericValueChange = useCallback(
-    (id: string) => (value: string) => {
+    (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
       !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
     },
     [setFormItemValue]
@@ -360,10 +362,15 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
-            <TextField
+            <NumericField
+              decimalScale={APP_ENV.chains[0].feeCurrencies[0].coinDecimals} // 6
+              decimalSeparator="."
               id={id10}
-              label={'fee'}
-              onChange={handleFieldValueChange(id10)}
+              lang="fr-FR"
+              onChange={handleNumericValueChange(id10)}
+              placeholder="0"
+              rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>} // KNOW
+              thousandSeparator=" " // narrow non-breaking spaces
               value={singleValueField(id10)}
             />
           </div>
@@ -373,7 +380,14 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [t, handleFieldValueChange, singleValueField, multiValuesField, handleNumericValueChange])
+  }, [
+    t,
+    handleFieldValueChange,
+    singleValueField,
+    multiValuesField,
+    handleNumericValueChange,
+    handleTagsFieldValueChange
+  ])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
     form.map(formItem => {
