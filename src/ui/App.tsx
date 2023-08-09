@@ -30,7 +30,7 @@ const App: FC = () => {
           </div>
         </div>
       </div>
-      <div id="modal" />
+      <div id="modal-root" />
       <Notification />
     </div>
   )

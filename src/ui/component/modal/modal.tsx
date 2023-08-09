@@ -31,7 +31,7 @@ export const Modal: FC<ModalProps> = ({
   const containerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    containerRef.current = document.querySelector('.okp4-dataverse-portal-main-layout')
+    containerRef.current = document.getElementById('modal-root')
   }, [])
 
   const handleEscape = useCallback(
