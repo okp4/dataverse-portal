@@ -159,3 +159,7 @@ $dropdown-tags-color: $primary;
 $dropdown-tags-background: rgba(0, 103, 150, 0.12);
 $dropdown-content-background-light: #ffffff;
 $dropdown-content-background-dark: $dropdown-background-dark;
+
+// modal
+$modal-background-dark: linear-gradient(360deg, #242433 0%, #2f2f42 100%);
+$modal-background-light: linear-gradient(360deg, #f2f6f9 0%, #ffffff 100%);
