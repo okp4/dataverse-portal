@@ -82,7 +82,8 @@ $themes: (
     dropdown-tags-color: $dropdown-tags-color,
     dropdown-tags-background: $dropdown-tags-background,
     dropdown-content-background: $dropdown-content-background-light,
-    modal-background: $modal-background-light
+    modal-background: $modal-background-light,
+    modal-line-divider: $modal-line-divider-light
   ),
   dark: (
     primary-color: $primary,
@@ -164,7 +165,8 @@ $themes: (
     dropdown-tags-color: $dropdown-tags-color,
     dropdown-tags-background: $dropdown-tags-background,
     dropdown-content-background: $dropdown-content-background-dark,
-    modal-background: $modal-background-dark
+    modal-background: $modal-background-dark,
+    modal-line-divider: $modal-line-divider-dark
   )
 );
 

@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import './modal.scss'
 
-type ModalProps = {
+export type ModalProps = {
   isOpen: boolean
   onClose: () => void
   closeOnEsc?: boolean
