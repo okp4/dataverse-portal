@@ -25,11 +25,13 @@
     "lint:fix": "eslint --fix src/**/*.{ts,tsx} && stylelint --fix '**/*.scss'"
   },
   "dependencies": {
+    "@maskito/core": "^1.4.0",
+    "@maskito/kit": "^1.4.0",
+    "@maskito/react": "^1.4.0",
     "fp-ts": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
-    "react-number-format": "^5.2.2",
     "react-router-dom": "^6.14.1",
     "react-transition-group": "^4.4.5",
     "short-uuid": "^4.2.2"

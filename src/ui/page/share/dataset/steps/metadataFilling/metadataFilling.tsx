@@ -363,14 +363,12 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
             <NumericField
-              decimalScale={APP_ENV.chains[0].feeCurrencies[0].coinDecimals} // 6
-              decimalSeparator="."
               id={id10}
-              lang="fr-FR"
+              min={0}
               onChange={handleNumericValueChange(id10)}
               placeholder="0"
-              rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>} // KNOW
-              thousandSeparator=" " // narrow non-breaking spaces
+              precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
+              rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
               value={singleValueField(id10)}
             />
           </div>
