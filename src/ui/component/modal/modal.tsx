@@ -81,7 +81,7 @@ export const Modal: FC<ModalProps> = ({
           role="dialog"
           tabIndex={-1}
         >
-          <div className="okp4-dataverse-portal-modal-content">{children}</div>
+          {children}
         </div>
       </div>
     </CSSTransition>,
