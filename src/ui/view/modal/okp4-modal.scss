@@ -7,7 +7,6 @@
     flex-direction: column;
     align-items: center;
     color: themed('text');
-    padding: 12px;
     width: 358px;
 
     @include use-breakpoints(('mobile', 'tablet')) {
@@ -15,23 +14,28 @@
     }
 
     .okp4-dataverse-portal-okp4-modal-top-element {
-      max-height: 78px;
+      height: 66px;
+      padding: 12px 12px 0;
     }
 
     .okp4-dataverse-portal-okp4-modal-top-element-divider {
       border-top: 1px solid themed('modal-line-divider');
-      width: 358px;
+      width: 100%;
     }
 
-    .okp4-dataverse-portal-okp4-modal-content {
-      max-height: 455px;
-      overflow-y: auto;
-      padding: 0 14px 0 21px;
-      margin-top: 20px;
+    .okp4-dataverse-portal-okp4-modal-content-container {
+      padding: 12px;
+
+      .okp4-dataverse-portal-okp4-modal-content {
+        max-height: 458px;
+        overflow-y: auto;
+        padding: 0 14px 0 21px;
+        margin: 8px 0;
+      }
     }
 
     .okp4-dataverse-portal-okp4-modal-bottom-element {
-      max-height: 78px;
+      height: 78px;
     }
   }
 }

@@ -7,13 +7,13 @@ type Okp4ModalProps = ModalProps & {
   bottomElement: JSX.Element
 }
 
-export const Okp4Modal: FC<Okp4ModalProps> = ({ topElement, bottomElement, ...modalProps }) => {
-  return (
-    <Modal {...modalProps} classes={{ main: 'okp4-dataverse-portal-okp4-modal-main' }}>
-      <div className="okp4-dataverse-portal-okp4-modal-top-element">{topElement} </div>
-      <div className="okp4-dataverse-portal-okp4-modal-top-element-divider" />
+export const Okp4Modal: FC<Okp4ModalProps> = ({ topElement, bottomElement, ...modalProps }) => (
+  <Modal {...modalProps} classes={{ main: 'okp4-dataverse-portal-okp4-modal-main' }}>
+    <div className="okp4-dataverse-portal-okp4-modal-top-element">{topElement} </div>
+    <div className="okp4-dataverse-portal-okp4-modal-top-element-divider" />
+    <div className="okp4-dataverse-portal-okp4-modal-content-container">
       <div className="okp4-dataverse-portal-okp4-modal-content">{modalProps.children}</div>
-      <div className="okp4-dataverse-portal-okp4-modal-bottom-element">{bottomElement} </div>
-    </Modal>
-  )
-}
+    </div>
+    <div className="okp4-dataverse-portal-okp4-modal-bottom-element">{bottomElement} </div>
+  </Modal>
+)
