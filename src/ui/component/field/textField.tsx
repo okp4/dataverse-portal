@@ -1,5 +1,5 @@
 import type { FC, ChangeEvent } from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import classNames from 'classnames'
 import type { BaseFieldProps } from './baseField'
 import { BaseField } from './baseField'
@@ -23,10 +23,6 @@ export const TextField: FC<TextFieldProps> = ({
 }) => {
   const { id, onChange } = inputProps
 
-  const [focused, setFocused] = useState(false)
-  const handleFocus = useCallback((): void => setFocused(true), [])
-  const handleBlur = useCallback((): void => setFocused(false), [])
-
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
       onChange?.(event)
@@ -36,7 +32,7 @@ export const TextField: FC<TextFieldProps> = ({
 
   return (
     <BaseField
-      className={classNames({ focus: focused }, { resizable })}
+      className={classNames({ resizable })}
       {...inputProps}
       error={error}
       inputElement={
@@ -45,17 +41,13 @@ export const TextField: FC<TextFieldProps> = ({
             {...inputProps}
             className="okp4-dataverse-portal-field-input"
             name={id}
-            onBlur={handleBlur}
             onChange={handleChange}
-            onFocus={handleFocus}
           />
         )
       }
       label={label}
       leftElement={leftElement}
-      onBlur={handleBlur}
       onChange={handleChange}
-      onFocus={handleFocus}
       rightElement={rightElement}
     />
   )

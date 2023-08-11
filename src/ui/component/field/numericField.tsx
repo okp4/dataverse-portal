@@ -1,6 +1,5 @@
 import type { FC, ChangeEvent } from 'react'
-import { useCallback, useMemo, useState } from 'react'
-import classNames from 'classnames'
+import { useCallback, useMemo } from 'react'
 import { maskitoNumberOptionsGenerator } from '@maskito/kit'
 import { useMaskito } from '@maskito/react'
 import { useTranslation } from 'react-i18next'
@@ -57,10 +56,6 @@ export const NumericField: FC<NumericFieldProps> = props => {
 
   const inputRef = useMaskito({ options: numericOptions })
 
-  const [focused, setFocused] = useState(false)
-  const handleFocus = useCallback((): void => setFocused(true), [])
-  const handleBlur = useCallback((): void => setFocused(false), [])
-
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
       const allowedIntermediatePatterns = [decimalSeparator, ...decimalPseudoSeparators].map(
@@ -76,7 +71,6 @@ export const NumericField: FC<NumericFieldProps> = props => {
 
   return (
     <BaseField
-      className={classNames({ focus: focused })}
       {...inputProps}
       error={error}
       inputElement={
@@ -85,8 +79,6 @@ export const NumericField: FC<NumericFieldProps> = props => {
           {...inputProps}
           className="okp4-dataverse-portal-field-input"
           name={id}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
           onInput={handleChange}
         />
       }

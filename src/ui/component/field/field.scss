@@ -21,7 +21,7 @@
       padding: 8px 0 8px 12px;
     }
 
-    &.focus {
+    &:focus-within {
       outline: none;
       border-color: themed('primary-color-variant-1');
       background-color: themed('input-background-focused');
@@ -134,9 +134,10 @@
       color: rgba(themed('text'), 0.4);
       margin-right: 18px;
 
-      &.focus {
-        color: themed('primary-color-variant-1');
-      }
+    }
+    
+    .okp4-dataverse-portal-field-input:focus ~ .okp4-dataverse-portal-field-right-element {
+      color: themed('primary-color-variant-1');
     }
 
     .okp4-dataverse-portal-field-label {
@@ -175,7 +176,6 @@
         left: 0;
       }
 
-      &.focus,
       &.filled {
         transform: translateY(-25%) scale(0.6);
         color: themed('input-label-shrinked');
@@ -184,6 +184,16 @@
           transform: none;
           color: themed('input-label-top');
         }
+      }
+    }
+
+    .okp4-dataverse-portal-field-input:focus ~ .okp4-dataverse-portal-field-label {
+      transform: translateY(-25%) scale(0.6);
+      color: themed('input-label-shrinked');
+
+      &.with-placeholder {
+        transform: none;
+        color: themed('input-label-top');
       }
     }
 

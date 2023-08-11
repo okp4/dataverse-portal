@@ -1,5 +1,5 @@
-import type { ChangeEvent, FocusEvent, ReactNode } from 'react'
-import { useCallback, type FC } from 'react'
+import type { ChangeEvent, ReactNode } from 'react'
+import { type FC } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
@@ -17,9 +17,7 @@ export type BaseFieldProps = {
   rightElement?: JSX.Element
   inputElement?: ReactNode
   className?: string
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -39,26 +37,8 @@ export const BaseField: FC<BaseFieldProps> = ({
     disabled = false,
     readOnly = false,
     required = false,
-    onChange,
-    onFocus,
-    onBlur
+    onChange
   } = inputProps
-
-  const handleFocus = useCallback(
-    (event: FocusEvent<HTMLInputElement>): void => onFocus?.(event),
-    [onFocus]
-  )
-  const handleBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>): void => onBlur?.(event),
-    [onBlur]
-  )
-
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      onChange?.(event)
-    },
-    [onChange]
-  )
 
   const baseFieldClassNames = classNames(
     { filled: readOnly || value },
@@ -71,7 +51,7 @@ export const BaseField: FC<BaseFieldProps> = ({
   )
 
   return (
-    <div className={classNames(className, baseFieldClassNames, 'okp4-dataverse-portal-field-main')}>
+    <div className={classNames('okp4-dataverse-portal-field-main', className, baseFieldClassNames)}>
       {leftElement && (
         <div
           className={classNames(
@@ -89,9 +69,7 @@ export const BaseField: FC<BaseFieldProps> = ({
           {...inputProps}
           className="okp4-dataverse-portal-field-input"
           name={id}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
+          onChange={onChange}
         />
       )}
 
