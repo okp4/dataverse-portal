@@ -176,6 +176,13 @@ export const dataverseItems: DataverseItemDetails[] = [
       'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
   },
   {
+    id: 'cb6ea0aa-e32d-4d79-8492-a6ebcc80b897',
+    type: 'dataset',
+    label: 'ADMIN EXPRESS COG 2020 REGION',
+    description:
+      'ADMIN EXPRESS allows cross-referencing with other data sources in order to build thematic representations of the territory according to an administrative granularity (commune, departmental district, department, region). ADMIN EXPRESS is available in a "COG" edition, in accordance with the official geographic code published each year by INSEE.'
+  },
+  {
     id: '957df710-4e35-45fb-add8-34d49904a77a',
     type: 'dataset',
     label: 'AGRESTE 2020',
