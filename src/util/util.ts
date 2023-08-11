@@ -85,3 +85,19 @@ export const updateItemById = <T extends Item>(id: string, items: T[], updatedIt
     O.getOrElse(() => items)
   )
 }
+
+/**
+ * Returns a new list excluding all the values present in the provided list.
+ *
+ * @template T - The type of array elements.
+ * @param {T[]} excludedItems - The values to be removed from the source array.
+ * @returns {(array: T[]) => T[]} - A function that takes an array and filters out the values present in excludedItems.
+ * @example
+ *
+ * const itemsToRemove = [1, 2];
+ * const myArray = [1, 2, 3, 4, 5];
+ * const filteredArray = without(itemsToRemove)(myArray);
+ * console.log(filteredArray);  // [3, 4, 5]
+ */
+export const without = <T>(excludedItems: T[]): ((array: T[]) => T[]) =>
+  A.filter<T>((item: T) => !excludedItems.includes(item))

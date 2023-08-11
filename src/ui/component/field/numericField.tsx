@@ -3,9 +3,12 @@ import { useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { maskitoNumberOptionsGenerator } from '@maskito/kit'
 import { useMaskito } from '@maskito/react'
+import { useTranslation } from 'react-i18next'
+import { decimalSeparatorForLocale, thousandSeparatorForLocale } from '@/util/i18n/i18n'
 import type { BaseFieldProps } from './baseField'
 import { BaseField } from './baseField'
 import './field.scss'
+import { without } from '@/util/util'
 
 type NumericFieldProps = BaseFieldProps & {
   precision?: number
@@ -17,19 +20,26 @@ type NumericFieldProps = BaseFieldProps & {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const NumericField: FC<NumericFieldProps> = ({
-  label,
-  error,
-  leftElement,
-  rightElement,
-  precision,
-  thousandSeparator,
-  decimalSeparator = '.',
-  decimalPseudoSeparators = [',', '.', 'ю', 'б'],
-  min,
-  max,
-  ...inputProps
-}) => {
+export const NumericField: FC<NumericFieldProps> = props => {
+  const { i18n } = useTranslation()
+
+  const {
+    label,
+    error,
+    leftElement,
+    rightElement,
+    precision,
+    thousandSeparator = thousandSeparatorForLocale(i18n.language),
+    decimalSeparator = decimalSeparatorForLocale(i18n.language),
+    decimalPseudoSeparators = without([thousandSeparator])(
+      // eslint-disable-next-line react/destructuring-assignment
+      props.decimalPseudoSeparators ?? ['.', 'ю', 'б']
+    ),
+    min,
+    max,
+    ...inputProps
+  } = props
+
   const { id, onChange } = inputProps
 
   const numericOptions = useMemo(
