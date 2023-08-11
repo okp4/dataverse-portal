@@ -21,6 +21,38 @@ type FilePickerProps = {
   onError?: (error: Error) => void
 }
 
+const extractFileStream = (file: globalThis.File): File =>
+  Object.assign(file, {
+    stream: file.stream()
+  })
+
+const mapDataTransferItemToFiles = (item: DataTransferItem): File[] => {
+  const file = item.getAsFile()
+  if (!file) throw new Error('Impossible to get file.')
+  return [extractFileStream(file)]
+}
+
+const traverseDirectory = async (fsDirectory: FileSystemDirectoryEntry): Promise<File[]> => {
+  const files: File[] = []
+  const directoryReader = fsDirectory.createReader()
+
+  const entries = await new Promise<FileSystemEntry[]>(resolve =>
+    directoryReader.readEntries(resolve)
+  )
+
+  for (const entry of entries) {
+    if (entry.isFile) {
+      const fsFileEntry = entry as FileSystemFileEntry
+      const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
+      files.push(extractFileStream(file))
+    } else if (entry.isDirectory) {
+      files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
+    }
+  }
+
+  return files
+}
+
 // eslint-disable-next-line max-lines-per-function
 export const FilePicker: FC<FilePickerProps> = ({
   onFileChange,
@@ -33,54 +65,10 @@ export const FilePicker: FC<FilePickerProps> = ({
   const { t } = useTranslation('filePicker')
 
   const handleDragAndDropState = useCallback((state: DragDropState) => {
-    state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
+    setIsDraggingOver(state === 'dragging-over')
   }, [])
 
-  const extractFileStream = useCallback(
-    (file: globalThis.File): File =>
-      Object.assign(file, {
-        stream: file.stream()
-      }),
-    []
-  )
-
-  const traverseDirectory = useCallback(
-    async (fsDirectory: FileSystemDirectoryEntry): Promise<File[]> => {
-      const files: File[] = []
-      const directoryReader = fsDirectory.createReader()
-
-      const readDirEntries = async (): Promise<void> => {
-        const entries = await new Promise<FileSystemEntry[]>(resolve =>
-          directoryReader.readEntries(resolve)
-        )
-
-        for (const entry of entries) {
-          if (entry.isFile) {
-            const fsFileEntry = entry as FileSystemFileEntry
-            const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
-            files.push(extractFileStream(file))
-          } else if (entry.isDirectory) {
-            files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
-          }
-        }
-      }
-
-      await readDirEntries()
-      return files
-    },
-    [extractFileStream]
-  )
-
-  const getDroppedFile = useCallback(
-    (item: DataTransferItem): File[] => {
-      const file = item.getAsFile()
-      if (!file) throw new Error('Impossible to get file.')
-      return [extractFileStream(file)]
-    },
-    [extractFileStream]
-  )
-
-  const handleDroppedItem = useCallback(
+  const getFilesFromDroppedItem = useCallback(
     async (item: DataTransferItem): Promise<File[]> => {
       try {
         const fsEntry = item.webkitGetAsEntry()
@@ -88,23 +76,23 @@ export const FilePicker: FC<FilePickerProps> = ({
 
         return fsEntry.isDirectory
           ? await traverseDirectory(fsEntry as FileSystemDirectoryEntry)
-          : getDroppedFile(item)
+          : mapDataTransferItemToFiles(item)
       } catch (error: unknown) {
         isError(error) && onError?.(error)
         return []
       }
     },
-    [traverseDirectory, getDroppedFile, onError]
+    [onError]
   )
 
   const handleDrop = useCallback(
     async (event: React.DragEvent<HTMLDivElement>) => {
-      const filesPromises = Array.from(event.dataTransfer.items, handleDroppedItem)
-      const resolvedFiles = await Promise.all(filesPromises)
-      const flattenedFiles = resolvedFiles.flat()
-      flattenedFiles.length && onFileChange(flattenedFiles)
+      const files = (
+        await Promise.all(Array.from(event.dataTransfer.items, getFilesFromDroppedItem))
+      ).flat()
+      files.length && onFileChange(files)
     },
-    [handleDroppedItem, onFileChange]
+    [getFilesFromDroppedItem, onFileChange]
   )
 
   const handleFileChange = useCallback(
@@ -115,7 +103,7 @@ export const FilePicker: FC<FilePickerProps> = ({
         onFileChange(files)
       }
     },
-    [extractFileStream, onFileChange]
+    [onFileChange]
   )
 
   const filesInput = useMemo(
