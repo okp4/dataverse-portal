@@ -1,5 +1,12 @@
 import * as O from 'fp-ts/Option'
-import { getURILastElement, isError, isSubstringOf, escapeSparqlStr, updateItemById } from './util'
+import {
+  getURILastElement,
+  isError,
+  isSubstringOf,
+  escapeSparqlStr,
+  updateItemById,
+  without
+} from './util'
 import type { Item } from './util'
 
 type Data = {
@@ -155,4 +162,51 @@ describe('Given the updateItemById function,', () => {
       })
     }
   )
+})
+
+describe('without utility function', () => {
+  it('filters out numbers', () => {
+    const itemsToRemove = [1, 2]
+    const myArray = [1, 2, 3, 4, 5]
+    const filteredArray = without(itemsToRemove)(myArray)
+    expect(filteredArray).toEqual([3, 4, 5])
+  })
+
+  it('filters out strings', () => {
+    const stringsToRemove = ['a', 'b']
+    const myStringArray = ['a', 'b', 'c', 'd']
+    const filteredStringArray = without(stringsToRemove)(myStringArray)
+    expect(filteredStringArray).toEqual(['c', 'd'])
+  })
+
+  it('handles empty arrays', () => {
+    const itemsToRemove: number[] = []
+    const myArray = [1, 2, 3, 4, 5]
+    const filteredArray = without(itemsToRemove)(myArray)
+    expect(filteredArray).toEqual([1, 2, 3, 4, 5])
+  })
+
+  it('handles removing from an empty array', () => {
+    const itemsToRemove = [1, 2, 3]
+    const myArray: number[] = []
+    const filteredArray = without(itemsToRemove)(myArray)
+    expect(filteredArray).toEqual([])
+  })
+
+  it('handles arrays of objects with shared references', () => {
+    const object1 = { id: 1 }
+    const object2 = { id: 2 }
+    const object3 = { id: 3 }
+    const objectsToRemove = [object1, object2]
+    const myObjectArray = [object1, object2, object3]
+    const filteredObjectArray = without(objectsToRemove)(myObjectArray)
+    expect(filteredObjectArray).toEqual([object3])
+  })
+
+  it('does not handle arrays of objects with different references', () => {
+    const objectsToRemove = [{ id: 1 }, { id: 2 }]
+    const myObjectArray = [{ id: 1 }, { id: 2 }, { id: 3 }]
+    const filteredObjectArray = without(objectsToRemove)(myObjectArray)
+    expect(filteredObjectArray).not.toEqual([{ id: 3 }])
+  })
 })
