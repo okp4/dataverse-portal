@@ -74,7 +74,7 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2'),
+        $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
     }
@@ -84,7 +84,7 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-2'),
+        $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
       border-radius: 4px;
@@ -96,7 +96,7 @@
         $content-color: themed('primary-color'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-1'),
+        $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
       border-radius: 12px;
@@ -104,7 +104,7 @@
 
       &:hover {
         background-color: unset;
-        color: themed('primary-color-variant-1');
+        color: themed('secondary-button-hover');
       }
 
       svg {
