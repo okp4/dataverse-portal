@@ -91,6 +91,29 @@
       justify-content: flex-start;
     }
 
+    &.outlined-secondary {
+      @include button(
+        $content-color: themed('primary-color'),
+        $background-color: unset,
+        $box-shadow: none,
+        $hover-color: themed('primary-color-variant-1'),
+        $pressed-color: themed('secondary-button-background-pressed')
+      );
+      border-radius: 12px;
+      border: 1px solid themed('primary-color');
+
+      &:hover {
+        background-color: unset;
+        color: themed('primary-color-variant-1');
+      }
+
+      svg {
+        path {
+          fill: themed('primary-color');
+        }
+      }
+    }
+
     &.tertiary {
       color: themed('text');
       border-radius: 12px;
