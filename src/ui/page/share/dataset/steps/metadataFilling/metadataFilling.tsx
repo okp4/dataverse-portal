@@ -20,6 +20,7 @@ import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
 import { NumericField } from '@/ui/component/field/numericField'
+import { DropDown } from '@/ui/view/share/data/dropDown/dropDown'
 
 type FormItemBaseProps = {
   id: string
@@ -144,6 +145,25 @@ export const MetadataFilling: FC = () => {
     [formItemById]
   )
 
+  // TODO: fetch default options from ontology
+  const defaultFormatOption = useMemo(
+    () => [
+      'option1',
+      'option2',
+      'option3',
+      'option4',
+      'option5',
+      'option6',
+      'option7',
+      'option8',
+      'option9',
+      'option10',
+      'option11',
+      'option12'
+    ],
+    []
+  )
+
   const multiValuesField = useCallback(
     (id: string): string[] =>
       pipe(
@@ -154,12 +174,12 @@ export const MetadataFilling: FC = () => {
           () => [],
           flow(
             O.flatMap(O.fromPredicate(Array.isArray)),
-            O.match(() => [], I.of)
+            O.match(() => defaultFormatOption, I.of)
           )
         ),
         apply(null)
       ),
-    [formItemById]
+    [formItemById, defaultFormatOption]
   )
 
   const datasetForm: DatasetForm = useMemo((): DatasetForm => {
@@ -258,17 +278,21 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id5,
-        type: 'text',
+        type: 'select',
         title: 'format',
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
-            <p>{t('share.metadataFilling.format')}</p>
-            <TextField
-              id={id5}
-              label={t('share.metadataFilling.formatSelection')}
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.format')}
+            </p>
+            <DropDown
               onChange={handleFieldValueChange(id5)}
-              value={singleValueField(id5)}
+              options={defaultFormatOption}
+              placeholder={t('share.metadataFilling.formatSelection')}
+              searchPlaceholder={t('share.metadataFilling.formatSelection')}
+              selectionType="checkbox"
+              value={multiValuesField(id5)}
             />
           </div>
         ),
@@ -278,17 +302,21 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id6,
-        type: 'text',
+        type: 'select',
         title: 'license',
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
-            <p>{t('share.metadataFilling.license')}</p>
-            <TextField
-              id={id6}
-              label={t('share.metadataFilling.licenceSelection')}
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.license')}
+            </p>
+            <DropDown
               onChange={handleFieldValueChange(id6)}
-              value={singleValueField(id6)}
+              options={defaultFormatOption}
+              placeholder={t('share.metadataFilling.licenceSelection')}
+              searchPlaceholder={t('share.metadataFilling.licenceSelection')}
+              selectionType="checkbox"
+              value={multiValuesField(id6)}
             />
           </div>
         ),
@@ -303,7 +331,9 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
-            <p>{t('share.metadataFilling.topic')}</p>
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.topic')}
+            </p>
             <TextField
               id={id7}
               label={t('share.metadataFilling.topicSelection')}
@@ -323,7 +353,9 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
-            <p>{t('share.metadataFilling.geographicalCoverage')}</p>
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.geographicalCoverage')}
+            </p>
             <TextField
               id={id8}
               label={t('share.metadataFilling.geographicalCoverageSelection')}
@@ -343,7 +375,9 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
-            <p>{t('share.metadataFilling.tags')}</p>
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.tags')}
+            </p>
             <TagsField
               addTag={handleTagsFieldValueChange(id9)}
               removeTag={handleTagsFieldValueChange(id9)}
@@ -388,7 +422,8 @@ export const MetadataFilling: FC = () => {
     singleValueField,
     multiValuesField,
     handleNumericValueChange,
-    handleTagsFieldValueChange
+    handleTagsFieldValueChange,
+    defaultFormatOption
   ])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
