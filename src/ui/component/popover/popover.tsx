@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FC } from 'react'
 import classNames from 'classnames'
 import * as RPopover from '@radix-ui/react-popover'
@@ -13,6 +13,7 @@ type PopoverProps = Omit<RPopover.PopoverContentProps, 'content'> & {
   contentClassName?: string
   triggerClassName?: string
   triggerIconName?: IconName
+  container?: RPopover.PopoverPortalProps['container']
 }
 
 export const Popover: FC<PopoverProps> = ({
@@ -22,9 +23,15 @@ export const Popover: FC<PopoverProps> = ({
   contentClassName,
   triggerClassName,
   triggerIconName,
+  container,
   ...contentProps
 }) => {
   const [isOpen, setIsOpen] = useState(open)
+  const containerRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    containerRef.current = container ?? document.getElementById('popover-root')
+  }, [container])
 
   return (
     <RPopover.Root onOpenChange={setIsOpen} open={isOpen}>
@@ -42,12 +49,14 @@ export const Popover: FC<PopoverProps> = ({
           </div>
         )}
       </RPopover.Trigger>
-      <RPopover.Content
-        {...contentProps}
-        className={classNames('okp4-dataverse-portal-popover-content', contentClassName)}
-      >
-        {content}
-      </RPopover.Content>
+      <RPopover.Portal container={containerRef.current}>
+        <RPopover.Content
+          {...contentProps}
+          className={classNames('okp4-dataverse-portal-popover-content', contentClassName)}
+        >
+          {content}
+        </RPopover.Content>
+      </RPopover.Portal>
     </RPopover.Root>
   )
 }
