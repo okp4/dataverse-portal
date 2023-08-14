@@ -1,12 +1,12 @@
 import type { FC } from 'react'
 import { useMemo, useCallback, useState } from 'react'
-import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
 import { Tag } from '@/ui/component/tag/tag'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import './dropDown.scss'
+import { Popover } from '@/ui/component/popover/popover'
 
 type SelectionItemType = 'checkbox'
 
@@ -16,7 +16,7 @@ export type DropDownProps = {
   options: string[]
   searchPlaceholder: string
   selectionType: SelectionItemType
-  onChange: (value: string[]) => void
+  onChange: (value: string) => void
   maxSearchResults?: number
 }
 
@@ -25,29 +25,26 @@ const {
 } = APP_ENV
 
 type DropDownInputProps = Pick<DropDownProps, 'value' | 'placeholder'> & {
-  onChange: (value: string) => void
+  onDelete: (value: string) => void
 }
 
-const DropDownInput: FC<DropDownInputProps> = ({ value, onChange, placeholder }) => {
-  const handleChange = useCallback(
-    (value: string) => () => {
-      onChange(value)
-    },
-    [onChange]
-  )
-
+const DropDownInput: FC<DropDownInputProps> = ({ value, onDelete, placeholder }) => {
   return (
     <div className="okp4-dataverse-portal-dropdown-input">
       {value.length ? (
         <div className="okp4-dataverse-portal-dropdown-input-selection">
-          {value.slice(0, maxDisplayedTags).map(v => (
-            <Tag
-              classes={{ main: 'okp4-dataverse-portal-dropdown-input-selection-item' }}
-              key={v}
-              onDelete={handleChange(v)}
-              tagName={v}
-            />
-          ))}
+          {value.slice(0, maxDisplayedTags).map(
+            (
+              valueElement // TODO: Remove maxDisplayedTags and display them dynamically according to the width of the container and the width of the tags
+            ) => (
+              <Tag
+                classes={{ main: 'okp4-dataverse-portal-dropdown-input-selection-item' }}
+                key={valueElement}
+                onDelete={onDelete}
+                tagName={valueElement}
+              />
+            )
+          )}
           {value.length > maxDisplayedTags && (
             <Tag
               classes={{ main: 'okp4-dataverse-portal-dropdown-input-selection-item' }}
@@ -129,18 +126,6 @@ export const DropDown: FC<DropDownProps> = ({
     [setSearchTerm]
   )
 
-  const handleChange = useCallback(
-    (v: string) => {
-      if (value.includes(v)) {
-        onChange(value.filter(val => val !== v))
-        return
-      }
-
-      onChange([...value, v])
-    },
-    [value, onChange]
-  )
-
   const foundOptions = useMemo(
     () =>
       searchTerm.trim() === ''
@@ -151,22 +136,24 @@ export const DropDown: FC<DropDownProps> = ({
 
   return (
     <div className="okp4-dataverse-portal-dropdown-main">
-      <Collapsible
+      <Popover
+        align="start"
         content={
           <div className="okp4-dataverse-portal-dropdown-content">
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
             <DropDownOptions
               foundOptions={foundOptions}
-              onChange={handleChange}
+              onChange={onChange}
               searchTerm={searchTerm}
               selectionType={selectionType}
               value={value}
             />
           </div>
         }
-        iconName="chevron-sharp"
-        trigger={<DropDownInput onChange={handleChange} placeholder={placeholder} value={value} />}
+        sideOffset={8}
+        trigger={<DropDownInput onDelete={onChange} placeholder={placeholder} value={value} />}
         triggerClassName="okp4-dataverse-portal-dropdown-trigger"
+        triggerIconName="chevron-sharp"
       />
     </div>
   )
