@@ -1,23 +1,5 @@
 @import '@/ui/style/theme.scss';
 
-.okp4-dataverse-portal-popover-trigger-icon {
-  @include with-theme {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 200ms ease-out;
-    
-    &.flipped {
-      transform: rotate(180deg);
-    }
-
-    path {
-      fill: themed("text");
-      stroke: themed("text");
-    }
-  }
-}
-
 .okp4-dataverse-portal-popover-trigger-button {
   display: flex;
   align-items: center;
@@ -25,6 +7,17 @@
   width: 100%;
   border: 0;
   cursor: pointer;
+}
+
+.okp4-dataverse-portal-popover-trigger-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 200ms ease-out;
+    
+  &.flipped {
+    transform: rotate(180deg);
+  }
 }
 
 .okp4-dataverse-portal-popover-content {
