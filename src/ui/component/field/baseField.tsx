@@ -1,4 +1,4 @@
-import type { ChangeEvent, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { type FC } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
@@ -6,6 +6,7 @@ import './field.scss'
 
 export type BaseFieldProps = {
   id: string
+  inputElement: ReactNode
   value?: string
   label?: string
   placeholder?: string
@@ -15,9 +16,7 @@ export type BaseFieldProps = {
   error?: string
   leftElement?: JSX.Element
   rightElement?: JSX.Element
-  inputElement?: ReactNode
   className?: string
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -36,8 +35,7 @@ export const BaseField: FC<BaseFieldProps> = ({
     placeholder,
     disabled = false,
     readOnly = false,
-    required = false,
-    onChange
+    required = false
   } = inputProps
 
   const baseFieldClassNames = classNames(
@@ -64,14 +62,7 @@ export const BaseField: FC<BaseFieldProps> = ({
         </div>
       )}
 
-      {inputElement ?? (
-        <input
-          {...inputProps}
-          className="okp4-dataverse-portal-field-input"
-          name={id}
-          onChange={onChange}
-        />
-      )}
+      {inputElement}
 
       {rightElement && (
         <div

@@ -5,7 +5,7 @@ import type { BaseFieldProps } from './baseField'
 import { BaseField } from './baseField'
 import './field.scss'
 
-type TextFieldProps = BaseFieldProps & {
+type TextFieldProps = Omit<BaseFieldProps, 'inputElement'> & {
   multiline?: boolean
   resizable?: boolean
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
@@ -19,9 +19,10 @@ export const TextField: FC<TextFieldProps> = ({
   rightElement,
   resizable,
   multiline,
+  onChange,
   ...inputProps
 }) => {
-  const { id, onChange } = inputProps
+  const { id } = inputProps
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -36,8 +37,15 @@ export const TextField: FC<TextFieldProps> = ({
       {...inputProps}
       error={error}
       inputElement={
-        multiline && (
+        multiline ? (
           <textarea
+            {...inputProps}
+            className="okp4-dataverse-portal-field-input"
+            name={id}
+            onChange={handleChange}
+          />
+        ) : (
+          <input
             {...inputProps}
             className="okp4-dataverse-portal-field-input"
             name={id}
@@ -47,7 +55,6 @@ export const TextField: FC<TextFieldProps> = ({
       }
       label={label}
       leftElement={leftElement}
-      onChange={handleChange}
       rightElement={rightElement}
     />
   )

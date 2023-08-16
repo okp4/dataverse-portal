@@ -9,13 +9,14 @@ import { BaseField } from './baseField'
 import './field.scss'
 import { without } from '@/util/util'
 
-type NumericFieldProps = BaseFieldProps & {
+type NumericFieldProps = Omit<BaseFieldProps, 'inputElement'> & {
   precision?: number
   thousandSeparator?: string
   decimalSeparator?: string
   decimalPseudoSeparators?: string[]
   min?: number
   max?: number
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -36,10 +37,11 @@ export const NumericField: FC<NumericFieldProps> = props => {
     ),
     min,
     max,
+    onChange,
     ...inputProps
   } = props
 
-  const { id, onChange } = inputProps
+  const { id } = inputProps
 
   const numericOptions = useMemo(
     () =>
