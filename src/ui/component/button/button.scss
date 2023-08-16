@@ -74,7 +74,7 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2'),
+        $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
     }
@@ -84,11 +84,39 @@
         $content-color: themed('primary-text'),
         $background-color: themed('primary-color'),
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-2'),
+        $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
       border-radius: 4px;
       justify-content: flex-start;
+    }
+
+    &.outlined-secondary {
+      @include button(
+        $content-color: themed('primary-color'),
+        $background-color: unset,
+        $box-shadow: none,
+        $hover-color: themed('secondary-button-hover'),
+        $pressed-color: themed('secondary-button-background-pressed')
+      );
+      border: 1px solid themed('primary-color');
+
+      &:hover {
+        background-color: unset;
+        color: themed('secondary-button-hover');
+      }
+
+      &:focus {
+        background-color: unset;
+        color: themed('secondary-button-background-pressed');
+        border-color: themed('secondary-button-background-pressed');
+      }
+
+      svg {
+        path {
+          fill: themed('primary-color');
+        }
+      }
     }
 
     &.tertiary {
@@ -109,7 +137,6 @@
         $hover-color: themed('secondary-color-variant-1'),
         $pressed-color: themed('primary-button-background-pressed')
       );
-      border-radius: 6px;
       border: 1px solid themed('secondary-color');
 
       &.disabled {
@@ -121,6 +148,12 @@
       &:hover {
         background-color: unset;
         color: themed('secondary-color-variant-1');
+      }
+
+      &:focus {
+        background-color: unset;
+        color: themed('primary-button-background-pressed');
+        border-color: themed('primary-button-background-pressed');
       }
 
       svg {
@@ -135,10 +168,9 @@
         $content-color: themed('primary-color-variant-3'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('primary-color-variant-2'),
-        $pressed-color: themed('primary-color')
+        $hover-color: themed('turquoise-button-hover'),
+        $pressed-color: themed('turquoise-button-pressed')
       );
-      border-radius: 6px;
       border: 1px solid themed('primary-color-variant-3');
 
       &.disabled {
@@ -148,7 +180,13 @@
 
       &:hover {
         background-color: unset;
-        color: themed('primary-color-variant-2');
+        color: themed('turquoise-button-hover');
+      }
+
+      &:focus {
+        background-color: unset;
+        color: themed('turquoise-button-pressed');
+        border-color: themed('turquoise-button-pressed');
       }
 
       svg {
@@ -181,7 +219,8 @@
       }
 
       &.outlined-tertiary,
-      &.quaternary-turquoise {
+      &.quaternary-turquoise,
+      &.outlined-secondary {
         &.small {
           padding: 7px 10px;
           gap: 6px;
@@ -189,7 +228,8 @@
       }
 
       &.primary-discreet,
-      &.secondary-discreet {
+      &.secondary-discreet,
+      &.outlined-secondary {
         padding: 4px 8px;
         gap: 10px;
       }
@@ -204,7 +244,8 @@
         }
 
         &.outlined-tertiary,
-        &.quaternary-turquoise {
+        &.quaternary-turquoise,
+        &.outlined-secondary {
           font-size: 14px;
           line-height: unset;
         }

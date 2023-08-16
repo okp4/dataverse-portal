@@ -19,6 +19,7 @@ type ButtonProps = {
     | 'primary-discreet'
     | 'secondary'
     | 'secondary-discreet'
+    | 'outlined-secondary'
     | 'tertiary'
     | 'outlined-tertiary'
     | 'quaternary-turquoise'
