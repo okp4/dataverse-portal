@@ -140,14 +140,20 @@ export const DropDown: FC<DropDownProps> = ({
         align="start"
         content={
           <div className="okp4-dataverse-portal-dropdown-content">
-            <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
-            <DropDownOptions
-              foundOptions={foundOptions}
-              onChange={onChange}
-              searchTerm={searchTerm}
-              selectionType={selectionType}
-              value={value}
-            />
+            <div className="okp4-dataverse-portal-dropdown-search-options">
+              <SearchBar
+                onSearch={handleSearch}
+                placeholder={searchPlaceholder}
+                value={searchTerm}
+              />
+              <DropDownOptions
+                foundOptions={foundOptions}
+                onChange={onChange}
+                searchTerm={searchTerm}
+                selectionType={selectionType}
+                value={value}
+              />
+            </div>
           </div>
         }
         sideOffset={8}

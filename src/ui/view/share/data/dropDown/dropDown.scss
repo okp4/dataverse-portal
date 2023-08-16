@@ -46,41 +46,57 @@
 
 .okp4-dataverse-portal-dropdown-content {
   @include with-theme {
+    --checkbox-height: 32px;
+    --checkbox-gap: 6px;
+    --visible-checkboxes: 6;
+    --search-height: 40px;
+    --search-option-gap: 8px;
+    --search-option-padding: 10px;
+    
+    --content-height: calc(
+      (var(--checkbox-height) + var(--checkbox-gap)) * var(--visible-checkboxes) + var(--search-height) + var(--search-option-gap) + var(--search-option-padding) * 2
+    );
 
-    @include columns-with-gap(8px);
-    padding: 10px;
-    border-radius: 6px;
-    background-color: themed('dropdown-content-background');
-    box-shadow: themed('dropdown-content-box-shadow');
-
-    .okp4-dataverse-portal-dropdown-options-list{
-      --checkbox-height: 32px;
-      --checkbox-gap: 6px;
-      --visible-checkboxes: 6;
-
-      @include columns-with-gap(var(--checkbox-gap));
+    display: flex;
+    flex-direction: column;
+    height: var(--content-height);
+    
+    .okp4-dataverse-portal-dropdown-search-options {
+      box-sizing: border-box;
+      padding: var(--search-option-padding);
+      @include columns-with-gap(var(--search-option-gap));
+      border-radius: 6px;
+      background-color: themed('dropdown-content-background');
+      box-shadow: themed('dropdown-content-box-shadow');
       height: min-content;
-      max-height: calc(
-        (var(--checkbox-height) + var(--checkbox-gap)) * var(--visible-checkboxes)
-      );
-      overflow-y: auto;
-      padding-right: 8px;
-
-      .checked {
-        background: none;
+      max-height: 100%;
+      
+      .okp4-dataverse-portal-dropdown-options-list {
+        @include columns-with-gap(var(--checkbox-gap));
+        overflow-y: auto;
+        padding-right: var(--checkbox-gap);
+  
+        .checked {
+          background: none;
+        }
+      }
+  
+      .okp4-dataverse-portal-dropdown-no-results-wrapper {
+        @include grid-item($colStart: 1, $colEnd: -1);
+        display: flex;
+        justify-content: center;
+        height: inherit;
+        min-height: calc((var(--checkbox-height) + var(--checkbox-gap)) * 3);
       }
     }
 
-    .okp4-dataverse-portal-dropdown-no-results-wrapper {
-      @include grid-item($colStart: 1, $colEnd: -1);
-      display: flex;
-      justify-content: center;
-      height: inherit;
-      min-height: calc((var(--checkbox-height) + var(--checkbox-gap)) * 3);
-    }
   }
 }
 
-.okp4-dataverse-portal-popover-content[data-side='top'] > .okp4-dataverse-portal-dropdown-content {
+.okp4-dataverse-portal-popover-content[data-side='top'] .okp4-dataverse-portal-dropdown-content {
+  justify-content: flex-end;
+}
+
+.okp4-dataverse-portal-popover-content[data-side='top'] .okp4-dataverse-portal-dropdown-search-options {
   flex-direction: column-reverse;
 }
