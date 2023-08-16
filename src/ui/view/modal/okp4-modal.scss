@@ -14,7 +14,7 @@
     }
 
     .okp4-dataverse-portal-okp4-modal-top-element {
-      height: 66px;
+      min-height: 66px;
       padding: 12px 12px 0;
     }
 
@@ -35,7 +35,8 @@
     }
 
     .okp4-dataverse-portal-okp4-modal-bottom-element {
-      height: 78px;
+      min-height: 66px;
+      padding: 0 12px 12px;
     }
   }
 }
