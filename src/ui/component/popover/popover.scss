@@ -6,6 +6,7 @@
   justify-content: space-between;
   width: 100%;
   border: 0;
+  background-color: transparent;
   cursor: pointer;
 }
 
@@ -22,6 +23,7 @@
 
 .okp4-dataverse-portal-popover-content {
   outline: none;
+  background-color: transparent;
   transform-origin: var(--radix-popover-content-transform-origin);
 }
 
