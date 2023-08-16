@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useOnKeyboard } from '@/ui/hook/useOnKeyboard'
 import './modal.scss'
 
-type ModalProps = {
+export type ModalProps = {
   isOpen: boolean
   onClose: () => void
   closeOnEsc?: boolean
@@ -81,7 +81,7 @@ export const Modal: FC<ModalProps> = ({
           role="dialog"
           tabIndex={-1}
         >
-          <div className="okp4-dataverse-portal-modal-content">{children}</div>
+          {children}
         </div>
       </div>
     </CSSTransition>,

@@ -1,4 +1,4 @@
-@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
 
 .okp4-dataverse-portal-modal-main {
   @include with-theme {
@@ -20,11 +20,6 @@
       background: themed('modal-background');
       border-radius: 12px;
       box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.06);
-
-      .okp4-dataverse-portal-modal-content {
-        color: themed('text');
-        padding: 14px;
-      }
     }
   }
 }
