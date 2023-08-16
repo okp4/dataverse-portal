@@ -32,24 +32,39 @@ const mapDataTransferItemToFiles = (item: DataTransferItem): File[] => {
   return [extractFileStream(file)]
 }
 
-const traverseDirectory = async (fsDirectory: FileSystemDirectoryEntry): Promise<File[]> => {
-  const files: File[] = []
-  const directoryReader = fsDirectory.createReader()
-
-  const entries = await new Promise<FileSystemEntry[]>(resolve =>
-    directoryReader.readEntries(resolve)
-  )
-
-  for (const entry of entries) {
-    if (entry.isFile) {
-      const fsFileEntry = entry as FileSystemFileEntry
-      const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
-      files.push(extractFileStream(file))
-    } else if (entry.isDirectory) {
-      files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
-    }
+const readEntries = async (
+  directoryReader: FileSystemDirectoryReader
+): Promise<FileSystemEntry[]> => {
+  try {
+    return await new Promise((resolve, reject) => {
+      directoryReader.readEntries(resolve, reject)
+    })
+  } catch (err: unknown) {
+    console.error(
+      isError(err)
+        ? `Oops.. An error occurred while reading file entry..${err}`
+        : `Oops.. An unknown error occurred while reading file entry..`
+    )
+    return []
   }
+}
 
+async function traverseDirectory(directory: FileSystemDirectoryEntry): Promise<File[]> {
+  const files: File[] = []
+  const directoryReader = directory.createReader()
+  let entries = await readEntries(directoryReader)
+  while (entries.length) {
+    for (const entry of entries) {
+      if (entry.isFile) {
+        const fsFileEntry = entry as FileSystemFileEntry
+        const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
+        files.push(extractFileStream(file))
+      } else if (entry.isDirectory) {
+        files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
+      }
+    }
+    entries = await readEntries(directoryReader)
+  }
   return files
 }
 
