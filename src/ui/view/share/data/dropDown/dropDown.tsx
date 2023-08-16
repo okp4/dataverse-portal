@@ -129,7 +129,7 @@ export const DropDown: FC<DropDownProps> = ({
   const foundOptions = useMemo(
     () =>
       searchTerm.trim() === ''
-        ? options
+        ? options.slice(0, maxSearchResults)
         : options.filter(option => isSubstringOf(searchTerm, option)).slice(0, maxSearchResults),
     [options, searchTerm, maxSearchResults]
   )
