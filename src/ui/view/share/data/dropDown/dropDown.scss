@@ -51,9 +51,9 @@
     padding: 10px;
     border-radius: 6px;
     background-color: themed('dropdown-content-background');
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.14);
+    box-shadow: themed('dropdown-content-box-shadow');
 
-    .okp4-dataverse-portal-dropdown-options-list {
+    .okp4-dataverse-portal-dropdown-options-list{
       --checkbox-height: 32px;
       --checkbox-gap: 6px;
       --visible-checkboxes: 6;
