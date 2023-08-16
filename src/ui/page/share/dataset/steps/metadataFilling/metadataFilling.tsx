@@ -114,6 +114,12 @@ export const MetadataFilling: FC = () => {
     },
     [setFormItemValue]
   )
+  const handleDropDownValueChange = useCallback(
+    (id: string) => (value: string) => {
+      setFormItemValue(id, value)()
+    },
+    [setFormItemValue]
+  )
 
   const handleNumericValueChange = useCallback(
     (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -154,6 +160,10 @@ export const MetadataFilling: FC = () => {
       'option4',
       'option5',
       'option6',
+      'cary-large-option5',
+      'cary-large-option53',
+      'huge-extreme-very-large-option56',
+      'okaybro?option6',
       'option7',
       'option8',
       'option9',
@@ -287,7 +297,7 @@ export const MetadataFilling: FC = () => {
               {t('share.metadataFilling.format')}
             </p>
             <DropDown
-              onChange={handleFieldValueChange(id5)}
+              onChange={handleDropDownValueChange(id5)}
               options={defaultFormatOption}
               placeholder={t('share.metadataFilling.formatSelection')}
               searchPlaceholder={t('share.metadataFilling.formatSelection')}
@@ -311,7 +321,7 @@ export const MetadataFilling: FC = () => {
               {t('share.metadataFilling.license')}
             </p>
             <DropDown
-              onChange={handleFieldValueChange(id6)}
+              onChange={handleDropDownValueChange(id6)}
               options={defaultFormatOption}
               placeholder={t('share.metadataFilling.licenceSelection')}
               searchPlaceholder={t('share.metadataFilling.licenceSelection')}
@@ -423,6 +433,7 @@ export const MetadataFilling: FC = () => {
     multiValuesField,
     handleNumericValueChange,
     handleTagsFieldValueChange,
+    handleDropDownValueChange,
     defaultFormatOption
   ])
 

@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       height: 42px;
-      margin-right: 3px;
+      width: 100%;
 
       @include noto-sans(400);
       font-size: 16px;
@@ -23,14 +23,29 @@
       line-height: 22px;
       white-space: nowrap;
 
-      .okp4-dataverse-portal-dropdown-input-selection {
+      .okp4-dataverse-portal-dropdown-input-list {
         display: flex;
         gap: 10px;
+        width: 100%;
 
-        .okp4-dataverse-portal-dropdown-input-selection-item {
+        .okp4-dataverse-portal-dropdown-input-list-item,
+        .okp4-dataverse-portal-dropdown-input-list-additional-item {
           color: themed('dropdown-tags-color');
           background-color: themed('dropdown-tags-background');
           height: 6px;
+        }
+
+        .okp4-dataverse-portal-dropdown-input-list-additional-item {
+          max-width: 40px; 
+        }
+
+        .okp4-dataverse-portal-dropdown-input-list-item {
+          min-width: 40px;
+          flex-shrink: 0;
+        }
+
+        .hidden{ 
+          display: none;
         }
       }
 
