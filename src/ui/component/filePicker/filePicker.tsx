@@ -5,7 +5,6 @@ import { DragAndDrop } from '@/ui/component/dragAndDrop/dragAndDrop'
 import type { DragDropState } from '@/ui/component/dragAndDrop/dragAndDrop'
 import { DropDownButton } from '@/ui/component/dropDownButton/dropDownButton'
 import type { Option } from '@/ui/component/dropDownButton/dropDownButton'
-import { isNonEmpty } from 'fp-ts/lib/ReadonlyArray'
 import { Icon } from '@/ui/component/icon/icon'
 import { isError } from '@/util/util'
 import classNames from 'classnames'
@@ -22,6 +21,53 @@ type FilePickerProps = {
   onError?: (error: Error) => void
 }
 
+const extractFileStream = (file: globalThis.File): File =>
+  Object.assign(file, {
+    stream: file.stream()
+  })
+
+const mapDataTransferItemToFiles = (item: DataTransferItem): File[] => {
+  const file = item.getAsFile()
+  if (!file) throw new Error('Impossible to get file.')
+  return [extractFileStream(file)]
+}
+
+const readEntries = async (
+  directoryReader: FileSystemDirectoryReader
+): Promise<FileSystemEntry[]> => {
+  try {
+    return await new Promise((resolve, reject) => {
+      directoryReader.readEntries(resolve, reject)
+    })
+  } catch (err: unknown) {
+    console.error(
+      isError(err)
+        ? `Oops.. An error occurred while reading file entry..${err}`
+        : `Oops.. An unknown error occurred while reading file entry..`
+    )
+    return []
+  }
+}
+
+async function traverseDirectory(directory: FileSystemDirectoryEntry): Promise<File[]> {
+  const files: File[] = []
+  const directoryReader = directory.createReader()
+  let entries = await readEntries(directoryReader)
+  while (entries.length) {
+    for (const entry of entries) {
+      if (entry.isFile) {
+        const fsFileEntry = entry as FileSystemFileEntry
+        const file = await new Promise<globalThis.File>(resolve => fsFileEntry.file(resolve))
+        files.push(extractFileStream(file))
+      } else if (entry.isDirectory) {
+        files.push(...(await traverseDirectory(entry as FileSystemDirectoryEntry)))
+      }
+    }
+    entries = await readEntries(directoryReader)
+  }
+  return files
+}
+
 // eslint-disable-next-line max-lines-per-function
 export const FilePicker: FC<FilePickerProps> = ({
   onFileChange,
@@ -34,45 +80,34 @@ export const FilePicker: FC<FilePickerProps> = ({
   const { t } = useTranslation('filePicker')
 
   const handleDragAndDropState = useCallback((state: DragDropState) => {
-    state === 'dragging-over' ? setIsDraggingOver(true) : setIsDraggingOver(false)
+    setIsDraggingOver(state === 'dragging-over')
   }, [])
 
-  const extractFileStream = useCallback(
-    (file: globalThis.File): File =>
-      Object.assign(file, {
-        stream: file.stream()
-      }),
-    []
-  )
-
-  const toFile = useCallback(
-    (item: DataTransferItem) => {
+  const getFilesFromDroppedItem = useCallback(
+    async (item: DataTransferItem): Promise<File[]> => {
       try {
         const fsEntry = item.webkitGetAsEntry()
-        const file = item.getAsFile()
+        if (!fsEntry) throw new Error('Impossible to get file or folder from dropped item.')
 
-        if (!fsEntry) throw new Error('Could not read item')
-        if (!file || fsEntry.isDirectory) throw new Error('Dropped item not a file')
-
-        return extractFileStream(file)
+        return fsEntry.isDirectory
+          ? await traverseDirectory(fsEntry as FileSystemDirectoryEntry)
+          : mapDataTransferItemToFiles(item)
       } catch (error: unknown) {
         isError(error) && onError?.(error)
+        return []
       }
     },
-    [extractFileStream, onError]
-  )
-
-  const isFileArray = useCallback(
-    (files: (File | undefined)[]): files is File[] => !files.includes(undefined),
-    []
+    [onError]
   )
 
   const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      const files = Array.from(event.dataTransfer.items, toFile)
-      isNonEmpty(files) && isFileArray(files) && onFileChange(files)
+    async (event: React.DragEvent<HTMLDivElement>) => {
+      const files = (
+        await Promise.all(Array.from(event.dataTransfer.items, getFilesFromDroppedItem))
+      ).flat()
+      files.length && onFileChange(files)
     },
-    [isFileArray, onFileChange, toFile]
+    [getFilesFromDroppedItem, onFileChange]
   )
 
   const handleFileChange = useCallback(
@@ -83,7 +118,7 @@ export const FilePicker: FC<FilePickerProps> = ({
         onFileChange(files)
       }
     },
-    [extractFileStream, onFileChange]
+    [onFileChange]
   )
 
   const filesInput = useMemo(
