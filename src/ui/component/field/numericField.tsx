@@ -58,17 +58,21 @@ export const NumericField: FC<NumericFieldProps> = props => {
 
   const inputRef = useMaskito({ options: numericOptions })
 
+  const allowedIntermediatePatterns = useMemo(
+    () =>
+      [decimalSeparator, ...decimalPseudoSeparators].map(
+        separator => new RegExp(`\\${separator}0*$`)
+      ),
+    [decimalSeparator, decimalPseudoSeparators]
+  )
+
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
-      const allowedIntermediatePatterns = [decimalSeparator, ...decimalPseudoSeparators].map(
-        separator => new RegExp(`\\${separator}0*$`)
-      )
-
       if (allowedIntermediatePatterns.some(pattern => pattern.test(event.target.value))) return
 
       onChange?.(event)
     },
-    [onChange, decimalSeparator, decimalPseudoSeparators]
+    [onChange, allowedIntermediatePatterns]
   )
 
   return (
