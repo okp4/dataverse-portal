@@ -164,49 +164,33 @@ describe('Given the updateItemById function,', () => {
   )
 })
 
-describe('without utility function', () => {
-  it('filters out numbers', () => {
-    const itemsToRemove = [1, 2]
-    const myArray = [1, 2, 3, 4, 5]
-    const filteredArray = without(itemsToRemove)(myArray)
-    expect(filteredArray).toEqual([3, 4, 5])
-  })
-
-  it('filters out strings', () => {
-    const stringsToRemove = ['a', 'b']
-    const myStringArray = ['a', 'b', 'c', 'd']
-    const filteredStringArray = without(stringsToRemove)(myStringArray)
-    expect(filteredStringArray).toEqual(['c', 'd'])
-  })
-
-  it('handles empty arrays', () => {
-    const itemsToRemove: number[] = []
-    const myArray = [1, 2, 3, 4, 5]
-    const filteredArray = without(itemsToRemove)(myArray)
-    expect(filteredArray).toEqual([1, 2, 3, 4, 5])
-  })
-
-  it('handles removing from an empty array', () => {
-    const itemsToRemove = [1, 2, 3]
-    const myArray: number[] = []
-    const filteredArray = without(itemsToRemove)(myArray)
-    expect(filteredArray).toEqual([])
-  })
-
-  it('handles arrays of objects with shared references', () => {
-    const object1 = { id: 1 }
-    const object2 = { id: 2 }
-    const object3 = { id: 3 }
-    const objectsToRemove = [object1, object2]
-    const myObjectArray = [object1, object2, object3]
-    const filteredObjectArray = without(objectsToRemove)(myObjectArray)
-    expect(filteredObjectArray).toEqual([object3])
-  })
-
-  it('does not handle arrays of objects with different references', () => {
-    const objectsToRemove = [{ id: 1 }, { id: 2 }]
-    const myObjectArray = [{ id: 1 }, { id: 2 }, { id: 3 }]
-    const filteredObjectArray = without(objectsToRemove)(myObjectArray)
-    expect(filteredObjectArray).not.toEqual([{ id: 3 }])
+describe('Considering the without utility function', () => {
+  describe.each`
+    itemsToRemove             | myArray                              | expectedArray
+    ${[1, 2]}                 | ${[1, 2, 3, 4, 5]}                   | ${[3, 4, 5]}
+    ${['a', 'b']}             | ${['a', 'b', 'c', 'd']}              | ${['c', 'd']}
+    ${[]}                     | ${[1, 2, 3, 4, 5]}                   | ${[1, 2, 3, 4, 5]}
+    ${[1, 2, 3]}              | ${[]}                                | ${[]}
+    ${[{ id: 1 }, { id: 2 }]} | ${[{ id: 1 }, { id: 2 }, { id: 3 }]} | ${[{ id: 1 }, { id: 2 }, { id: 3 }]}
+  `(
+    `Given an initial array of elements <$myArray>`,
+    ({ itemsToRemove, myArray, expectedArray }) => {
+      describe(`When calling the without function with items to remove: ${JSON.stringify(
+        itemsToRemove
+      )} on my array:  ${JSON.stringify(myArray)}`, () => {
+        const filteredArray = without(itemsToRemove)(myArray)
+        test(`Then expect filtered array to be ${JSON.stringify(expectedArray)}`, () => {
+          expect(filteredArray).toEqual(expectedArray)
+        })
+      })
+    }
+  )
+  describe('Given an initial array of objects', () => {
+    test('Then expect to not remove objects with identical values but different references', () => {
+      const objectsToRemove = [{ id: 1 }, { id: 2 }]
+      const myObjectArray = [{ id: 1 }, { id: 2 }, { id: 3 }]
+      const filteredObjectArray = without(objectsToRemove)(myObjectArray)
+      expect(filteredObjectArray).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }])
+    })
   })
 })
