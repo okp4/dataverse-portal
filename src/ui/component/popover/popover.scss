@@ -1,0 +1,56 @@
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-popover-trigger-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.okp4-dataverse-portal-popover-trigger-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 200ms ease-out;
+    
+  &.flipped {
+    transform: rotate(180deg);
+  }
+}
+
+.okp4-dataverse-portal-popover-content {
+  outline: none;
+  background-color: transparent;
+  transform-origin: var(--radix-popover-content-transform-origin);
+}
+
+.okp4-dataverse-portal-popover-content[data-state='open'] {
+  animation: popover-expand 300ms ease-out;
+}
+
+.okp4-dataverse-portal-popover-content[data-state='closed'] {
+  animation: popover-collapse 300ms ease-out;
+}
+
+@keyframes popover-expand {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(var(--radix-popover-content-available-height));
+  }
+}
+
+@keyframes popover-collapse {
+  from {
+    transform: scaleY(var(--radix-popover-content-available-height));
+  }
+
+  to {
+    transform: scaleY(0);
+  }
+}

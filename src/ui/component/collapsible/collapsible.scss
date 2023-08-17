@@ -32,14 +32,14 @@
 }
 
 .okp4-dataverse-portal-collapsible-content[data-state='open'] {
-  animation: slideDown 300ms ease-out;
+  animation: collapsible-expand 300ms ease-out;
 }
 
 .okp4-dataverse-portal-collapsible-content[data-state='closed'] {
-  animation: slideUp 300ms ease-out;
+  animation: collapsible-collapse 300ms ease-out;
 }
 
-@keyframes slideDown {
+@keyframes collapsible-expand {
   from {
     height: 0;
     width: var(--okp4-collapsible-trigger-initial-width);
@@ -51,7 +51,7 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes collapsible-collapse {
   from {
     height: var(--radix-collapsible-content-height);
     width: var(--radix-collapsible-content-width);
