@@ -33,7 +33,7 @@ export const NumericField: FC<NumericFieldProps> = props => {
     decimalSeparator = decimalSeparatorForLocale(i18n.language),
     decimalPseudoSeparators = without([thousandSeparator])(
       // eslint-disable-next-line react/destructuring-assignment
-      props.decimalPseudoSeparators ?? ['.', 'ю', 'б']
+      props.decimalPseudoSeparators ?? [',', '.', 'ю', 'б']
     ),
     min,
     max,
