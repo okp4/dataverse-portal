@@ -9,7 +9,7 @@ import { BaseField } from './baseField'
 import './field.scss'
 import { without } from '@/util/util'
 
-type NumericFieldProps = Omit<BaseFieldProps, 'inputElement'> & {
+type NumericFieldProps = Omit<BaseFieldProps<number>, 'inputElement'> & {
   precision?: number
   thousandSeparator?: string
   decimalSeparator?: string

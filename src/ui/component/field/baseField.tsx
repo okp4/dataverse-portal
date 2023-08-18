@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import { Icon } from '@/ui/component/icon/icon'
 import './field.scss'
 
-export type BaseFieldProps = {
+export type BaseFieldProps<T> = {
   id: string
   inputElement: ReactNode
-  value?: string
+  value?: T
   label?: string
   placeholder?: string
   disabled?: boolean
@@ -20,7 +20,7 @@ export type BaseFieldProps = {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const BaseField: FC<BaseFieldProps> = ({
+export const BaseField: FC<BaseFieldProps<string | number>> = ({
   label,
   error,
   leftElement,

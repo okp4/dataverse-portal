@@ -5,7 +5,7 @@ import type { BaseFieldProps } from './baseField'
 import { BaseField } from './baseField'
 import './field.scss'
 
-type TextFieldProps = Omit<BaseFieldProps, 'inputElement'> & {
+type TextFieldProps = Omit<BaseFieldProps<string>, 'inputElement'> & {
   multiline?: boolean
   resizable?: boolean
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
