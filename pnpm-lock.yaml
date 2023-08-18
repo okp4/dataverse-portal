@@ -1,6 +1,15 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@maskito/core':
+    specifier: ^1.4.0
+    version: 1.4.0
+  '@maskito/kit':
+    specifier: ^1.4.0
+    version: 1.4.0(@maskito/core@1.4.0)
+  '@maskito/react':
+    specifier: ^1.4.0
+    version: 1.4.0(@maskito/core@1.4.0)(react-dom@18.2.0)(react@18.2.0)
   fp-ts:
     specifier: ^2.16.0
     version: 2.16.0
@@ -1144,6 +1153,30 @@ packages:
     dependencies:
       long: 4.0.0
     dev: true
+
+  /@maskito/core@1.4.0:
+    resolution: {integrity: sha512-Q5o3vQ4c52VzJf6dvA1RgruMHM3uwPCjw2ghwJDNeU7W9xn/iuI61KN/kyuMeZDicRQwE+ddVokg2jEtYiPfJw==}
+    dev: false
+
+  /@maskito/kit@1.4.0(@maskito/core@1.4.0):
+    resolution: {integrity: sha512-1hILMNvXbX2GisdrvnFmqqWrjsD4jhUJUWAviIXUBXlxGuh++yqBxx07XEC6BwtYeMDxHD/dF0i5xQ9/oNdxcg==}
+    peerDependencies:
+      '@maskito/core': ^1.4.0
+    dependencies:
+      '@maskito/core': 1.4.0
+    dev: false
+
+  /@maskito/react@1.4.0(@maskito/core@1.4.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vmdBGAyFiujBXMofWblj0KZiGbPMolB3MAKgzMA//vc53TEVq2efvDsok7toCuKzdOBzSNkEPmnNJo0iWnALHg==}
+    peerDependencies:
+      '@maskito/core': ^1.4.0
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@maskito/core': 1.4.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

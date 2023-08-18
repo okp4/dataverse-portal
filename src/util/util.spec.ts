@@ -1,6 +1,13 @@
-import { getURILastElement, isError, isSubstringOf, escapeSparqlStr, updateItemById } from './util'
-import type { Item } from './util'
 import * as O from 'fp-ts/Option'
+import {
+  getURILastElement,
+  isError,
+  isSubstringOf,
+  escapeSparqlStr,
+  updateItemById,
+  without
+} from './util'
+import type { Item } from './util'
 
 type Data = {
   arg: string
@@ -155,4 +162,35 @@ describe('Given the updateItemById function,', () => {
       })
     }
   )
+})
+
+describe('Considering the without utility function', () => {
+  describe.each`
+    itemsToRemove             | myArray                              | expectedArray
+    ${[1, 2]}                 | ${[1, 2, 3, 4, 5]}                   | ${[3, 4, 5]}
+    ${['a', 'b']}             | ${['a', 'b', 'c', 'd']}              | ${['c', 'd']}
+    ${[]}                     | ${[1, 2, 3, 4, 5]}                   | ${[1, 2, 3, 4, 5]}
+    ${[1, 2, 3]}              | ${[]}                                | ${[]}
+    ${[{ id: 1 }, { id: 2 }]} | ${[{ id: 1 }, { id: 2 }, { id: 3 }]} | ${[{ id: 1 }, { id: 2 }, { id: 3 }]}
+  `(
+    `Given an initial array of elements <$myArray>`,
+    ({ itemsToRemove, myArray, expectedArray }) => {
+      describe(`When calling the without function with items to remove: ${JSON.stringify(
+        itemsToRemove
+      )} on my array:  ${JSON.stringify(myArray)}`, () => {
+        const filteredArray = without(itemsToRemove)(myArray)
+        test(`Then expect filtered array to be ${JSON.stringify(expectedArray)}`, () => {
+          expect(filteredArray).toEqual(expectedArray)
+        })
+      })
+    }
+  )
+  describe('Given an initial array of objects', () => {
+    test('Then expect to not remove objects with identical values but different references', () => {
+      const objectsToRemove = [{ id: 1 }, { id: 2 }]
+      const myObjectArray = [{ id: 1 }, { id: 2 }, { id: 3 }]
+      const filteredObjectArray = without(objectsToRemove)(myObjectArray)
+      expect(filteredObjectArray).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }])
+    })
+  })
 })

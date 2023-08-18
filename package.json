@@ -25,6 +25,9 @@
     "lint:fix": "eslint --fix src/**/*.{ts,tsx} && stylelint --fix '**/*.scss'"
   },
   "dependencies": {
+    "@maskito/core": "^1.4.0",
+    "@maskito/kit": "^1.4.0",
+    "@maskito/react": "^1.4.0",
     "fp-ts": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

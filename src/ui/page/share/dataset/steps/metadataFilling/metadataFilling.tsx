@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import type { ChangeEvent } from 'react'
 import { useEffect, useMemo, useCallback, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as IOO from 'fp-ts/IOOption'
@@ -13,11 +14,12 @@ import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
 import { ShowResourceError } from '@/shared/error/resource'
 import { ShowPayloadError, type PayloadError } from '@/shared/error/payload'
-import { Field } from '@/ui/component/field/field'
+import { TextField } from '@/ui/component/field/textField'
 import type { NotificationType } from '@/ui/component/notification/notification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
+import { NumericField } from '@/ui/component/field/numericField'
 
 type FormItemBaseProps = {
   id: string
@@ -98,15 +100,23 @@ export const MetadataFilling: FC = () => {
 
   const formSides = ['left', 'right']
 
+  const handleTagsFieldValueChange = useCallback(
+    (id: string) => (tag: string) => {
+      setFormItemValue(id, tag)()
+    },
+    [setFormItemValue]
+  )
+
   const handleFieldValueChange = useCallback(
-    (id: string) => (value: string) => {
-      setFormItemValue(id, value)()
+    (id: string) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormItemValue(id, event.target.value)()
     },
     [setFormItemValue]
   )
 
   const handleNumericValueChange = useCallback(
-    (id: string) => (value: string) => {
+    (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
       !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
     },
     [setFormItemValue]
@@ -173,7 +183,7 @@ export const MetadataFilling: FC = () => {
         required: true,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id1}>
-            <Field
+            <TextField
               id={id1}
               label={t('share.metadataFilling.datasetTitle')}
               onChange={handleFieldValueChange(id1)}
@@ -193,7 +203,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling publisher" key={id2}>
-            <Field
+            <TextField
               id={id2}
               label={t('share.metadataFilling.publisher')}
               onChange={handleFieldValueChange(id2)}
@@ -213,7 +223,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling creator" key={id3}>
-            <Field
+            <TextField
               id={id3}
               label={t('share.metadataFilling.creator')}
               onChange={handleFieldValueChange(id3)}
@@ -233,7 +243,7 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling description" key={id4}>
-            <Field
+            <TextField
               id={id4}
               label={t('share.metadataFilling.description')}
               multiline
@@ -254,7 +264,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p>{t('share.metadataFilling.format')}</p>
-            <Field
+            <TextField
               id={id5}
               label={t('share.metadataFilling.formatSelection')}
               onChange={handleFieldValueChange(id5)}
@@ -274,7 +284,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p>{t('share.metadataFilling.license')}</p>
-            <Field
+            <TextField
               id={id6}
               label={t('share.metadataFilling.licenceSelection')}
               onChange={handleFieldValueChange(id6)}
@@ -294,7 +304,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p>{t('share.metadataFilling.topic')}</p>
-            <Field
+            <TextField
               id={id7}
               label={t('share.metadataFilling.topicSelection')}
               onChange={handleFieldValueChange(id7)}
@@ -314,7 +324,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p>{t('share.metadataFilling.geographicalCoverage')}</p>
-            <Field
+            <TextField
               id={id8}
               label={t('share.metadataFilling.geographicalCoverageSelection')}
               onChange={handleFieldValueChange(id8)}
@@ -335,8 +345,8 @@ export const MetadataFilling: FC = () => {
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
             <p>{t('share.metadataFilling.tags')}</p>
             <TagsField
-              addTag={handleFieldValueChange(id9)}
-              removeTag={handleFieldValueChange(id9)}
+              addTag={handleTagsFieldValueChange(id9)}
+              removeTag={handleTagsFieldValueChange(id9)}
               tags={multiValuesField(id9)}
             />
           </div>
@@ -352,10 +362,17 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
-            <Field
+            <NumericField
+              decimalPseudoSeparators={[',']}
+              decimalSeparator="."
               id={id10}
-              label={'fee'}
+              max={Infinity}
+              min={0}
               onChange={handleNumericValueChange(id10)}
+              placeholder="0"
+              precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
+              rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
+              thousandSeparator=" " // narrow no-break space U+202F
               value={singleValueField(id10)}
             />
           </div>
@@ -365,7 +382,14 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [t, handleFieldValueChange, singleValueField, multiValuesField, handleNumericValueChange])
+  }, [
+    t,
+    handleFieldValueChange,
+    singleValueField,
+    multiValuesField,
+    handleNumericValueChange,
+    handleTagsFieldValueChange
+  ])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
     form.map(formItem => {
