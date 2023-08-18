@@ -122,6 +122,14 @@ describe('Given the share data slice', () => {
     value: O.some(['Agriculture', 'Open Data', 'Dataviz'])
   }
 
+  const textItemFeesID6: FormItem = {
+    id: '6',
+    title: 'fees',
+    required: false,
+    type: 'text',
+    value: O.some('1 082 689.998')
+  }
+
   // init form payloads
   const initialFormPayload1: InitFormPayload = [textItemID2]
 
@@ -189,6 +197,11 @@ describe('Given the share data slice', () => {
   const numericFormItemPayloadID5: SetFormItemValuePayload = {
     id: '5',
     value: 6
+  }
+
+  const textFormItemFeesPayloadID6: SetFormItemValuePayload = {
+    id: '6',
+    value: '1 632.02547'
   }
 
   // preloaded states
@@ -284,6 +297,11 @@ describe('Given the share data slice', () => {
   const expectedTagsWithoutRemovedTagFormItem5: FormItem = {
     ...tagItemID5,
     value: O.some(['Agriculture', 'Dataviz'])
+  }
+
+  const expectedTextFormItemFeesID6: FormItem = {
+    ...textItemFeesID6,
+    value: O.some('1 632.02547')
   }
 
   describe.each`
@@ -409,6 +427,7 @@ describe('Given the share data slice', () => {
     ${preloadedStateWithFormItem(tagItemID5)}           | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
     ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.id, tagItemID5.type)}
+    ${preloadedStateWithFormItem(textItemFeesID6)}      | ${textFormItemFeesPayloadID6}                          | ${[expectedTextFormItemFeesID6]}                        | ${O.some(expectedTextFormItemFeesID6)}                        | ${undefined}                | ${undefined}                                            | ${undefined}
   `(
     'Given a form item payload <$formItemPayload> ',
     ({

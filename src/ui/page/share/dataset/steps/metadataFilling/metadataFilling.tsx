@@ -114,14 +114,6 @@ export const MetadataFilling: FC = () => {
     [setFormItemValue]
   )
 
-  const handleNumericValueChange = useCallback(
-    (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value
-      !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
-    },
-    [setFormItemValue]
-  )
-
   const numericalFieldValue = (v: DatasetFormItem['value']) => (): string =>
     pipe(
       v,
@@ -357,7 +349,7 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id10,
-        type: 'numeric',
+        type: 'text',
         title: 'fee',
         value: O.none,
         render: (): JSX.Element => (
@@ -368,7 +360,7 @@ export const MetadataFilling: FC = () => {
               id={id10}
               max={Infinity}
               min={0}
-              onChange={handleNumericValueChange(id10)}
+              onChange={handleFieldValueChange(id10)}
               placeholder="0"
               precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
               rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
@@ -382,14 +374,7 @@ export const MetadataFilling: FC = () => {
         }
       }
     ]
-  }, [
-    t,
-    handleFieldValueChange,
-    singleValueField,
-    multiValuesField,
-    handleNumericValueChange,
-    handleTagsFieldValueChange
-  ])
+  }, [t, handleFieldValueChange, singleValueField, multiValuesField, handleTagsFieldValueChange])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
     form.map(formItem => {
