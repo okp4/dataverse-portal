@@ -116,8 +116,11 @@ export const MetadataFilling: FC = () => {
 
   const handleNumericValueChange = useCallback(
     (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value
-      !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
+      const { value } = event.target
+      const isValueValid = value !== '' || !isNaN(Number(value))
+      // TODO: allow to set back to empty value in the slice
+      // User should be able to set back to empty value
+      setFormItemValue(id, isValueValid ? Number(value) : NaN)()
     },
     [setFormItemValue]
   )
@@ -128,8 +131,8 @@ export const MetadataFilling: FC = () => {
         id,
         formItemById,
         IOO.map(({ value }) => value),
-        IOO.match(constant(0), v =>
-          pipe(v, O.chain(O.fromPredicate(N.isNumber)), O.getOrElse(constant(0)))
+        IOO.match(constant(NaN), v =>
+          pipe(v, O.chain(O.fromPredicate(N.isNumber)), O.getOrElse(constant(NaN)))
         ),
         apply(null)
       ),
