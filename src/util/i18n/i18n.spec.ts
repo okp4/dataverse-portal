@@ -110,4 +110,48 @@ describe('I18n utilities', () => {
       }).toThrow('Decimal and thousand separators must be different')
     })
   })
+
+  describe('localizedNumberFormatter and localizedNumberParser', () => {
+    const locales = ['en-US', 'fr-FR', 'de-DE']
+
+    const testCases: Record<string, { number: number; formatted: string }[]> = {
+      'en-US': [
+        { number: 1234.56, formatted: '1,234.56' },
+        { number: 0.2004, formatted: '0.2004' },
+        { number: 987654.32, formatted: '987,654.32' }
+      ],
+      'fr-FR': [
+        { number: 1234.56, formatted: '1 234,56' },
+        { number: 0, formatted: '0' },
+        { number: 987654.32, formatted: '987 654,32' }
+      ],
+      'de-DE': [
+        { number: 1234.56, formatted: '1.234,56' },
+        { number: 0.00001, formatted: '0,000001' },
+        { number: -422, formatted: '-422' },
+        { number: 987654.32, formatted: '987.654,32' }
+      ]
+    }
+
+    locales.forEach(locale => {
+      const format = localizedNumberFormatter(
+        { minimumFractionDigits: 0, maximumFractionDigits: 6 },
+        locale
+      )
+      const parse = localizedNumberParser(locale)
+      const cases = testCases[locale]
+
+      test(`parse ∘ format = Identity for locale ${locale}`, () => {
+        cases.forEach(({ number }) => {
+          expect(parse(format(number))).toBeCloseTo(number)
+        })
+      })
+
+      test(`format ∘ parse = Identity for locale ${locale}`, () => {
+        cases.forEach(({ formatted }) => {
+          expect(format(parse(formatted))).toBe(formatted)
+        })
+      })
+    })
+  })
 })
