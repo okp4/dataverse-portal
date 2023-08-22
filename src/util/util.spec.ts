@@ -5,7 +5,8 @@ import {
   isSubstringOf,
   escapeSparqlStr,
   updateItemById,
-  without
+  without,
+  createIntermediateNumericPattern
 } from './util'
 import type { Item } from './util'
 
@@ -191,6 +192,32 @@ describe('Considering the without utility function', () => {
       const myObjectArray = [{ id: 1 }, { id: 2 }, { id: 3 }]
       const filteredObjectArray = without(objectsToRemove)(myObjectArray)
       expect(filteredObjectArray).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }])
+    })
+  })
+})
+
+describe('Considering the createIntermediateNumericPattern utility function', () => {
+  const separator = '.'
+  const pattern = createIntermediateNumericPattern(separator)
+
+  describe.each`
+    input             | match
+    ${'7.'}           | ${true}
+    ${'2.0'}          | ${true}
+    ${'2.0200'}       | ${true}
+    ${'2.0002000020'} | ${true}
+    ${'2.2220'}       | ${true}
+    ${'5.0000005505'} | ${false}
+    ${'2.02'}         | ${false}
+    ${'2.2'}          | ${false}
+    ${'2'}            | ${false}
+    ${'2.0002'}       | ${false}
+    ${'2.0020002'}    | ${false}
+  `(`Given a separator "$separator" and a numeric input string "$input"`, ({ input, match }) => {
+    describe(`When testing the pattern against the string "${input}"`, () => {
+      it(`Then it ${match ? 'matches' : 'not match'} the pattern`, () => {
+        expect(pattern.test(input)).toBe(match)
+      })
     })
   })
 })
