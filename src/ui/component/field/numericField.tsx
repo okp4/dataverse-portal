@@ -9,7 +9,7 @@ import {
   localizedNumberParser,
   thousandSeparatorForLocale
 } from '@/util/i18n/i18n'
-import { without } from '@/util/util'
+import { createIntermediateNumericPattern, without } from '@/util/util'
 import type { BaseFieldProps } from './baseField'
 import { BaseField } from './baseField'
 import './field.scss'
@@ -89,10 +89,7 @@ export const NumericField: FC<NumericFieldProps> = props => {
   const inputRef = useMaskito({ options: numericOptions })
 
   const allowedIntermediatePatterns = useMemo(
-    () =>
-      [decimalSeparator, ...decimalPseudoSeparators].map(
-        separator => new RegExp(`\\${separator}0*$`) // TODO: fix numbers ending with unhandled pattern, like 1.020
-      ),
+    () => [decimalSeparator, ...decimalPseudoSeparators].map(createIntermediateNumericPattern),
     [decimalSeparator, decimalPseudoSeparators]
   )
 

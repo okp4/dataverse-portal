@@ -105,3 +105,6 @@ export const without = <T>(itemsToRemove: T[]): ((array: T[]) => T[]) =>
 // Escapes all special characters in a string that have significance in a regular expression,
 // allowing the string to be used safely in a RegExp constructor.
 export const escapeRegExp = (s: string): string => s.replace(/[\^$.*+?()|[\]{}\\]/g, '\\$&')
+
+export const createIntermediateNumericPattern = (separator: string): RegExp =>
+  new RegExp(`${escapeRegExp(separator)}(\\d*0+){0,1}$`)
