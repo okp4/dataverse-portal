@@ -116,28 +116,37 @@ export const MetadataFilling: FC = () => {
 
   const handleNumericValueChange = useCallback(
     (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value
-      !isNaN(Number(value)) && setFormItemValue(id, Number(value))()
+      const { value } = event.target
+      const isValueValid = value !== '' || !isNaN(Number(value))
+      // TODO: allow to set back to empty value in the slice
+      // User should be able to set back to empty value
+      setFormItemValue(id, isValueValid ? Number(value) : NaN)()
     },
     [setFormItemValue]
   )
 
-  const numericalFieldValue = (v: DatasetFormItem['value']) => (): string =>
-    pipe(
-      v,
-      O.chain(O.fromPredicate(N.isNumber)),
-      O.map(N.Show.show),
-      O.getOrElse(constant(S.empty))
-    )
+  const numericValueField = useCallback(
+    (id: string): number =>
+      pipe(
+        id,
+        formItemById,
+        IOO.map(({ value }) => value),
+        IOO.match(constant(NaN), v =>
+          pipe(v, O.chain(O.fromPredicate(N.isNumber)), O.getOrElse(constant(NaN)))
+        ),
+        apply(null)
+      ),
+    [formItemById]
+  )
 
-  const singleValueField = useCallback(
+  const textValueField = useCallback(
     (id: string): string =>
       pipe(
         id,
         formItemById,
         IOO.map(({ value }) => value),
         IOO.match(constant(S.empty), v =>
-          pipe(v, O.chain(O.fromPredicate(S.isString)), O.getOrElse(numericalFieldValue(v)))
+          pipe(v, O.chain(O.fromPredicate(S.isString)), O.getOrElse(constant(S.empty)))
         ),
         apply(null)
       ),
@@ -188,7 +197,7 @@ export const MetadataFilling: FC = () => {
               label={t('share.metadataFilling.datasetTitle')}
               onChange={handleFieldValueChange(id1)}
               required
-              value={singleValueField(id1)}
+              value={textValueField(id1)}
             />
           </div>
         ),
@@ -207,7 +216,7 @@ export const MetadataFilling: FC = () => {
               id={id2}
               label={t('share.metadataFilling.publisher')}
               onChange={handleFieldValueChange(id2)}
-              value={singleValueField(id2)}
+              value={textValueField(id2)}
             />
           </div>
         ),
@@ -227,7 +236,7 @@ export const MetadataFilling: FC = () => {
               id={id3}
               label={t('share.metadataFilling.creator')}
               onChange={handleFieldValueChange(id3)}
-              value={singleValueField(id3)}
+              value={textValueField(id3)}
             />
           </div>
         ),
@@ -248,7 +257,7 @@ export const MetadataFilling: FC = () => {
               label={t('share.metadataFilling.description')}
               multiline
               onChange={handleFieldValueChange(id4)}
-              value={singleValueField(id4)}
+              value={textValueField(id4)}
             />
           </div>
         ),
@@ -268,7 +277,7 @@ export const MetadataFilling: FC = () => {
               id={id5}
               label={t('share.metadataFilling.formatSelection')}
               onChange={handleFieldValueChange(id5)}
-              value={singleValueField(id5)}
+              value={textValueField(id5)}
             />
           </div>
         ),
@@ -288,7 +297,7 @@ export const MetadataFilling: FC = () => {
               id={id6}
               label={t('share.metadataFilling.licenceSelection')}
               onChange={handleFieldValueChange(id6)}
-              value={singleValueField(id6)}
+              value={textValueField(id6)}
             />
           </div>
         ),
@@ -308,7 +317,7 @@ export const MetadataFilling: FC = () => {
               id={id7}
               label={t('share.metadataFilling.topicSelection')}
               onChange={handleFieldValueChange(id7)}
-              value={singleValueField(id7)}
+              value={textValueField(id7)}
             />
           </div>
         ),
@@ -328,7 +337,7 @@ export const MetadataFilling: FC = () => {
               id={id8}
               label={t('share.metadataFilling.geographicalCoverageSelection')}
               onChange={handleFieldValueChange(id8)}
-              value={singleValueField(id8)}
+              value={textValueField(id8)}
             />
           </div>
         ),
@@ -373,7 +382,7 @@ export const MetadataFilling: FC = () => {
               precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
               rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
               thousandSeparator=" " // narrow no-break space U+202F
-              value={singleValueField(id10)}
+              value={numericValueField(id10)}
             />
           </div>
         ),
@@ -385,7 +394,8 @@ export const MetadataFilling: FC = () => {
   }, [
     t,
     handleFieldValueChange,
-    singleValueField,
+    textValueField,
+    numericValueField,
     multiValuesField,
     handleNumericValueChange,
     handleTagsFieldValueChange
