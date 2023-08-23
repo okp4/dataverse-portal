@@ -19,7 +19,9 @@
     "previous": "Zurück",
     "next": "Weiter",
     "seeMore": "Mehr sehen",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "close": "Schließen",
+    "clearAll": "Alles löschen"
   },
   "filters": "Filter",
   "dataverse": "Dataverse",

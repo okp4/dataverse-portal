@@ -12,6 +12,7 @@ import { DropDown } from './dropDown'
 import './dropDown.scss'
 import './multiselectDropDown.scss'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 type MultiselectDropdownModalProps = {
   label: string
@@ -32,53 +33,57 @@ const MultiselectDropdownModal: FC<MultiselectDropdownModalProps> = ({
   handleCheckedChange,
   handleCloseModal,
   isModalOpen
-}) => (
-  <Okp4Modal
-    bottomElement={
-      <div className="okp4-dataverse-portal-modal-bottom-element">
-        <button
-          className="okp4-dataverse-portal-modal-bottom-element-button"
-          onClick={handleCloseModal}
-        >
+}) => {
+  const { t } = useTranslation('common')
+
+  return (
+    <Okp4Modal
+      bottomElement={
+        <div className="okp4-dataverse-portal-modal-bottom-element">
+          <button
+            className="okp4-dataverse-portal-modal-bottom-element-button"
+            onClick={handleCloseModal}
+          >
+            {/**TODO: Button component */}
+            {t('actions.close')}
+          </button>
           {/**TODO: Button component */}
-          close {/**TODO: trads */}
-        </button>
-        {/**TODO: Button component */}
-        <button
-          className="okp4-dataverse-portal-modal-bottom-element-button"
-          onClick={handleClearAll}
+          <button
+            className="okp4-dataverse-portal-modal-bottom-element-button"
+            onClick={handleClearAll}
+          >
+            {t('actions.clearAll')}
+          </button>
+        </div>
+      }
+      closeOnEsc
+      isCentered
+      isOpen={isModalOpen}
+      onClose={handleCloseModal}
+      topElement={<h2>{label}</h2>}
+    >
+      {options.map(option => (
+        <div
+          className={classNames('okp4-dataverse-portal-dynamic-checkbox', {
+            checked: value.includes(option)
+          })}
+          key={option}
         >
-          clear all {/**TODO: trads */}
-        </button>
-      </div>
-    }
-    closeOnEsc
-    isCentered
-    isOpen={isModalOpen}
-    onClose={handleCloseModal}
-    topElement={<h2>{label}</h2>}
-  >
-    {options.map(option => (
-      <div
-        className={classNames('okp4-dataverse-portal-dynamic-checkbox', {
-          checked: value.includes(option)
-        })}
-        key={option}
-      >
-        <Checkbox
-          checked={value.includes(option)}
-          id={option}
-          name={option}
-          onCheckedChange={handleCheckedChange({ value: option })}
-          value={option}
-        />
-        <label className="okp4-dataverse-portal-dynamic-checkbox-label" htmlFor={option}>
-          <span className="okp4-dataverse-portal-dynamic-checkbox-label-text">{option}</span>
-        </label>
-      </div>
-    ))}
-  </Okp4Modal>
-)
+          <Checkbox
+            checked={value.includes(option)}
+            id={option}
+            name={option}
+            onCheckedChange={handleCheckedChange({ value: option })}
+            value={option}
+          />
+          <label className="okp4-dataverse-portal-dynamic-checkbox-label" htmlFor={option}>
+            <span className="okp4-dataverse-portal-dynamic-checkbox-label-text">{option}</span>
+          </label>
+        </div>
+      ))}
+    </Okp4Modal>
+  )
+}
 
 type SelectionItemType = 'checkbox'
 
