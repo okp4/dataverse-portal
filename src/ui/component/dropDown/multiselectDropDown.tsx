@@ -5,13 +5,85 @@ import { isSubstringOf } from '@/util/util'
 import { Tag } from '@/ui/component/tag/tag'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import { Okp4Modal } from '@/ui/view/modal/okp4-modal'
+import type { CheckboxOption } from '@/ui/component/checkbox/checkbox'
+import { Checkbox } from '@/ui/component/checkbox/checkbox'
+import { DropDown } from './dropDown'
 import './dropDown.scss'
 import './multiselectDropDown.scss'
-import { DropDown } from './dropDown'
+import classNames from 'classnames'
+
+type MultiselectDropdownModalProps = {
+  label: string
+  options: string[]
+  value: string[]
+  handleClearAll: () => void
+  handleCheckedChange: ({ value }: Pick<CheckboxOption, 'value'>) => () => void
+  handleCloseModal: () => void
+  isModalOpen: boolean
+}
+
+// eslint-disable-next-line max-lines-per-function
+const MultiselectDropdownModal: FC<MultiselectDropdownModalProps> = ({
+  label,
+  options,
+  value,
+  handleClearAll,
+  handleCheckedChange,
+  handleCloseModal,
+  isModalOpen
+}) => (
+  <Okp4Modal
+    bottomElement={
+      <div className="okp4-dataverse-portal-modal-bottom-element">
+        <button
+          className="okp4-dataverse-portal-modal-bottom-element-button"
+          onClick={handleCloseModal}
+        >
+          {/**TODO: Button component */}
+          close {/**TODO: trads */}
+        </button>
+        {/**TODO: Button component */}
+        <button
+          className="okp4-dataverse-portal-modal-bottom-element-button"
+          onClick={handleClearAll}
+        >
+          clear all {/**TODO: trads */}
+        </button>
+      </div>
+    }
+    closeOnEsc
+    isCentered
+    isOpen={isModalOpen}
+    onClose={handleCloseModal}
+    topElement={<h2>{label}</h2>}
+  >
+    {options.map(option => (
+      <div
+        className={classNames('okp4-dataverse-portal-dynamic-checkbox', {
+          checked: value.includes(option)
+        })}
+        key={option}
+      >
+        <Checkbox
+          checked={value.includes(option)}
+          id={option}
+          name={option}
+          onCheckedChange={handleCheckedChange({ value: option })}
+          value={option}
+        />
+        <label className="okp4-dataverse-portal-dynamic-checkbox-label" htmlFor={option}>
+          <span className="okp4-dataverse-portal-dynamic-checkbox-label-text">{option}</span>
+        </label>
+      </div>
+    ))}
+  </Okp4Modal>
+)
 
 type SelectionItemType = 'checkbox'
 
 export type MultiselectDropDownProps = {
+  label: string
   placeholder: string
   value: string[]
   options: string[]
@@ -26,19 +98,22 @@ const {
 } = APP_ENV
 
 type MultiselectDropDownFieldProps = Pick<MultiselectDropDownProps, 'value' | 'placeholder'> & {
-  onDelete: (value: string) => void
+  onChange: (value: string) => void
+  handleShowAllOptions?: (event: React.MouseEvent) => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 const MultiselectDropDownField: FC<MultiselectDropDownFieldProps> = ({
   value,
-  onDelete,
-  placeholder
+  onChange,
+  placeholder,
+  handleShowAllOptions
 }) => {
   const handleDelete = useCallback(
     (value: string) => (): void => {
-      onDelete(value)
+      onChange(value)
     },
-    [onDelete]
+    [onChange]
   )
 
   return value.length ? (
@@ -56,12 +131,20 @@ const MultiselectDropDownField: FC<MultiselectDropDownFieldProps> = ({
         />
       ))}
       {value.length - maxDisplayedTags > 0 && (
-        <Tag
-          classes={{
-            main: 'okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item'
-          }}
-          tagName={`+${value.length - maxDisplayedTags}`}
-        />
+        <div
+          aria-label="Show all options"
+          className="okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item-wrapper"
+          onClick={handleShowAllOptions}
+          role="button"
+          tabIndex={0}
+        >
+          <Tag
+            classes={{
+              main: 'okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item'
+            }}
+            tagName={`+${value.length - maxDisplayedTags}`}
+          />
+        </div>
       )}
     </div>
   ) : (
@@ -117,7 +200,9 @@ const MultiselectDropDownOptions: FC<MultiselectDropDownOptionsProps> = ({
   )
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const MultiselectDropDown: FC<MultiselectDropDownProps> = ({
+  label,
   placeholder,
   value,
   options,
@@ -126,6 +211,29 @@ export const MultiselectDropDown: FC<MultiselectDropDownProps> = ({
   selectionType,
   maxSearchResults = maxDisplayedSearchResults
 }) => {
+  const [isModalOpen, setModalOpen] = useState(false)
+
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false)
+  }, [])
+
+  const handleOpenModal = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation()
+    setModalOpen(true)
+  }, [])
+
+  const handleClearAll = useCallback(() => {
+    value.forEach(onChange)
+  }, [value, onChange])
+
+  const handleCheckedChange = useCallback(
+    ({ value }: Pick<CheckboxOption, 'value'>) =>
+      (): void => {
+        onChange(value)
+      },
+    [onChange]
+  )
+
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   const handleSearch = useCallback(
@@ -160,9 +268,23 @@ export const MultiselectDropDown: FC<MultiselectDropDownProps> = ({
         }
         contentClassName="okp4-dataverse-portal-multiselect-dropdown-options"
         trigger={
-          <MultiselectDropDownField onDelete={onChange} placeholder={placeholder} value={value} />
+          <MultiselectDropDownField
+            handleShowAllOptions={handleOpenModal}
+            onChange={onChange}
+            placeholder={placeholder}
+            value={value}
+          />
         }
         triggerClassName="okp4-dataverse-portal-multiselect-dropdown-field"
+      />
+      <MultiselectDropdownModal
+        handleCheckedChange={handleCheckedChange}
+        handleClearAll={handleClearAll}
+        handleCloseModal={handleCloseModal}
+        isModalOpen={isModalOpen}
+        label={label}
+        options={options}
+        value={value}
       />
     </div>
   )

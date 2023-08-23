@@ -298,6 +298,7 @@ export const MetadataFilling: FC = () => {
               {t('share.metadataFilling.format')}
             </p>
             <MultiselectDropDown
+              label={t('share.metadataFilling.format')}
               onChange={handleTagsFieldValueChange(id5)}
               options={defaultFormatOption}
               placeholder={t('share.metadataFilling.formatSelection')}
@@ -322,6 +323,7 @@ export const MetadataFilling: FC = () => {
               {t('share.metadataFilling.license')}
             </p>
             <MultiselectDropDown
+              label={t('share.metadataFilling.license')}
               onChange={handleTagsFieldValueChange(id6)}
               options={defaultFormatOption}
               placeholder={t('share.metadataFilling.licenceSelection')}
