@@ -139,11 +139,7 @@ export const MultiselectDropDown: FC<MultiselectDropDownProps> = ({
   return (
     <div className="okp4-dataverse-portal-multiselect-dropdown-main">
       <DropDown
-        field={
-          <MultiselectDropDownField onDelete={onChange} placeholder={placeholder} value={value} />
-        }
-        fieldClassName="okp4-dataverse-portal-multiselect-dropdown-field"
-        options={
+        content={
           <div className="okp4-dataverse-portal-dropdown-search-options">
             <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
             <MultiselectDropDownOptions
@@ -155,7 +151,11 @@ export const MultiselectDropDown: FC<MultiselectDropDownProps> = ({
             />
           </div>
         }
-        optionsClassName="okp4-dataverse-portal-multiselect-dropdown-options"
+        contentClassName="okp4-dataverse-portal-multiselect-dropdown-options"
+        trigger={
+          <MultiselectDropDownField onDelete={onChange} placeholder={placeholder} value={value} />
+        }
+        triggerClassName="okp4-dataverse-portal-multiselect-dropdown-field"
       />
     </div>
   )
