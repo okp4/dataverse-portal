@@ -295,7 +295,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id5}>
             <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.format')}
+              {t('share.metadataFilling.formatLabel')}
             </p>
             <MultiselectDropDown
               label={t('share.metadataFilling.format')}
@@ -320,7 +320,7 @@ export const MetadataFilling: FC = () => {
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id6}>
             <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.license')}
+              {t('share.metadataFilling.licenseLabel')}
             </p>
             <MultiselectDropDown
               label={t('share.metadataFilling.license')}

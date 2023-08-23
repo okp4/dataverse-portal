@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 import { useMemo, useCallback, useState } from 'react'
+import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
 import { Tag } from '@/ui/component/tag/tag'
@@ -8,11 +10,10 @@ import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noRes
 import { Okp4Modal } from '@/ui/view/modal/okp4-modal'
 import type { CheckboxOption } from '@/ui/component/checkbox/checkbox'
 import { Checkbox } from '@/ui/component/checkbox/checkbox'
+import { Button } from '@/ui/component/button/button'
 import { DropDown } from './dropDown'
 import './dropDown.scss'
 import './multiselectDropDown.scss'
-import classNames from 'classnames'
-import { useTranslation } from 'react-i18next'
 
 type MultiselectDropdownModalProps = {
   label: string
@@ -39,32 +40,33 @@ const MultiselectDropdownModal: FC<MultiselectDropdownModalProps> = ({
   return (
     <Okp4Modal
       bottomElement={
-        <div className="okp4-dataverse-portal-modal-bottom-element">
-          <button
-            className="okp4-dataverse-portal-modal-bottom-element-button"
+        <>
+          <Button
+            className="okp4-dataverse-portal-multiselect-dropdown-modal-bottom-button"
+            label={t('actions.close')}
             onClick={handleCloseModal}
-          >
-            {/**TODO: Button component */}
-            {t('actions.close')}
-          </button>
-          {/**TODO: Button component */}
-          <button
-            className="okp4-dataverse-portal-modal-bottom-element-button"
+            variant="outlined-secondary"
+          />
+          <Button
+            className="okp4-dataverse-portal-multiselect-dropdown-modal-bottom-button"
+            label={t('actions.clearAll')}
             onClick={handleClearAll}
-          >
-            {t('actions.clearAll')}
-          </button>
-        </div>
+            variant="quaternary-turquoise"
+          />
+        </>
       }
-      closeOnEsc
-      isCentered
+      classes={{
+        main: 'okp4-dataverse-portal-multiselect-dropdown-modal-main'
+      }}
       isOpen={isModalOpen}
       onClose={handleCloseModal}
-      topElement={<h2>{label}</h2>}
+      topElement={
+        <h3 className="okp4-dataverse-portal-multiselect-dropdown-modal-title">{label}</h3>
+      }
     >
       {options.map(option => (
         <div
-          className={classNames('okp4-dataverse-portal-dynamic-checkbox', {
+          className={classNames('okp4-dataverse-portal-multiselect-dropdown-modal-checkbox', {
             checked: value.includes(option)
           })}
           key={option}
@@ -76,8 +78,13 @@ const MultiselectDropdownModal: FC<MultiselectDropdownModalProps> = ({
             onCheckedChange={handleCheckedChange({ value: option })}
             value={option}
           />
-          <label className="okp4-dataverse-portal-dynamic-checkbox-label" htmlFor={option}>
-            <span className="okp4-dataverse-portal-dynamic-checkbox-label-text">{option}</span>
+          <label
+            className="okp4-dataverse-portal-multiselect-dropdown-modal-checkbox-label"
+            htmlFor={option}
+          >
+            <span className="okp4-dataverse-portal-multiselect-dropdown-modal-checkbox-label-text">
+              {option}
+            </span>
           </label>
         </div>
       ))}
