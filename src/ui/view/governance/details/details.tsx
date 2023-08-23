@@ -13,6 +13,7 @@ import type {
 } from '@/ui/page/dataverse/zone/governance/mockedData'
 import classNames from 'classnames'
 import './details.scss'
+import { Okp4Modal } from '../../modal/okp4-modal'
 
 type ArticleProps = {
   article: ArticleDTO
@@ -54,6 +55,16 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
     }
   }, [])
 
+  const [isModalOpen, setModalOpen] = useState(false)
+
+  const handleOpenModal = useCallback(() => {
+    setModalOpen(true)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false)
+  }, [])
+
   return (
     <div className="okp4-dataverse-portal-governance-details-paragraph">
       <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
@@ -68,9 +79,36 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
       </div>
       {isTextTooLong && (
         <div className="okp4-dataverse-portal-governance-details-button">
-          <Button disabled label={t('actions.seeMore')} variant="outlined-tertiary" />
+          <Button
+            label={t('actions.seeMore')}
+            onClick={handleOpenModal}
+            variant="outlined-tertiary"
+          />
         </div>
       )}
+      <Okp4Modal
+        bottomElement={
+          <Button
+            className="okp4-dataverse-portal-governance-details-modal-button"
+            label={t('actions.close')}
+            onClick={handleCloseModal}
+            size="large"
+            variant="outlined-secondary"
+          />
+        }
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        topElement={
+          <div className="okp4-dataverse-portal-governance-details-modal-top-element">
+            <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
+            <h1>{paragraph.title}</h1>
+          </div>
+        }
+      >
+        <div className="okp4-dataverse-portal-governance-details-modal-content">
+          {paragraph.description}
+        </div>
+      </Okp4Modal>
     </div>
   )
 }
