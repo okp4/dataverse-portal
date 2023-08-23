@@ -45,9 +45,13 @@ export const Modal: FC<ModalProps> = ({
 
   useOnKeyboard(handleEscape)
 
-  const handleOverlayClick = useCallback(() => {
-    onClose()
-  }, [onClose])
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      onClose()
+    },
+    [onClose]
+  )
 
   const preventPropagation = useCallback((e: React.MouseEvent): void => {
     e.stopPropagation()
