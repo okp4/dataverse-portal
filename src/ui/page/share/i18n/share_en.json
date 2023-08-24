@@ -32,7 +32,8 @@
       "topicSelection": "Select topic",
       "geographicalCoverage": "Geographical coverage:",
       "geographicalCoverageSelection": "Select geographical coverage",
-      "tags": "Tags"
+      "tags": "Tags",
+      "enterDatasetFee": "Enter the minimum fee applicable for the use of this dataset"
     }
   }
 }
