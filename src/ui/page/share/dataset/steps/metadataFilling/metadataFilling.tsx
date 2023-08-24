@@ -20,6 +20,7 @@ import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { TagsField } from '@/ui/view/tagsField/tagsField'
 import './metadataFilling.scss'
 import { NumericField } from '@/ui/component/field/numericField'
+import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 
 type FormItemBaseProps = {
   id: string
@@ -371,18 +372,23 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
-            <NumericField
-              decimalPseudoSeparators={[',']}
-              decimalSeparator="."
-              id={id10}
-              max={Infinity}
-              min={0}
-              onChange={handleNumericValueChange(id10)}
-              placeholder="0"
-              precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
-              rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
-              thousandSeparator=" " // narrow no-break space U+202F
-              value={numericValueField(id10)}
+            <KnowFee
+              field={
+                <NumericField
+                  decimalPseudoSeparators={[',']}
+                  decimalSeparator="."
+                  id={id10}
+                  max={Infinity}
+                  min={0}
+                  onChange={handleNumericValueChange(id10)}
+                  placeholder="0"
+                  precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
+                  rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
+                  thousandSeparator=" " // narrow no-break space U+202F
+                  value={numericValueField(id10)}
+                />
+              }
+              label={t('share.metadataFilling.enterDatasetFee')}
             />
           </div>
         ),
