@@ -30,9 +30,11 @@
       "licenseLabel": "Licence :",
       "license": "Licence",
       "licenceSelection": "Sélectionner la licence",
-      "topic": "Thème :",
+      "topicLabel": "Thème :",
+      "topic": "Thème",
       "topicSelection": "Sélectionner le thème",
-      "geographicalCoverage": "Couverture géographique :",
+      "geographicalCoverageLabel": "Couverture géographique :",
+      "geographicalCoverage": "Couverture géographique",
       "geographicalCoverageSelection": "Sélectionner la couverture géographique",
       "tags": "Tags",
       "enterDatasetFee": "Indiquer le tarif minimum applicable à l'utilisation de cet ensemble de données"
