@@ -30,9 +30,11 @@
       "licenseLabel": "License:",
       "license": "License",
       "licenceSelection": "Select license",
-      "topic": "Topic:",
+      "topicLabel": "Topic:",
+      "topic": "Topic",
       "topicSelection": "Select topic",
-      "geographicalCoverage": "Geographical coverage:",
+      "geographicalCoverageLabel": "Geographical coverage:",
+      "geographicalCoverage": "Geographical coverage",
       "geographicalCoverageSelection": "Select geographical coverage",
       "tags": "Tags",
       "enterDatasetFee": "Enter the minimum fee applicable for the use of this dataset"

@@ -339,19 +339,22 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id7,
-        type: 'text',
+        type: 'select',
         title: 'topic',
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id7}>
             <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.topic')}
+              {t('share.metadataFilling.topicLabel')}
             </p>
-            <TextField
-              id={id7}
-              label={t('share.metadataFilling.topicSelection')}
-              onChange={handleFieldValueChange(id7)}
-              value={textValueField(id7)}
+            <MultiselectDropDown
+              label={t('share.metadataFilling.topic')}
+              onChange={handleTagsFieldValueChange(id7)}
+              options={defaultFormatOption}
+              placeholder={t('share.metadataFilling.topicSelection')}
+              searchPlaceholder={t('share.metadataFilling.topicSelection')}
+              selectionType="checkbox"
+              value={multiValuesField(id7)}
             />
           </div>
         ),
@@ -361,19 +364,22 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id8,
-        type: 'text',
+        type: 'select',
         title: 'geographicalCoverage',
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id8}>
             <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.geographicalCoverage')}
+              {t('share.metadataFilling.geographicalCoverageLabel')}
             </p>
-            <TextField
-              id={id8}
-              label={t('share.metadataFilling.geographicalCoverageSelection')}
-              onChange={handleFieldValueChange(id8)}
-              value={textValueField(id8)}
+            <MultiselectDropDown
+              label={t('share.metadataFilling.geographicalCoverage')}
+              onChange={handleTagsFieldValueChange(id8)}
+              options={defaultFormatOption}
+              placeholder={t('share.metadataFilling.geographicalCoverageSelection')}
+              searchPlaceholder={t('share.metadataFilling.geographicalCoverageSelection')}
+              selectionType="checkbox"
+              value={multiValuesField(id8)}
             />
           </div>
         ),
