@@ -32,7 +32,8 @@
       "topicSelection": "Thema auswählen",
       "geographicalCoverage": "Geografische Abdeckung:",
       "geographicalCoverageSelection": "Wählen Sie die geografische Abdeckung",
-      "tags": "Tags"
+      "tags": "Tags",
+      "enterDatasetFee": "Geben Sie die Mindestgebühr für diese Datenutzung ein."
     }
   }
 }
