@@ -10,7 +10,9 @@
       "serviceStorageSearch": "Search a storage service",
       "select": "Select your Data",
       "selectDescription": "Select the dataset that you want to upload into the storage service.",
-      "knowFee": "Fees set for the use of the dataset"
+      "knowFee": "Fees set for the use of the dataset",
+      "summary": "All in summary",
+      "summaryCertify": "I certify that I do not share any personal metadata."
     },
     "service": {
       "title": "I share a service",
