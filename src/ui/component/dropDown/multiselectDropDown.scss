@@ -1,0 +1,94 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins.scss';
+
+.okp4-dataverse-portal-multiselect-dropdown-main {
+  @include with-theme {
+    .okp4-dataverse-portal-multiselect-dropdown-field-list {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+
+      .okp4-dataverse-portal-multiselect-dropdown-field-list-item,
+      .okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item {
+        color: themed('dropdown-tags-color');
+        background-color: themed('dropdown-tags-background');
+      }
+
+      .okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item {
+        max-width: 40px; 
+      }
+
+      .okp4-dataverse-portal-multiselect-dropdown-field-list-item {
+        min-width: 40px;
+        flex-shrink: 0;
+      }
+
+      .hidden { 
+        display: none;
+      }
+    }
+  }
+}
+
+
+.okp4-dataverse-portal-multiselect-dropdown-options {
+  @include with-theme {
+    --checkbox-height: 32px;
+    --checkbox-gap: 6px;
+    --visible-checkboxes: 6;
+    --search-height: 40px;
+    --search-option-gap: 8px;
+    --search-option-padding: 10px;
+      
+    --content-height: calc(
+      (var(--checkbox-height) + var(--checkbox-gap)) * var(--visible-checkboxes) + var(--search-height) + var(--search-option-gap) + var(--search-option-padding) * 2
+    );
+    display: flex;
+    flex-direction: column;
+    height: var(--content-height);
+    max-height: auto;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+      
+    .okp4-dataverse-portal-dropdown-search-options {
+      box-sizing: border-box;
+      padding: var(--search-option-padding);
+      @include columns-with-gap(var(--search-option-gap));
+      border-radius: 6px;
+      background-color: themed('dropdown-content-background');
+      box-shadow: themed('dropdown-content-box-shadow');
+      height: min-content;
+      max-height: 100%;
+        
+      .okp4-dataverse-portal-dropdown-options-list {
+        @include columns-with-gap(var(--checkbox-gap));
+        overflow-y: auto;
+        padding-right: var(--checkbox-gap);
+    
+        .checked {
+          background: none;
+        }
+      }
+    
+      .okp4-dataverse-portal-dropdown-no-results-wrapper {
+        @include grid-item($colStart: 1, $colEnd: -1);
+        display: flex;
+        justify-content: center;
+        height: inherit;
+        min-height: calc((var(--checkbox-height) + var(--checkbox-gap)) * 3);
+      }
+    }
+  }
+}
+
+.okp4-dataverse-portal-popover-content[data-side='top'] {
+  &.okp4-dataverse-portal-multiselect-dropdown-options {
+    justify-content: flex-end;
+  } 
+}
+    
+.okp4-dataverse-portal-popover-content[data-side='top'] .okp4-dataverse-portal-dropdown-search-options {
+  flex-direction: column-reverse;
+}
