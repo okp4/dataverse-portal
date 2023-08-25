@@ -87,7 +87,8 @@ $themes: (
     dropdown-content-background: $dropdown-content-background-light,
     dropdown-content-box-shadow: $dropdown-content-box-shadow-light,
     modal-background: $modal-background-light,
-    modal-line-divider: $modal-line-divider-light
+    modal-line-divider: $modal-line-divider-light,
+    share-dataset-summary-title: $share-dataset-summary-title-light
   ),
   dark: (
     primary-color: $primary,
@@ -174,7 +175,8 @@ $themes: (
     dropdown-content-background: $dropdown-content-background-dark,
     dropdown-content-box-shadow: $dropdown-content-box-shadow-dark,
     modal-background: $modal-background-dark,
-    modal-line-divider: $modal-line-divider-dark
+    modal-line-divider: $modal-line-divider-dark,
+    share-dataset-summary-title: $share-dataset-summary-title-dark
   )
 );
 
