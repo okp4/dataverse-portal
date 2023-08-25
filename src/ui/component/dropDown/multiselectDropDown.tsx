@@ -34,6 +34,13 @@ const MultiselectDropDownField: FC<MultiselectDropDownFieldProps> = ({
   onDelete,
   placeholder
 }) => {
+  const handleDelete = useCallback(
+    (value: string) => (): void => {
+      onDelete(value)
+    },
+    [onDelete]
+  )
+
   return value.length ? (
     <div className="okp4-dataverse-portal-multiselect-dropdown-field-list">
       {value.map((valueElement, index) => (
@@ -44,7 +51,7 @@ const MultiselectDropDownField: FC<MultiselectDropDownFieldProps> = ({
             }`
           }}
           key={valueElement}
-          onDelete={onDelete}
+          onDelete={handleDelete(valueElement)}
           tagName={valueElement}
         />
       ))}

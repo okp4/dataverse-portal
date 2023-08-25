@@ -8,7 +8,7 @@ import classNames from 'classnames'
 type TagProps = {
   tagName: string
   classes?: { main?: string; name?: string; icon?: string }
-  onDelete?: (tagName: string) => void
+  onDelete?: () => void
 }
 
 export const Tag: FC<TagProps> = ({ tagName, onDelete, classes }) => {
@@ -20,10 +20,10 @@ export const Tag: FC<TagProps> = ({ tagName, onDelete, classes }) => {
       e.stopPropagation()
 
       if (onDelete) {
-        onDelete(tagName)
+        onDelete()
       }
     },
-    [onDelete, tagName]
+    [onDelete]
   )
 
   return (
