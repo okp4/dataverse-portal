@@ -102,7 +102,9 @@ export const Summary: FC = () => {
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-summary-container">
-      <h2>{t('share:share.dataset.summary')}</h2>
+      <h2 className="okp4-dataverse-portal-share-dataset-summary-title">
+        {t('share:share.dataset.summary')}
+      </h2>
       <div className="okp4-dataverse-portal-share-dataset-summary-left">
         <div className="okp4-dataverse-portal-share-dataset-summary-item-container">
           {summaryLeftfItems.map((item, index) => (

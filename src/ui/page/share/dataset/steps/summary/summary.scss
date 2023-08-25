@@ -13,7 +13,7 @@
       @include grid-container($colGutter: 34px, $rowGutter: 26px);
     }
 
-    h2 {
+    .okp4-dataverse-portal-share-dataset-summary-title {
       @include grid-item($colStart: 1, $colEnd: -1);
       @include noto-sans(700);
       font-size: 28px;
