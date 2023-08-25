@@ -11,9 +11,9 @@ import type {
   ParagraphDTO,
   SectionDTO
 } from '@/ui/page/dataverse/zone/governance/mockedData'
+import { Okp4Modal } from '@/ui/view/modal/okp4-modal'
 import classNames from 'classnames'
 import './details.scss'
-import { Okp4Modal } from '../../modal/okp4-modal'
 
 type ArticleProps = {
   article: ArticleDTO
@@ -96,12 +96,17 @@ const Paragraph: FC<ParagraphProps> = ({ paragraph, theme }) => {
             variant="outlined-secondary"
           />
         }
+        classes={{
+          main: 'okp4-dataverse-portal-governance-details-modal-main'
+        }}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         topElement={
           <div className="okp4-dataverse-portal-governance-details-modal-top-element">
             <Icon name={`${iconMapping[paragraph.title] || 'description'}-${theme}` as IconName} />
-            <h1>{paragraph.title}</h1>
+            <h1 className="okp4-dataverse-portal-governance-details-modal-top-element-title">
+              {paragraph.title}
+            </h1>
           </div>
         }
       >
