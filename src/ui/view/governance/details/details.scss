@@ -173,6 +173,32 @@
   }
 }
 
+.okp4-dataverse-portal-governance-details-modal-main {
+  .okp4-dataverse-portal-governance-details-modal-top-element {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    .okp4-dataverse-portal-governance-details-modal-top-element-title {
+      @include norse-font(700);
+      font-size: 24px;
+    }
+  }
+
+  .okp4-dataverse-portal-governance-details-modal-content {
+    @include noto-sans(400);
+    max-width: 293px;
+    overflow-wrap: break-word;
+  }
+
+  .okp4-dataverse-portal-okp4-modal-bottom-element {
+    .okp4-dataverse-portal-governance-details-modal-button {
+      width: 120px;
+    }
+  }
+}
+  
+
 .okp4-dataverse-portal-governance-identity-main {
   @include with-theme {
     @include noto-sans(700);
