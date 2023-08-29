@@ -1,0 +1,201 @@
+/* stylelint-disable selector-class-pattern */
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/functions.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-day-picker-main {
+  @include with-theme {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background-color: themed('calendar-background');
+    box-shadow: 0 6px 12px 0 rgba(33, 37, 41, 0.12);
+    border-radius: 12px;
+    padding: 24px 32px;
+
+    .okp4-dataverse-portal-day-picker-title {
+      @include noto-sans(700);
+      font-size: 16px;
+      color: themed('text');
+      line-height: 22px;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+      text-align: center;
+    }
+
+    .okp4-dataverse-portal-day-picker-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+
+      .okp4-dataverse-portal-day-picker-button {
+        width: auto;
+        white-space: nowrap;
+        padding: 0;
+
+        .okp4-dataverse-portal-content-container {
+          padding: 8px 12px;
+        }
+
+        .okp4-dataverse-portal-button-label {
+          font-size: 14px;
+          line-height: 24px;
+        }
+
+        &.outlined-secondary {
+          .okp4-dataverse-portal-content-container {
+            padding: 7px 12px;
+          }
+        }
+      }
+    }
+    
+    .rdp {
+      --rdp-accent-color: #{themed('primary-color')};
+      --rdp-background-color: transparent;
+      @include noto-sans(400);
+      margin: 0;
+
+      .rdp-row {
+        border-top: 5px solid transparent;
+      }
+    
+      .rdp-month {
+        .rdp-caption {
+          justify-content: center;
+        }
+        
+        .rdp-head_cell {
+          @include noto-sans(700);
+          font-size: 14px;
+          color: themed('neutral-900');
+          line-height: 24px;
+        }
+
+        .rdp-day {
+          font-size: 14px;
+          color: themed('calendar-day-color');
+          line-height: 24px;
+          border: 0;
+
+          &:focus-visible {
+            background-color: themed('calendar-day-today');
+          }
+        }
+
+        .rdp-day_today {
+          color: themed('calendar-day-today');
+          position: relative;
+
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: themed('calendar-day-today');
+          }
+        
+          &.rdp-day_selected {
+            &::before {
+              background-color: themed('text')
+            }
+          }
+        
+          &.rdp-day_outside {
+            &::before {
+              background-color: themed('calendar-day-outside-color');
+            }
+          }
+        }
+
+        .rdp-day_outside {
+          color: themed('calendar-day-outside-color');
+        }
+
+        .rdp-day_selected {
+          @include noto-sans(700);
+          color: #ffffff;
+        }
+
+        .rdp-day_range_middle {
+          background-color: themed('calendar-day-range-middle');
+          color: themed('text');
+        }
+    
+        .rdp-day_range_start,
+        .rdp-day_range_end {
+          border-radius: 50%;
+          z-index: 1;
+        }
+
+        .rdp-cell {
+          position: relative;
+        }
+
+        .rdp-cell:has(.rdp-day_range_start) {
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 20px;
+            height: 40px;
+            background-color: themed('calendar-day-range-middle');
+          }
+        }
+
+        .rdp-cell:has(.rdp-day_range_end) {
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            width: 20px;
+            height: 40px;
+            background-color: themed('calendar-day-range-middle');
+          }
+        }
+
+        .rdp-caption_dropdowns {
+          gap: 14px;
+          margin-bottom: 26px;
+        }
+
+        .rdp-dropdown_month, .rdp-dropdown_year {
+          padding: 6px;
+          border-radius: 6px;
+          background-color: themed('calendar-dropdowns-background');
+          cursor: pointer;        
+        }
+
+        .rdp-caption_label {
+          @include noto-sans(300);
+          font-size: 16px;
+          color: themed('text');
+          line-height: 22px;
+        }
+
+        .rdp-dropdown_icon {
+          color: themed('text');
+          width: 15px;
+          height: 10px;
+          
+          $icon-color: themed('text'); 
+          $icon-color-encoded: encode-color($icon-color);
+          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 18 11" fill="none"><path d="M10.7385 10.4815L1.77539 1.51846" stroke="#{$icon-color-encoded}" stroke-width="4" stroke-linejoin="bevel"/><path d="M11.5986 6.70146L16.9999 1.51846" stroke="#{$icon-color-encoded}" stroke-width="4"/></svg>') no-repeat center center;
+
+          path {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

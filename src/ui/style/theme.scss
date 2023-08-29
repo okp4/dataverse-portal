@@ -18,6 +18,7 @@ $themes: (
     background-disabled: $background-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
+    neutral-900: $neutral-900,
     background: $background-light,
     background-variant-1: $background-light-variant-1,
     background-variant-2: $background-light-variant-2,
@@ -88,7 +89,13 @@ $themes: (
     dropdown-content-box-shadow: $dropdown-content-box-shadow-light,
     modal-background: $modal-background-light,
     modal-line-divider: $modal-line-divider-light,
-    share-dataset-summary-title: $share-dataset-summary-title-light
+    share-dataset-summary-title: $share-dataset-summary-title-light,
+    calendar-background: $calendar-background-light,
+    calendar-day-color: $calendar-day-color-light,
+    calendar-day-outside-color: $calendar-day-outside-color-light,
+    calendar-day-range-middle: $calendar-day-range-middle-light,
+    calendar-day-today: $calendar-day-today-light,
+    calendar-dropdowns-background: $calendar-dropdowns-background-light,
   ),
   dark: (
     primary-color: $primary,
@@ -106,6 +113,7 @@ $themes: (
     background-disabled: $background-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
+    neutral-900: $neutral-900,
     background: $background-dark,
     background-variant-1: $background-dark-variant-1,
     background-variant-2: $background-dark-variant-2,
@@ -176,7 +184,13 @@ $themes: (
     dropdown-content-box-shadow: $dropdown-content-box-shadow-dark,
     modal-background: $modal-background-dark,
     modal-line-divider: $modal-line-divider-dark,
-    share-dataset-summary-title: $share-dataset-summary-title-dark
+    share-dataset-summary-title: $share-dataset-summary-title-dark,
+    calendar-background: $calendar-background-dark,
+    calendar-day-color: $calendar-day-color-dark,
+    calendar-day-outside-color: $calendar-day-outside-color-dark,
+    calendar-day-range-middle: $calendar-day-range-middle-dark,
+    calendar-day-today: $calendar-day-today-dark,
+    calendar-dropdowns-background: $calendar-dropdowns-background-dark,
   )
 );
 

@@ -6,6 +6,7 @@ $primary-variant-3: #00b6b7;
 $primary-variant-4: #50ddb7;
 $primary-variant-5: #5580a2;
 $primary-text: #ffffff;
+$primary-100: #AABFD0;
 
 // secondary (orange)
 $secondary: #ff9500;
@@ -16,6 +17,7 @@ $secondary-disabled: #b2c3d1;
 // neutral (grey)
 $neutral: #babec2;
 $neutral-variant-1: #dfe4e9;
+$neutral-900: #4A4C4E;
 
 // disabled
 $color-text-disabled: #ccd9e3;
@@ -174,3 +176,17 @@ $modal-line-divider-dark: rgba(255, 255, 255, 0.12);
 // share dataset summary
 $share-dataset-summary-title-dark: rgba(255, 255, 255, 0.4);
 $share-dataset-summary-title-light: rgba(0, 64, 115, 0.4);
+
+// calendar
+$calendar-background-light: #ffffff;
+$calendar-background-dark: #242433;
+$calendar-day-color-light: $neutral-900;
+$calendar-day-color-dark: #E3E3E3;
+$calendar-day-outside-color-light: $neutral;
+$calendar-day-outside-color-dark: #707275;
+$calendar-day-range-middle-light: $primary-100;
+$calendar-day-range-middle-dark: rgba($primary, 0.2);
+$calendar-day-today-light: $primary-variant-1;
+$calendar-day-today-dark: #2B608A;
+$calendar-dropdowns-background-light: rgba($primary-variant-1, 0.08);
+$calendar-dropdowns-background-dark: $background-dark;
