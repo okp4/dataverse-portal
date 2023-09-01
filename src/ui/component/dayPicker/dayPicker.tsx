@@ -1,9 +1,18 @@
-import { useCallback, type FC } from 'react'
+import { useCallback, type FC, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { SelectSingleEventHandler } from 'react-day-picker'
 import { DayPicker as RDayPicker } from 'react-day-picker'
+import { enUS, fr, de } from 'date-fns/locale'
 import { Button } from '@/ui/component/button/button'
 import 'react-day-picker/dist/style.css'
 import './dayPicker.scss'
+import './i18n/index'
+
+const localeMap = new Map([
+  ['en', enUS],
+  ['fr', fr],
+  ['de', de]
+])
 
 type DayPickerProps = {
   onSelect: SelectSingleEventHandler
@@ -27,6 +36,11 @@ export const DayPicker: FC<DayPickerProps> = ({
   title,
   onConfirm
 }) => {
+  const locale = useTranslation().i18n.language
+  const { t } = useTranslation('dayPicker')
+
+  const getLocaleFromLocaleString = useMemo(() => localeMap.get(locale) ?? enUS, [locale])
+
   const handleRemoveDate = useCallback(
     (event?: React.MouseEvent<HTMLButtonElement>) => {
       if (!selected) return
@@ -44,6 +58,7 @@ export const DayPicker: FC<DayPickerProps> = ({
         captionLayout="dropdown"
         fromDate={fromDate}
         fromYear={fromYear}
+        locale={getLocaleFromLocaleString}
         mode="single"
         onSelect={onSelect}
         selected={selected}
@@ -55,7 +70,7 @@ export const DayPicker: FC<DayPickerProps> = ({
         <Button
           className="okp4-dataverse-portal-day-picker-button"
           disabled={!selected}
-          label="Remove date" // TODO: i18n
+          label={t('removeDate')}
           onClick={handleRemoveDate}
           size="small"
           variant="outlined-secondary"
@@ -64,7 +79,7 @@ export const DayPicker: FC<DayPickerProps> = ({
           <Button
             className="okp4-dataverse-portal-day-picker-button"
             disabled={!selected}
-            label="Select date"
+            label={t('selectDate')}
             onClick={onConfirm}
             size="small"
           />

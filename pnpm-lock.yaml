@@ -10,6 +10,9 @@ dependencies:
   '@maskito/react':
     specifier: ^1.4.0
     version: 1.4.0(@maskito/core@1.4.0)(react-dom@18.2.0)(react@18.2.0)
+  date-fns:
+    specifier: ^2.30.0
+    version: 2.30.0
   fp-ts:
     specifier: ^2.16.0
     version: 2.16.0
