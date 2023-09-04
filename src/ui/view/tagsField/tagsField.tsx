@@ -45,25 +45,29 @@ export const TagsField: FC<TagsFieldProps> = ({ tags, addTag, removeTag }) => {
 
   return (
     <div className="okp4-dataverse-portal-tags-field-main">
-      {tags.map((tag: string, index: number) => (
-        <Tag key={`${tag}-${index}`} onDelete={handleDelete(tag)} tagName={tag} />
-      ))}
-      <div className="okp4-dataverse-portal-tags-field">
-        <span
-          className={classNames('okp4-dataverse-portal-tags-field-placeholder', {
-            hidden: inputValue
-          })}
-        >
-          {t('typeAndPress')}
-          <span className="okp4-dataverse-portal-tags-field-placeholder-action">{t('enter')}</span>
-        </span>
-        <input
-          className="okp4-dataverse-portal-tags-field-input"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          type="text"
-          value={inputValue}
-        />
+      <div className="okp4-dataverse-portal-tags-field-content">
+        {tags.map((tag: string, index: number) => (
+          <Tag key={`${tag}-${index}`} onDelete={handleDelete(tag)} tagName={tag} />
+        ))}
+        <div className="okp4-dataverse-portal-tags-field">
+          <span
+            className={classNames('okp4-dataverse-portal-tags-field-placeholder', {
+              hidden: inputValue
+            })}
+          >
+            {t('typeAndPress')}
+            <span className="okp4-dataverse-portal-tags-field-placeholder-action">
+              {t('enter')}
+            </span>
+          </span>
+          <input
+            className="okp4-dataverse-portal-tags-field-input"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            type="text"
+            value={inputValue}
+          />
+        </div>
       </div>
     </div>
   )
