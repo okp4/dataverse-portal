@@ -8,10 +8,10 @@ import { pipe } from 'fp-ts/function'
 import type { Show } from 'fp-ts/lib/Show'
 import type { VocabularyPort } from '../port'
 
-const retrieveVocabularyDependenciesTag = 'retrieve-vocabulary-deps'
+declare const depsSymbol: unique symbol
 
 type Deps = {
-  _tag: typeof retrieveVocabularyDependenciesTag
+  _opaque: typeof depsSymbol
   vocabularyGateway: VocabularyPort
   language: string
   limit: number
@@ -126,7 +126,7 @@ const validateDeps = (
     deps,
     O.fromPredicate(depsIsRequiredTransientDeps),
     O.map(({ vocabularyGateway, limit, language }) => ({
-      _tag: retrieveVocabularyDependenciesTag as typeof retrieveVocabularyDependenciesTag,
+      _opaque: depsSymbol as typeof depsSymbol,
       vocabularyGateway,
       limit,
       language
