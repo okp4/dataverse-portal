@@ -12,13 +12,19 @@
   background-color: $background-color;
   box-shadow: $box-shadow;
 
-  &:hover {
+  &:hover:not(.disabled) {
     background: $hover-color;
     border-color: $hover-color;
     box-shadow: none;
   }
 
-  &:focus {
+  &:focus{
+    &.disabled {
+      outline: 1px solid themed('secondary-disabled');
+    }
+  }
+
+  &:focus:not(.disabled) {
     background-color: $pressed-color;
     box-shadow: none;
   }
@@ -29,7 +35,7 @@
 
   &.disabled {
     cursor: unset;
-    background: themed('neutral-variant-1');
+    background-color: themed('neutral-200');
     color: themed('neutral');
     box-shadow: none;
 
@@ -77,6 +83,12 @@
         $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
+
+      &.disabled {
+        background-color: themed('neutral-200');
+        color: themed('secondary-disabled');
+        box-shadow: none;
+      }
     }
 
     &.secondary-discreet {
@@ -101,15 +113,21 @@
       );
       border: 1px solid themed('primary-color');
 
-      &:hover {
+      &:hover:not(.disabled) {
         background-color: unset;
         color: themed('secondary-button-hover');
       }
 
-      &:focus {
+      &:focus:not(.disabled) {
         background-color: unset;
         color: themed('secondary-button-background-pressed');
         border-color: themed('secondary-button-background-pressed');
+      }
+
+      &.disabled {
+        background-color: unset;
+        color: themed('secondary-disabled');
+        border-color: themed('secondary-disabled');
       }
 
       svg {
@@ -124,7 +142,7 @@
       border-radius: 12px;
       background: themed('tertiary-button-background');
 
-      &:hover {
+      &:hover:not(.disabled) {
         background: themed('tertiary-button-background-variant-1');
       }
     }
@@ -145,12 +163,12 @@
         border-color: themed('secondary-disabled');
       }
 
-      &:hover {
+      &:hover:not(.disabled) {
         background-color: unset;
         color: themed('secondary-color-variant-1');
       }
 
-      &:focus {
+      &:focus:not(.disabled) {
         background-color: unset;
         color: themed('primary-button-background-pressed');
         border-color: themed('primary-button-background-pressed');
@@ -178,12 +196,12 @@
         border-color: themed('secondary-disabled');
       }
 
-      &:hover {
+      &:hover:not(.disabled) {
         background-color: unset;
         color: themed('turquoise-button-hover');
       }
 
-      &:focus {
+      &:focus:not(.disabled) {
         background-color: unset;
         color: themed('turquoise-button-pressed');
         border-color: themed('turquoise-button-pressed');
