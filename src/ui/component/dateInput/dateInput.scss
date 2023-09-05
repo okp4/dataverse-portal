@@ -1,0 +1,38 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-date-input-main {
+  @include with-theme {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 124px;
+    gap: 10px;
+    padding: 8px 6px;
+    border-radius: 6px;
+    background-color: themed('input-background');
+
+    .okp4-dataverse-portal-date-input {
+      @include noto-sans(400);
+      border: 0;
+      width: 86px;
+      font-size: 16px;
+      font-feature-settings: 'clig' off, 'liga' off;
+      text-align: right;
+      color: rgba(themed('text'), 0.8);
+      background-color: themed('input-background');
+      outline: none;
+      cursor: pointer;
+
+      &::placeholder {
+        color: rgba(themed('text'), 0.8);
+      }
+    }
+
+    path {
+      fill: rgba(themed('text'), 0.8);
+    }
+  }
+}
