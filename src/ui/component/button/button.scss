@@ -12,21 +12,23 @@
   background-color: $background-color;
   box-shadow: $box-shadow;
 
-  &:hover:not(.disabled) {
-    background: $hover-color;
-    border-color: $hover-color;
-    box-shadow: none;
+  &:hover {
+    &:not(.disabled) {
+      background: $hover-color;
+      border-color: $hover-color;
+      box-shadow: none;
+    }
   }
 
   &:focus{
     &.disabled {
       outline: 1px solid themed('secondary-disabled');
     }
-  }
 
-  &:focus:not(.disabled) {
-    background-color: $pressed-color;
-    box-shadow: none;
+    &:not(.disabled) {
+      background-color: $pressed-color;
+      box-shadow: none;
+    }
   }
 
   &:active {
@@ -113,15 +115,19 @@
       );
       border: 1px solid themed('primary-color');
 
-      &:hover:not(.disabled) {
-        background-color: unset;
-        color: themed('secondary-button-hover');
+      &:hover {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-button-hover');
+        }
       }
 
-      &:focus:not(.disabled) {
-        background-color: unset;
-        color: themed('secondary-button-background-pressed');
-        border-color: themed('secondary-button-background-pressed');
+      &:focus {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-button-background-pressed');
+          border-color: themed('secondary-button-background-pressed');
+        }
       }
 
       &.disabled {
@@ -142,8 +148,10 @@
       border-radius: 12px;
       background: themed('tertiary-button-background');
 
-      &:hover:not(.disabled) {
-        background: themed('tertiary-button-background-variant-1');
+      &:hover {
+        &:not(.disabled) {
+          background: themed('tertiary-button-background-variant-1');
+        }
       }
     }
 
@@ -163,15 +171,19 @@
         border-color: themed('secondary-disabled');
       }
 
-      &:hover:not(.disabled) {
-        background-color: unset;
-        color: themed('secondary-color-variant-1');
+      &:hover {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-color-variant-1');
+        }
       }
 
-      &:focus:not(.disabled) {
-        background-color: unset;
-        color: themed('primary-button-background-pressed');
-        border-color: themed('primary-button-background-pressed');
+      &:focus {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('primary-button-background-pressed');
+          border-color: themed('primary-button-background-pressed');
+        }
       }
 
       svg {
@@ -196,15 +208,19 @@
         border-color: themed('secondary-disabled');
       }
 
-      &:hover:not(.disabled) {
-        background-color: unset;
-        color: themed('turquoise-button-hover');
+      &:hover {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('turquoise-button-hover');
+        }
       }
 
-      &:focus:not(.disabled) {
-        background-color: unset;
-        color: themed('turquoise-button-pressed');
-        border-color: themed('turquoise-button-pressed');
+      &:focus {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('turquoise-button-pressed');
+          border-color: themed('turquoise-button-pressed');
+        }
       }
 
       svg {
