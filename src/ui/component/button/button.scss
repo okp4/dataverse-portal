@@ -37,7 +37,7 @@
 
   &.disabled {
     cursor: unset;
-    background-color: themed('neutral-200');
+    background-color: themed('neutral-variant-3');
     color: themed('neutral');
     box-shadow: none;
 
@@ -87,7 +87,7 @@
       );
 
       &.disabled {
-        background-color: themed('neutral-200');
+        background-color: themed('neutral-variant-3');
         color: themed('secondary-disabled');
         box-shadow: none;
       }
