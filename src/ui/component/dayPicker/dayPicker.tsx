@@ -19,6 +19,7 @@ export type DayPickerProps = {
   toDate?: Date
   selected?: Date
   title?: string
+  type?: 'single' | 'rangeFrom' | 'rangeTo'
   isoWeek?: boolean
   showOutsideDays?: boolean
 }
@@ -31,6 +32,7 @@ export const DayPicker: FC<DayPickerProps> = ({
   toDate,
   selected,
   title,
+  type = 'single',
   isoWeek = true,
   showOutsideDays = true
 }) => {
@@ -39,20 +41,34 @@ export const DayPicker: FC<DayPickerProps> = ({
 
   const getLocaleFromLocaleString = useMemo(() => localeMap.get(locale) ?? enUS, [locale])
 
+  const disabledDays = useMemo(() => {
+    const defaultDisabledDays = [
+      { before: new Date(fromYear, 0, 1) },
+      { after: new Date(toYear, 11, 31) }
+    ]
+    switch (type) {
+      case 'rangeFrom':
+        return toDate ? [{ before: toYear, after: toDate }] : defaultDisabledDays
+      case 'rangeTo':
+        return fromDate ? [{ before: fromDate, after: fromYear }] : defaultDisabledDays
+      case 'single':
+        return defaultDisabledDays
+    }
+  }, [type, fromDate, toDate, fromYear, toYear])
+
   return (
     <div className="okp4-dataverse-portal-day-picker-main">
       {title && <h2 className="okp4-dataverse-portal-day-picker-title">{title}</h2>}
       <RDayPicker
         ISOWeek={isoWeek}
         captionLayout="dropdown"
-        fromDate={fromDate}
+        disabled={disabledDays}
         fromYear={fromYear}
         locale={getLocaleFromLocaleString}
         mode="single"
         onSelect={onSelect}
         selected={selected}
         showOutsideDays={showOutsideDays}
-        toDate={toDate}
         toYear={toYear}
       />
     </div>
