@@ -1,6 +1,7 @@
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DayPicker as RDayPicker } from 'react-day-picker'
+import { addDays, isAfter, subDays, isSameDay } from 'date-fns'
 import { enUS, fr, de } from 'date-fns/locale'
 import 'react-day-picker/dist/style.css'
 import './dayPicker.scss'
@@ -24,6 +25,7 @@ export type DayPickerProps = {
   showOutsideDays?: boolean
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const DayPicker: FC<DayPickerProps> = ({
   onSelect,
   fromYear,
@@ -42,19 +44,56 @@ export const DayPicker: FC<DayPickerProps> = ({
   const getLocaleFromLocaleString = useMemo(() => localeMap.get(locale) ?? enUS, [locale])
 
   const disabledDays = useMemo(() => {
-    const defaultDisabledDays = [
-      { before: new Date(fromYear, 0, 1) },
-      { after: new Date(toYear, 11, 31) }
-    ]
+    const startOfFromYear = new Date(fromYear, 0, 1)
+    const endOfToYear = new Date(toYear, 11, 31)
+
     switch (type) {
       case 'rangeFrom':
-        return toDate ? [{ before: toYear, after: toDate }] : defaultDisabledDays
+        return toDate ? [{ after: toDate, before: endOfToYear }] : []
       case 'rangeTo':
-        return fromDate ? [{ before: fromDate, after: fromYear }] : defaultDisabledDays
+        return fromDate ? [{ after: startOfFromYear, before: fromDate }] : []
       case 'single':
-        return defaultDisabledDays
+        return []
     }
   }, [type, fromDate, toDate, fromYear, toYear])
+
+  const middleRange = useMemo(() => {
+    if (!fromDate || !toDate) {
+      return []
+    }
+
+    if (isAfter(subDays(toDate, 1), fromDate)) {
+      const middleFrom = addDays(fromDate, 1)
+      const middleTo = subDays(toDate, 1)
+      return [{ from: middleFrom, to: middleTo }]
+    }
+
+    return []
+  }, [fromDate, toDate])
+
+  const startRange = useMemo(() => {
+    if (!fromDate || !toDate) {
+      return []
+    }
+
+    if (!isSameDay(fromDate, toDate)) {
+      return [fromDate]
+    }
+
+    return []
+  }, [fromDate, toDate])
+
+  const endRange = useMemo(() => {
+    if (!fromDate || !toDate) {
+      return []
+    }
+
+    if (!isSameDay(fromDate, toDate)) {
+      return [toDate]
+    }
+
+    return []
+  }, [fromDate, toDate])
 
   return (
     <div className="okp4-dataverse-portal-day-picker-main">
@@ -66,6 +105,12 @@ export const DayPicker: FC<DayPickerProps> = ({
         fromYear={fromYear}
         locale={getLocaleFromLocaleString}
         mode="single"
+        modifiers={{ middleRange, startRange, endRange }}
+        modifiersClassNames={{
+          middleRange: 'rdp-day_range_middle',
+          startRange: 'rdp-day_range_start',
+          endRange: 'rdp-day_range_end'
+        }}
         onSelect={onSelect}
         selected={selected}
         showOutsideDays={showOutsideDays}
