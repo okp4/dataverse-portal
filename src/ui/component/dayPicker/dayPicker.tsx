@@ -101,6 +101,7 @@ export const DayPicker: FC<DayPickerProps> = ({
       <RDayPicker
         ISOWeek={isoWeek}
         captionLayout="dropdown"
+        defaultMonth={selected}
         disabled={disabledDays}
         fromYear={fromYear}
         locale={getLocaleFromLocaleString}
