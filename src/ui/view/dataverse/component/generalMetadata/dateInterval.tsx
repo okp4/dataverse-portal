@@ -15,7 +15,7 @@ const FormattedDateSpan: FC<{
   const { t } = useTranslation('common')
   return (
     <span>
-      {t(label)}&nbsp;
+      {t(`${label}Label`)}&nbsp;
       {localizedDate}
     </span>
   )
