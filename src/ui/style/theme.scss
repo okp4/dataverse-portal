@@ -18,6 +18,7 @@ $themes: (
     background-disabled: $background-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
+    neutral-variant-2: $neutral-variant-2,
     background: $background-light,
     background-variant-1: $background-light-variant-1,
     background-variant-2: $background-light-variant-2,
@@ -88,7 +89,13 @@ $themes: (
     dropdown-content-box-shadow: $dropdown-content-box-shadow-light,
     modal-background: $modal-background-light,
     modal-line-divider: $modal-line-divider-light,
-    share-dataset-summary-title: $share-dataset-summary-title-light
+    share-dataset-summary-title: $share-dataset-summary-title-light,
+    daypicker-background: $daypicker-background-light,
+    daypicker-day-color: $daypicker-day-color-light,
+    daypicker-day-outside-color: $daypicker-day-outside-color-light,
+    daypicker-day-range-middle: $daypicker-day-range-middle-light,
+    daypicker-day-today: $daypicker-day-today-light,
+    daypicker-dropdowns-background: $daypicker-dropdowns-background-light,
   ),
   dark: (
     primary-color: $primary,
@@ -106,6 +113,7 @@ $themes: (
     background-disabled: $background-disabled,
     neutral: $neutral,
     neutral-variant-1: $neutral-variant-1,
+    neutral-variant-2: $neutral-variant-2,
     background: $background-dark,
     background-variant-1: $background-dark-variant-1,
     background-variant-2: $background-dark-variant-2,
@@ -176,7 +184,13 @@ $themes: (
     dropdown-content-box-shadow: $dropdown-content-box-shadow-dark,
     modal-background: $modal-background-dark,
     modal-line-divider: $modal-line-divider-dark,
-    share-dataset-summary-title: $share-dataset-summary-title-dark
+    share-dataset-summary-title: $share-dataset-summary-title-dark,
+    daypicker-background: $daypicker-background-dark,
+    daypicker-day-color: $daypicker-day-color-dark,
+    daypicker-day-outside-color: $daypicker-day-outside-color-dark,
+    daypicker-day-range-middle: $daypicker-day-range-middle-dark,
+    daypicker-day-today: $daypicker-day-today-dark,
+    daypicker-dropdowns-background: $daypicker-dropdowns-background-dark,
   )
 );
 
