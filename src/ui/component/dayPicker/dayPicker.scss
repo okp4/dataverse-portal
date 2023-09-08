@@ -85,6 +85,12 @@
               background-color: #ffffff;
             }
           }
+
+          &.rdp-day_selected_from_other_picker {
+            &::before {
+              background-color: #ffffff;
+            }
+          }
         
           &.rdp-day_outside {
             &::before {
@@ -97,9 +103,18 @@
           color: themed('daypicker-day-outside-color');
         }
 
-        .rdp-day_selected {
+        
+        .rdp-day_selected, .rdp-day_selected_from_other_picker {
           @include noto-sans(700);
           color: #ffffff;
+        }
+
+        .rdp-day_selected_from_other_picker {
+          background-color: themed('daypicker-day-range-middle');
+        }
+        
+        .rdp-day_selected {
+          background-color: var(--rdp-accent-color);
         }
 
         .rdp-day_range_middle {

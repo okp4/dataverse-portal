@@ -95,6 +95,17 @@ export const DayPicker: FC<DayPickerProps> = ({
     return []
   }, [fromDate, toDate])
 
+  const selectedDayFromOtherPicker = useMemo(() => {
+    switch (type) {
+      case 'rangeFrom':
+        return toDate ? [toDate] : []
+      case 'rangeTo':
+        return fromDate ? [fromDate] : []
+      case 'single':
+        return []
+    }
+  }, [fromDate, toDate, type])
+
   return (
     <div className="okp4-dataverse-portal-day-picker-main">
       {title && <h2 className="okp4-dataverse-portal-day-picker-title">{title}</h2>}
@@ -106,11 +117,12 @@ export const DayPicker: FC<DayPickerProps> = ({
         fromYear={fromYear}
         locale={getLocaleFromLocaleString}
         mode="single"
-        modifiers={{ middleRange, startRange, endRange }}
+        modifiers={{ middleRange, startRange, endRange, selectedDayFromOtherPicker }}
         modifiersClassNames={{
           middleRange: 'rdp-day_range_middle',
           startRange: 'rdp-day_range_start',
-          endRange: 'rdp-day_range_end'
+          endRange: 'rdp-day_range_end',
+          selectedDayFromOtherPicker: 'rdp-day_selected_from_other_picker'
         }}
         onSelect={onSelect}
         selected={selected}
