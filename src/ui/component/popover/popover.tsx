@@ -14,6 +14,8 @@ type PopoverProps = Omit<RPopover.PopoverContentProps, 'content'> & {
   contentClassName?: string
   triggerClassName?: string
   triggerIconName?: IconName
+  align?: RPopover.PopoverContentProps['align']
+  sideOffset?: RPopover.PopoverContentProps['sideOffset']
   container?: RPopover.PopoverPortalProps['container']
 }
 
@@ -26,6 +28,8 @@ export const Popover: FC<PopoverProps> = ({
   triggerIconName,
   container,
   onOpenChange,
+  align = 'start',
+  sideOffset = 8,
   ...contentProps
 }) => {
   const containerRef = useRef<HTMLElement | null>(null)
@@ -53,7 +57,9 @@ export const Popover: FC<PopoverProps> = ({
       <RPopover.Portal container={containerRef.current}>
         <RPopover.Content
           {...contentProps}
+          align={align}
           className={classNames('okp4-dataverse-portal-popover-content', contentClassName)}
+          sideOffset={sideOffset}
         >
           {content}
         </RPopover.Content>

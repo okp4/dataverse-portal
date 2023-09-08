@@ -25,12 +25,10 @@ export const DropDown: FC<DropDownProps> = ({
   return (
     <div className="okp4-dataverse-portal-dropdown-main">
       <Popover
-        align="start"
         content={content}
         contentClassName={classNames('okp4-dataverse-portal-dropdown-content', contentClassName)}
         onOpenChange={handleOpenChange}
         open={open}
-        sideOffset={8}
         trigger={
           <div className={classNames('okp4-dataverse-portal-dropdown-field', triggerClassName)}>
             {trigger}
