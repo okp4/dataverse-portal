@@ -13,14 +13,22 @@
   box-shadow: $box-shadow;
 
   &:hover {
-    background: $hover-color;
-    border-color: $hover-color;
-    box-shadow: none;
+    &:not(.disabled) {
+      background: $hover-color;
+      border-color: $hover-color;
+      box-shadow: none;
+    }
   }
 
-  &:focus {
-    background-color: $pressed-color;
-    box-shadow: none;
+  &:focus{
+    &.disabled {
+      outline: 1px solid themed('secondary-disabled');
+    }
+
+    &:not(.disabled) {
+      background-color: $pressed-color;
+      box-shadow: none;
+    }
   }
 
   &:active {
@@ -29,7 +37,7 @@
 
   &.disabled {
     cursor: unset;
-    background: themed('neutral-variant-1');
+    background-color: themed('neutral-variant-3');
     color: themed('neutral');
     box-shadow: none;
 
@@ -77,6 +85,12 @@
         $hover-color: themed('secondary-button-hover'),
         $pressed-color: themed('secondary-button-background-pressed')
       );
+
+      &.disabled {
+        background-color: themed('neutral-variant-3');
+        color: themed('secondary-disabled');
+        box-shadow: none;
+      }
     }
 
     &.secondary-discreet {
@@ -102,14 +116,24 @@
       border: 1px solid themed('primary-color');
 
       &:hover {
-        background-color: unset;
-        color: themed('secondary-button-hover');
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-button-hover');
+        }
       }
 
       &:focus {
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-button-background-pressed');
+          border-color: themed('secondary-button-background-pressed');
+        }
+      }
+
+      &.disabled {
         background-color: unset;
-        color: themed('secondary-button-background-pressed');
-        border-color: themed('secondary-button-background-pressed');
+        color: themed('secondary-disabled');
+        border-color: themed('secondary-disabled');
       }
 
       svg {
@@ -125,7 +149,9 @@
       background: themed('tertiary-button-background');
 
       &:hover {
-        background: themed('tertiary-button-background-variant-1');
+        &:not(.disabled) {
+          background: themed('tertiary-button-background-variant-1');
+        }
       }
     }
 
@@ -146,14 +172,18 @@
       }
 
       &:hover {
-        background-color: unset;
-        color: themed('secondary-color-variant-1');
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('secondary-color-variant-1');
+        }
       }
 
       &:focus {
-        background-color: unset;
-        color: themed('primary-button-background-pressed');
-        border-color: themed('primary-button-background-pressed');
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('primary-button-background-pressed');
+          border-color: themed('primary-button-background-pressed');
+        }
       }
 
       svg {
@@ -179,14 +209,18 @@
       }
 
       &:hover {
-        background-color: unset;
-        color: themed('turquoise-button-hover');
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('turquoise-button-hover');
+        }
       }
 
       &:focus {
-        background-color: unset;
-        color: themed('turquoise-button-pressed');
-        border-color: themed('turquoise-button-pressed');
+        &:not(.disabled) {
+          background-color: unset;
+          color: themed('turquoise-button-pressed');
+          border-color: themed('turquoise-button-pressed');
+        }
       }
 
       svg {

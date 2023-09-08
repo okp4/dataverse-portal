@@ -25,43 +25,45 @@
     }
 
     .okp4-dataverse-portal-stepper-actions-button {
-      background-color: transparent;
-
-      &:hover {
+      &.okp4-dataverse-portal-button-main {
         background-color: transparent;
-      }
 
-      circle {
-        fill: themed('primary-color');
-      }
+        &:hover {
+          background-color: transparent;
+        }
 
-      path {
-        stroke: #ffffff;
-      }
-
-      &.hidden {
-        visibility: hidden;
-      }
-
-      &.disabled {
         circle {
-          fill: themed('background-disabled');
+          fill: themed('primary-color');
         }
 
         path {
-          stroke: themed('secondary-disabled');
+          stroke: #ffffff;
         }
 
-        cursor: not-allowed;
-
-        .okp4-dataverse-portal-button-label {
-          color: rgba(themed('text'), 0.4);
+        &.hidden {
+          visibility: hidden;
         }
-      }
 
-      &.previous {
-        svg {
-          transform: rotateY(180deg);
+        &.disabled {
+          circle {
+            fill: themed('background-disabled');
+          }
+
+          path {
+            stroke: themed('secondary-disabled');
+          }
+
+          cursor: not-allowed;
+
+          .okp4-dataverse-portal-button-label {
+            color: rgba(themed('text'), 0.4);
+          }
+        }
+
+        &.previous {
+          svg {
+            transform: rotateY(180deg);
+          }
         }
       }
     }
