@@ -83,7 +83,7 @@ export const DayPicker: FC<DayPickerProps> = ({
     return [toDate]
   }, [fromDate, toDate])
 
-  const selectedDayFromOtherPicker = useMemo(() => {
+  const rangeEndpoint = useMemo(() => {
     switch (type) {
       case 'rangeFrom':
         return toDate ? [toDate] : []
@@ -105,12 +105,12 @@ export const DayPicker: FC<DayPickerProps> = ({
         fromYear={fromYear}
         locale={getLocaleFromLocaleString}
         mode="single"
-        modifiers={{ middleRange, startRange, endRange, selectedDayFromOtherPicker }}
+        modifiers={{ middleRange, startRange, endRange, rangeEndpoint }}
         modifiersClassNames={{
           middleRange: 'rdp-day_range_middle',
           startRange: 'rdp-day_range_start',
           endRange: 'rdp-day_range_end',
-          selectedDayFromOtherPicker: 'rdp-day_selected_from_other_picker'
+          rangeEndpoint: 'rdp-day_selected'
         }}
         onSelect={onSelect}
         selected={selected}
