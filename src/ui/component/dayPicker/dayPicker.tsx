@@ -58,41 +58,29 @@ export const DayPicker: FC<DayPickerProps> = ({
   }, [type, fromDate, toDate, fromYear, toYear])
 
   const middleRange = useMemo(() => {
-    if (!fromDate || !toDate) {
+    if (!fromDate || !toDate || !isAfter(subDays(toDate, 1), fromDate)) {
       return []
     }
 
-    if (isAfter(subDays(toDate, 1), fromDate)) {
-      const middleFrom = addDays(fromDate, 1)
-      const middleTo = subDays(toDate, 1)
-      return [{ from: middleFrom, to: middleTo }]
-    }
-
-    return []
+    const middleFrom = addDays(fromDate, 1)
+    const middleTo = subDays(toDate, 1)
+    return [{ from: middleFrom, to: middleTo }]
   }, [fromDate, toDate])
 
   const startRange = useMemo(() => {
-    if (!fromDate || !toDate) {
+    if (!fromDate || !toDate || isSameDay(fromDate, toDate)) {
       return []
     }
 
-    if (!isSameDay(fromDate, toDate)) {
-      return [fromDate]
-    }
-
-    return []
+    return [fromDate]
   }, [fromDate, toDate])
 
   const endRange = useMemo(() => {
-    if (!fromDate || !toDate) {
+    if (!fromDate || !toDate || isSameDay(fromDate, toDate)) {
       return []
     }
 
-    if (!isSameDay(fromDate, toDate)) {
-      return [toDate]
-    }
-
-    return []
+    return [toDate]
   }, [fromDate, toDate])
 
   const selectedDayFromOtherPicker = useMemo(() => {
