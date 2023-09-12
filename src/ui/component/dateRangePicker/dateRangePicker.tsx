@@ -10,8 +10,8 @@ export type DateRange = {
 }
 
 type DateRangePickerProps = Omit<DayPickerProps, 'title' | 'onSelect' | 'selected'> & {
-  onSelect: (dateRange?: DateRange) => void
-  selected?: DateRange
+  onSelect: (dateRange: DateRange) => void
+  selected: DateRange
 }
 
 export const DateRangePicker: FC<DateRangePickerProps> = ({
@@ -40,14 +40,14 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
       <DatePicker
         {...dayPickerProps}
         onSelect={handleSelectFrom}
-        selected={selected?.from}
+        selected={selected.from}
         title={t('from')}
         type="rangeFrom"
       />
       <DatePicker
         {...dayPickerProps}
         onSelect={handleSelectTo}
-        selected={selected?.to}
+        selected={selected.to}
         title={t('to')}
         type="rangeTo"
       />
