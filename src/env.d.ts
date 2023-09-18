@@ -82,4 +82,8 @@ declare const APP_ENV: {
     maxDisplayedTags: number
     maxDisplayedSearchResults: number
   }
+  datePicker: {
+    fromYearOffset: number
+    toYearOffset: number
+  }
 }

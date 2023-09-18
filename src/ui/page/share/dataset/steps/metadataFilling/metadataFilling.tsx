@@ -463,11 +463,11 @@ export const MetadataFilling: FC = () => {
             </p>
             <DateRangePicker
               fromDate={dateRangeValueField(id9).from}
-              fromYear={new Date().getFullYear() - 100} // TODO: create constant
+              fromYear={new Date().getFullYear() + APP_ENV.datePicker.fromYearOffset}
               onSelect={handleDateRangeValueChange(id9)}
               selected={dateRangeValueField(id9)}
               toDate={dateRangeValueField(id9).to}
-              toYear={new Date().getFullYear() + 20} // TODO: create constant
+              toYear={new Date().getFullYear() + APP_ENV.datePicker.toYearOffset}
             />
           </div>
         ),
