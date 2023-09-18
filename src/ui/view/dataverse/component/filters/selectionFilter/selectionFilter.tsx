@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import { useMemo, useCallback, useState } from 'react'
-import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
+import { Filter } from '@/ui/view/dataverse/component/filters/filter'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import './selectionFilter.scss'
@@ -85,43 +85,38 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
   )
 
   return (
-    <div className="okp4-dataverse-portal-selection-filter-main">
-      <Collapsible
-        content={
-          <div className="okp4-dataverse-portal-selection-filter">
-            <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
-            <div className="okp4-dataverse-portal-selection-filter-options-list">
-              {foundFilterOptions.length > 0 ? (
-                foundFilterOptions.map(({ selected, disabled, value }) => {
-                  switch (selectionType) {
-                    case 'checkbox':
-                      return (
-                        <DynamicCheckbox
-                          checked={selected}
-                          disabled={disabled}
-                          highlightedTerm={searchTerm}
-                          key={value}
-                          name={filterName}
-                          onCheckedChange={handleSelectedChange}
-                          value={value}
-                        />
-                      )
-                  }
-                })
-              ) : (
-                <NoResultFound
-                  className="okp4-dataverse-portal-selection-filter-no-results-wrapper"
-                  iconName="large-magnifier-with-cross"
-                />
-              )}
-            </div>
+    <Filter
+      content={
+        <>
+          <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} value={searchTerm} />
+          <div className="okp4-dataverse-portal-selection-filter-options-list">
+            {foundFilterOptions.length > 0 ? (
+              foundFilterOptions.map(({ selected, disabled, value }) => {
+                switch (selectionType) {
+                  case 'checkbox':
+                    return (
+                      <DynamicCheckbox
+                        checked={selected}
+                        disabled={disabled}
+                        highlightedTerm={searchTerm}
+                        key={value}
+                        name={filterName}
+                        onCheckedChange={handleSelectedChange}
+                        value={value}
+                      />
+                    )
+                }
+              })
+            ) : (
+              <NoResultFound
+                className="okp4-dataverse-portal-selection-filter-no-results-wrapper"
+                iconName="large-magnifier-with-cross"
+              />
+            )}
           </div>
-        }
-        iconName="chevron"
-        open
-        trigger={<FilterLabel label={filterName} />}
-        triggerClassName="okp4-dataverse-portal-selection-filter-trigger"
-      />
-    </div>
+        </>
+      }
+      filterName={filterName}
+    />
   )
 }
