@@ -11,7 +11,7 @@ const localeMap = new Map([
   ['de', de]
 ])
 
-type DayPickerProps = {
+export type DayPickerProps = {
   onSelect: (date?: Date) => void
   fromYear: number
   toYear: number
