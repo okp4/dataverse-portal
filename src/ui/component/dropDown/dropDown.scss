@@ -8,7 +8,8 @@
       background-color: themed('dropdown-background');
       border: 1px solid themed('dropdown-border');
       border-radius: 6px;
-      padding: 1px 6px 1px 10px;
+      height: 42px;
+      padding: 0 6px 0 10px;
     }
 
     .okp4-dataverse-portal-popover-trigger-icon {
@@ -21,7 +22,6 @@
     .okp4-dataverse-portal-dropdown-field {
       display: flex;
       align-items: center;
-      height: 42px;
       width: 100%;
       @include noto-sans(400);
       font-size: 16px;

@@ -458,17 +458,19 @@ export const MetadataFilling: FC = () => {
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
-            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.tags')}
-            </p>
-            <DateRangePicker
-              fromDate={dateRangeValueField(id9).from}
-              fromYear={new Date().getFullYear() + APP_ENV.datePicker.fromYearOffset}
-              onSelect={handleDateRangeValueChange(id9)}
-              selected={dateRangeValueField(id9)}
-              toDate={dateRangeValueField(id9).to}
-              toYear={new Date().getFullYear() + APP_ENV.datePicker.toYearOffset}
-            />
+            <div className="okp4-dataverse-portal-share-data-metadata-filling-temporal-coverage">
+              <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+                {t('share.metadataFilling.temporalCoverageLabel')}
+              </p>
+              <DateRangePicker
+                fromDate={dateRangeValueField(id9).from}
+                fromYear={new Date().getFullYear() + APP_ENV.datePicker.fromYearOffset}
+                onSelect={handleDateRangeValueChange(id9)}
+                selected={dateRangeValueField(id9)}
+                toDate={dateRangeValueField(id9).to}
+                toYear={new Date().getFullYear() + APP_ENV.datePicker.toYearOffset}
+              />
+            </div>
           </div>
         ),
         style: {
