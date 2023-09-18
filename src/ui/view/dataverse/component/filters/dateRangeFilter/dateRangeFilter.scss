@@ -1,0 +1,31 @@
+@import '@/ui/style/mixins.scss';
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-date-range-filter {
+  $date-pickers-gap: 11px;
+
+  @include with-theme {
+    @include columns-with-gap(5px);
+    padding: 8px 6px 0;
+
+    .okp4-dataverse-portal-date-range-filter-titles {
+      display: flex;
+      gap: $date-pickers-gap;
+    }
+  
+    .okp4-dataverse-portal-date-range-filter-title {
+      @include noto-sans(700);
+      flex: 1;
+      margin: 0;
+      color: rgba(themed('text'), 0.8);
+      font-size: 14px;
+      line-height: 20px;
+      text-transform: uppercase;
+    }
+
+    .okp4-dataverse-portal-date-range-picker-main {
+      gap: $date-pickers-gap;
+    }
+  }
+}

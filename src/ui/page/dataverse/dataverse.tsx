@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import './i18n/index'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import { DateRangeFilter } from '@/ui/view/dataverse/component/filters/dateRangeFilter/dateRangeFilter'
 
 type DataverseItemType = 'service' | 'zone' | 'dataset'
 type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'
@@ -577,6 +578,7 @@ const selectionFilters = {
     'Austria',
     'Bahamas'
   ],
+  'data-temp-cov': [],
   'data-format': ['CSV', 'JSON', 'XML'],
   'data-licence': ['ETALAB', 'LO-FR-2_0', 'Licence 3']
 }
@@ -729,15 +731,19 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
-          {Object.entries(selectionFilters).map(([filterName, filterValues]) => (
-            <SelectionFilter
-              filterName={t(`filters:${filterName}.name`)}
-              filterValues={filterValues}
-              key={filterName}
-              searchPlaceholder={t(`filters:${filterName}.search`)}
-              selectionType="checkbox"
-            />
-          ))}
+          {Object.entries(selectionFilters).map(([filterName, filterValue]) =>
+            filterName === 'data-temp-cov' ? (
+              <DateRangeFilter filterName={t(`filters:${filterName}.name`)} key={filterName} />
+            ) : (
+              <SelectionFilter
+                filterName={t(`filters:${filterName}.name`)}
+                filterValue={filterValue}
+                key={filterName}
+                searchPlaceholder={t(`filters:${filterName}.search`)}
+                selectionType="checkbox"
+              />
+            )
+          )}
         </div>
       )}
       {(isLargeScreen || !showMobileFilters) && (

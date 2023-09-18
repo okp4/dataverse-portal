@@ -25,7 +25,7 @@ export const FilterLabel: FC<FilterLabelProps> = ({ label }) => (
 
 type SelectionFilterProps = {
   filterName: string
-  filterValues: string[]
+  filterValue: string[]
   searchPlaceholder: string
   selectionType: SelectionItemType
   maxSearchResults?: number
@@ -34,7 +34,7 @@ type SelectionFilterProps = {
 // eslint-disable-next-line max-lines-per-function
 export const SelectionFilter: FC<SelectionFilterProps> = ({
   filterName,
-  filterValues,
+  filterValue,
   searchPlaceholder,
   selectionType,
   maxSearchResults = 10
@@ -49,10 +49,10 @@ export const SelectionFilter: FC<SelectionFilterProps> = ({
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   const [filterOptions, setFilterOptions] = useState<SelectionOption[]>(
-    filterValues
+    filterValue
       .map(value => createDefaultFilterOption(value))
       .sort((a, b) => a.value.localeCompare(b.value))
-  )
+  ) // TODO: lift state up once filter query is implemented
 
   const handleSearch = useCallback(
     (searchTerm: string) => {
