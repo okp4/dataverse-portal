@@ -5,8 +5,8 @@ $primary-variant-2: #008fad;
 $primary-variant-3: #00b6b7;
 $primary-variant-4: #50ddb7;
 $primary-variant-5: #5580a2;
+$primary-variant-6: #AABFD0;
 $primary-text: #ffffff;
-$primary-100: #AABFD0;
 
 // secondary (orange)
 $secondary: #ff9500;
@@ -185,8 +185,8 @@ $daypicker-day-color-light: $neutral-variant-2;
 $daypicker-day-color-dark: #E3E3E3;
 $daypicker-day-outside-color-light: $neutral;
 $daypicker-day-outside-color-dark: #707275;
-$daypicker-day-range-middle-light: $primary-100;
-$daypicker-day-range-middle-dark: rgba($primary, 0.2);
+$daypicker-day-range-middle-light: $primary-variant-6;
+$daypicker-day-range-middle-dark: #203F5A;
 $daypicker-day-today-light: $primary-variant-1;
 $daypicker-day-today-dark: #2B608A;
 $daypicker-dropdowns-background-light: rgba($primary-variant-1, 0.08);
