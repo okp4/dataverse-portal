@@ -1,5 +1,6 @@
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { DateRange, DateInterval, DateAfter, DateBefore, DayOfWeek } from 'react-day-picker'
 import { DayPicker as RDayPicker } from 'react-day-picker'
 import { addDays, isAfter, subDays, isSameDay } from 'date-fns'
 import { enUS, fr, de } from 'date-fns/locale'
@@ -23,6 +24,7 @@ export type DayPickerProps = {
   type?: 'single' | 'rangeFrom' | 'rangeTo'
   isoWeek?: boolean
   showOutsideDays?: boolean
+  disabledDates?: Array<Date | DateInterval | DateRange | DateBefore | DateAfter | DayOfWeek>
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -36,7 +38,8 @@ export const DayPicker: FC<DayPickerProps> = ({
   title,
   type = 'single',
   isoWeek = true,
-  showOutsideDays = true
+  showOutsideDays = true,
+  disabledDates = []
 }) => {
   const { i18n } = useTranslation()
   const locale = i18n.language
@@ -53,9 +56,9 @@ export const DayPicker: FC<DayPickerProps> = ({
       case 'rangeTo':
         return fromDate ? [{ after: startOfFromYear, before: fromDate }] : []
       case 'single':
-        return []
+        return disabledDates
     }
-  }, [type, fromDate, toDate, fromYear, toYear])
+  }, [type, fromDate, toDate, fromYear, toYear, disabledDates])
 
   const middleRange = useMemo(() => {
     if (!fromDate || !toDate || !isAfter(subDays(toDate, 1), fromDate)) {

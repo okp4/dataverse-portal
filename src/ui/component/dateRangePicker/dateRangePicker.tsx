@@ -9,7 +9,10 @@ export type DateRange = {
   to?: Date
 }
 
-type DateRangePickerProps = Omit<DayPickerProps, 'title' | 'onSelect' | 'selected'> & {
+type DateRangePickerProps = Omit<
+  DayPickerProps,
+  'title' | 'onSelect' | 'selected' | 'disabledDates'
+> & {
   onSelect: (dateRange: DateRange) => void
   selected: DateRange
 }
