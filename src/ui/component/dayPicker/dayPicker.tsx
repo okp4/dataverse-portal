@@ -38,7 +38,7 @@ export const DayPicker: FC<DayPickerProps> = ({
   title,
   type = 'single',
   isoWeek = true,
-  showOutsideDays = true,
+  showOutsideDays = false,
   disabledDates = []
 }) => {
   const { i18n } = useTranslation()
