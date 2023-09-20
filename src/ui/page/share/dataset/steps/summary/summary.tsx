@@ -16,7 +16,9 @@ import type {
   NumericField as NumericFieldType,
   SelectPicker,
   TagField,
-  TextField
+  TextField,
+  DateStringRangeField,
+  DateStringRange
 } from '@/ui/store/slice/shareData/shareData.slice'
 import './summary.scss'
 
@@ -58,6 +60,9 @@ export const Summary: FC = () => {
   const getFieldValueForNumeric = (item: NumericFieldType): number | undefined =>
     pipe(item.value, O.toUndefined)
 
+  const getDateRangeFieldValue = (item: DateStringRangeField): DateStringRange | undefined =>
+    pipe(item.value, O.toUndefined)
+
   type SummaryLeftItemProps = {
     item: FormItem
   }
@@ -84,6 +89,7 @@ export const Summary: FC = () => {
         }
         return null
       }
+
       case 'text': {
         const textValue = getFieldValueForText(item)
         if (textValue) {
@@ -94,6 +100,25 @@ export const Summary: FC = () => {
 
         return null
       }
+
+      case 'date-range': {
+        const dateRangeValue = getDateRangeFieldValue(item)
+
+        if (!dateRangeValue || (!dateRangeValue.from && !dateRangeValue.to)) return null
+
+        const { from, to } = dateRangeValue
+
+        return from && to ? (
+          <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+            {`${t('from')} ${from} ${t('to').toLowerCase()} ${to}`}
+          </p>
+        ) : (
+          <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+            {from ? `${t('from')} ${from}` : `${t('to')} ${to}`}
+          </p>
+        )
+      }
+
       case 'numeric':
       case 'i18n-text':
         return null
