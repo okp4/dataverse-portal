@@ -3,10 +3,10 @@ import './card.scss'
 import classNames from 'classnames'
 
 export type CardBackground =
-  | 'primary-color'
-  | 'primary-color-variant-1'
-  | 'primary-color-variant-2'
-  | 'primary-color-variant-3'
+  | 'knowledge-tree'
+  | 'data-services-tree'
+  | 'zones-tree'
+  | 'applications-tree'
   | 'card'
 
 export type CardProps = {

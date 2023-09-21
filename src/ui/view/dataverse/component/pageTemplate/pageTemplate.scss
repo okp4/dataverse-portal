@@ -2,7 +2,11 @@
 @import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
 
-$colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4');
+$colors: (
+  'blue-500': $blue-500,
+  'turquoise-500': $turquoise-500,
+  'primary-variant-4': $primary-variant-4,
+);
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
   @include with-theme() {
@@ -24,9 +28,9 @@ $colors: ('primary-color', 'primary-color-variant-3', 'primary-color-variant-4')
         line-height: 24px;
         text-transform: uppercase;
 
-        @each $color-key in $colors {
+        @each $color-key, $color-value in $colors {
           &.#{$color-key} {
-            color: themed($color-key);
+            color: $color-value;
           }
         }
       }

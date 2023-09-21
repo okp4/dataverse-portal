@@ -33,11 +33,11 @@
         }
 
         circle {
-          fill: themed('primary-color');
+          fill: $blue-500;
         }
 
         path {
-          stroke: #ffffff;
+          stroke: $white;
         }
 
         &.hidden {
@@ -46,11 +46,11 @@
 
         &.disabled {
           circle {
-            fill: themed('background-disabled');
+            fill: $neutral-200;
           }
 
           path {
-            stroke: themed('secondary-disabled');
+            stroke: $neutral-600;
           }
 
           cursor: not-allowed;

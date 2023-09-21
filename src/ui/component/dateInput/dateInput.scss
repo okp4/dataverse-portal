@@ -12,7 +12,7 @@
     gap: 10px;
     padding: 8px 6px;
     border-radius: 6px;
-    background-color: themed('input-background');
+    background-color: themed('background-variant-3');
 
     .okp4-dataverse-portal-date-input {
       @include noto-sans(400);
@@ -22,7 +22,7 @@
       font-feature-settings: 'clig' off, 'liga' off;
       text-align: right;
       color: rgba(themed('text'), 0.8);
-      background-color: themed('input-background');
+      background-color: themed('background-variant-3');
       outline: none;
       cursor: pointer;
 

@@ -3,10 +3,10 @@ import type { ColorVariant, DataverseItem } from './types'
 export const renderItemTypeColor = (type: DataverseItem): ColorVariant => {
   switch (type) {
     case 'service':
-      return 'primary-color'
+      return 'blue-500'
     case 'zone':
-      return 'primary-color-variant-3'
+      return 'turquoise-500'
     case 'dataset':
-      return 'primary-color-variant-4'
+      return 'primary-variant-4'
   }
 }

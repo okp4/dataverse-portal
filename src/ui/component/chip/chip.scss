@@ -7,7 +7,7 @@
     padding: 8px 12px;
     border-radius: 12px;
     box-sizing: border-box;
-    background-color: themed(tertiary-button-background);
+    background-color: themed('background-variant-3');
     cursor: pointer;
 
     @include use-breakpoints(('large-desktop')) {
@@ -15,7 +15,7 @@
     }
 
     &.selected {
-      background-color: themed(primary-color-variant-1);
+      background-color: $darkblue-500;
     }
 
     .okp4-dataverse-portal-chip-content {
@@ -39,7 +39,7 @@
         &.selected {
           svg {
             path {
-              fill: themed(primary-text);
+              fill: $white;
             }
           }
         }
@@ -62,7 +62,7 @@
 
         &.selected {
           @include noto-sans(700);
-          color: themed(primary-text);
+          color: $white;
         }
       }
     }

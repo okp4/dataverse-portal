@@ -37,14 +37,14 @@
 
       rect {
         fill-opacity: 1;
-        fill: themed('disabled-checkbox-background');
-        stroke: themed('disabled-checkbox-background');
+        fill: $neutral-200;
+        stroke: $neutral-200;
       }
     }
 
     &.disabled.checked {
       path {
-        fill: themed('secondary-disabled');
+        fill: $neutral-600;
       }
     }
   }

@@ -1,2 +1,2 @@
 export type DataverseItem = 'zone' | 'dataset' | 'service'
-export type ColorVariant = 'primary-color' | 'primary-color-variant-3' | 'primary-color-variant-4'
+export type ColorVariant = 'blue-500' | 'turquoise-500' | 'primary-variant-4'

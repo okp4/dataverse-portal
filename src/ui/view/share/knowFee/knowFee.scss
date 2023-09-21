@@ -3,7 +3,7 @@
 @import '@/ui/style/mixins';
 
 @mixin background-image($theme) {
-  background: themed('article-background') right / contain
+  background: themed('background-variant-3') right / contain
     url('@/ui/asset/images/know-token-#{$theme}.webp') no-repeat;
 }
 
