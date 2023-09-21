@@ -102,7 +102,33 @@ export const MetadataFilling: FC = () => {
 
   const formSides = ['left', 'right']
 
+  const multiValuesField = useCallback(
+    (id: string): string[] =>
+      pipe(
+        id,
+        formItemById,
+        IOO.map(({ value }) => value),
+        IOO.match(
+          () => [],
+          flow(
+            O.flatMap(O.fromPredicate(Array.isArray)),
+            O.match(() => [], I.of)
+          )
+        ),
+        apply(null)
+      ),
+    [formItemById]
+  )
+
   const handleTagsFieldValueChange = useCallback(
+    (id: string) => (tag: string) => {
+      const isTagPresent = multiValuesField(id).includes(tag)
+      !isTagPresent && setFormItemValue(id, tag)()
+    },
+    [multiValuesField, setFormItemValue]
+  )
+
+  const removeTag = useCallback(
     (id: string) => (tag: string) => {
       setFormItemValue(id, tag)()
     },
@@ -173,24 +199,6 @@ export const MetadataFilling: FC = () => {
       'option12'
     ],
     []
-  )
-
-  const multiValuesField = useCallback(
-    (id: string): string[] =>
-      pipe(
-        id,
-        formItemById,
-        IOO.map(({ value }) => value),
-        IOO.match(
-          () => [],
-          flow(
-            O.flatMap(O.fromPredicate(Array.isArray)),
-            O.match(() => [], I.of)
-          )
-        ),
-        apply(null)
-      ),
-    [formItemById]
   )
 
   const datasetForm: DatasetForm = useMemo((): DatasetForm => {
@@ -399,7 +407,7 @@ export const MetadataFilling: FC = () => {
             </p>
             <TagsField
               addTag={handleTagsFieldValueChange(id9)}
-              removeTag={handleTagsFieldValueChange(id9)}
+              removeTag={removeTag(id9)}
               tags={multiValuesField(id9)}
             />
           </div>
@@ -448,7 +456,8 @@ export const MetadataFilling: FC = () => {
     multiValuesField,
     handleNumericValueChange,
     handleTagsFieldValueChange,
-    defaultFormatOption
+    defaultFormatOption,
+    removeTag
   ])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
