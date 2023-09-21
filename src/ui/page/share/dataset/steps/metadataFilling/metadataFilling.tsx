@@ -12,7 +12,8 @@ import { apply, constant, flow, pipe } from 'fp-ts/lib/function'
 import {
   type FormError,
   type InitFormPayload,
-  type DateStringRange
+  type DateStringRange,
+  isDateStringRange
 } from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
@@ -175,14 +176,20 @@ export const MetadataFilling: FC = () => {
       pipe(
         id,
         formItemById,
-        IOO.map(({ value }) => value as O.Option<DateStringRange>),
+        IOO.map(({ value }) => value),
         IOO.match(
           constant({}),
           flow(
-            O.fold(constant({}), dateStringRange => ({
-              from: dateStringRange.from ? new Date(dateStringRange.from) : undefined,
-              to: dateStringRange.to ? new Date(dateStringRange.to) : undefined
-            }))
+            O.match(
+              constant({}),
+              flow(
+                O.fromPredicate(isDateStringRange),
+                O.fold(constant({}), ({ from, to }) => ({
+                  from: from ? new Date(from) : undefined,
+                  to: to ? new Date(to) : undefined
+                }))
+              )
+            )
           )
         ),
         apply(null)
