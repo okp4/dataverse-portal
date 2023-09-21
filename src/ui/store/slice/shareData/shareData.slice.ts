@@ -77,6 +77,14 @@ export type FormItem =
   | SelectPicker
   | DateStringRangeField
 
+type FormItemValue =
+  | number
+  | string
+  | string[]
+  | I18nStringPayload
+  | DateStringRange
+  | I18nTextFieldValue
+
 export type Form = FormItem[]
 
 export type InitFormItem = FormItem
@@ -91,7 +99,7 @@ export type I18nStringPayload = {
 
 export type SetFormItemValuePayload = {
   id: FormItemId
-  value: string | number | I18nStringPayload | DateStringRange
+  value: FormItemValue
 }
 
 export const FormItemWrongTypeError = (formItemId: string, type: unknown) =>
@@ -127,7 +135,7 @@ export type ShareDataSlice = {
     setStorageServiceId: (id: O.Option<StorageServiceId>) => IOE.IOEither<PayloadIsEmptyError, void>
     setFormItemValue: (
       id: string,
-      value: string | number | I18nStringPayload | DateStringRange
+      value: FormItemValue
     ) => IOEither<ResourceNotFoundError | PayloadIsEmptyError | FormItemWrongTypeError, void>
   }
 }
@@ -229,9 +237,8 @@ const mapToDateStringRangeFieldValue = (
   pipe(
     storedValues,
     O.fold(
-      () =>
-        O.some(O.isNone(storedValues) ? dateRangeValue : { ...storedValues, ...dateRangeValue }),
-      () => O.some(dateRangeValue)
+      () => O.some(dateRangeValue),
+      v => O.some({ ...v, ...dateRangeValue })
     )
   )
 
@@ -267,22 +274,20 @@ const mapToSelectFieldValue = (
   )
 
 export const isI18nStringPayload = (
-  formItemValue: number | string | I18nStringPayload | DateStringRange
+  formItemValue: FormItemValue
 ): formItemValue is I18nStringPayload =>
   typeof formItemValue !== 'string' &&
   typeof formItemValue !== 'number' &&
   'language' in formItemValue
 
-export const isStringDateRange = (
-  formItemValue: number | string | I18nStringPayload | DateStringRange
-): formItemValue is DateStringRange =>
+export const isDateStringRange = (formItemValue: FormItemValue): formItemValue is DateStringRange =>
   typeof formItemValue !== 'string' &&
   typeof formItemValue !== 'number' &&
   'from' in formItemValue &&
   'to' in formItemValue
 
 const updateFormItem =
-  (updatedValue: number | string | I18nStringPayload | DateStringRange) =>
+  (updatedValue: FormItemValue) =>
   (formItem: FormItem): E.Either<FormItemWrongTypeError, FormItem> => {
     switch (formItem.type) {
       case 'i18n-text': {
@@ -299,7 +304,7 @@ const updateFormItem =
       case 'date-range': {
         return pipe(
           updatedValue,
-          E.fromPredicate(isStringDateRange, () => wrongTypeError(formItem.id, formItem.type)),
+          E.fromPredicate(isDateStringRange, () => wrongTypeError(formItem.id, formItem.type)),
           E.map(dateRangeValue => ({
             ...formItem,
             value: mapToDateStringRangeFieldValue(dateRangeValue, formItem.value)
@@ -428,10 +433,7 @@ export const createShareDataSlice: ShareDataStateCreator =
           IOO.fromIO(() => get().shareData.form),
           IOO.chainOptionK(flow(A.findFirst(formItem => eqFormItem.equals(formItem, { id }))))
         ),
-      setFormItemValue: (
-        id: string,
-        value: number | string | I18nStringPayload | DateStringRange
-      ) =>
+      setFormItemValue: (id: string, value: FormItemValue) =>
         pipe(
           id,
           S.isEmpty,
