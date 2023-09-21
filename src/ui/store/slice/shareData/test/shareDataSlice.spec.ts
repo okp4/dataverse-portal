@@ -122,6 +122,30 @@ describe('Given the share data slice', () => {
     value: O.some(['Agriculture', 'Open Data', 'Dataviz'])
   }
 
+  const dateStringRangeItemID6: FormItem = {
+    id: '6',
+    title: 'date range',
+    required: false,
+    type: 'date-range',
+    value: O.some({ from: '2023-09-21', to: '2023-09-30' })
+  }
+
+  const emptyDateStringRangeItemID6: FormItem = {
+    id: '6',
+    title: 'date range',
+    required: false,
+    type: 'date-range',
+    value: O.some({ from: null, to: null })
+  }
+
+  const fromDateStringRangeItemID6: FormItem = {
+    id: '6',
+    title: 'date range',
+    required: false,
+    type: 'date-range',
+    value: O.some({ from: '2023-09-21', to: null })
+  }
+
   // init form payloads
   const initialFormPayload1: InitFormPayload = [textItemID2]
 
@@ -189,6 +213,21 @@ describe('Given the share data slice', () => {
   const numericFormItemPayloadID5: SetFormItemValuePayload = {
     id: '5',
     value: 6
+  }
+
+  const dateStringRangeFormItemPayloadID6: SetFormItemValuePayload = {
+    id: '6',
+    value: { from: '2023-09-21', to: '2023-09-30' }
+  }
+
+  const emptyDateStringRangeFormItemPayloadID6: SetFormItemValuePayload = {
+    id: '6',
+    value: { from: null, to: null }
+  }
+
+  const fromDateStringRangeFormItemPayloadID6: SetFormItemValuePayload = {
+    id: '6',
+    value: { from: '2023-09-21', to: null }
   }
 
   // preloaded states
@@ -284,6 +323,21 @@ describe('Given the share data slice', () => {
   const expectedTagsWithoutRemovedTagFormItem5: FormItem = {
     ...tagItemID5,
     value: O.some(['Agriculture', 'Dataviz'])
+  }
+
+  const expectedDateStringRangeFormItem6: FormItem = {
+    ...dateStringRangeItemID6,
+    value: O.some({ from: '2023-09-21', to: '2023-09-30' })
+  }
+
+  const expectedEmptyDateStringRangeFormItem6: FormItem = {
+    ...emptyDateStringRangeItemID6,
+    value: O.some({ from: null, to: null })
+  }
+
+  const expectedFromDateStringRangeFormItem6: FormItem = {
+    ...fromDateStringRangeItemID6,
+    value: O.some({ from: '2023-09-21', to: null })
   }
 
   describe.each`
@@ -392,23 +446,26 @@ describe('Given the share data slice', () => {
   )
 
   describe.each`
-    preloadedState                                      | formItemPayload                                        | expectedForm                                            | expectedFormItem                                              | expectedIsEmptyPayloadError | expectedNotFoundError                                   | expectedWrongTypeError
-    ${undefined}                                        | ${numericFormItemPayloadID1}                           | ${[]}                                                   | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID1.id)}  | ${undefined}
-    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1WithZeroValue}              | ${[expectedNumericFormItem1WithZeroValue]}              | ${O.some(expectedNumericFormItem1WithZeroValue)}              | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID1}                           | ${[expectedNumericFormItem1]}                           | ${O.some(expectedNumericFormItem1)}                           | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(numericItemID1)}       | ${{ id: '', value: 10 }}                               | ${[numericItemID1]}                                     | ${O.none}                                                     | ${PayloadIsEmptyError()}    | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(numericItemID1)}       | ${numericFormItemPayloadID20}                          | ${[numericItemID1]}                                     | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID20.id)} | ${undefined}
-    ${preloadedStateWithFormItem(textItemID2)}          | ${textFormItemPayloadID2}                              | ${[expectedTextFormItem2]}                              | ${O.some(expectedTextFormItem2)}                              | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(emptyI18nTextItemID3)} | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithOneLanguageFormItem3]}           | ${O.some(expectedI18nTextWithOneLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithUpdatedTextID3}           | ${[expectedI18nTextWithUpdatedTextFormItem3]}           | ${O.some(expectedI18nTextWithUpdatedTextFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithNewLanguageFormItem3]}           | ${O.some(expectedI18nTextWithNewLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(i18nTextItemID3)}      | ${i18nTextFormItemPayloadWithEmptyStringOnLanguageID3} | ${[expectedI18nTextWithEMptyStringOnLanguageFormItem3]} | ${O.some(expectedI18nTextWithEMptyStringOnLanguageFormItem3)} | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(emptySelectItemID4)}   | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithOneSelectionFormItem4]}            | ${O.some(expectedSelectWithOneSelectionFormItem4)}            | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(selectItemID4)}        | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithUpdatedSelectionFormItem4]}        | ${O.some(expectedSelectWithUpdatedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(selectItemID4)}        | ${removeSelectedFromSelectFormItemPayloadID4}          | ${[expectedSelectWithRemovedSelectionFormItem4]}        | ${O.some(expectedSelectWithRemovedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(tagItemID5)}           | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(tagItemID5)}           | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
-    ${preloadedStateWithFormItem(tagItemID5)}           | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.id, tagItemID5.type)}
+    preloadedState                                             | formItemPayload                                        | expectedForm                                            | expectedFormItem                                              | expectedIsEmptyPayloadError | expectedNotFoundError                                   | expectedWrongTypeError
+    ${undefined}                                               | ${numericFormItemPayloadID1}                           | ${[]}                                                   | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID1.id)}  | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}              | ${numericFormItemPayloadID1WithZeroValue}              | ${[expectedNumericFormItem1WithZeroValue]}              | ${O.some(expectedNumericFormItem1WithZeroValue)}              | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}              | ${numericFormItemPayloadID1}                           | ${[expectedNumericFormItem1]}                           | ${O.some(expectedNumericFormItem1)}                           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}              | ${{ id: '', value: 10 }}                               | ${[numericItemID1]}                                     | ${O.none}                                                     | ${PayloadIsEmptyError()}    | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(numericItemID1)}              | ${numericFormItemPayloadID20}                          | ${[numericItemID1]}                                     | ${O.none}                                                     | ${undefined}                | ${ResourceNotFoundError(numericFormItemPayloadID20.id)} | ${undefined}
+    ${preloadedStateWithFormItem(textItemID2)}                 | ${textFormItemPayloadID2}                              | ${[expectedTextFormItem2]}                              | ${O.some(expectedTextFormItem2)}                              | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(emptyI18nTextItemID3)}        | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithOneLanguageFormItem3]}           | ${O.some(expectedI18nTextWithOneLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}             | ${i18nTextFormItemPayloadWithUpdatedTextID3}           | ${[expectedI18nTextWithUpdatedTextFormItem3]}           | ${O.some(expectedI18nTextWithUpdatedTextFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}             | ${i18nTextFormItemPayloadWithNewLanguageID3}           | ${[expectedI18nTextWithNewLanguageFormItem3]}           | ${O.some(expectedI18nTextWithNewLanguageFormItem3)}           | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(i18nTextItemID3)}             | ${i18nTextFormItemPayloadWithEmptyStringOnLanguageID3} | ${[expectedI18nTextWithEMptyStringOnLanguageFormItem3]} | ${O.some(expectedI18nTextWithEMptyStringOnLanguageFormItem3)} | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(emptySelectItemID4)}          | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithOneSelectionFormItem4]}            | ${O.some(expectedSelectWithOneSelectionFormItem4)}            | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(selectItemID4)}               | ${addSelectedFormItemPayloadID4}                       | ${[expectedSelectWithUpdatedSelectionFormItem4]}        | ${O.some(expectedSelectWithUpdatedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(selectItemID4)}               | ${removeSelectedFromSelectFormItemPayloadID4}          | ${[expectedSelectWithRemovedSelectionFormItem4]}        | ${O.some(expectedSelectWithRemovedSelectionFormItem4)}        | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}                  | ${addTagFormItemPayloadID5}                            | ${[expectedTagsWithAdditionalTagFormItem5]}             | ${O.some(expectedTagsWithAdditionalTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}                  | ${removeTagFormItemPayloadID5}                         | ${[expectedTagsWithoutRemovedTagFormItem5]}             | ${O.some(expectedTagsWithoutRemovedTagFormItem5)}             | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(tagItemID5)}                  | ${numericFormItemPayloadID5}                           | ${[tagItemID5]}                                         | ${O.some(tagItemID5)}                                         | ${undefined}                | ${undefined}                                            | ${FormItemWrongTypeError(tagItemID5.id, tagItemID5.type)}
+    ${preloadedStateWithFormItem(dateStringRangeItemID6)}      | ${dateStringRangeFormItemPayloadID6}                   | ${[expectedDateStringRangeFormItem6]}                   | ${O.some(expectedDateStringRangeFormItem6)}                   | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(emptyDateStringRangeItemID6)} | ${emptyDateStringRangeFormItemPayloadID6}              | ${[expectedEmptyDateStringRangeFormItem6]}              | ${O.some(expectedEmptyDateStringRangeFormItem6)}              | ${undefined}                | ${undefined}                                            | ${undefined}
+    ${preloadedStateWithFormItem(fromDateStringRangeItemID6)}  | ${fromDateStringRangeFormItemPayloadID6}               | ${[expectedFromDateStringRangeFormItem6]}               | ${O.some(expectedFromDateStringRangeFormItem6)}               | ${undefined}                | ${undefined}                                            | ${undefined}
   `(
     'Given a form item payload <$formItemPayload> ',
     ({
