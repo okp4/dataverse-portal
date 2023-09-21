@@ -53,7 +53,7 @@
 
         .okp4-dataverse-portal-governance-details-article-container {
           @include columns-with-gap(40px);
-          background: themed(article-background);
+          background: themed('background-variant-3');
           border-radius: 20px;
           padding: 40px;
 
@@ -135,7 +135,7 @@
 
             .okp4-dataverse-portal-governance-details-paragraph {
               @include columns-with-gap(6px);
-              background: themed(paragraph-background);
+              background: themed('background');
               max-height: 252px;
               border-radius: 10px;
               line-height: 20px;
@@ -207,11 +207,11 @@
     width: 100%;
     border-radius: 20px;
     color: themed('text');
-    background: themed(article-background);
+    background: themed('background-variant-3');
 
     .okp4-dataverse-portal-governance-identity-container {
       .okp4-dataverse-portal-governance-identity-paragraphs-container {
-        background: themed(paragraph-background);
+        background: themed('background');
         width: fit-content;
         border-radius: 10px;
         padding: 20px;

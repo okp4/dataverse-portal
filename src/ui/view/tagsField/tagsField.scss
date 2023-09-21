@@ -7,7 +7,7 @@
   @include with-theme() {
     padding: 10px;
     border-radius: 10px;
-    background-color: themed('card');
+    background-color: themed('background-variant-3');
     
     .okp4-dataverse-portal-tags-field-content {
       box-sizing: border-box;

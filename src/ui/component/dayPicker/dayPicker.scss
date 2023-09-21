@@ -1,6 +1,5 @@
 /* stylelint-disable selector-class-pattern */
 @import '@/ui/style/fonts.scss';
-@import '@/ui/style/functions.scss';
 @import '@/ui/style/mixins.scss';
 @import '@/ui/style/theme.scss';
 
@@ -42,7 +41,7 @@
         .rdp-head_cell {
           @include noto-sans(700);
           font-size: 14px;
-          color: themed('neutral-variant-2');
+          color: $neutral-secondary-800;
           line-height: 24px;
         }
 
@@ -54,7 +53,7 @@
 
           &:focus-visible {
             background-color: themed('daypicker-day-today');
-            color: #ffffff;
+            color: $white;
           }
         }
 
@@ -76,13 +75,13 @@
 
           &:focus-visible {
             &::before {
-              background-color: #ffffff;
+              background-color: $white;
             }
           }
         
           &.rdp-day_selected {
             &::before {
-              background-color: #ffffff;
+              background-color: $white;
             }
           }
         
@@ -100,7 +99,7 @@
         
         .rdp-day_selected {
           @include noto-sans(700);
-          color: #ffffff;
+          color: $white;
           background-color: var(--rdp-accent-color);
 
           &.rdp-day_outside {
@@ -181,10 +180,7 @@
           color: themed('text');
           width: 15px;
           height: 10px;
-          
-          $icon-color: themed('text'); 
-          $icon-color-encoded: encode-color($icon-color);
-          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 18 11" fill="none"><path d="M10.7385 10.4815L1.77539 1.51846" stroke="#{$icon-color-encoded}" stroke-width="4" stroke-linejoin="bevel"/><path d="M11.5986 6.70146L16.9999 1.51846" stroke="#{$icon-color-encoded}" stroke-width="4"/></svg>') no-repeat center center;
+          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 18 11" fill="none"><path d="M10.7385 10.4815L1.77539 1.51846" stroke="#{themed('text')}" stroke-width="4" stroke-linejoin="bevel"/><path d="M11.5986 6.70146L16.9999 1.51846" stroke="#{themed('text')}" stroke-width="4"/></svg>') no-repeat center center;
 
           path {
             display: none;

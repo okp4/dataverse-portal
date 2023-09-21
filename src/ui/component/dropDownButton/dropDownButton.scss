@@ -28,19 +28,19 @@
 
     &.primary {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('secondary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
-        $hover-color: themed('secondary-color-variant-1')
+        $content-color: $white,
+        $background-color: $orange-500,
+        $box-shadow: 0 4px 12px rgb($orange-500, 0.6),
+        $hover-color: $orange-300
       );
     }
 
     &.secondary {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('primary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('primary-color-variant-2')
+        $content-color: $white,
+        $background-color: $blue-500,
+        $box-shadow: 0 4px 12px rgba($blue-500, 0.6),
+        $hover-color: $teal-500
       );
     }
 

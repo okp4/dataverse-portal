@@ -14,7 +14,7 @@ type InteractCard = {
   category: string
   disabled?: boolean
   style: {
-    backgroundColor: CardBackground
+    background: CardBackground
   }
   path?: string
 }
@@ -32,7 +32,7 @@ export const Interact: FC = () => {
         action: t('home.blocks.interact.data-services.action'),
         category: t('home.blocks.interact.data-services.category'),
         style: {
-          backgroundColor: 'primary-color-variant-1'
+          background: 'data-services-tree'
         },
         path: routes.share
       },
@@ -41,7 +41,7 @@ export const Interact: FC = () => {
         category: t('home.blocks.interact.knowledge.category'),
         disabled: true,
         style: {
-          backgroundColor: 'primary-color'
+          background: 'knowledge-tree'
         }
       },
       {
@@ -49,7 +49,7 @@ export const Interact: FC = () => {
         category: t('home.blocks.interact.zones.category'),
         disabled: true,
         style: {
-          backgroundColor: 'primary-color-variant-2'
+          background: 'zones-tree'
         }
       },
       {
@@ -57,7 +57,7 @@ export const Interact: FC = () => {
         category: t('home.blocks.interact.applications.category'),
         disabled: true,
         style: {
-          backgroundColor: 'primary-color-variant-3'
+          background: 'applications-tree'
         }
       }
     ],
@@ -69,7 +69,7 @@ export const Interact: FC = () => {
       <h1>{t('home.blocks.interact.label')}</h1>
       {interactCards.map(({ action, category, disabled, style, path }, index) => (
         <Card
-          background={style.backgroundColor}
+          background={style.background}
           key={index}
           mainClassName={classNames('okp4-dataverse-portal-home-page-interact-card', { disabled })}
           {...(path && { onClick: handleNavigateTo(path) })}

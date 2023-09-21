@@ -73,7 +73,7 @@ $variants: ('success', 'error', 'warning', 'info');
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      background: themed(tertiary-button-background);
+      background: themed('background-variant-3');
       border-radius: 6px;
       padding: 21px 38px 21px 21px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
@@ -108,9 +108,9 @@ $variants: ('success', 'error', 'warning', 'info');
             line-height: 28px;
             letter-spacing: 0.4px;
 
-            @each $variant-key in $variants {
-              &.#{$variant-key} {
-                color: themed($variant-key);
+            @each $variant in $variants {
+              &.#{$variant} {
+                color: themed($variant);
               }
             }
           }

@@ -1,193 +1,104 @@
-// primary (blue)
-$primary: #006796;
-$primary-variant-1: #004073;
-$primary-variant-2: #008fad;
-$primary-variant-3: #00b6b7;
-$primary-variant-4: #50ddb7;
-$primary-variant-5: #5580a2;
-$primary-variant-6: #AABFD0;
-$primary-text: #ffffff;
+// Background
+$background-color-inverse: rgb(23, 24, 33);
+$background-color-dark: rgb(18, 19, 32);
+$background-color-inverse-light: rgb(36, 36, 51);
+$background-color: rgb(223, 228, 233);
+$background-color-light: rgb(242, 246, 249);
 
-// secondary (orange)
-$secondary: #ff9500;
-$secondary-variant-1: #ffb855;
-$secondary-variant-2: #ffdcaa;
-$secondary-disabled: #b2c3d1;
+// Blue Palette
+$blue-100: rgb(170, 204, 220);
+$blue-200: rgb(128, 179, 202);
+$blue-300: rgb(85, 154, 185);
+$blue-400: rgb(43, 128, 167);
+$blue-500: rgb(0, 103, 150);
+$blue-600: rgb(0, 86, 125);
+$blue-700: rgb(0, 69, 100);
+$blue-800: rgb(0, 52, 75);
+$blue-900: rgb(0, 48, 58);
 
-// neutral (grey)
-$neutral: #babec2;
-$neutral-variant-1: #dfe4e9;
-$neutral-variant-2: #4A4C4E;
-$neutral-variant-3: #E5EBF0;
+// Orange Palette
+$orange-100: rgb(255, 220, 170);
+$orange-200: rgb(255, 202, 128);
+$orange-300: rgb(255, 184, 85);
+$orange-400: rgb(255, 167, 43);
+$orange-500: rgb(255, 149, 0);
+$orange-600: rgb(212, 124, 0);
+$orange-700: rgb(170, 99, 0);
+$orange-800: rgb(128, 75, 0);
+$orange-900: rgb(85, 50, 0);
 
-// disabled
-$color-text-disabled: #ccd9e3;
-$background-disabled: #e7edf1;
+// Neutral Palette
+$neutral-100: rgb(240, 243, 246);
+$neutral-200: rgb(229, 235, 240);
+$neutral-300: rgb(216, 225, 232);
+$neutral-400: rgb(204, 215, 224);
+$neutral-500: rgb(191, 205, 217);
+$neutral-600: rgb(178, 195, 209);
+$neutral-700: rgb(148, 162, 174);
+$neutral-800: rgb(119, 130, 139);
+$neutral-900: rgb(89, 98, 105);
 
-// backgrounds
-$background-dark: #171821;
-$background-light: #dfe4e9;
-$background-dark-variant-1: rgba(255, 255, 255, 0.06);
-$background-light-variant-1: rgba(0, 64, 115, 0.06);
-$background-dark-variant-2: #004073;
-$background-light-variant-2: #006796;
-$background-primary-variant: rgba(0, 103, 150, 0.08);
-$background-primary-variant-3: rgba(0, 182, 183, 0.08);
-$background-primary-variant-4: rgba(80, 221, 183, 0.08);
+// Dark blue Palette
+$darkblue-100: rgb(170, 191, 208);
+$darkblue-200: rgb(128, 159, 185);
+$darkblue-300: rgb(85, 128, 162);
+$darkblue-400: rgb(43, 96, 138);
+$darkblue-500: rgb(0, 64, 115);
+$darkblue-600: rgb(0, 53, 96);
+$darkblue-700: rgb(0, 43, 77);
+$darkblue-800: rgb(0, 32, 58);
+$darkblue-900: rgb(0, 21, 38);
 
-// buttons
-$tertiary-button-background-dark: #242433;
-$tertiary-button-background-light: #f2f6f9;
-$tertiary-button-background-dark-variant-1: #121320;
-$tertiary-button-background-light-variant-1: #eaedf0;
-$primary-button-background-pressed: #d47c00;
-$secondary-button-background-pressed: #004564;
-$secondary-button-hover: #559ab9;
-$turquoise-button-hover: #55cecf;
-$turquoise-button-pressed: #00797a;
+// Teal Palette
+$teal-100: rgb(170, 218, 228);
+$teal-200: rgb(128, 199, 214);
+$teal-300: rgb(85, 180, 200);
+$teal-400: rgb(43, 162, 187);
+$teal-500: rgb(0, 143, 173);
+$teal-600: rgb(0, 143, 173);
+$teal-700: rgb(0, 119, 144);
+$teal-800: rgb(0, 95, 115);
+$teal-900: rgb(0, 72, 87);
 
-// chips
-$chip-dark: #ffffff;
-$chip-light: #004073;
+// Turquoise Palette
+$turquoise-100: rgb(170, 231, 231);
+$turquoise-200: rgb(128, 218, 219);
+$turquoise-300: rgb(85, 206, 207);
+$turquoise-400: rgb(43, 194, 195);
+$turquoise-500: rgb(0, 182, 183);
+$turquoise-600: rgb(0, 152, 152);
+$turquoise-700: rgb(0, 121, 122);
+$turquoise-800: rgb(0, 91, 92);
+$turquoise-900: rgb(0, 61, 61);
 
-// switches
-$switch-dark: #242433;
-$switch-light: #ffdcaa;
-$switch-dark-variant-1: rgb(255 255 255 / 20%);
-$switch-light-variant-1: #ffffff;
+// Neutral Primary Palette
+$neutral-primary-100: rgb(193, 193, 199);
+$neutral-primary-200: rgb(162, 162, 171);
+$neutral-primary-300: rgb(131, 131, 143);
+$neutral-primary-400: rgb(100, 100, 115);
+$neutral-primary-500: rgb(69, 69, 87);
+$neutral-primary-600: rgb(58, 58, 73);
+$neutral-primary-700: rgb(46, 46, 58);
+$neutral-primary-800: rgb(35, 35, 44);
+$neutral-primary-900: rgb(23, 23, 29);
 
-// list items
-$list-item-dark: #242433;
-$list-item-light: #f2f6f9;
+// Neutral Secondary Palette
+$neutral-secondary-100: rgb(218, 217, 226);
+$neutral-secondary-200: rgb(199, 198, 211);
+$neutral-secondary-300: rgb(180, 180, 196);
+$neutral-secondary-400: rgb(162, 161, 182);
+$neutral-secondary-500: rgb(143, 142, 167);
+$neutral-secondary-600: rgb(119, 118, 139);
+$neutral-secondary-700: rgb(95, 95, 111);
+$neutral-secondary-800: rgb(72, 71, 84);
+$neutral-secondary-900: rgb(48, 47, 56);
 
-// cards
-$card-dark: #242433;
-$card-light: #f2f6f9;
-$card-background-disabled: #001526;
-$card-background-hover-light: #003560;
-$card-background-hover-dark: #00203a;
-$card-button-selected: #004564;
-$card-background-selected: rgba(0, 103, 150, 0.08);
-$card-background-pressed-light: #002b4d;
-$card-background-pressed-dark: #001526;
+// Others
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+$status-color-error: rgb(255, 54, 72);
+$status-color-success: rgb(74, 211, 119);
 
-// menus
-$menu-dark: #121320;
-$menu-light: #f2f6f9;
-$menu-dark-variant-1: #242433;
-$menu-light-variant-1: $background-light;
-
-// texts
-$text-dark: #ffffff;
-$text-light: $primary-variant-1;
-
-// gradients
-$gradient: linear-gradient(270deg, #00b6b7 17.51%, #004073 100%);
-$card-background-light-gradient: linear-gradient(180deg, #f2f6f9 0%, rgba(242, 246, 249, 0) 100%);
-$card-background-dark-gradient: linear-gradient(
-  180deg,
-  rgba($card-dark, 0.8) 0%,
-  rgba($card-dark, 0) 100%
-);
-// semantic
-$success: #4ad377;
-$error: #ff3648;
-$warning: #ff9500;
-$info-light: #004073;
-$info-dark: #dfe4e9;
-
-// skeleton
-$skeleton-base-color-light: #a9a9a9;
-$skeleton-base-color-dark: #dcdcdc;
-$skeleton-animated-color-light: #696969;
-$skeleton-animated-color-dark: #efefef;
-
-// governance navigation
-$governance-nav-section-background: #b2c3d2;
-
-// article
-$article-background-dark: #242433;
-$article-background-light: #f2f6f9;
-
-// paragraph
-$paragraph-background-dark: #171821;
-$paragraph-background-light: #dfe4e9;
-
-// checkbox
-$disabled-checkbox-background: #e5ebf0;
-
-//tabs
-$tab-disabled-background: #b2c3d1;
-$tab-disabled-text: #94a2ae;
-$tab-inactive-background-light: rgba(0, 64, 115, 0.06);
-$tab-inactive-background-dark: rgba(255, 255, 255, 0.06);
-$tab-inactive-text-light: rgba(0, 64, 115, 0.6);
-$tab-inactive-text-dark: rgba(255, 255, 255, 0.6);
-$tab-active-background: #004073;
-
-//file drag and drop
-$file-picker-background-light: #f2f6f9;
-$file-picker-background-dark: #242433;
-$file-picker-background-focused-light: #d5e5ed;
-$file-picker-background-focused-dark: #202c3f;
-$file-picker-border-light: hsla(207, 100%, 23%, 0.4);
-$file-picker-border-dark: hsl(0, 0%, 100%);
-$file-picker-border-focused-light: hsl(199, 100%, 29%);
-$file-picker-border-focused-dark: hsl(199, 100%, 29%);
-
-// input
-$input-background-dark: #242433;
-$input-background-light: #f2f6f9;
-$input-border-light: $primary-variant-1;
-$input-border-dark: #f2f6f9;
-$input-label-shrinked-light: #809fb9;
-$input-label-shrinked-dark: rgba(255, 255, 255, 0.6);
-$input-background-focused-light: rgba(0, 64, 115, 0.08);
-$input-background-focused-dark: #242433;
-$input-background-disabled-light: $background-disabled;
-$input-background-disabled-dark: #494955;
-$input-label-disabled-light: $secondary-disabled;
-$input-label-disabled-dark: #242433;
-$input-label-placeholder-dark: rgba(178, 179, 194, 0.6);
-$input-label-placeholder-light: rgba(0, 64, 115, 0.6);
-$input-label-top-dark: #ffffff;
-$input-label-top-light: #004073;
-
-// tags field
-$tags-field-input-action-background-light: rgba(0, 64, 115, 0.08);
-$tags-field-input-action-background-dark: rgba(255, 255, 255, 0.08);
-
-// dropdown
-$dropdown-background-light: rgba(0, 64, 115, 0.08);
-$dropdown-background-dark: #242433;
-$dropdown-border-light: rgba(0, 64, 115, 0.12);
-$dropdown-tags-color: $primary;
-$dropdown-tags-background: rgba(0, 103, 150, 0.12);
-$dropdown-content-background-light: #ffffff;
-$dropdown-content-background-dark: $dropdown-background-dark;
-$dropdown-content-box-shadow-light: 0 4px 8px 0 rgba(0, 0, 0, 0.14);
-$dropdown-content-box-shadow-dark: 0 8px 20px 0 rgba(0, 0, 0, 0.40);
-
-
-// modal
-$modal-background-dark: linear-gradient(360deg, #242433 0%, #2f2f42 100%);
-$modal-background-light: linear-gradient(360deg, #f2f6f9 0%, #ffffff 100%);
-$modal-line-divider-light: rgba(0, 64, 115, 0.12);
-$modal-line-divider-dark: rgba(255, 255, 255, 0.12);
-// share dataset summary
-$share-dataset-summary-title-dark: rgba(255, 255, 255, 0.4);
-$share-dataset-summary-title-light: rgba(0, 64, 115, 0.4);
-
-// daypicker
-$daypicker-background-light: #ffffff;
-$daypicker-background-dark: #242433;
-$daypicker-day-color-light: $neutral-variant-2;
-$daypicker-day-color-dark: #E3E3E3;
-$daypicker-day-outside-color-light: $neutral;
-$daypicker-day-outside-color-dark: #707275;
-$daypicker-day-range-middle-light: $primary-variant-6;
-$daypicker-day-range-middle-dark: #203F5A;
-$daypicker-day-today-light: $primary-variant-1;
-$daypicker-day-today-dark: #2B608A;
-$daypicker-dropdowns-background-light: rgba($primary-variant-1, 0.08);
-$daypicker-dropdowns-background-dark: $background-dark;
+// ❗️ following colors is missing in the design system
+// TODO: define appropriate colors with product team
+$primary-variant-4: rgb(80, 221, 183);

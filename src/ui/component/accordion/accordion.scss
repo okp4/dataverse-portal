@@ -59,12 +59,12 @@
           }
 
           &:hover {
-            background-color: themed('primary-color');
-            color: #ffffff;
+            background-color: $blue-500;
+            color: $white;
 
             svg {
               path {
-                fill: #ffffff;
+                fill: $white;
               }
             }
           }
@@ -72,15 +72,15 @@
 
         &.back-button {
           justify-content: unset;
-          color: themed('secondary-color');
+          color: $orange-500;
           column-gap: 7px;
 
           svg {
             height: 10px;
 
             path {
-              fill: themed('secondary-color');
-              stroke: themed('secondary-color');
+              fill: $orange-500;
+              stroke: $orange-500;
             }
           }
         }
