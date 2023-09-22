@@ -109,8 +109,7 @@ const formErrorData = (
 }
 
 export const MetadataFilling: FC = () => {
-  const { t, i18n } = useTranslation('share')
-  const locale = i18n.language
+  const { t } = useTranslation('share')
 
   const dispatchNotification = useDispatchNotification()
   const { initForm, setFormItemValue, formItemById, isFormInitialized } = useAppStore(state => ({
@@ -155,20 +154,15 @@ export const MetadataFilling: FC = () => {
     [setFormItemValue]
   )
 
-  const localizedDateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }),
-    [locale]
-  )
-
   const handleDateRangeValueChange = useCallback(
     (id: string) => (dateRange: DateRange) => {
       const dateStringRange: DateStringRange = {
-        from: dateRange.from ? localizedDateFormatter.format(dateRange.from) : null,
-        to: dateRange.to ? localizedDateFormatter.format(dateRange.to) : null
+        from: dateRange.from ? dateRange.from.toISOString() : null,
+        to: dateRange.to ? dateRange.to.toISOString() : null
       }
       setFormItemValue(id, dateStringRange)()
     },
-    [setFormItemValue, localizedDateFormatter]
+    [setFormItemValue]
   )
 
   const dateRangeValueField = useCallback(

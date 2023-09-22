@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { type FC, useState, useCallback } from 'react'
+import { type FC, useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import * as O from 'fp-ts/Option'
@@ -23,7 +23,9 @@ import type {
 import './summary.scss'
 
 export const Summary: FC = () => {
-  const { t } = useTranslation(['common', 'share'])
+  const { t, i18n } = useTranslation(['common', 'share'])
+
+  const locale = i18n.language
 
   const { files } = useFileStore(state => ({
     files: state.filesDescriptor
@@ -66,6 +68,16 @@ export const Summary: FC = () => {
   type SummaryLeftItemProps = {
     item: FormItem
   }
+
+  const localizedDateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }),
+    [locale]
+  )
+
+  const formatISODate = useCallback(
+    (isoDateString: string) => localizedDateFormatter.format(new Date(isoDateString)),
+    [localizedDateFormatter]
+  )
 
   const SummaryLeftItem: FC<SummaryLeftItemProps> = ({ item }) => {
     const { type } = item
@@ -110,11 +122,13 @@ export const Summary: FC = () => {
 
         return from && to ? (
           <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-            {`${t('from')} ${from} ${t('to').toLowerCase()} ${to}`}
+            {`${t('from')} ${formatISODate(from)} ${t('to').toLowerCase()} ${formatISODate(to)}`}
           </p>
         ) : (
           <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-            {from ? `${t('from')} ${from}` : `${t('to')} ${to}`}
+            {from
+              ? `${t('from')} ${formatISODate(from)}`
+              : `${t('to')} ${formatISODate(to as string)}`}
           </p>
         )
       }
