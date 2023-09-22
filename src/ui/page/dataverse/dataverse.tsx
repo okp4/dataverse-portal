@@ -47,12 +47,6 @@ export type Governance = {
 
 type Typed<T extends DataverseItemType> = { type: T }
 
-type ZoneResource = {
-  type: Exclude<DataverseItemType, 'zone'>
-  amount: number
-  lastUpdated: string
-}
-
 export type Service = DataverseItem & Typed<'service'>
 
 export type Dataset = DataverseItem & Typed<'dataset'>
@@ -60,7 +54,6 @@ export type Dataset = DataverseItem & Typed<'dataset'>
 export type Zone = DataverseItem &
   Typed<'zone'> & {
     governance: Governance
-    resources: ZoneResource[]
   }
 
 export type DataverseItemDetails = Zone | Dataset | Service
@@ -107,19 +100,7 @@ export const dataverseItems: DataverseItemDetails[] = [
         fr: "Cette première Zone a une gouvernance centralisée : seul OKP4 peut modifier les règles. Dans cette première version, seul OKP4 peut enregistrer des données et des services. Toutefois, n'importe quel wallet est autorisé à télécharger les données.",
         de: 'Dieser erste Zone hat eine zentralisierte Governance: Nur OKP4 kann die Regeln ändern. In dieser ersten Version kann nur OKP4 Daten und Dienste speichern. Allerdings ist es jeder Wallet erlaubt, Daten hochzuladen.'
       }
-    },
-    resources: [
-      {
-        type: 'dataset',
-        amount: 20,
-        lastUpdated: '2023-03-28T00:00:00+00:00'
-      },
-      {
-        type: 'service',
-        amount: 7,
-        lastUpdated: '2023-03-31T00:00:00+00:00'
-      }
-    ]
+    }
   },
   {
     id: '97ff7e16-c08d-47be-8475-211016c82e33',
@@ -133,19 +114,7 @@ export const dataverseItems: DataverseItemDetails[] = [
         fr: "DS4I est une Zone privée où les ressources ne sont accessibles que pour un groupe d'adresses de wallets contenues dans une Whitelist dédiée. Seul OKP4 a le droit de modifier cette whitelist.",
         de: 'DS4I ist ein privater Zone, in dem die Ressourcen nur für eine Gruppe zugänglich sind. Adressen von Wallets, die in einer dedizierten Whitelist enthalten sind. Nur OKP4 hat das Recht, diese Whitelist zu ändern.'
       }
-    },
-    resources: [
-      {
-        type: 'dataset',
-        amount: 1,
-        lastUpdated: '2023-03-25T00:00:00+00:00'
-      },
-      {
-        type: 'service',
-        amount: 1,
-        lastUpdated: '2023-04-02T00:00:00+00:00'
-      }
-    ]
+    }
   },
   {
     id: '79ec2986-0d71-4e92-a48d-95379b3da9ed',
