@@ -493,6 +493,62 @@ export const dataverseItems: DataverseItemDetails[] = [
     label: 'IONOS S3 Object Storage',
     description:
       'IONOS S3 Object Storage facilitates digital transformation: store and manage data of varying volumes, easily and affordably.'
+  },
+  {
+    id: 'a19fec74-d428-46ac-ad3b-730e520fef86',
+    type: 'zone',
+    label: 'CROP',
+    description:
+      'Today, cooperatives and traders need to have a detailed knowledge of their territory to optimize their supply and collection activities, but also to support farmers in the agro-ecological transition. The CROP project responds to these challenges by proposing an agro-economic data visualization tool for territories. CROP allows to cross different data sources to get a better knowledge at the scale of the farm but also of its territory.',
+    governance: {
+      description: {
+        en: 'CROP is a zone in which only FarmLEAP partners can share agronomic data. Governance of this zone is centralized: only FarmLEAP and OKP4 are authorized to modify the zone rules.',
+        fr: 'CROP est une zone dans laquelle seuls les partenaires de FarmLEAP peuvent partager des données agronomiques. La gouvernance de cette zone est centralisée : seuls FarmLEAP et OKP4 sont autorisés à modifier les règles de la zone.',
+        de: 'CROP ist eine Zone, in der nur FarmLEAP-Partner agronomische Daten austauschen können. Die Verwaltung dieser Zone ist zentralisiert: nur FarmLEAP und OKP4 sind berechtigt, die Regeln der Zone zu ändern.'
+      }
+    }
+  },
+  {
+    id: 'fdfde6f6-b5d8-4c6b-ae4c-3451b92d5314',
+    type: 'zone',
+    label: 'CADS',
+    description:
+      'As part of the CADS project, the aim of this zone is to calculate an agri-environmental indicator based on the i4trust architecture context broker.',
+    governance: {
+      description: {
+        en: 'CADS is a zone in which only CADS project partners can share data for the purpose of calculating carbon credits. The governance of this zone is centralized: only OKP4, on behalf of the consortium, is authorized to modify the rules of the zone.',
+        fr: 'CADS est une zone dans laquelle seuls les partenaires du projet CADS peuvent partager des données dans le but de calculer des crédits carbone. La gouvernance de cette zone est centralisée : seul OKP4, pour le compte du consortium, est autorisé à modifier les règles de la zone.',
+        de: 'CADS ist eine Zone, in der nur die Partner des CADS-Projekts Daten zum Zweck der Berechnung von Emissionsgutschriften austauschen können. Die Governance dieser Zone ist zentralisiert: Nur OKP4 im Namen des Konsortiums ist berechtigt, die Regeln der Zone zu ändern.'
+      }
+    }
+  },
+  {
+    id: 'd74127ac-d411-4fef-9d65-73c6fc22315d',
+    type: 'zone',
+    label: 'DDP',
+    description:
+      'Supported by CERFRANCE Bretagne, la data est dans le pré (or DDP) is a Zone whose aim is to enhance the value of agricultural data (technical and accounting) through a mechanism for setting the right price for dairy products, and then providing specific advice to each farmer.',
+    governance: {
+      description: {
+        en: 'La Data est dans le Pré (DDP) is a zone in which only Cerfrance Bretagne partners can share economic or agronomic data. The governance of this zone is centralized: only Cerfrance Bretagne and OKP4 are authorized to modify the rules of the zone.',
+        fr: 'La Data est dans le Pré (DDP) est une zone dans laquelle seuls les partenaires de Cerfrance Bretagne peuvent partager des données économiques ou agronomiques. La gouvernance de cette zone est centralisée : seuls Cerfrance Bretagne et OKP4 sont autorisés à modifier les règles de la zone.',
+        de: 'La Data est dans le Pré (DDP) ist eine Zone, in der nur die Partner von Cerfrance Bretagne wirtschaftliche oder agronomische Daten austauschen können. Die Governance dieser Zone ist zentralisiert: Nur Cerfrance Bretagne und OKP4 sind berechtigt, die Regeln der Zone zu ändern.'
+      }
+    }
+  },
+  {
+    id: 'ababcf97-a85f-4bf2-b890-34624928452c',
+    type: 'zone',
+    label: 'Appel Agri',
+    description:
+      'Calculating the carbon footprint of a farm requires a lot of data (electricity consumption, livestock size, plant protection products used, etc.). The collection of these data is very time consuming (on average 1 day) while all these data exist in various information systems. O2M is developing a digital tool for the calculation of carbon credits. The objective of this Zone is to automate the collection of agricultural open data.',
+    governance: {
+      description: {
+        en: 'Appel Agri is a zone in which only O2M partners can share agronomic data. Governance of this zone is centralized: only O2M and OKP4 (on behalf of O2M) are authorized to modify the zone rules.',
+        fr: "Appel Agri est une zone dans laquelle seuls les partenaires de O2M peuvent partager des données agronomiques. La gouvernance de cette zone est centralisée : seuls O2M et OKP4 (pour le compte d'O2M) sont autorisés à modifier les règles de la zone.",
+        de: 'Appel Agri ist eine Zone, in der nur O2M-Partner agronomische Daten austauschen können. Die Verwaltung dieser Zone ist zentralisiert: Nur O2M und OKP4 (im Auftrag von O2M) sind berechtigt, die Regeln der Zone zu ändern.'
+      }
+    }
   }
 ]
 
