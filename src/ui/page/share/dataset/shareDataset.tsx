@@ -10,6 +10,7 @@ import type { StepElement } from '@/ui/component/stepper/stepper'
 import '../i18n/index'
 import './shareDataset.scss'
 import { useAppStore, useFileStore } from '@/ui/store'
+import { CompleteTransaction } from './steps/completeTransaction/completeTransaction'
 
 export const ShareDataset: FC = () => {
   const { t } = useTranslation('share')
@@ -32,8 +33,15 @@ export const ShareDataset: FC = () => {
   }
   const metadataFilling: StepElement = { id: 'step3', content: <MetadataFilling /> }
   const summary: StepElement = { id: 'step4', content: <Summary /> }
+  const completeTransaction: StepElement = { id: 'step5', content: <CompleteTransaction /> }
 
-  const steps = [storageServiceSelection, dataSelection, metadataFilling, summary]
+  const steps = [
+    storageServiceSelection,
+    dataSelection,
+    metadataFilling,
+    summary,
+    completeTransaction
+  ]
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-page-main">
