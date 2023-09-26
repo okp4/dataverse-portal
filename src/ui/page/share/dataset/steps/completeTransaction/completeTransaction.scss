@@ -32,7 +32,7 @@
         &::after {
           content: "";
           position: absolute;
-          background: radial-gradient(circle at center, rgb(0, 103, 150), transparent);
+          background: radial-gradient(circle at center, themed('blue-emphasis-500'), transparent);
           top: -101px;
           right: -78px;
           height: 332px;
@@ -46,7 +46,7 @@
         &::before {
           content: "";
           position: absolute;
-          background: radial-gradient(circle at center, rgb(255, 149, 0), transparent);
+          background: radial-gradient(circle at center, themed('orange-emphasis-500'), transparent);
           bottom: 0;
           left: 244px;
           height: 332px;
@@ -89,11 +89,11 @@
           padding: 16px 23px 23px;
           border-radius: 12px;
           background-color: themed('background-variant-3');
-          box-shadow:  0 4px 0 rgba(rgb(0, 0, 0), 0.06);
+          box-shadow:  0 4px 0 rgba(themed('black-emphasis'), 0.06);
 
           .okp4-dataverse-portal-share-dataset-complete-tx-fee-estimation {
             @include noto-sans(700);
-            color: rgb(255, 149, 0);
+            color: themed('orange-emphasis-500');
             font-size: 11px;
             line-height: 24px;
             text-transform: uppercase;

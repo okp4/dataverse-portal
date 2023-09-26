@@ -25,7 +25,7 @@
       }
 
       &:hover {
-        color: $orange-300;
+        color: themed('orange-emphasis-300');
       }
     }
 

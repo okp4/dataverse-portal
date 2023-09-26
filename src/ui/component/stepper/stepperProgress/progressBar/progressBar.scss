@@ -17,7 +17,7 @@ $transition-duration: 600ms;
     }
     
     &.active {
-      background-color: $turquoise-500;
+      background-color: themed('turquoise-emphasis-500');
       transition-duration: $transition-duration;
       transition-property: background-color;
     }
@@ -32,7 +32,7 @@ $transition-duration: 600ms;
       content: '';
       position: absolute;
       inset: 0;
-      background-color: $turquoise-500;
+      background-color: themed('turquoise-emphasis-500');
       transform: translateX(-100%);
     }
 

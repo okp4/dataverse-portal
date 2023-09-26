@@ -51,12 +51,12 @@
 
           &:hover {
             @include transition-bg-color;
-            background-color: $darkblue-900;
+            background-color: themed('darkblue-emphasis-900');
 
             .okp4-dataverse-portal-share-page-text-container {
               h3,
               p {
-                color: $white;
+                color: themed('white-emphasis');
                 opacity: 0.4;
               }
 
@@ -111,11 +111,11 @@
 
         &:hover {
           @include transition-bg-color;
-          background-color: $darkblue-500;
+          background-color: themed('darkblue-emphasis-500');
 
           h3,
           p {
-            color: $white;
+            color: themed('white-emphasis');
           }
         }
       }

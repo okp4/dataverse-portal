@@ -24,7 +24,7 @@
     }
     
     .rdp {
-      --rdp-accent-color: #{themed('primary-color')};
+      --rdp-accent-color: #{themed('blue-emphasis-500')};
       --rdp-background-color: transparent;
       @include noto-sans(400);
       margin: 0;
@@ -41,7 +41,7 @@
         .rdp-head_cell {
           @include noto-sans(700);
           font-size: 14px;
-          color: $neutral-secondary-800;
+          color: themed('neutral-secondary-emphasis-800');
           line-height: 24px;
         }
 
@@ -53,7 +53,7 @@
 
           &:focus-visible {
             background-color: themed('daypicker-day-today');
-            color: $white;
+            color: themed('white-emphasis');
           }
         }
 
@@ -75,13 +75,13 @@
 
           &:focus-visible {
             &::before {
-              background-color: $white;
+              background-color: themed('white-emphasis');
             }
           }
         
           &.rdp-day_selected {
             &::before {
-              background-color: $white;
+              background-color: themed('white-emphasis');
             }
           }
         
@@ -99,7 +99,7 @@
         
         .rdp-day_selected {
           @include noto-sans(700);
-          color: $white;
+          color: themed('white-emphasis');
           background-color: var(--rdp-accent-color);
 
           &.rdp-day_outside {

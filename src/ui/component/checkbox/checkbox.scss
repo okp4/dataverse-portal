@@ -37,14 +37,14 @@
 
       rect {
         fill-opacity: 1;
-        fill: $neutral-200;
-        stroke: $neutral-200;
+        fill: themed('neutral-emphasis-200');
+        stroke: themed('neutral-emphasis-200');
       }
     }
 
     &.disabled.checked {
       path {
-        fill: $neutral-600;
+        fill: themed('neutral-emphasis-600');
       }
     }
   }

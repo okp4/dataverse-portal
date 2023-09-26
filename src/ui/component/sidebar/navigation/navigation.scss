@@ -77,19 +77,19 @@
         &:hover {
           svg {
             path {
-              fill: $orange-500;
+              fill: themed('orange-emphasis-500');
             }
           }
 
           p {
-            color: $orange-300;
+            color: themed('orange-emphasis-300');
             opacity: 1;
           }
         }
 
         &.active {
           p {
-            color: $orange-500;
+            color: themed('orange-emphasis-500');
             opacity: 1;
           }
         }

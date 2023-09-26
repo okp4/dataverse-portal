@@ -22,7 +22,7 @@
 
     &.focused {
       @include custom-dashed-border(
-        $color: $blue-500,
+        $color: themed('blue-emphasis-500'),
         $width: 3px,
         $border-radius: 12px,
         $dashArray: 24px

@@ -8,12 +8,12 @@
     gap: 4px;
     align-items: center;
     justify-content: center;
-    color: $turquoise-500;
+    color: themed('turquoise-emphasis-500');
     font-size: 14px;
     height: 34px;
     padding: 0 8px;
     line-height: 18px;
-    background: rgba($turquoise-500, 0.12);
+    background: rgba(themed('turquoise-emphasis-500'), 0.12);
     border-radius: 6px;
     width: fit-content;
 

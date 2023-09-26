@@ -88,12 +88,12 @@ $service-details-vertical-padding: 21px;
 
             &.selected {
               outline-offset: -2px;
-              outline: 2px solid $blue-500;
-              background-color: rgba($blue-500, 0.08);
+              outline: 2px solid themed('blue-emphasis-500');
+              background-color: rgba(themed('blue-emphasis-500'), 0.08);
             }
 
             .selected-button {
-              background-color: $blue-700;
+              background-color: themed('blue-emphasis-700');
               box-shadow: none;
             }
           }

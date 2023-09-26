@@ -99,7 +99,7 @@
             }
 
             &.disconnect {
-              color: $status-color-error;
+              color: themed('error');
               cursor: pointer;
             }
           }

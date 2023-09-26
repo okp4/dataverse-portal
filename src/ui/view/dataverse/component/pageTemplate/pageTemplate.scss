@@ -3,9 +3,9 @@
 @import '@/ui/style/theme.scss';
 
 $colors: (
-  'blue-500': $blue-500,
-  'turquoise-500': $turquoise-500,
-  'primary-variant-4': $primary-variant-4,
+  'blue-500': 'blue-emphasis-500',
+  'turquoise-500': 'turquoise-emphasis-500',
+  'primary-variant-4': 'primary-variant-emphasis-4',
 );
 
 .okp4-dataverse-portal-dataverse-component-page-template-main {
@@ -30,7 +30,7 @@ $colors: (
 
         @each $color-key, $color-value in $colors {
           &.#{$color-key} {
-            color: $color-value;
+            color: themed($color-value);
           }
         }
       }

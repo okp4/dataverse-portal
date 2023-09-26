@@ -73,14 +73,14 @@
             gap:8px;
             
             .okp4-dataverse-portal-tag-main {
-              color: $blue-500;
-              background-color: rgba($blue-500, 0.12);
+              color: themed('blue-emphasis-500');
+              background-color: rgba(themed('blue-emphasis-500'), 0.12);
             }
             
             &.tag-label {
               .okp4-dataverse-portal-tag-main {
-                color: $turquoise-500;
-                background-color: rgba($turquoise-500, 0.12);
+                color: themed('turquoise-emphasis-500');
+                background-color: rgba(themed('turquoise-emphasis-500'), 0.12);
               }
             }
           }

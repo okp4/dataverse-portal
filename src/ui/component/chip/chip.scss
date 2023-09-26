@@ -15,7 +15,7 @@
     }
 
     &.selected {
-      background-color: $darkblue-500;
+      background-color: themed('darkblue-emphasis-500');
     }
 
     .okp4-dataverse-portal-chip-content {
@@ -39,7 +39,7 @@
         &.selected {
           svg {
             path {
-              fill: $white;
+              fill: themed('white-emphasis');
             }
           }
         }
@@ -62,7 +62,7 @@
 
         &.selected {
           @include noto-sans(700);
-          color: $white;
+          color: themed('white-emphasis');
         }
       }
     }
