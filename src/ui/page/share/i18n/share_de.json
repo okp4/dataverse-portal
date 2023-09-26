@@ -41,6 +41,13 @@
       "temporalCoverageLabel": "Zeitliche Abdeckung:",
       "tags": "Tags",
       "enterDatasetFee": "Geben Sie die Mindestgebühr für diese Datenutzung ein."
+    },
+    "completeTransaction": {
+      "completeTransaction": "Die Transaktion abschließen",
+      "sharedDataset": "Gemeinsamer Datensatz",
+      "feeEstimation": "Kostenschätzung",
+      "referenceDataset": "um Ihren Datensatz im Protokoll zu referenzieren.",
+      "proceedPayment": "Nehmen Sie die Zahlung vor aufn"
     }
   }
 }

@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import * as O from 'fp-ts/Option'
 import { flow, pipe } from 'fp-ts/lib/function'
 import type { FormItem, TextField } from '@/ui/store/slice/shareData/shareData.slice'
@@ -9,6 +10,9 @@ import './completeTransaction.scss'
 
 // eslint-disable-next-line max-lines-per-function
 export const CompleteTransaction: FC = () => {
+  const { t, i18n } = useTranslation('share')
+  const locale = i18n.language
+
   const theme = useAppStore(store => store.theme)
 
   const { formItems } = useAppStore(state => ({
@@ -32,13 +36,13 @@ export const CompleteTransaction: FC = () => {
   return (
     <div className="okp4-dataverse-portal-share-dataset-complete-tx-container">
       <h2 className="okp4-dataverse-portal-share-dataset-complete-tx-title">
-        Complete the transaction
+        {t('share.completeTransaction.completeTransaction')}
       </h2>
       <div className="okp4-dataverse-portal-share-dataset-complete-tx-content">
         <div className="okp4-dataverse-portal-share-dataset-complete-tx-gradient" />
         <div className="okp4-dataverse-portal-share-dataset-complete-tx-content-summary-container">
           <span className="okp4-dataverse-portal-share-dataset-complete-tx-content-summary-type">
-            Shared dataset
+            {t('share.completeTransaction.sharedDataset')}
           </span>
           {dataSetTitle && (
             <h3 className="okp4-dataverse-portal-share-dataset-complete-tx-content-summary-title">
@@ -47,15 +51,15 @@ export const CompleteTransaction: FC = () => {
           )}
           <div className="okp4-dataverse-portal-share-dataset-complete-tx-content-summary">
             <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-estimation">
-              Fee estimation
+              {t('share.completeTransaction.feeEstimation')}
             </span>
             <div className="okp4-dataverse-portal-share-dataset-complete-tx-fee">
               <div>
                 <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-amount">
-                  0,01
+                  {(5).toLocaleString(locale)} {/* TODO: replace with real fee*/}
                 </span>
                 <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-currency">
-                  KNOW
+                  {APP_ENV.chains[0].feeCurrencies[0].coinDenom}
                 </span>
               </div>
               <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-info-icon">
@@ -63,11 +67,11 @@ export const CompleteTransaction: FC = () => {
               </span>
             </div>
             <p className="okp4-dataverse-portal-share-dataset-complete-tx-fee-description">
-              to reference your dataset into the protocol
+              {t('share.completeTransaction.referenceDataset')}
             </p>
             <Button
               icons={{ endIcon: <Icon name="keplr" /> }}
-              label={`Proceed to the payment on`}
+              label={t('share.completeTransaction.proceedPayment')}
             />
           </div>
         </div>
