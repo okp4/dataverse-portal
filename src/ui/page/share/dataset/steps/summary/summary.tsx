@@ -21,6 +21,7 @@ import type {
   DateStringRange
 } from '@/ui/store/slice/shareData/shareData.slice'
 import './summary.scss'
+import { formatISODate, localizedDateFormatter } from '@/util/date/date'
 
 export const Summary: FC = () => {
   const { t, i18n } = useTranslation(['common', 'share'])
@@ -69,14 +70,9 @@ export const Summary: FC = () => {
     item: FormItem
   }
 
-  const localizedDateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }),
+  const dateFormatter = useMemo(
+    () => localizedDateFormatter({ year: 'numeric', month: '2-digit', day: '2-digit' }, locale),
     [locale]
-  )
-
-  const formatISODate = useCallback(
-    (isoDateString: string) => localizedDateFormatter.format(new Date(isoDateString)),
-    [localizedDateFormatter]
   )
 
   const SummaryLeftItem: FC<SummaryLeftItemProps> = ({ item }) => {
@@ -123,7 +119,9 @@ export const Summary: FC = () => {
         if (from && to) {
           return (
             <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-              {`${t('from')} ${formatISODate(from)} ${t('to').toLowerCase()} ${formatISODate(to)}`}
+              {`${t('from')} ${formatISODate(dateFormatter, from)} ${t(
+                'to'
+              ).toLowerCase()} ${formatISODate(dateFormatter, to)}`}
             </p>
           )
         }
@@ -131,7 +129,7 @@ export const Summary: FC = () => {
         if (from && !to) {
           return (
             <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-              {`${t('from')} ${formatISODate(from)}`}
+              {`${t('from')} ${formatISODate(dateFormatter, from)}`}
             </p>
           )
         }
@@ -139,7 +137,7 @@ export const Summary: FC = () => {
         if (!from && to) {
           return (
             <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-              {`${t('to')} ${formatISODate(to)}`}
+              {`${t('to')} ${formatISODate(dateFormatter, to)}`}
             </p>
           )
         }

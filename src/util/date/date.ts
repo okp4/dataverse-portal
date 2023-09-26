@@ -14,3 +14,11 @@ export const formatDateToPattern = (
       type in pattern ? pattern[type as keyof PartialDateTimeFormatOptions] : value
     )
     .join('')
+
+export const localizedDateFormatter = (
+  options: PartialDateTimeFormatOptions,
+  locale: string = 'en-US'
+): Intl.DateTimeFormat => new Intl.DateTimeFormat(locale, options)
+
+export const formatISODate = (formatter: Intl.DateTimeFormat, isoDateString: string): string =>
+  formatter.format(new Date(isoDateString))
