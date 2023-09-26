@@ -63,7 +63,7 @@ export const CompleteTransaction: FC = () => {
                 </span>
               </div>
               <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-info-icon">
-                <Icon name={`info-${theme}`} />
+                <Icon name={`info-outlined-${theme}`} />
               </span>
             </div>
             <p className="okp4-dataverse-portal-share-dataset-complete-tx-fee-description">
