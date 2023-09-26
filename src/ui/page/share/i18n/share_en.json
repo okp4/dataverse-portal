@@ -38,6 +38,7 @@
       "geographicalCoverageLabel": "Geographical coverage:",
       "geographicalCoverage": "Geographical coverage",
       "geographicalCoverageSelection": "Select geographical coverage",
+      "temporalCoverageLabel": "Temporal coverage:",
       "tags": "Tags",
       "enterDatasetFee": "Enter the minimum fee applicable for the use of this dataset"
     }

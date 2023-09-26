@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { type FC, useState, useCallback } from 'react'
+import { type FC, useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import * as O from 'fp-ts/Option'
@@ -16,12 +16,17 @@ import type {
   NumericField as NumericFieldType,
   SelectPicker,
   TagField,
-  TextField
+  TextField,
+  DateStringRangeField,
+  DateStringRange
 } from '@/ui/store/slice/shareData/shareData.slice'
 import './summary.scss'
+import { formatISODate, localizedDateFormatter } from '@/util/date/date'
 
 export const Summary: FC = () => {
-  const { t } = useTranslation(['common', 'share'])
+  const { t, i18n } = useTranslation(['common', 'share'])
+
+  const locale = i18n.language
 
   const { files } = useFileStore(state => ({
     files: state.filesDescriptor
@@ -58,9 +63,17 @@ export const Summary: FC = () => {
   const getFieldValueForNumeric = (item: NumericFieldType): number | undefined =>
     pipe(item.value, O.toUndefined)
 
+  const getDateRangeFieldValue = (item: DateStringRangeField): DateStringRange | undefined =>
+    pipe(item.value, O.toUndefined)
+
   type SummaryLeftItemProps = {
     item: FormItem
   }
+
+  const dateFormatter = useMemo(
+    () => localizedDateFormatter({ year: 'numeric', month: '2-digit', day: '2-digit' }, locale),
+    [locale]
+  )
 
   const SummaryLeftItem: FC<SummaryLeftItemProps> = ({ item }) => {
     const { type } = item
@@ -84,6 +97,7 @@ export const Summary: FC = () => {
         }
         return null
       }
+
       case 'text': {
         const textValue = getFieldValueForText(item)
         if (textValue) {
@@ -94,6 +108,43 @@ export const Summary: FC = () => {
 
         return null
       }
+
+      case 'date-range': {
+        const dateRangeValue = getDateRangeFieldValue(item)
+
+        if (!dateRangeValue || (!dateRangeValue.from && !dateRangeValue.to)) return null
+
+        const { from, to } = dateRangeValue
+
+        if (from && to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('from')} ${formatISODate(dateFormatter, from)} ${t(
+                'to'
+              ).toLowerCase()} ${formatISODate(dateFormatter, to)}`}
+            </p>
+          )
+        }
+
+        if (from && !to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('from')} ${formatISODate(dateFormatter, from)}`}
+            </p>
+          )
+        }
+
+        if (!from && to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('to')} ${formatISODate(dateFormatter, to)}`}
+            </p>
+          )
+        }
+
+        return null
+      }
+
       case 'numeric':
       case 'i18n-text':
         return null

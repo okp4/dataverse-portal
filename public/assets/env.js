@@ -74,5 +74,9 @@ const APP_ENV = {
       ...sharedChainConf
     }
   ],
-  dropDown: { maxDisplayedSearchResults: 10, maxDisplayedTags: 4 }
+  dropDown: { maxDisplayedSearchResults: 10, maxDisplayedTags: 4 },
+  datePicker: {
+    fromYearOffset: -100,
+    toYearOffset: 20
+  }
 }

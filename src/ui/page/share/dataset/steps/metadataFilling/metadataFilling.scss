@@ -43,7 +43,7 @@
         &.left {
           @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
           @include grid-container($colsNb: 2, $colGutter: 20px, $rowGutter: 16px);
-          grid-template-rows: 42px 42px 214px 67px 67px;
+          grid-template-rows: 42px 42px 214px 68px 68px;
 
           @include use-breakpoints(('desktop')) {
             @include grid-item($colStart: 1, $colEnd: 7, $rowStart: auto, $rowEnd: auto);
@@ -53,7 +53,7 @@
         &.right {
           @include grid-item($colStart: 6, $colEnd: 11, $rowStart: auto, $rowEnd: auto);
           @include grid-container($colsNb: 1, $colGutter: 0, $rowGutter: 16px);
-          grid-template-rows: 65px 65px 65px 205px;
+          grid-template-rows: 65px 65px 41px 136px 124px;
 
           @include use-breakpoints(('desktop')) {
             @include grid-item($colStart: 7, $colEnd: 13, $rowStart: auto, $rowEnd: auto);
@@ -64,7 +64,7 @@
           @include noto-sans(700);
           color: themed('text');
           font-size: 14px;
-          line-height: 20px;
+          line-height: 1;
           margin-bottom: 8px;
         }
       }
@@ -88,6 +88,17 @@
 
         &.fee {
           align-self: end;
+        }
+
+        .okp4-dataverse-portal-share-data-metadata-filling-temporal-coverage {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .okp4-dataverse-portal-date-range-picker-main {
+            flex: 0 0 344px;
+            gap: 20px;
+          }
         }
       }
     }

@@ -3,7 +3,7 @@
 @import '@/ui/style/mixins.scss';
 
 .okp4-dataverse-portal-tags-field-main {
-  $tag-height: 28px;
+  $tag-height: 34px;
   @include with-theme() {
     padding: 10px;
     border-radius: 10px;
@@ -14,7 +14,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      max-height: 66px;
+      max-height: calc(2 * #{$tag-height} + 10px);
       overflow-y: auto;
       width: 100%;
 

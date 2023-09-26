@@ -9,7 +9,12 @@ import * as O from 'fp-ts/Option'
 import * as N from 'fp-ts/number'
 import * as I from 'fp-ts/Identity'
 import { apply, constant, flow, pipe } from 'fp-ts/lib/function'
-import type { FormError, InitFormPayload } from '@/ui/store/slice/shareData/shareData.slice'
+import {
+  type FormError,
+  type InitFormPayload,
+  type DateStringRange,
+  isDateStringRange
+} from '@/ui/store/slice/shareData/shareData.slice'
 import { useAppStore } from '@/ui/store'
 import type { ResourceError } from '@/shared/error/resource'
 import { ShowResourceError } from '@/shared/error/resource'
@@ -21,6 +26,8 @@ import { TagsField } from '@/ui/view/tagsField/tagsField'
 import { NumericField } from '@/ui/component/field/numericField'
 import { KnowFee } from '@/ui/view/share/knowFee/knowFee'
 import { MultiselectDropDown } from '@/ui/component/dropDown/multiselectDropDown'
+import type { DateRange } from '@/ui/component/dateRangePicker/dateRangePicker'
+import { DateRangePicker } from '@/ui/component/dateRangePicker/dateRangePicker'
 import './metadataFilling.scss'
 
 type FormItemBaseProps = {
@@ -66,7 +73,18 @@ type SelectPicker = FormItemBaseProps & {
   value: O.Option<string[]>
 }
 
-type DatasetFormItem = TextField | NumericField | TagField | SelectPicker | I18NTextField
+type DateStringRangeField = FormItemBaseProps & {
+  type: 'date-range'
+  value: O.Option<DateStringRange>
+}
+
+type DatasetFormItem =
+  | TextField
+  | NumericField
+  | TagField
+  | SelectPicker
+  | I18NTextField
+  | DateStringRangeField
 
 type DatasetForm = DatasetFormItem[]
 
@@ -92,6 +110,7 @@ const formErrorData = (
 
 export const MetadataFilling: FC = () => {
   const { t } = useTranslation('share')
+
   const dispatchNotification = useDispatchNotification()
   const { initForm, setFormItemValue, formItemById, isFormInitialized } = useAppStore(state => ({
     initForm: state.shareData.initForm,
@@ -133,6 +152,43 @@ export const MetadataFilling: FC = () => {
       setFormItemValue(id, tag)()
     },
     [setFormItemValue]
+  )
+
+  const handleDateRangeValueChange = useCallback(
+    (id: string) => (dateRange: DateRange) => {
+      const dateStringRange: DateStringRange = {
+        from: dateRange.from ? dateRange.from.toISOString() : null,
+        to: dateRange.to ? dateRange.to.toISOString() : null
+      }
+      setFormItemValue(id, dateStringRange)()
+    },
+    [setFormItemValue]
+  )
+
+  const dateRangeValueField = useCallback(
+    (id: string): DateRange =>
+      pipe(
+        id,
+        formItemById,
+        IOO.map(({ value }) => value),
+        IOO.match(
+          constant({}),
+          flow(
+            O.match(
+              constant({}),
+              flow(
+                O.fromPredicate(isDateStringRange),
+                O.fold(constant({}), ({ from, to }) => ({
+                  from: from ? new Date(from) : undefined,
+                  to: to ? new Date(to) : undefined
+                }))
+              )
+            )
+          )
+        ),
+        apply(null)
+      ),
+    [formItemById]
   )
 
   const handleFieldValueChange = useCallback(
@@ -212,6 +268,7 @@ export const MetadataFilling: FC = () => {
     const id8 = 'input-field-8'
     const id9 = 'input-field-9'
     const id10 = 'input-field-10'
+    const id11 = 'input-field-11'
 
     return [
       {
@@ -397,19 +454,24 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id9,
-        type: 'tag',
-        title: 'tags',
+        type: 'date-range',
+        title: 'temporalCoverage',
         value: O.none,
         render: (): JSX.Element => (
           <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id9}>
-            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
-              {t('share.metadataFilling.tags')}
-            </p>
-            <TagsField
-              addTag={handleTagsFieldValueChange(id9)}
-              removeTag={removeTag(id9)}
-              tags={multiValuesField(id9)}
-            />
+            <div className="okp4-dataverse-portal-share-data-metadata-filling-temporal-coverage">
+              <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+                {t('share.metadataFilling.temporalCoverageLabel')}
+              </p>
+              <DateRangePicker
+                fromDate={dateRangeValueField(id9).from}
+                fromYear={new Date().getFullYear() + APP_ENV.datePicker.fromYearOffset}
+                onSelect={handleDateRangeValueChange(id9)}
+                selected={dateRangeValueField(id9)}
+                toDate={dateRangeValueField(id9).to}
+                toYear={new Date().getFullYear() + APP_ENV.datePicker.toYearOffset}
+              />
+            </div>
           </div>
         ),
         style: {
@@ -418,25 +480,46 @@ export const MetadataFilling: FC = () => {
       },
       {
         id: id10,
+        type: 'tag',
+        title: 'tags',
+        value: O.none,
+        render: (): JSX.Element => (
+          <div className="okp4-dataverse-portal-share-data-metadata-filling" key={id10}>
+            <p className="okp4-dataverse-portal-share-data-metadata-filling-legend">
+              {t('share.metadataFilling.tags')}
+            </p>
+            <TagsField
+              addTag={handleTagsFieldValueChange(id10)}
+              removeTag={removeTag(id10)}
+              tags={multiValuesField(id10)}
+            />
+          </div>
+        ),
+        style: {
+          side: 'right'
+        }
+      },
+      {
+        id: id11,
         type: 'numeric',
         title: 'fee',
         value: O.none,
         render: (): JSX.Element => (
-          <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id10}>
+          <div className="okp4-dataverse-portal-share-data-metadata-filling fee" key={id11}>
             <KnowFee
               field={
                 <NumericField
                   decimalPseudoSeparators={[',']}
                   decimalSeparator="."
-                  id={id10}
+                  id={id11}
                   max={Infinity}
                   min={0}
-                  onChange={handleNumericValueChange(id10)}
+                  onChange={handleNumericValueChange(id11)}
                   placeholder="0"
                   precision={APP_ENV.chains[0].feeCurrencies[0].coinDecimals}
                   rightElement={<span>{APP_ENV.chains[0].currencies[0].coinDenom}</span>}
                   thousandSeparator=" " // narrow no-break space U+202F
-                  value={numericValueField(id10)}
+                  value={numericValueField(id11)}
                 />
               }
               label={t('share.metadataFilling.enterDatasetFee')}
@@ -457,7 +540,9 @@ export const MetadataFilling: FC = () => {
     handleNumericValueChange,
     handleTagsFieldValueChange,
     defaultFormatOption,
-    removeTag
+    removeTag,
+    handleDateRangeValueChange,
+    dateRangeValueField
   ])
 
   const mapForm = (form: DatasetForm): InitFormPayload =>
@@ -487,6 +572,11 @@ export const MetadataFilling: FC = () => {
           return {
             ...formItem,
             type: 'tag'
+          }
+        case 'date-range':
+          return {
+            ...formItem,
+            type: 'date-range'
           }
       }
     })
