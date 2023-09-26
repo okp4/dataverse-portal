@@ -120,17 +120,31 @@ export const Summary: FC = () => {
 
         const { from, to } = dateRangeValue
 
-        return from && to ? (
-          <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-            {`${t('from')} ${formatISODate(from)} ${t('to').toLowerCase()} ${formatISODate(to)}`}
-          </p>
-        ) : (
-          <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
-            {from
-              ? `${t('from')} ${formatISODate(from)}`
-              : `${t('to')} ${formatISODate(to as string)}`}
-          </p>
-        )
+        if (from && to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('from')} ${formatISODate(from)} ${t('to').toLowerCase()} ${formatISODate(to)}`}
+            </p>
+          )
+        }
+
+        if (from && !to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('from')} ${formatISODate(from)}`}
+            </p>
+          )
+        }
+
+        if (!from && to) {
+          return (
+            <p className="okp4-dataverse-portal-share-dataset-summary-item-text">
+              {`${t('to')} ${formatISODate(to)}`}
+            </p>
+          )
+        }
+
+        return null
       }
 
       case 'numeric':
