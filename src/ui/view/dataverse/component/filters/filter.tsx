@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { Collapsible } from '@/ui/component/collapsible/collapsible'
 import './filter.scss'
 
-type FilterLabelProps = {
+export type FilterLabelProps = {
   label: string
 }
 
