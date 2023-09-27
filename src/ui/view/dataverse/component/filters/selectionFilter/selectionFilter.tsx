@@ -2,7 +2,6 @@ import type { FC } from 'react'
 import { useMemo, useCallback, useState } from 'react'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { isSubstringOf } from '@/util/util'
-import type { FilterLabelProps } from '@/ui/view/dataverse/component/filters/filter'
 import { Filter } from '@/ui/view/dataverse/component/filters/filter'
 import { DynamicCheckbox } from '@/ui/view/dataverse/component/dynamicCheckbox/dynamicCheckbox'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
@@ -16,10 +15,6 @@ export type SelectionOption = {
 }
 
 type SelectionItemType = 'checkbox'
-
-export const FilterLabel: FC<FilterLabelProps> = ({ label }) => (
-  <h3 className="okp4-dataverse-portal-dataverse-filter-label">{label}</h3>
-)
 
 type SelectionFilterProps = {
   filterName: string

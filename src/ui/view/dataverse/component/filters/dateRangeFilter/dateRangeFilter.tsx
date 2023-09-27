@@ -3,13 +3,8 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DateRange } from '@/ui/component/dateRangePicker/dateRangePicker'
 import { DateRangePicker } from '@/ui/component/dateRangePicker/dateRangePicker'
-import type { FilterLabelProps } from '@/ui/view/dataverse/component/filters/filter'
 import { Filter } from '@/ui/view/dataverse/component/filters/filter'
 import './dateRangeFilter.scss'
-
-export const FilterLabel: FC<FilterLabelProps> = ({ label }) => (
-  <h3 className="okp4-dataverse-portal-dataverse-filter-label">{label}</h3>
-)
 
 type DateRangeFilterProps = {
   filterName: string
