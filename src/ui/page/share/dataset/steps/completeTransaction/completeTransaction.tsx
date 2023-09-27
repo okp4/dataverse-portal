@@ -56,7 +56,9 @@ export const CompleteTransaction: FC = () => {
             <div className="okp4-dataverse-portal-share-dataset-complete-tx-fee">
               <div>
                 <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-amount">
-                  {(5).toLocaleString(locale)} {/* TODO: replace with real fee*/}
+                  {
+                    APP_ENV.chains[0].feeCurrencies[0].defaultFee.toLocaleString(locale) // TODO: replace with real fee
+                  }
                 </span>
                 <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-currency">
                   {APP_ENV.chains[0].feeCurrencies[0].coinDenom}
