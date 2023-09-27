@@ -5,8 +5,8 @@ export const renderItemTypeColor = (type: DataverseItem): ColorVariant => {
     case 'service':
       return 'blue-500'
     case 'zone':
-      return 'turquoise-500'
+      return 'turquoise-700'
     case 'dataset':
-      return 'primary-variant-4'
+      return 'turquoise-200'
   }
 }

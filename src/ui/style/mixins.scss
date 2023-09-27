@@ -97,7 +97,7 @@
   line-height: $line-height;
   letter-spacing: 4px;
   font-size: 24px;
-  background: linear-gradient(270deg, rgb(0, 182, 183) 17.51%, themed('darkblue-emphasis-500') 100%);
+  background: linear-gradient(270deg, themed('turquoise-emphasis-500') 17.51%, themed('darkblue-emphasis-500') 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
