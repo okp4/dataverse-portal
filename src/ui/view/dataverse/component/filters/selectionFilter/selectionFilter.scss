@@ -1,65 +1,19 @@
-@import '@/ui/style/fonts.scss';
-@import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-.okp4-dataverse-portal-selection-filter-main {
-  @include with-theme {
-    position: relative;
-    padding: 8px 0 16px;
+.okp4-dataverse-portal-selection-filter-options-list {
+  --checkbox-height: 32px;
+  --checkbox-gap: 6px;
+  --visible-checkboxes: 3;
 
-    &:not(:last-child)::after {
-      content: '';
-      opacity: 0.8;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 1px;
-      background-image: radial-gradient(
-        rgba(themed('text'), 0.2) 0%,
-        rgba(themed('text'), 0) 80%
-      );          
-    }
-
-    .okp4-dataverse-portal-selection-filter-trigger {
-      background-color: themed('background');
-    }
-  
-    .okp4-dataverse-portal-selection-filter {
-      @include columns-with-gap(16px);
-      padding-top: 8px;
-      
-      .okp4-dataverse-portal-selection-filter-options-list {
-        --checkbox-height: 32px;
-        --checkbox-gap: 6px;
-        --visible-checkboxes: 3;
-        @include columns-with-gap(var(--checkbox-gap));
-        height: calc(var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) * (var(--visible-checkboxes)));
-        overflow-y: auto;
-        padding-right: 8px;
-      }
-
-      .okp4-dataverse-portal-selection-filter-no-results-wrapper {
-        @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
-        display: flex;
-        justify-content: center;
-        height: inherit;
-      }
-    }
-  }
+  @include columns-with-gap(var(--checkbox-gap));
+  height: calc(var(--checkbox-height) * var(--visible-checkboxes) + var(--checkbox-gap) * (var(--visible-checkboxes)));
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
-.okp4-dataverse-portal-dataverse-filter-label {
-  @include with-theme {
-    @include norse-font(700);
-    color: themed('text');
-    width: fit-content;
-    font-size: 18px;
-    line-height: 36px;
-    margin: 0;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: left;
-  }
+.okp4-dataverse-portal-selection-filter-no-results-wrapper {
+  @include grid-item($colStart: 1, $colEnd: -1, $rowStart: auto, $rowEnd: auto);
+  display: flex;
+  justify-content: center;
+  height: inherit;
 }

@@ -1,8 +1,10 @@
-import * as O from 'fp-ts/Option'
-import * as A from 'fp-ts/Array'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import * as O from 'fp-ts/Option'
+import * as A from 'fp-ts/Array'
+import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { useDataverseStore, useAppStore } from '@/ui/store/index'
 import { DataverseItemCard } from '@/ui/view/dataverse/component/dataverseItemCard/dataverseItemCard'
@@ -10,23 +12,20 @@ import { Button } from '@/ui/component/button/button'
 import Chip from '@/ui/component/chip/chip'
 import { Icon } from '@/ui/component/icon/icon'
 import type { IconName } from '@/ui/component/icon/icon'
-import {
-  SelectionFilter,
-  FilterLabel
-} from '@/ui/view/dataverse/component/filters/selectionFilter/selectionFilter'
+import { SelectionFilter } from '@/ui/view/dataverse/component/filters/selectionFilter/selectionFilter'
 import '@/ui/view/dataverse/component/filters/i18n/index'
-import './dataverse.scss'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import { LottieLoader } from '@/ui/component/loader/lottieLoader'
 import threeDots from '@/ui/asset/loader/threeDots.json'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
 import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse/command'
-import { pipe } from 'fp-ts/lib/function'
-import { useNavigate } from 'react-router-dom'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
-import './i18n/index'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
+import { DateRangeFilter } from '@/ui/view/dataverse/component/filters/dateRangeFilter/dateRangeFilter'
+import { FilterLabel } from '@/ui/view/dataverse/component/filters/filter'
+import './i18n/index'
+import './dataverse.scss'
 
 type DataverseItemType = 'service' | 'zone' | 'dataset'
 type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'
@@ -577,6 +576,7 @@ const selectionFilters = {
     'Austria',
     'Bahamas'
   ],
+  'data-temp-cov': [],
   'data-format': ['CSV', 'JSON', 'XML'],
   'data-licence': ['ETALAB', 'LO-FR-2_0', 'Licence 3']
 }
@@ -729,15 +729,19 @@ const Dataverse = (): JSX.Element => {
       {(isLargeScreen || showMobileFilters) && (
         <div className="okp4-dataverse-portal-dataverse-page-filters-container">
           <FiltersChips />
-          {Object.entries(selectionFilters).map(([filterName, filterValues]) => (
-            <SelectionFilter
-              filterName={t(`filters:${filterName}.name`)}
-              filterValues={filterValues}
-              key={filterName}
-              searchPlaceholder={t(`filters:${filterName}.search`)}
-              selectionType="checkbox"
-            />
-          ))}
+          {Object.entries(selectionFilters).map(([filterName, filterValue]) =>
+            filterName === 'data-temp-cov' ? (
+              <DateRangeFilter filterName={t(`filters:${filterName}.name`)} key={filterName} />
+            ) : (
+              <SelectionFilter
+                filterName={t(`filters:${filterName}.name`)}
+                filterValue={filterValue}
+                key={filterName}
+                searchPlaceholder={t(`filters:${filterName}.search`)}
+                selectionType="checkbox"
+              />
+            )
+          )}
         </div>
       )}
       {(isLargeScreen || !showMobileFilters) && (
