@@ -15,11 +15,11 @@ export const CompleteTransaction: FC = () => {
 
   const theme = useAppStore(store => store.theme)
 
-  const { formItems } = useAppStore(state => ({
-    formItems: state.shareData.form
+  const { formItemById } = useAppStore(state => ({
+    formItemById: state.shareData.formItemById
   }))
 
-  const dataSetTitleField = formItems.find(item => item.type === 'text' && item.title === 'title')
+  const dataSetTitleField = pipe('input-field-1', formItemById)()
 
   const getFieldValueForText = (item: TextField): string | undefined =>
     pipe(item.value, O.toUndefined)
@@ -28,7 +28,6 @@ export const CompleteTransaction: FC = () => {
 
   const dataSetTitle = pipe(
     dataSetTitleField,
-    O.fromNullable,
     O.map(flow(O.fromPredicate(isTextField), O.map(getFieldValueForText), O.toUndefined)),
     O.toUndefined
   )
