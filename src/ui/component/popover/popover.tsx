@@ -6,7 +6,7 @@ import type { IconName } from '@/ui/component/icon/icon'
 import { Icon } from '@/ui/component/icon/icon'
 import './popover.scss'
 
-type PopoverProps = Omit<RPopover.PopoverContentProps, 'content'> & {
+type PopoverProps = {
   content: JSX.Element
   trigger: JSX.Element
   onOpenChange?: () => void
@@ -14,9 +14,10 @@ type PopoverProps = Omit<RPopover.PopoverContentProps, 'content'> & {
   contentClassName?: string
   triggerClassName?: string
   triggerIconName?: IconName
-  align?: RPopover.PopoverContentProps['align']
-  sideOffset?: RPopover.PopoverContentProps['sideOffset']
-  container?: RPopover.PopoverPortalProps['container']
+  align?: 'center' | 'start' | 'end'
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  sideOffset?: number
+  container?: HTMLElement
 }
 
 export const Popover: FC<PopoverProps> = ({
@@ -29,8 +30,8 @@ export const Popover: FC<PopoverProps> = ({
   container,
   onOpenChange,
   align = 'start',
-  sideOffset = 8,
-  ...contentProps
+  side = 'bottom',
+  sideOffset = 8
 }) => {
   const containerRef = useRef<HTMLElement | null>(null)
 
@@ -56,9 +57,9 @@ export const Popover: FC<PopoverProps> = ({
       </RPopover.Trigger>
       <RPopover.Portal container={containerRef.current}>
         <RPopover.Content
-          {...contentProps}
           align={align}
           className={classNames('okp4-dataverse-portal-popover-content', contentClassName)}
+          side={side}
           sideOffset={sideOffset}
         >
           {content}
