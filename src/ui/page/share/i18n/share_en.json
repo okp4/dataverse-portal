@@ -41,6 +41,13 @@
       "temporalCoverageLabel": "Temporal coverage:",
       "tags": "Tags",
       "enterDatasetFee": "Enter the minimum fee applicable for the use of this dataset"
+    },
+    "completeTransaction": {
+      "completeTransaction": "Complete the transaction",
+      "sharedDataset": "Shared Dataset",
+      "feeEstimation": "Fee estimation",
+      "referenceDataset": "to reference your dataset into the protocol",
+      "proceedPayment": "Proceed to the payment on"
     }
   }
 }

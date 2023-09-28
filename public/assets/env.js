@@ -31,7 +31,8 @@ const sharedChainConf = {
         low: 0.01,
         average: 0.025,
         high: 0.03
-      }
+      },
+      defaultFee: 5
     }
   ],
   coinType: 118

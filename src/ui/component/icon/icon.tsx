@@ -60,6 +60,8 @@ import { ReactComponent as ErrorIcon } from '@/ui/asset/icon/error.svg'
 import { ReactComponent as WarningIcon } from '@/ui/asset/icon/warning.svg'
 import { ReactComponent as InfoLightIcon } from '@/ui/asset/icon/info-light.svg'
 import { ReactComponent as InfoDarkIcon } from '@/ui/asset/icon/info-dark.svg'
+import { ReactComponent as InfoOutlinedLightIcon } from '@/ui/asset/icon/info-outlined-light.svg'
+import { ReactComponent as InfoOutlinedDarkIcon } from '@/ui/asset/icon/info-outlined-dark.svg'
 import { ReactComponent as CheckIcon } from '@/ui/asset/icon/check.svg'
 import { ReactComponent as HookDarkIcon } from '@/ui/asset/icon/hook-dark.svg'
 import { ReactComponent as HookLightIcon } from '@/ui/asset/icon/hook-light.svg'
@@ -149,6 +151,8 @@ export type IconName =
   | 'check'
   | 'info-light'
   | 'info-dark'
+  | 'info-outlined-light'
+  | 'info-outlined-dark'
   | 'hook-light'
   | 'hook-dark'
   | 'computer-dark'
@@ -235,6 +239,8 @@ const icons: Record<IconName, React.FunctionComponent> = {
   check: CheckIcon,
   'info-light': InfoLightIcon,
   'info-dark': InfoDarkIcon,
+  'info-outlined-light': InfoOutlinedLightIcon,
+  'info-outlined-dark': InfoOutlinedDarkIcon,
   'hook-light': HookLightIcon,
   'hook-dark': HookDarkIcon,
   'computer-dark': ComputerDarkIcon,

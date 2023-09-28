@@ -11,6 +11,7 @@ type Currency = {
     average: number
     high: number
   }
+  defaultFee: number
 }
 type CW20Currency = Currency & {
   type: 'cw20'

@@ -1,0 +1,141 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins';
+
+.okp4-dataverse-portal-share-dataset-complete-tx-container {
+  @include with-theme {
+    .okp4-dataverse-portal-share-dataset-complete-tx-title {
+      @include noto-sans(700);
+      font-size: 28px;
+      color: themed('text');
+      letter-spacing: 0.4px;
+      margin-bottom: 40px;
+    }
+    
+    .okp4-dataverse-portal-share-dataset-complete-tx-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 39px;
+
+      .okp4-dataverse-portal-share-dataset-complete-tx-gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 262px;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: rgba(themed('background-variant-3'), 0.5);
+
+        &::after {
+          content: "";
+          position: absolute;
+          background: radial-gradient(circle at center, rgb(0, 103, 150), transparent);
+          top: -101px;
+          right: -78px;
+          height: 332px;
+          aspect-ratio: 1;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%;
+          filter: blur(50px);
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          background: radial-gradient(circle at center, rgb(255, 149, 0), transparent);
+          bottom: 0;
+          left: 244px;
+          height: 332px;
+          aspect-ratio: 1;
+          transform: translate3D(-50%, 50%, 0);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%;
+          filter: blur(50px);
+        }
+      }
+
+      .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-container {
+        @include columns-with-gap(10px);
+        align-items: center;
+        isolation: isolate;
+
+        .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-type {
+          @include noto-sans(700);
+          color: rgba(themed('text'), 0.60);
+          font-size: 20px;
+          line-height: 28px;
+          text-transform: uppercase;
+        }
+        
+        .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-title {
+          @include noto-sans(700);
+          color: themed('text');
+          font-size: 30px;
+          line-height: 28px;
+          margin-bottom: 44px;
+        }
+        
+        .okp4-dataverse-portal-share-dataset-complete-tx-content-summary {
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-width: 554px;
+          padding: 16px 23px 23px;
+          border-radius: 12px;
+          background-color: themed('background-variant-3');
+          box-shadow:  0 4px 0 rgba(rgb(0, 0, 0), 0.06);
+
+          .okp4-dataverse-portal-share-dataset-complete-tx-fee-estimation {
+            @include noto-sans(700);
+            color: rgb(255, 149, 0);
+            font-size: 11px;
+            line-height: 24px;
+            text-transform: uppercase;
+          }
+          
+          .okp4-dataverse-portal-share-dataset-complete-tx-fee {
+            display: flex;
+            gap: 9px;
+            align-items: baseline;
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-fee-amount {
+              @include noto-sans(700);
+              color: themed('text');
+              font-size: 28px;
+              line-height: 28px;
+              letter-spacing: 0.4px;
+              margin-right: 4px;
+            }
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-fee-currency {
+              @include noto-sans(700);
+              color: themed('text');
+              font-size: 16px;
+              line-height: 24px;
+              letter-spacing: 0.4px;
+              text-transform: uppercase;
+            }
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-fee-info-icon {
+              transform: translateY(3px);
+            }
+          }
+
+          .okp4-dataverse-portal-share-dataset-complete-tx-fee-description {
+            @include noto-sans(400);
+            color: rgba(themed('text'), 0.60);
+            font-size: 16px;
+            line-height: 22px;
+            margin-bottom: 22px;
+          }
+        }
+      }
+    }
+  }
+}

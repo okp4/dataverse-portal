@@ -41,6 +41,13 @@
       "temporalCoverageLabel": "Couverture temporelle :",
       "tags": "Tags",
       "enterDatasetFee": "Indiquer le tarif minimum applicable à l'utilisation de cet ensemble de données"
+    },
+    "completeTransaction": {
+      "completeTransaction": "Finaliser la transaction",
+      "sharedDataset": "Jeu de données partagé",
+      "feeEstimation": "Estimation des frais",
+      "referenceDataset": "pour référencer votre jeu de données dans le protocole",
+      "proceedPayment": "Procéder au paiement sur"
     }
   }
 }
