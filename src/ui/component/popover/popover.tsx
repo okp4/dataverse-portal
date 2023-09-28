@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import classNames from 'classnames'
 import * as RPopover from '@radix-ui/react-popover'
@@ -33,11 +33,13 @@ export const Popover: FC<PopoverProps> = ({
   side = 'bottom',
   sideOffset = 8
 }) => {
-  const containerRef = useRef<HTMLElement | null>(null)
+  const [containerElement, setContainerElement] = useState<HTMLElement | null>(container ?? null)
 
   useEffect(() => {
-    containerRef.current = container ?? document.getElementById('popover-root')
-  }, [container])
+    if (containerElement) return
+
+    setContainerElement(document.getElementById('popover-root'))
+  }, [containerElement])
 
   return (
     <RPopover.Root onOpenChange={onOpenChange} open={open}>
@@ -55,7 +57,7 @@ export const Popover: FC<PopoverProps> = ({
           </div>
         )}
       </RPopover.Trigger>
-      <RPopover.Portal container={containerRef.current}>
+      <RPopover.Portal container={containerElement}>
         <RPopover.Content
           align={align}
           className={classNames('okp4-dataverse-portal-popover-content', contentClassName)}
