@@ -16,8 +16,11 @@ type TooltipProps = {
   portalContainer?: HTMLElement
   delayDuration?: number
   width?: number
+  arrowWidth?: number
+  arrowHeight?: number
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const Tooltip: FC<TooltipProps> = ({
   content,
   contentClassName,
@@ -29,7 +32,9 @@ export const Tooltip: FC<TooltipProps> = ({
   sideOffset = 5,
   portalContainer,
   delayDuration = 400,
-  width
+  width,
+  arrowWidth = 16,
+  arrowHeight = 8
 }) => {
   const [containerElement, setContainerElement] = useState<HTMLElement | null>(
     portalContainer ?? null
@@ -61,7 +66,11 @@ export const Tooltip: FC<TooltipProps> = ({
             }}
           >
             {content}
-            <RTooltip.Arrow className="okp4-dataverse-portal-tooltip-arrow" />
+            <RTooltip.Arrow
+              className="okp4-dataverse-portal-tooltip-arrow"
+              height={arrowHeight}
+              width={arrowWidth}
+            />
           </RTooltip.Content>
         </RTooltip.Portal>
       </RTooltip.Root>

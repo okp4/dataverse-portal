@@ -47,7 +47,17 @@
       "sharedDataset": "Gemeinsamer Datensatz",
       "feeEstimation": "Kostenschätzung",
       "referenceDataset": "um Ihren Datensatz im Protokoll zu referenzieren.",
-      "proceedPayment": "Nehmen Sie die Zahlung vor aufn"
+      "proceedPayment": "Nehmen Sie die Zahlung vor aufn",
+      "tooltip": {
+        "gasFeeOnly": "Diese Gebühr besteht nur aus den Gasgebühren.",
+        "estimationNote": "Es handelt sich um eine Schätzung auf der Grundlage der aktuellen Netzbedingungen und der Komplexität der Transaktion.",
+        "pleaseNote": "Bitte beachten Sie:",
+        "gasFeePurpose": "Die Gasgebühr stellt sicher, dass Ihre Transaktion über das Blockchain-Netzwerk abgewickelt wird.",
+        "transactionDeclineCondition": "Wenn die tatsächlich erforderlichen Gasgebühren den geschätzten Betrag übersteigen, wird die Transaktion abgelehnt. Andernfalls wird sie validiert.",
+        "exactGasFee": "Ihnen werden nur die exakten Gasgebühren in Rechnung gestellt, die während der Transaktion ausgegeben werden.",
+        "maxProcessingTime": "Außerdem beträgt die maximale Bearbeitungszeit für einen neuen Block 10 Sekunden. Ihre Transaktion wird in einen verfügbaren Block aufgenommen, der auf dem von Ihnen gewählten Gaspreis basiert.",
+        "chooseGasPriceCarefully": "Überprüfen Sie den Gaspreis sorgfältig, um die Transaktionsgeschwindigkeit und die Kosten zu optimieren."
+      }
     }
   }
 }

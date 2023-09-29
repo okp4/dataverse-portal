@@ -47,7 +47,17 @@
       "sharedDataset": "Jeu de données partagé",
       "feeEstimation": "Estimation des frais",
       "referenceDataset": "pour référencer votre jeu de données dans le protocole",
-      "proceedPayment": "Procéder au paiement sur"
+      "proceedPayment": "Procéder au paiement sur",
+      "tooltip": {
+        "gasFeeOnly": "Ces frais ne comprennent que les frais de gaz.",
+        "estimationNote": "Il s'agit d'une estimation basée sur les conditions actuelles du réseau et la complexité de la transaction.",
+        "pleaseNote": "Veuillez noter :",
+        "gasFeePurpose": "Les frais de gaz garantissent le traitement de votre transaction sur le réseau blockchain.",
+        "transactionDeclineCondition": "Si les frais de gaz réels requis dépassent le montant estimé, la transaction sera refusée. Dans le cas contraire, elle sera validée.",
+        "exactGasFee": "Vous ne serez facturé que pour les frais de gaz exacts dépensés au cours de la transaction.",
+        "maxProcessingTime": "En outre, le temps de traitement maximum d'un nouveau bloc est de 10 secondes. Votre transaction sera incluse dans un bloc disponible en fonction du prix de gaz que vous avez choisi.",
+        "chooseGasPriceCarefully": "Veillez à examiner attentivement le prix de gaz afin d'optimiser la vitesse et les coûts de la transaction."
+      }
     }
   }
 }
