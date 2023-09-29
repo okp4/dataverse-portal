@@ -59,12 +59,12 @@
         }
       }
 
-      .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-container {
+      .okp4-dataverse-portal-share-dataset-complete-tx-content-container {
         @include columns-with-gap(10px);
         align-items: center;
         isolation: isolate;
 
-        .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-type {
+        .okp4-dataverse-portal-share-dataset-complete-tx-content-type {
           @include noto-sans(700);
           color: rgba(themed('text'), 0.60);
           font-size: 20px;
@@ -72,7 +72,7 @@
           text-transform: uppercase;
         }
 
-        .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-title {
+        .okp4-dataverse-portal-share-dataset-complete-tx-content-title {
           @include noto-sans(700);
           color: themed('text');
           font-size: 30px;
@@ -89,7 +89,7 @@
           padding: 16px 23px 23px;
           border-radius: 12px;
           background-color: themed('background-variant-3');
-          box-shadow:  0 4px 0 rgba(themed('black-emphasis'), 0.06);
+          box-shadow: 0 0 4px 0 rgba(themed('black-emphasis'), 0.06);
 
           .okp4-dataverse-portal-share-dataset-complete-tx-fee-estimation {
             @include noto-sans(700);
@@ -133,6 +133,58 @@
             font-size: 16px;
             line-height: 22px;
             margin-bottom: 22px;
+          }
+
+          .okp4-dataverse-portal-share-dataset-complete-tx-content-validation-summary {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-time {
+              @include noto-sans(400);
+              line-height: 22px;
+              font-size: 16px;
+              color: rgba(themed('text'), 0.40);
+            }
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-validation-title {
+              @include noto-sans(700);
+              margin: 7px 0;
+              color: themed('text');
+              font-size: 16px;
+              line-height: 22px;
+            }
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-validation-description {
+              @include noto-sans(400);
+              max-width: 468px;
+              margin-bottom: 20px;
+              color: themed('text');
+              font-size: 16px;
+              line-height: 22px;
+              text-align: center;
+            }
+
+            .okp4-dataverse-portal-share-dataset-complete-tx-validation-link {
+              /* TODO: reuse secondary variant button's mixin */
+              @include noto-sans(700);
+              padding: 16px;
+              font-size: 16px;
+              line-height: 24px;
+              border-radius: 12px;
+              background-color: rgba(255, 149, 0, 1);
+              box-shadow: 0 4px 12px 0 rgba(255, 149, 0, 0.60);
+              color: rgb(255, 255, 255);
+              text-decoration: none;
+
+              &:hover {
+                background-color: rgb(255, 184, 85)
+              }
+
+              &:focus{
+                background-color: rgb(212, 124, 0);
+              }
+            }
           }
         }
       }
