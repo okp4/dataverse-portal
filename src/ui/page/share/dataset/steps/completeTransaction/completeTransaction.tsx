@@ -1,7 +1,8 @@
-import { useState, type FC, useCallback } from 'react'
+import { useState, type FC, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as O from 'fp-ts/Option'
 import { flow, pipe } from 'fp-ts/lib/function'
+import { formatISODateToParts, localizedDateFormatter } from '@/util/date/date'
 import type { FormItem, TextField } from '@/ui/store/slice/shareData/shareData.slice'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
@@ -79,8 +80,31 @@ const Summary: FC<SummaryProps> = ({ onButtonClick }) => {
 
 // eslint-disable-next-line max-lines-per-function
 const ValidationSummary: FC = () => {
-  const { i18n, t } = useTranslation('share')
-  const locale = i18n.language
+  const { t } = useTranslation('share')
+
+  const formatter = useMemo(
+    () =>
+      localizedDateFormatter(
+        {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        },
+        'en-US'
+      ),
+    []
+  )
+
+  const isoDate = new Date().toISOString() // TODO: replace with isoDate from tx
+
+  const dateTimeParts = formatISODateToParts(formatter, isoDate)
+
+  const { month, day, year, hour, minute } = Object.fromEntries(
+    dateTimeParts.map(({ type, value }) => [type, value])
+  )
 
   return (
     <div className="okp4-dataverse-portal-share-dataset-complete-tx-content-validation-summary">
@@ -88,7 +112,7 @@ const ValidationSummary: FC = () => {
         <LottieLoader animationData={potion} />
       </div>
       <span className="okp4-dataverse-portal-share-dataset-complete-tx-time">
-        {new Date().toLocaleTimeString(locale)}
+        {`${month}/${day}/${year} ${hour}:${minute}`}
       </span>
       <h3 className="okp4-dataverse-portal-share-dataset-complete-tx-validation-title">
         {t('share.completeTransaction.paymentSuccessfullyValidated')}

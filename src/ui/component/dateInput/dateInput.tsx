@@ -2,7 +2,7 @@ import { useMemo, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/ui/component/icon/icon'
 import './dateInput.scss'
-import type { PartialDateTimeFormatOptions } from '@/util/date/date'
+import type { PartialDateFormatOptions } from '@/util/date/date'
 import { formatDateToPattern } from '@/util/date/date'
 
 const datePattern = {
@@ -11,7 +11,7 @@ const datePattern = {
   year: 'YY'
 }
 
-const dateFormatOptions: PartialDateTimeFormatOptions = {
+const dateFormatOptions: PartialDateFormatOptions = {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric'
