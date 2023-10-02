@@ -57,7 +57,10 @@
         "exactGasFee": "Ihnen werden nur die exakten Gasgebühren in Rechnung gestellt, die während der Transaktion ausgegeben werden.",
         "maxProcessingTime": "Außerdem beträgt die maximale Bearbeitungszeit für einen neuen Block 10 Sekunden. Ihre Transaktion wird in einen verfügbaren Block aufgenommen, der auf dem von Ihnen gewählten Gaspreis basiert.",
         "chooseGasPriceCarefully": "Überprüfen Sie den Gaspreis sorgfältig, um die Transaktionsgeschwindigkeit und die Kosten zu optimieren."
-      }
+      },
+      "paymentSuccessfullyValidated": "Zahlung erfolgreich validiert",
+      "yourDatasetReferencingRequestHasBeenSent": "Ihr Antrag auf Datensatzreferenzierung wurde erfolgreich an das Dataverse gesendet! Das Netz wird nun mit der Blockvalidierung fortfahren.",
+      "openTransactionExplorer": "Transaktions-Explorer öffnen"
     }
   }
 }

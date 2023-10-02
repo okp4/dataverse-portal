@@ -79,7 +79,7 @@ const Summary: FC<SummaryProps> = ({ onButtonClick }) => {
 
 // eslint-disable-next-line max-lines-per-function
 const ValidationSummary: FC = () => {
-  const { i18n } = useTranslation('share')
+  const { i18n, t } = useTranslation('share')
   const locale = i18n.language
 
   return (
@@ -91,11 +91,10 @@ const ValidationSummary: FC = () => {
         {new Date().toLocaleTimeString(locale)}
       </span>
       <h3 className="okp4-dataverse-portal-share-dataset-complete-tx-validation-title">
-        Payment successfully validated!
+        {t('share.completeTransaction.paymentSuccessfullyValidated')}
       </h3>
       <p className="okp4-dataverse-portal-share-dataset-complete-tx-validation-description">
-        Your dataset referencing request has been successfully sent to the dataverse! The network
-        will now proceed with the block validation process.
+        {t('share.completeTransaction.yourDatasetReferencingRequestHasBeenSent')}
       </p>
       <a
         className="okp4-dataverse-portal-share-dataset-complete-tx-validation-link"
@@ -103,7 +102,7 @@ const ValidationSummary: FC = () => {
         rel="noreferrer"
         target="_blank"
       >
-        {'Open Transaction Explorer'}
+        {t('share.completeTransaction.openTransactionExplorer')}
       </a>
     </div>
   )

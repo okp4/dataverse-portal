@@ -57,7 +57,10 @@
         "exactGasFee": "You will only be charged for the exact gas fees spent during the transaction.",
         "maxProcessingTime": "Additionally, the maximum processing time for a new block is 10 seconds. Your transaction will be included in an available block based on the gas price you choose.",
         "chooseGasPriceCarefully": "Make sure to review the gas price carefully to optimize transaction speed and costs."
-      }
+      },
+      "paymentSuccessfullyValidated": "Payment successfully validated!",
+      "yourDatasetReferencingRequestHasBeenSent": "Your dataset referencing request has been successfully sent to the dataverse! The network will now proceed with the block validation process.",
+      "openTransactionExplorer": "Open Transaction Explorer"
     }
   }
 }
