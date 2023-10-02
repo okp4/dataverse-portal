@@ -78,13 +78,23 @@ describe('Date utilities', () => {
     `(
       'Given a valid ISO date string $isoDateString with options $options and locale $locale',
       ({ isoDateString, options, locale, expectedOutput }) => {
-        const formatter = new Intl.DateTimeFormat(locale, options)
+        const formatter = new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' })
 
         test(`When calling formatISODateToParts(), then expect the output to be '${JSON.stringify(
           expectedOutput
         )}'`, () => {
           const result = formatISODateToParts(formatter, isoDateString)
-          expect(result).toEqual(expectedOutput)
+
+          result.forEach((outputPart, index) => {
+            if (outputPart.type === 'literal' && [' ', ' '].includes(outputPart.value)) {
+              // Special handling for spaces - they can be either regular or non-breaking, depending on operating system
+              expect([' ', ' ']).toContain(expectedOutput[index].value)
+
+              return
+            }
+
+            expect(outputPart).toEqual(expectedOutput[index])
+          })
         })
       }
     )
