@@ -6,6 +6,7 @@ import type { FormItem, TextField } from '@/ui/store/slice/shareData/shareData.s
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { useAppStore } from '@/ui/store'
+import { Tooltip } from '@/ui/component/tooltip/tooltip'
 import './completeTransaction.scss'
 
 // eslint-disable-next-line max-lines-per-function
@@ -64,7 +65,32 @@ export const CompleteTransaction: FC = () => {
                 </span>
               </div>
               <span className="okp4-dataverse-portal-share-dataset-complete-tx-fee-info-icon">
-                <Icon name={`info-outlined-${theme}`} />
+                <Tooltip
+                  align="start"
+                  alignOffset={-35}
+                  content={
+                    <>
+                      <p>
+                        <span>{t('share.completeTransaction.tooltip.gasFeeOnly')}</span>&nbsp;
+                        <span>{t('share.completeTransaction.tooltip.estimationNote')}</span>
+                      </p>
+                      <div>
+                        <p>{t('share.completeTransaction.tooltip.pleaseNote')}</p>
+                        <ul>
+                          <li>{t('share.completeTransaction.tooltip.gasFeePurpose')}</li>
+                          <li>
+                            {t('share.completeTransaction.tooltip.transactionDeclineCondition')}
+                          </li>
+                          <li>{t('share.completeTransaction.tooltip.exactGasFee')}</li>
+                        </ul>
+                      </div>
+                      <p>{t('share.completeTransaction.tooltip.maxProcessingTime')}</p>
+                      <p>{t('share.completeTransaction.tooltip.chooseGasPriceCarefully')}</p>
+                    </>
+                  }
+                  contentClassName="okp4-dataverse-portal-share-dataset-complete-tx-fee-info-tooltip"
+                  trigger={<Icon name={`info-outlined-${theme}`} />}
+                />
               </span>
             </div>
             <p className="okp4-dataverse-portal-share-dataset-complete-tx-fee-description">

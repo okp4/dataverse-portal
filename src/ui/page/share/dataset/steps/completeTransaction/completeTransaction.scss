@@ -11,7 +11,7 @@
       letter-spacing: 0.4px;
       margin-bottom: 40px;
     }
-    
+
     .okp4-dataverse-portal-share-dataset-complete-tx-content {
       position: relative;
       display: flex;
@@ -71,7 +71,7 @@
           line-height: 28px;
           text-transform: uppercase;
         }
-        
+
         .okp4-dataverse-portal-share-dataset-complete-tx-content-summary-title {
           @include noto-sans(700);
           color: themed('text');
@@ -79,7 +79,7 @@
           line-height: 28px;
           margin-bottom: 44px;
         }
-        
+
         .okp4-dataverse-portal-share-dataset-complete-tx-content-summary {
           box-sizing: border-box;
           display: flex;
@@ -98,7 +98,7 @@
             line-height: 24px;
             text-transform: uppercase;
           }
-          
+
           .okp4-dataverse-portal-share-dataset-complete-tx-fee {
             display: flex;
             gap: 9px;
@@ -137,5 +137,20 @@
         }
       }
     }
+  }
+}
+
+.okp4-dataverse-portal-share-dataset-complete-tx-fee-info-tooltip {
+  @include columns-with-gap(16px);
+  width: 427px;
+
+  ul {
+    margin:0;
+    margin-left: 6px;
+    padding-left: 16px;
+  }
+
+  div > p, li {
+    margin-bottom: 4px;
   }
 }

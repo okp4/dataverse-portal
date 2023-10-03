@@ -47,7 +47,17 @@
       "sharedDataset": "Shared Dataset",
       "feeEstimation": "Fee estimation",
       "referenceDataset": "to reference your dataset into the protocol",
-      "proceedPayment": "Proceed to the payment on"
+      "proceedPayment": "Proceed to the payment on",
+      "tooltip": {
+        "gasFeeOnly": "This fee consists only of gas fees.",
+        "estimationNote": "This is an estimation based on the current network conditions and the complexity of the transaction.",
+        "pleaseNote": "Please note:",
+        "gasFeePurpose": "The gas fee ensures your transaction gets processed on the blockchain network.",
+        "transactionDeclineCondition": "If the actual gas fees required exceed the estimated amount, the transaction will be declined. Otherwise, it will be validated.",
+        "exactGasFee": "You will only be charged for the exact gas fees spent during the transaction.",
+        "maxProcessingTime": "Additionally, the maximum processing time for a new block is 10 seconds. Your transaction will be included in an available block based on the gas price you choose.",
+        "chooseGasPriceCarefully": "Make sure to review the gas price carefully to optimize transaction speed and costs."
+      }
     }
   }
 }
