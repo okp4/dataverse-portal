@@ -2,53 +2,6 @@
 @import '@/ui/style/theme.scss';
 @import '@/ui/style/mixins.scss';
 
-@mixin button($content-color, $background-color, $box-shadow, $hover-color, $pressed-color) {
-  @include transition-bg-color;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  color: $content-color;
-  border-radius: 12px;
-  background-color: $background-color;
-  box-shadow: $box-shadow;
-
-  &:hover {
-    &:not(.disabled) {
-      background: $hover-color;
-      border-color: $hover-color;
-      box-shadow: none;
-    }
-  }
-
-  &:focus{
-    &.disabled {
-      outline: 1px solid themed('neutral-emphasis-600');
-    }
-
-    &:not(.disabled) {
-      background-color: $pressed-color;
-      box-shadow: none;
-    }
-  }
-
-  &:active {
-    box-shadow: none;
-  }
-
-  &.disabled {
-    cursor: unset;
-    background-color: themed('neutral-emphasis-200');
-    color: themed('neutral-emphasis-600');
-    box-shadow: none;
-
-    svg {
-      path {
-        fill: themed('neutral-emphasis-600');
-      }
-    }
-  }
-}
-
 .okp4-dataverse-portal-button-main {
   @include with-theme {
     cursor: pointer;
