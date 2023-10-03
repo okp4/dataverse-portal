@@ -1,0 +1,36 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-tooltip-trigger-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.okp4-dataverse-portal-tooltip-content {
+  @include with-theme {
+    @include noto-sans(400);
+    box-sizing: border-box;
+    max-width: var(--radix-tooltip-content-available-width);
+    max-height: var(--radix-tooltip-content-available-height);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    background-color: themed('menu');
+    color: rgba(themed('text'), 0.6);
+    outline: none;
+    box-shadow: themed('dropdown-content-box-shadow');
+
+    .okp4-dataverse-portal-tooltip-arrow {
+      fill: themed('menu');
+
+      polygon {
+        filter: drop-shadow(0 0 2px rgba(0,0,0, 0.2))
+      }
+    }
+  }
+}
