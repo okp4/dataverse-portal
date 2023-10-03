@@ -166,24 +166,19 @@
             }
 
             .okp4-dataverse-portal-share-dataset-complete-tx-validation-link {
-              /* TODO: reuse secondary variant button's mixin */
               @include noto-sans(700);
+              @include button(
+                $content-color: themed('white-emphasis'),
+                $background-color: themed('orange-emphasis-500'),
+                $box-shadow: 0 4px 12px 0 rgba(themed('orange-emphasis-500'), 0.60),
+                $hover-color: themed('orange-emphasis-300'),
+                $pressed-color: themed('orange-emphasis-600')
+              );
+              width: auto;
               padding: 16px;
               font-size: 16px;
               line-height: 24px;
-              border-radius: 12px;
-              background-color: rgba(255, 149, 0, 1);
-              box-shadow: 0 4px 12px 0 rgba(255, 149, 0, 0.60);
-              color: rgb(255, 255, 255);
               text-decoration: none;
-
-              &:hover {
-                background-color: rgb(255, 184, 85)
-              }
-
-              &:focus{
-                background-color: rgb(212, 124, 0);
-              }
             }
           }
         }
