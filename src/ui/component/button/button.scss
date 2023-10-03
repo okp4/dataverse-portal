@@ -22,7 +22,7 @@
 
   &:focus{
     &.disabled {
-      outline: 1px solid themed('secondary-disabled');
+      outline: 1px solid themed('neutral-emphasis-600');
     }
 
     &:not(.disabled) {
@@ -37,13 +37,13 @@
 
   &.disabled {
     cursor: unset;
-    background-color: themed('neutral-variant-3');
-    color: themed('neutral');
+    background-color: themed('neutral-emphasis-200');
+    color: themed('neutral-emphasis-600');
     box-shadow: none;
 
     svg {
       path {
-        fill: themed('neutral');
+        fill: themed('neutral-emphasis-600');
       }
     }
   }
@@ -57,21 +57,21 @@
 
     &.primary {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('secondary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('secondary-color'), 0.6),
-        $hover-color: themed('secondary-color-variant-1'),
-        $pressed-color: themed('primary-button-background-pressed')
+        $content-color: themed('white-emphasis'),
+        $background-color: themed('orange-emphasis-500'),
+        $box-shadow: 0 4px 12px rgba(themed('orange-emphasis-500'), 0.6),
+        $hover-color: themed('orange-emphasis-300'),
+        $pressed-color: themed('orange-emphasis-600')
       );
     }
 
     &.primary-discreet {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('secondary-color'),
+        $content-color: themed('white-emphasis'),
+        $background-color: themed('orange-emphasis-500'),
         $box-shadow: none,
-        $hover-color: themed('secondary-color-variant-1'),
-        $pressed-color: themed('primary-button-background-pressed')
+        $hover-color: themed('orange-emphasis-300'),
+        $pressed-color: themed('orange-emphasis-600')
       );
       border-radius: 4px;
       justify-content: flex-start;
@@ -79,27 +79,27 @@
 
     &.secondary {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('primary-color'),
-        $box-shadow: 0 4px 12px rgb(themed('primary-color'), 0.6),
-        $hover-color: themed('secondary-button-hover'),
-        $pressed-color: themed('secondary-button-background-pressed')
+        $content-color: themed('white-emphasis'),
+        $background-color: themed('blue-emphasis-500'),
+        $box-shadow: 0 4px 12px rgba(themed('blue-emphasis-500'), 0.6),
+        $hover-color: themed('blue-emphasis-300'),
+        $pressed-color: themed('blue-emphasis-700')
       );
 
       &.disabled {
-        background-color: themed('neutral-variant-3');
-        color: themed('secondary-disabled');
+        background-color: themed('neutral-emphasis-200');
+        color: themed('neutral-emphasis-600');
         box-shadow: none;
       }
     }
 
     &.secondary-discreet {
       @include button(
-        $content-color: themed('primary-text'),
-        $background-color: themed('primary-color'),
+        $content-color: themed('white-emphasis'),
+        $background-color: themed('blue-emphasis-500'),
         $box-shadow: none,
-        $hover-color: themed('secondary-button-hover'),
-        $pressed-color: themed('secondary-button-background-pressed')
+        $hover-color: themed('blue-emphasis-300'),
+        $pressed-color: themed('blue-emphasis-700')
       );
       border-radius: 4px;
       justify-content: flex-start;
@@ -107,38 +107,38 @@
 
     &.outlined-secondary {
       @include button(
-        $content-color: themed('primary-color'),
+        $content-color: themed('blue-emphasis-500'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('secondary-button-hover'),
-        $pressed-color: themed('secondary-button-background-pressed')
+        $hover-color: themed('blue-emphasis-300'),
+        $pressed-color: themed('blue-emphasis-700')
       );
-      border: 1px solid themed('primary-color');
+      border: 1px solid themed('blue-emphasis-500');
 
       &:hover {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('secondary-button-hover');
+          color: themed('blue-emphasis-300');
         }
       }
 
       &:focus {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('secondary-button-background-pressed');
-          border-color: themed('secondary-button-background-pressed');
+          color: themed('blue-emphasis-700');
+          border-color: themed('blue-emphasis-700');
         }
       }
 
       &.disabled {
         background-color: unset;
-        color: themed('secondary-disabled');
-        border-color: themed('secondary-disabled');
+        color: themed('neutral-emphasis-600');
+        border-color: themed('neutral-emphasis-600');
       }
 
       svg {
         path {
-          fill: themed('primary-color');
+          fill: themed('blue-emphasis-500');
         }
       }
     }
@@ -146,86 +146,86 @@
     &.tertiary {
       color: themed('text');
       border-radius: 12px;
-      background: themed('tertiary-button-background');
+      background: themed('background-variant-3');
 
       &:hover {
         &:not(.disabled) {
-          background: themed('tertiary-button-background-variant-1');
+          background: themed('background-variant-4');
         }
       }
     }
 
     &.outlined-tertiary {
       @include button(
-        $content-color: themed('secondary-color'),
+        $content-color: themed('orange-emphasis-500'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('secondary-color-variant-1'),
-        $pressed-color: themed('primary-button-background-pressed')
+        $hover-color: themed('orange-emphasis-300'),
+        $pressed-color: themed('orange-emphasis-600')
       );
-      border: 1px solid themed('secondary-color');
+      border: 1px solid themed('orange-emphasis-500');
 
       &.disabled {
         background-color: unset;
-        color: themed('secondary-disabled');
-        border-color: themed('secondary-disabled');
+        color: themed('neutral-emphasis-600');
+        border-color: themed('neutral-emphasis-600');
       }
 
       &:hover {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('secondary-color-variant-1');
+          color: themed('orange-emphasis-300');
         }
       }
 
       &:focus {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('primary-button-background-pressed');
-          border-color: themed('primary-button-background-pressed');
+          color: themed('orange-emphasis-600');
+          border-color: themed('orange-emphasis-600');
         }
       }
 
       svg {
         path {
-          fill: themed('secondary-color');
+          fill: themed('orange-emphasis-500');
         }
       }
     }
 
     &.quaternary-turquoise {
       @include button(
-        $content-color: themed('primary-color-variant-3'),
+        $content-color: themed('turquoise-emphasis-500'),
         $background-color: unset,
         $box-shadow: none,
-        $hover-color: themed('turquoise-button-hover'),
-        $pressed-color: themed('turquoise-button-pressed')
+        $hover-color: themed('turquoise-emphasis-300'),
+        $pressed-color: themed('turquoise-emphasis-700')
       );
-      border: 1px solid themed('primary-color-variant-3');
+      border: 1px solid themed('turquoise-emphasis-500');
 
       &.disabled {
-        color: themed('secondary-disabled');
-        border-color: themed('secondary-disabled');
+        color: themed('neutral-emphasis-600');
+        border-color: themed('neutral-emphasis-600');
       }
 
       &:hover {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('turquoise-button-hover');
+          color: themed('turquoise-emphasis-300');
         }
       }
 
       &:focus {
         &:not(.disabled) {
           background-color: unset;
-          color: themed('turquoise-button-pressed');
-          border-color: themed('turquoise-button-pressed');
+          color: themed('turquoise-emphasis-700');
+          border-color: themed('turquoise-emphasis-700');
         }
       }
 
       svg {
         path {
-          fill: themed('secondary-color');
+          fill: themed('orange-emphasis-500');
         }
       }
     }

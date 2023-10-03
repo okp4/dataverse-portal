@@ -88,12 +88,12 @@ $service-details-vertical-padding: 21px;
 
             &.selected {
               outline-offset: -2px;
-              outline: 2px solid themed('primary-color');
-              background-color: themed('card-background-selected');
+              outline: 2px solid themed('blue-emphasis-500');
+              background-color: rgba(themed('blue-emphasis-500'), 0.08);
             }
 
             .selected-button {
-              background-color: themed('card-button-selected');
+              background-color: themed('blue-emphasis-700');
               box-shadow: none;
             }
           }
@@ -115,7 +115,7 @@ $service-details-vertical-padding: 21px;
         @media (min-height: 851px) and (max-height: 1024px) {
           max-height: calc(
             $searchbar-height + $search-container-gap + $card-height + $card-gap + $card-height / 2 -
-              $service-details-vertical-padding
+            $service-details-vertical-padding
           );
         }
 

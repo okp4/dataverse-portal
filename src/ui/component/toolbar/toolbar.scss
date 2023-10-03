@@ -63,7 +63,7 @@
       .okp4-dataverse-portal-wallet-menu {
         color: themed('text');
         border-radius: 12px;
-        background: themed('tertiary-button-background');
+        background: themed('background-variant-3');
         top: 53px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         border-radius: 12px;
@@ -99,7 +99,7 @@
             }
 
             &.disconnect {
-              color: themed('log-out-menu');
+              color: themed('error');
               cursor: pointer;
             }
           }

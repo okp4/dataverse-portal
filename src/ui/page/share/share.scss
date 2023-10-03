@@ -20,7 +20,7 @@
       .okp4-dataverse-portal-share-page-card {
         height: 100%;
         box-sizing: border-box;
-        background-color: themed('card');
+        background-color: themed('background-variant-3');
         padding: 44px;
         position: relative;
         display: grid;
@@ -51,12 +51,12 @@
 
           &:hover {
             @include transition-bg-color;
-            background-color: themed('card-background-disabled');
+            background-color: themed('darkblue-emphasis-900');
 
             .okp4-dataverse-portal-share-page-text-container {
               h3,
               p {
-                color: themed('primary-text');
+                color: themed('white-emphasis');
                 opacity: 0.4;
               }
 
@@ -111,11 +111,11 @@
 
         &:hover {
           @include transition-bg-color;
-          background-color: themed('primary-color-variant-1');
+          background-color: themed('darkblue-emphasis-500');
 
           h3,
           p {
-            color: themed('primary-text');
+            color: themed('white-emphasis');
           }
         }
       }

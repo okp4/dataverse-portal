@@ -1,10 +1,10 @@
 @import '@/ui/style/theme.scss';
 
 $backgrounds: (
-  'primary-color': 'knowledge-tree',
-  'primary-color-variant-1': 'data-services-tree',
-  'primary-color-variant-2': 'zones-tree',
-  'primary-color-variant-3': 'applications-tree'
+  'knowledge-tree': 'blue-emphasis-500',
+  'data-services-tree': 'darkblue-emphasis-500',
+  'zones-tree': 'teal-emphasis-500',
+  'applications-tree': 'turquoise-emphasis-500',
 );
 
 .okp4-dataverse-portal-card-main {
@@ -15,13 +15,12 @@ $backgrounds: (
 
     @each $background-key, $background-value in $backgrounds {
       &.#{$background-key} {
-        background: themed($background-key)
-          url('@/ui/asset/images/#{$background-value}.webp')
-          no-repeat;
+        background: url('@/ui/asset/images/#{$background-key}.webp') no-repeat;
+        background-color: themed($background-value);
         cursor: pointer;
 
         &:hover {
-          background-color: themed(card-background-hover);
+          background-color: themed('card-background-hover');
         }
 
         &:focus {
@@ -32,14 +31,14 @@ $backgrounds: (
           cursor: unset;
 
           &:hover {
-            background-color: themed(card-background-disabled);
+            background-color: themed('darkblue-emphasis-900');
           }
         }
       }
     }
 
     &.card {
-      background-color: themed('card');
+      background-color: themed('background-variant-3');
     }
   }
 }

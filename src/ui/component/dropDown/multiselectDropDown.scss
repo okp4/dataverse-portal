@@ -11,8 +11,8 @@
 
       .okp4-dataverse-portal-multiselect-dropdown-field-list-item,
       .okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item {
-        color: themed('dropdown-tags-color');
-        background-color: themed('dropdown-tags-background');
+        color: themed('blue-emphasis-500');
+        background-color: rgba(themed('blue-emphasis-500'), 0.12);
       }
 
       .okp4-dataverse-portal-multiselect-dropdown-field-list-additional-item-wrapper {
@@ -120,7 +120,7 @@
       padding: 9px 0;
           
       path {
-        fill: #ffffff;
+        fill: themed('white-emphasis');
       }
           
       .okp4-dataverse-portal-multiselect-dropdown-modal-checkbox-label {

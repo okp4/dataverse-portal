@@ -26,7 +26,7 @@
       @include grid-item($colStart: 1, $colEnd: 6, $rowStart: auto, $rowEnd: auto);
       box-sizing: border-box;
       max-height: 690px;
-      background-color: themed('article-background');
+      background-color: themed('background-variant-3');
       border-radius: 12px;
       padding: 15px 10px 15px 18px;
 
@@ -73,14 +73,14 @@
             gap:8px;
             
             .okp4-dataverse-portal-tag-main {
-              color: themed('dropdown-tags-color');
-              background-color: themed('dropdown-tags-background');
+              color: themed('blue-emphasis-500');
+              background-color: rgba(themed('blue-emphasis-500'), 0.12);
             }
             
             &.tag-label {
               .okp4-dataverse-portal-tag-main {
-                color: themed(primary-color-variant-3);
-                background-color: rgba(themed(primary-color-variant-3), 0.12);
+                color: themed('turquoise-emphasis-500');
+                background-color: rgba(themed('turquoise-emphasis-500'), 0.12);
               }
             }
           }

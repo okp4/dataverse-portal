@@ -59,12 +59,12 @@
           }
 
           &:hover {
-            background-color: themed('primary-color');
-            color: #ffffff;
+            background-color: themed('blue-emphasis-500');
+            color: themed('white-emphasis');
 
             svg {
               path {
-                fill: #ffffff;
+                fill: themed('white-emphasis');
               }
             }
           }
@@ -72,15 +72,15 @@
 
         &.back-button {
           justify-content: unset;
-          color: themed('secondary-color');
+          color: themed('orange-emphasis-500');
           column-gap: 7px;
 
           svg {
             height: 10px;
 
             path {
-              fill: themed('secondary-color');
-              stroke: themed('secondary-color');
+              fill: themed('orange-emphasis-500');
+              stroke: themed('orange-emphasis-500');
             }
           }
         }

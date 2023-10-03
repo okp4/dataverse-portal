@@ -3,9 +3,9 @@
 @import '@/ui/style/theme.scss';
 
 $colors: (
-  'primary-color': 'background-primary-variant',
-  'primary-color-variant-3': 'background-primary-variant-3',
-  'primary-color-variant-4': 'background-primary-variant-4'
+  'blue-500': 'blue-emphasis-500',
+  'turquoise-700': 'turquoise-emphasis-700',
+  'turquoise-200': 'turquoise-emphasis-200',
 );
 
 .okp4-dataverse-portal-dataverse-card-main {
@@ -40,8 +40,8 @@ $colors: (
 
       @each $color-key, $color-value in $colors {
         &.#{$color-key} {
-          color: themed($color-key);
-          background-color: themed($color-value);
+          color: themed($color-value);
+          background-color: rgba(themed($color-value), 0.08);
         }
       }
     }
