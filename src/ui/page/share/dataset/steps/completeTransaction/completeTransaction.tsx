@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import * as O from 'fp-ts/Option'
 import { flow, pipe } from 'fp-ts/lib/function'
 import { formatISODateToParts, localizedDateFormatter } from '@/util/date/date'
-import type { FormItem, TextField } from '@/ui/store/slice/shareData/shareData.slice'
+import { isTextField, type TextField } from '@/ui/store/slice/shareData/shareData.slice'
 import { Button } from '@/ui/component/button/button'
 import { Icon } from '@/ui/component/icon/icon'
 import { useAppStore } from '@/ui/store'
@@ -146,8 +146,6 @@ export const CompleteTransaction: FC = () => {
 
   const getFieldValueForText = (item: TextField): string | undefined =>
     pipe(item.value, O.toUndefined)
-
-  const isTextField = (item: FormItem): item is TextField => item.type === 'text'
 
   const dataSetTitle = pipe(
     dataSetTitleField,
