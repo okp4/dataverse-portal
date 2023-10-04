@@ -3,6 +3,7 @@ import * as Wallet from '@/domain/wallet/domain'
 import * as Dataverse from '@/domain/dataverse/domain'
 import * as File from '@/domain/file/domain'
 import * as Vocabulary from '@/domain/vocabulary/domain'
+import * as Metadata from '@/domain/metadata/domain'
 import * as App from './appStore'
 
 import type { StoreApi } from 'zustand'
@@ -27,6 +28,9 @@ export const useDataverseStore = createStoreHook(dataverseStore)
 
 const fileStore = File.storeFactory()
 export const useFileStore = createStoreHook(fileStore)
+
+const metadataStore = Metadata.storeFactory()
+export const useMetadataStore = createStoreHook(metadataStore)
 
 const appStore = App.storeFactory()
 export const useAppStore = createStoreHook(appStore)
