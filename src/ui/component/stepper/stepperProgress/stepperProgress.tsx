@@ -9,17 +9,23 @@ type StepperProgressProps = {
   steps: Step[]
   activeStepId: StepId
   previousActiveStepId?: StepId
+  completedMessage?: string
 }
 
 const getProgressBarTransition = ({
   stepOrder,
   activeStepOrder,
-  previousActiveStepOrder
+  previousActiveStepOrder,
+  completedMessage
 }: {
   stepOrder: number
   activeStepOrder: number
   previousActiveStepOrder: number
+  completedMessage?: string
 }): ProgressBarTransition => {
+  if (completedMessage) {
+    return 'none'
+  }
   if (stepOrder === activeStepOrder && previousActiveStepOrder < stepOrder) {
     return 'forward'
   }
@@ -32,7 +38,8 @@ const getProgressBarTransition = ({
 export const StepperProgress: FC<StepperProgressProps> = ({
   steps,
   activeStepId,
-  previousActiveStepId
+  previousActiveStepId,
+  completedMessage
 }) => {
   const activeStep = findStep(steps, activeStepId)
   const previousActiveStep = findStep(steps, previousActiveStepId)
@@ -42,16 +49,17 @@ export const StepperProgress: FC<StepperProgressProps> = ({
       {steps.map(({ id, status, order }) => (
         <ProgressBar
           key={id}
-          state={id === activeStepId ? 'active' : status}
+          state={completedMessage ? 'complete' : id === activeStepId ? 'active' : status}
           transition={getProgressBarTransition({
             stepOrder: order,
             activeStepOrder: activeStep.order,
-            previousActiveStepOrder: previousActiveStep.order
+            previousActiveStepOrder: previousActiveStep.order,
+            completedMessage
           })}
         />
       ))}
       <span className="okp4-dataverse-portal-stepper-progress-step-count">
-        {activeStep.order + 1 + '/' + steps.length}
+        {completedMessage ?? activeStep.order + 1 + '/' + steps.length}
       </span>
     </div>
   )

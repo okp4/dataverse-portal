@@ -14,10 +14,16 @@ export type StepElement = Optional<Omit<Step, 'order'>, 'status'> & {
 
 type StepperProps = {
   steps: StepElement[]
+  completedMessage?: string
+  hideActionsOnComplete?: boolean
 }
 
 // eslint-disable-next-line max-lines-per-function
-export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
+export const Stepper: FC<StepperProps> = ({
+  steps: stepElements,
+  completedMessage,
+  hideActionsOnComplete
+}) => {
   const { steps, nextStep, previousStep, activeStepId, previousActiveStepId }: UseStepper =
     useStepper(
       stepElements.map(({ id, status }) => ({
@@ -29,10 +35,15 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
   const activeStepElement = stepElements.find(step => step.id === activeStepId) ?? stepElements[0]
   const activeStep = steps.find(step => step.id === activeStepId) ?? steps[0]
 
+  const isEveryStepValid = stepElements.every(stepElement => stepElement.validate?.() ?? true)
+  const isLastStep = activeStep.order === steps.length - 1
+  const isStepperComplete = isEveryStepValid && isLastStep
+
   return (
     <div className="okp4-dataverse-portal-stepper-main">
       <StepperProgress
         activeStepId={activeStepId}
+        completedMessage={isStepperComplete ? completedMessage : undefined}
         previousActiveStepId={previousActiveStepId}
         steps={steps}
       />
@@ -45,9 +56,10 @@ export const Stepper: FC<StepperProps> = ({ steps: stepElements }) => {
       </TransitionGroup>
 
       <StepperActions
+        hideOnComplete={hideActionsOnComplete && isEveryStepValid && isLastStep}
         isActiveStepValid={activeStepElement.validate?.() ?? true}
         isFirstStep={activeStep.order === 0}
-        isLastStep={activeStep.order === steps.length - 1}
+        isLastStep={isLastStep}
         nextStep={nextStep}
         previousStep={previousStep}
       />
