@@ -46,7 +46,7 @@ export const ShareDataset: FC = () => {
   return (
     <div className="okp4-dataverse-portal-share-dataset-page-main">
       <h1>{t('share.dataset.title')}</h1>
-      <Stepper steps={steps} />
+      <Stepper completedMessage={t('share.done')} hideActionsOnComplete steps={steps} />
     </div>
   )
 }
