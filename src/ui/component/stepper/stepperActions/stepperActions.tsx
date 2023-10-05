@@ -12,6 +12,7 @@ type StepperActionsProps = {
   nextStep: () => void
   previousStep: (isActiveStepValid: boolean) => void
   isActiveStepValid: boolean
+  hideOnComplete?: boolean
 }
 
 export const StepperActions: FC<StepperActionsProps> = ({
@@ -19,7 +20,8 @@ export const StepperActions: FC<StepperActionsProps> = ({
   previousStep,
   isFirstStep,
   isLastStep,
-  isActiveStepValid
+  isActiveStepValid,
+  hideOnComplete
 }) => {
   const { t } = useTranslation('common')
 
@@ -36,7 +38,7 @@ export const StepperActions: FC<StepperActionsProps> = ({
     <div className="okp4-dataverse-portal-stepper-actions-main">
       <Button
         className={classNames('okp4-dataverse-portal-stepper-actions-button', 'previous', {
-          hidden: isFirstStep
+          hidden: isFirstStep || hideOnComplete
         })}
         icons={{
           startIcon: <Icon name="forward" />
@@ -48,7 +50,7 @@ export const StepperActions: FC<StepperActionsProps> = ({
       <Button
         className={classNames(
           'okp4-dataverse-portal-stepper-actions-button',
-          { hidden: isLastStep },
+          { hidden: isLastStep || hideOnComplete },
           {
             disabled: !isActiveStepValid
           }
