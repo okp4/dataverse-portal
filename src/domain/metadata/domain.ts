@@ -5,7 +5,6 @@ import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import * as O from 'fp-ts/Option'
 import * as A from 'fp-ts/Array'
-import type IO from 'fp-ts/IO'
 import * as RTE from 'fp-ts/ReaderTaskEither'
 import { flow, pipe } from 'fp-ts/function'
 import type { ForgetType } from '@/util/type'
@@ -95,31 +94,7 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                 )
               )
             )
-          ),
-        setLanguage: (newLng: string): IO.IO<void> => {
-          console.log({ newLng })
-          return pipe(
-            newLng,
-            O.fromPredicate(lng => !!lng.length),
-            O.match(
-              () => () =>
-                set(state => ({
-                  data: {
-                    ...state.data,
-                    error: O.some(
-                      new Error(
-                        `Oops.. An error occurred in <setLanguage> call.. Parameter cannot be empty: <${newLng}>..`
-                      )
-                    )
-                  }
-                })),
-              language => () =>
-                set(state => ({
-                  data: { ...state.data, metadata: [], language }
-                }))
-            )
           )
-        }
       })),
       {
         anonymousActionType: 'Aggregate',

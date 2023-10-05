@@ -1,4 +1,3 @@
-import type { IO } from 'fp-ts/lib/IO'
 import type { ReaderTaskEither } from 'fp-ts/lib/ReaderTaskEither'
 import type { MetadataPort } from './port'
 
@@ -17,6 +16,4 @@ export type Command = {
   retrieveDataverseItemMetadata: (
     dataverseItemId: DataverseItemId
   ) => ReaderTaskEither<Deps, LoadMetadataError, void>
-  // Set the language in which the metadata should be translated to
-  setLanguage: (newLng: string) => IO<void>
 }
