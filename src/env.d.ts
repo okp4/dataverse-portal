@@ -74,7 +74,8 @@ declare const APP_ENV: {
     | 'form:feedback'
     | 'form:error'
     | 'about:okp4'
-    | 'extension:keplr',
+    | 'extension:keplr'
+    | 'explorer:okp4',
     string
   >
   sparql: Record<'endpoint', string>

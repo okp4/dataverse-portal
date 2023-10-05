@@ -57,7 +57,10 @@
         "exactGasFee": "Vous ne serez facturé que pour les frais de gaz exacts dépensés au cours de la transaction.",
         "maxProcessingTime": "En outre, le temps de traitement maximum d'un nouveau bloc est de 10 secondes. Votre transaction sera incluse dans un bloc disponible en fonction du prix de gaz que vous avez choisi.",
         "chooseGasPriceCarefully": "Veillez à examiner attentivement le prix de gaz afin d'optimiser la vitesse et les coûts de la transaction."
-      }
+      },
+      "paymentSuccessfullyValidated": "Paiement validé avec succès",
+      "yourDatasetReferencingRequestHasBeenSent": "Votre demande de référencement a été envoyée avec succès au dataverse ! Le réseau va maintenant procéder à la validation des blocs.",
+      "openTransactionExplorer": "Ouvrir l'explorateur de transactions"
     }
   }
 }

@@ -47,7 +47,8 @@ const APP_ENV = {
     'form:feedback': 'https://okp4.typeform.com/to/TNyFBH72',
     'form:error': 'https://okp4.typeform.com/to/GkWxots6',
     'about:okp4': 'https://okp4.network',
-    'extension:keplr': 'https://www.keplr.app/download'
+    'extension:keplr': 'https://www.keplr.app/download',
+    'explorer:okp4': 'https://explore.okp4.network'
   },
   sparql: {
     endpoint: 'https://api.staging.okp4.space/ontology/world/sparql'

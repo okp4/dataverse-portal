@@ -16,7 +16,7 @@ import { SelectionFilter } from '@/ui/view/dataverse/component/filters/selection
 import '@/ui/view/dataverse/component/filters/i18n/index'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import { LottieLoader } from '@/ui/component/loader/lottieLoader'
-import threeDots from '@/ui/asset/loader/threeDots.json'
+import threeDots from '@/ui/asset/animations/threeDots.json'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
 import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse/command'

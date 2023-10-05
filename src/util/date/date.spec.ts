@@ -1,4 +1,9 @@
-import { formatDateToPattern, formatISODate, localizedDateFormatter } from './date'
+import {
+  formatDateToPattern,
+  formatISODate,
+  formatISODateToParts,
+  localizedDateFormatter
+} from './date'
 
 // eslint-disable-next-line max-lines-per-function
 describe('Date utilities', () => {
@@ -59,6 +64,52 @@ describe('Date utilities', () => {
 
         test('When calling formatISODate(), then expect it to throw a RangeError', () => {
           expect(() => formatISODate(formatter, isoDateString)).toThrow(RangeError)
+        })
+      }
+    )
+  })
+
+  describe('Considering the formatISODateToParts function', () => {
+    describe.each`
+      isoDateString                 | options                                                                                      | locale     | expectedOutput
+      ${'2023-10-02T18:02:00.000Z'} | ${{ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }} | ${'en-US'} | ${[{ type: 'month', value: '10' }, { type: 'literal', value: '/' }, { type: 'day', value: '02' }, { type: 'literal', value: '/' }, { type: 'year', value: '2023' }, { type: 'literal', value: ', ' }, { type: 'hour', value: '06' }, { type: 'literal', value: ':' }, { type: 'minute', value: '02' }, { type: 'literal', value: ' ' }, { type: 'dayPeriod', value: 'PM' }]}
+      ${'2023-10-02T18:02:00.000Z'} | ${{ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }} | ${'de'}    | ${[{ type: 'day', value: '02' }, { type: 'literal', value: '.' }, { type: 'month', value: '10' }, { type: 'literal', value: '.' }, { type: 'year', value: '2023' }, { type: 'literal', value: ', ' }, { type: 'hour', value: '18' }, { type: 'literal', value: ':' }, { type: 'minute', value: '02' }]}
+      ${'2023-10-02T18:02:00.000Z'} | ${{ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }} | ${'fr'}    | ${[{ type: 'day', value: '02' }, { type: 'literal', value: '/' }, { type: 'month', value: '10' }, { type: 'literal', value: '/' }, { type: 'year', value: '2023' }, { type: 'literal', value: ' ' }, { type: 'hour', value: '18' }, { type: 'literal', value: ':' }, { type: 'minute', value: '02' }]}
+    `(
+      'Given a valid ISO date string $isoDateString with options $options and locale $locale',
+      ({ isoDateString, options, locale, expectedOutput }) => {
+        const formatter = new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' })
+
+        test(`When calling formatISODateToParts(), then expect the output to be '${JSON.stringify(
+          expectedOutput
+        )}'`, () => {
+          const result = formatISODateToParts(formatter, isoDateString)
+
+          result.forEach((outputPart, index) => {
+            if (outputPart.type === 'literal' && [' ', ' '].includes(outputPart.value)) {
+              // Special handling for spaces - they can be either regular or non-breaking, depending on operating system
+              expect([' ', ' ']).toContain(expectedOutput[index].value)
+
+              return
+            }
+
+            expect(outputPart).toEqual(expectedOutput[index])
+          })
+        })
+      }
+    )
+
+    describe.each`
+      isoDateString     | options                                                                                                     | locale
+      ${''}             | ${{ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }} | ${'en-US'}
+      ${'invalid-date'} | ${{ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }} | ${'fr-FR'}
+    `(
+      'Given an invalid ISO date string $isoDateString with options $options and locale $locale',
+      ({ isoDateString, options, locale }) => {
+        const formatter = new Intl.DateTimeFormat(locale, options)
+
+        test('When calling formatISODateToParts(), then expect it to throw a RangeError', () => {
+          expect(() => formatISODateToParts(formatter, isoDateString)).toThrow(RangeError)
         })
       }
     )
