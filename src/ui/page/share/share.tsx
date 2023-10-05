@@ -15,6 +15,10 @@ export const Share: FC = () => {
     navigate(routes.shareDataset)
   }, [navigate])
 
+  const handleShareService = useCallback(() => {
+    navigate(routes.shareService)
+  }, [navigate])
+
   return (
     <div className="okp4-dataverse-portal-share-page-main">
       <div className="okp4-dataverse-portal-share-page-content">
@@ -30,15 +34,15 @@ export const Share: FC = () => {
             </div>
           </>
         </Card>
-        <Card mainClassName="okp4-dataverse-portal-share-page-card right">
+        <Card
+          mainClassName="okp4-dataverse-portal-share-page-card right"
+          onClick={handleShareService}
+        >
           <>
             <div className="okp4-dataverse-portal-share-page-ilustration" />
             <div className="okp4-dataverse-portal-share-page-text-container">
               <h3>{t('share.service.title')}</h3>
               <p>{t('share.service.description')}</p>
-              <h3 className="okp4-dataverse-portal-share-page-text-disabled">
-                {t('share.soonAvailable')}
-              </h3>
             </div>
           </>
         </Card>

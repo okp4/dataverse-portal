@@ -18,7 +18,6 @@
       "title": "Je partage un service",
       "description": "Partagez facilement votre service dans le dataverse"
     },
-    "soonAvailable": "Bientôt disponible",
     "metadataFilling": {
       "stepTitle": "Renseigner les métadonnées",
       "stepDescription": "Saisir les métadonnées de l'ensemble de données à référencer. Il est fortement déconseillé d'utiliser des données personnelles dans les métadonnées, car elles sont immuables une fois dans la blockchain et ne sont pas conformes au RGPD.",
