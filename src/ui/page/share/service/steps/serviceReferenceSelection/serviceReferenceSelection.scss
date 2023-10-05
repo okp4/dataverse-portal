@@ -1,0 +1,20 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+
+.okp4-dataverse-portal-share-service-page-service-reference-container {
+  @include with-theme() {
+    display: flex;
+    flex-direction: column;
+    margin-top: 26px;
+    height: 100%;
+
+    .okp4-dataverse-portal-share-service-page-service-reference-title {
+      @include noto-sans(700);
+      margin-bottom: 22px;
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 0.4px;
+      color: themed('text');
+    }
+  }
+}

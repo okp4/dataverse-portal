@@ -1,0 +1,16 @@
+@import '@/ui/style/fonts.scss';
+@import '@/ui/style/theme.scss';
+@import '@/ui/style/mixins';
+
+.okp4-dataverse-portal-share-service-page-main {
+  @include with-theme {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .okp4-dataverse-portal-share-service-page-main-title {
+      @include norse-gradient-header($line-height: 36px);
+      margin-bottom: 20px;
+    }
+  }
+}
