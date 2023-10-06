@@ -44,27 +44,10 @@
 
         &.right {
           @include bi-column-item('right');
+          cursor: pointer;
 
           .okp4-dataverse-portal-share-page-ilustration {
             background: center / contain url('@/ui/asset/images/share-service.webp') no-repeat;
-          }
-
-          &:hover {
-            @include transition-bg-color;
-            background-color: themed('darkblue-emphasis-900');
-
-            .okp4-dataverse-portal-share-page-text-container {
-              h3,
-              p {
-                color: themed('white-emphasis');
-                opacity: 0.4;
-              }
-
-              .okp4-dataverse-portal-share-page-text-disabled {
-                visibility: visible;
-                opacity: 1;
-              }
-            }
           }
         }
 
@@ -94,18 +77,6 @@
             align-self: center;
             color: themed('text');
             margin-top: 19px;
-          }
-
-          .okp4-dataverse-portal-share-page-text-disabled {
-            position: relative;
-            bottom: -5%;
-            visibility: hidden;
-            display: flex;
-            align-self: center;
-
-            @include use-breakpoints('large-desktop') {
-              bottom: -15%;
-            }
           }
         }
 

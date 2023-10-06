@@ -7,6 +7,7 @@ import { Governance } from '@/ui/page/dataverse/zone/governance/governance'
 import { NotFoundError } from '@/ui/page/error/notFoundError/notFoundError'
 import { Share } from '@/ui/page/share/share'
 import { ShareDataset } from '@/ui/page/share/dataset/shareDataset'
+import { ShareService } from '@/ui/page/share/service/shareService'
 import { UnsupportedFeatureLayout } from '@/ui//view/unsupportedFeatureLayout/unsupportedFeatureLayout'
 
 export enum routes {
@@ -18,6 +19,7 @@ export enum routes {
   governance = 'dataverse/zone/:id/governance/:sectionId?/:subsectionId?',
   share = 'share',
   shareDataset = '/share/data',
+  shareService = '/share/service',
   notFoundError = '*'
 }
 
@@ -74,6 +76,12 @@ export const appRoutes: Route[] = [
     id: 'shareDataset',
     path: routes.shareDataset,
     element: <ShareDataset />,
+    layout: <UnsupportedFeatureLayout />
+  },
+  {
+    id: 'shareService',
+    path: routes.shareService,
+    element: <ShareService />,
     layout: <UnsupportedFeatureLayout />
   }
 ]

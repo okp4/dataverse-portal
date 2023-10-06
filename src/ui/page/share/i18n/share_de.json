@@ -18,7 +18,6 @@
       "title": "Ich teile einen Dienst",
       "description": "Einfache Freigabe Ihres Dienstes im Dataverse"
     },
-    "soonAvailable": "Bald verfügbar",
     "metadataFilling": {
       "stepTitle": "Füllen Sie die Metadaten aus",
       "stepDescription": "Bitte füllen Sie die Metadaten des Datensatzes zu Referenzzwecken aus. Es wird dringend davon abgeraten, personenbezogene Daten in die Metadaten aufzunehmen, da sie unveränderlich sind, sobald sie in der Blockchain gespeichert sind, was nicht den GDPR-Vorschriften entspricht.",
