@@ -61,6 +61,7 @@
       "paymentSuccessfullyValidated": "Paiement validé avec succès",
       "yourDatasetReferencingRequestHasBeenSent": "Votre demande de référencement a été envoyée avec succès au dataverse ! Le réseau va maintenant procéder à la validation des blocs.",
       "openTransactionExplorer": "Ouvrir l'explorateur de transactions"
-    }
+    },
+    "done": "Terminé !"
   }
 }

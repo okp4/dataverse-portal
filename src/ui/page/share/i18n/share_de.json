@@ -61,6 +61,7 @@
       "paymentSuccessfullyValidated": "Zahlung erfolgreich validiert",
       "yourDatasetReferencingRequestHasBeenSent": "Ihr Antrag auf Datensatzreferenzierung wurde erfolgreich an das Dataverse gesendet! Das Netz wird nun mit der Blockvalidierung fortfahren.",
       "openTransactionExplorer": "Transaktions-Explorer öffnen"
-    }
+    },
+    "done": "Fertig !"
   }
 }

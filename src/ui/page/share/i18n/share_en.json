@@ -61,6 +61,7 @@
       "paymentSuccessfullyValidated": "Payment successfully validated!",
       "yourDatasetReferencingRequestHasBeenSent": "Your dataset referencing request has been successfully sent to the dataverse! The network will now proceed with the block validation process.",
       "openTransactionExplorer": "Open Transaction Explorer"
-    }
+    },
+    "done": "Done!"
   }
 }
