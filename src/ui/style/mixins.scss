@@ -1,4 +1,5 @@
 @import '@/ui/style/theme.scss';
+@import '@/ui/style/fonts.scss';
 
 @mixin use-breakpoints($breakpoints) {
   @each $breakpoint in $breakpoints {
