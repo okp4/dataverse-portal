@@ -1,5 +1,4 @@
 import type { MetadataPort } from '@/domain/metadata/port'
-import { isError } from '@/util/util'
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import type { SparqlResult } from './dto'
@@ -8,6 +7,9 @@ import type {
   MetadataItem,
   MetadataProperty
 } from '@/domain/metadata/entity'
+import type { SerializationError } from '@/shared/error/serialize'
+import type { NetworkError } from '@/shared/error/network'
+import { fetchWithSparql, serializeFetchResponse } from '@/infra/shared/sparql.util'
 
 const auditMetadata = ['createdBy', 'createdOn', 'lastModifiedBy', 'updatedOn'] as const
 type AuditMetadata = (typeof auditMetadata)[number]
@@ -19,7 +21,7 @@ export const metadataSparqlGateway: MetadataPort = {
   retrieveMetadata: (
     dataverseItemId: string,
     language: string
-  ): TE.TaskEither<Error, MetadataItem[]> => {
+  ): TE.TaskEither<SerializationError | NetworkError, MetadataItem[]> => {
     const query = `
     PREFIX core: <https://ontology.okp4.space/core/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -179,43 +181,6 @@ export const metadataSparqlGateway: MetadataPort = {
     GROUP BY ?publisher ?createdBy ?updatedOn ?createdOn ?lastModifiedBy ?image ?creator ?startDate ?endDate ?tags
     `
 
-    const request: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        accept: 'application/sparql-results+json'
-      },
-      body: `query=${encodeURIComponent(query)}`
-    }
-
-    const fetchMetadata = (): TE.TaskEither<Error, Response> =>
-      TE.tryCatch(
-        async () => {
-          const resp = await fetch(APP_ENV.sparql['endpoint'], request)
-          if (!resp.ok) {
-            throw new Error(
-              `Oops.. A ${resp.status} HTTP error occurred with the following message: ${resp.statusText} `
-            )
-          }
-          return resp
-        },
-        error =>
-          isError(error)
-            ? error
-            : new Error(`Oops.. Something went wrong fetching ontology: ${JSON.stringify(error)}`)
-      )
-
-    const serializeResponse = (response: Response): TE.TaskEither<Error, SparqlResult> =>
-      TE.tryCatch(
-        async () => response.json(),
-        err =>
-          isError(err)
-            ? err
-            : new Error(
-                `Oops.. Something went wrong serializing sparql response: ${JSON.stringify(err)}`
-              )
-      )
-
     const mapDtoToEntity = (dto: SparqlResult): MetadataItem[] =>
       Object.entries(dto.results.bindings[0]).map(([key, value]) => ({
         category: isAuditMetadata(key) ? 'auditMetadata' : 'generalMetadata',
@@ -223,6 +188,11 @@ export const metadataSparqlGateway: MetadataPort = {
         value: value.value
       }))
 
-    return pipe(fetchMetadata(), TE.chain(serializeResponse), TE.map(mapDtoToEntity))
+    return pipe(
+      query,
+      fetchWithSparql,
+      TE.chainW(serializeFetchResponse<SparqlResult>),
+      TE.map(mapDtoToEntity)
+    )
   }
 }
