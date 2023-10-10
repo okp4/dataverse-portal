@@ -5,6 +5,8 @@ import * as MetadataDomain from '../domain'
 import type { AuditMetadataItem, GeneralMetadataItem } from '../query'
 import { type MetadataItem } from '../entity'
 import { type Deps } from '../command'
+import { type NetworkError, NetworkUnspecifiedError } from '@/shared/error/network'
+import { SerializationError } from '@/shared/error/serialize'
 // eslint-disable-next-line import/no-restricted-paths
 import { metadataSparqlGateway } from '../../../infra/metadata/sparql/sparqlGateway'
 
@@ -13,7 +15,7 @@ const deps: Deps = {
   language: 'en'
 }
 
-type GatewayResult = TE.TaskEither<Error, MetadataItem[]>
+type GatewayResult = TE.TaskEither<SerializationError | NetworkError, MetadataItem[]>
 
 type MetadataState = {
   auditMetadata: AuditMetadataItem[]
@@ -123,7 +125,8 @@ const gatewayResult3 = TE.right([
   }
 ])
 
-const errorGatewayResult = TE.left(new Error())
+const gatewayErrorResult1 = TE.left(NetworkUnspecifiedError('Network crashed'))
+const gatewayErrorResult2 = TE.left(SerializationError('Serialization failed'))
 
 const stateWithGeneralAndAuditMetadata1: MetadataState = {
   auditMetadata: [{ property: 'createdBy', value: 'Okp4' }],
@@ -169,16 +172,17 @@ describe(`Retrieve metadata from a dataverve item by its ID`, () => {
   })
 
   describe.each`
-    preloadedState                       | dataverseItemId | mockGatewayResult     | expectedState                        | error
-    ${undefined}                         | ${''}           | ${gatewayResult1}     | ${defaultState}                      | ${undefined}
-    ${undefined}                         | ${'id1'}        | ${gatewayResult2}     | ${stateWithGeneralAndAuditMetadata1} | ${undefined}
-    ${stateWithGeneralAndAuditMetadata1} | ${'id1'}        | ${gatewayResult3}     | ${stateWithGeneralAndAuditMetadata2} | ${undefined}
-    ${stateWithGeneralAndAuditMetadata1} | ${'id1'}        | ${gatewayResult3}     | ${stateWithGeneralAndAuditMetadata2} | ${undefined}
-    ${undefined}                         | ${'id1'}        | ${errorGatewayResult} | ${defaultState}                      | ${new Error()}
+    preloadedState                       | dataverseItemId | mockGatewayResult      | expectedState                        | error
+    ${undefined}                         | ${''}           | ${gatewayResult1}      | ${defaultState}                      | ${undefined}
+    ${undefined}                         | ${'id1'}        | ${gatewayResult2}      | ${stateWithGeneralAndAuditMetadata1} | ${undefined}
+    ${stateWithGeneralAndAuditMetadata1} | ${'id1'}        | ${gatewayResult3}      | ${stateWithGeneralAndAuditMetadata2} | ${undefined}
+    ${stateWithGeneralAndAuditMetadata1} | ${'id1'}        | ${gatewayResult3}      | ${stateWithGeneralAndAuditMetadata2} | ${undefined}
+    ${undefined}                         | ${'id1'}        | ${gatewayErrorResult1} | ${defaultState}                      | ${NetworkUnspecifiedError('Network crashed')}
+    ${undefined}                         | ${'id1'}        | ${gatewayErrorResult2} | ${defaultState}                      | ${SerializationError('Serialization failed')}
   `(
     'Given a preloaded state <$preloadedState> and a dataverse item id <$dataverseItemId> with this context dependency <$deps>',
     ({ preloadedState, dataverseItemId, mockGatewayResult, expectedState, error }: Data2) => {
-      describe(`When calling retrieveDataverseItemMetadata command`, () => {
+      describe(`When calling retrieveDataverseItemMetadata command `, () => {
         afterEach(() => {
           jest.restoreAllMocks()
         })
@@ -200,7 +204,7 @@ describe(`Retrieve metadata from a dataverve item by its ID`, () => {
           }
 
           if (error) {
-            expect(metadataRetrievalResult).toBeLeft()
+            expect(metadataRetrievalResult).toEqualLeft(error)
           } else {
             expect(metadataRetrievalResult).toBeRight()
           }
