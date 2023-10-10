@@ -1,10 +1,11 @@
 import type { ReaderTaskEither } from 'fp-ts/lib/ReaderTaskEither'
 import type { MetadataPort } from './port'
+import type { SerializationError } from '@/shared/error/serialize'
+import type { NetworkError } from '@/shared/error/network'
 
 type DataverseItemId = string
 
-// TODO: add metadata errors
-export type LoadMetadataError = ErrorOptions
+export type LoadMetadataError = SerializationError | NetworkError
 
 export type Deps = {
   metadataPort: MetadataPort

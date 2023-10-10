@@ -12,6 +12,7 @@ import type { AuditMetadataItem, GeneralMetadataItem, Metadata, MetadataItem } f
 import type { Query } from './query'
 import type { Command, Deps } from './command'
 import { isDevMode } from '@/util/env.util'
+import { isNetworkRequestAbortedError } from '@/shared/error/network'
 
 type State = {
   data: Metadata
@@ -80,11 +81,18 @@ export const storeFactory = ({ initialState }: Partial<Options> = {}): StoreApi<
                 RTE.tapError(
                   flow(
                     RTE.left,
-                    RTE.tapError(() =>
-                      RTE.fromIO(() =>
-                        set(state => ({
-                          data: { ...state.data, isLoading: false }
-                        }))
+                    RTE.tapError(
+                      flow(
+                        O.fromPredicate(isNetworkRequestAbortedError),
+                        O.match(
+                          () =>
+                            RTE.fromIO(() =>
+                              set(state => ({
+                                data: { ...state.data, isLoading: false }
+                              }))
+                            ),
+                          () => RTE.of(undefined)
+                        )
                       )
                     )
                   )
