@@ -5,7 +5,26 @@ import type {
   NetworkUnspecifiedError
 } from '@/shared/error/network'
 import type { SerializationError } from '@/shared/error/serialize'
-import type { RetrieveVocabularyDependencies } from './helper/dependencies'
+import type { VocabularyPort } from './port'
+
+const depsSymbol: unique symbol = Symbol()
+
+export type RawDeps = {
+  vocabularyGateway: VocabularyPort
+  language: string
+  limit: number
+}
+
+export type Deps = {
+  _opaque: typeof depsSymbol
+} & RawDeps
+
+export const buildDeps = (input: RawDeps): Deps => ({
+  _opaque: depsSymbol,
+  language: input.language,
+  limit: input.limit,
+  vocabularyGateway: input.vocabularyGateway
+})
 
 export type VocabularyType =
   | '<https://ontology.okp4.space/thesaurus/license>'
@@ -18,8 +37,6 @@ export type RetrieveVocabularyError =
   | NetworkUnspecifiedError
   | SerializationError
   | NetworkRequestAbortedError
-
-export type Deps = RetrieveVocabularyDependencies
 
 export type Command = {
   retrieveVocabularyByType: (
