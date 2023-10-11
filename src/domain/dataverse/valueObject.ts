@@ -1,7 +1,5 @@
 import type { Option } from 'fp-ts/Option'
 
-type DataverseQueryError = Error
-
 type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
 
@@ -24,7 +22,6 @@ export type DataverseQuery = {
   limit: number
   hasNext: boolean
   isLoading: boolean
-  error: Option<DataverseQueryError>
   filters: DataverseQueryFilters
   language: string
 }

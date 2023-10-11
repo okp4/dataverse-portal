@@ -2,6 +2,7 @@ import * as Notification from '@/domain/notification/aggregate'
 import * as Wallet from '@/domain/wallet/domain'
 import * as Dataverse from '@/domain/dataverse/domain'
 import * as File from '@/domain/file/domain'
+import * as Vocabulary from '@/domain/vocabulary/domain'
 import * as App from './appStore'
 
 import type { StoreApi } from 'zustand'
@@ -29,3 +30,6 @@ export const useFileStore = createStoreHook(fileStore)
 
 const appStore = App.storeFactory()
 export const useAppStore = createStoreHook(appStore)
+
+const vocabularyStore = Vocabulary.storeFactory()
+export const useVocabularyStore = createStoreHook(vocabularyStore)

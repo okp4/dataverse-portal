@@ -3,7 +3,6 @@ import { flow, pipe } from 'fp-ts/function'
 import * as A from 'fp-ts/Array'
 import * as B from 'fp-ts/boolean'
 import * as O from 'fp-ts/Option'
-import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
 import * as IO from 'fp-ts/IO'
 import * as S from 'fp-ts/string'
@@ -19,10 +18,12 @@ import type {
   ByServiceCategoryFilter,
   ByTypeFilterInput,
   Command,
-  DataverseElementType
+  DataverseElementType,
+  LoadDataverseError
 } from './command'
 import type { ByTypeQueryFilter, DataverseQuery } from './valueObject'
 import type { Query } from './query'
+import { isNetworkRequestAbortedError } from '@/shared/error/network'
 
 export type State = {
   data: Dataverse & DataverseQuery
@@ -97,7 +98,6 @@ export const storeFactory = (
             isLoading: false,
             limit: 20,
             hasNext: false,
-            error: O.none,
             filters: { byType: 'all', byProperty: O.none, byServiceCategory: O.none },
             language: 'en'
           }))
@@ -105,7 +105,6 @@ export const storeFactory = (
         dataverse: () => () => get().data.dataverse,
         hasNext: () => () => get().data.hasNext,
         isLoading: () => () => get().data.isLoading,
-        error: () => () => get().data.error,
         byTypeFilter: () => () => get().data.filters.byType,
         byPropertyFilter: () =>
           pipe(
@@ -150,16 +149,14 @@ export const storeFactory = (
                 }))
             )
           ),
-        loadDataverse: (): T.Task<void> =>
+        loadDataverse: (): TE.TaskEither<LoadDataverseError, void> =>
           pipe(
-            T.fromIO(() => get().data),
-            T.chain(data =>
+            TE.fromIO(() => get().data),
+            TE.chain(data =>
               pipe(
-                T.fromIO(() =>
-                  set(state => ({ data: { ...state.data, isLoading: true, error: O.none } }))
-                ),
-                T.chainFirst(() => T.fromIO(() => gateway.cancelDataverseRetrieval())),
-                T.chain(() =>
+                TE.fromIO(() => set(state => ({ data: { ...state.data, isLoading: true } }))),
+                TE.chainFirst(() => TE.fromIO(() => gateway.cancelDataverseRetrieval())),
+                TE.chain(() =>
                   gateway.retrieveDataverse(
                     data.language,
                     data.limit,
@@ -167,33 +164,35 @@ export const storeFactory = (
                     data.filters
                   )
                 ),
-                TE.matchE(
-                  e =>
-                    pipe(
-                      e,
-                      O.fromPredicate(e => e.name === 'AbortError'),
-                      O.fold(
-                        () =>
-                          T.fromIO(() =>
-                            set(state => ({
-                              data: { ...state.data, isLoading: false, error: O.some(e) }
-                            }))
-                          ),
-                        // do not update state if fetch was aborted
-                        () => T.of(undefined)
+                TE.tapError(
+                  flow(
+                    TE.left,
+                    TE.tapError(
+                      flow(
+                        O.fromPredicate(isNetworkRequestAbortedError),
+                        O.match(
+                          () =>
+                            TE.fromIO(() =>
+                              set(state => ({
+                                data: { ...state.data, isLoading: false }
+                              }))
+                            ),
+                          () => TE.of(undefined)
+                        )
                       )
-                    ),
-                  r =>
-                    T.fromIO(() =>
-                      set(state => ({
-                        data: {
-                          ...state.data,
-                          isLoading: false,
-                          hasNext: r.query.hasNext,
-                          dataverse: pipe(data.dataverse, A.concat(r.data))
-                        }
-                      }))
                     )
+                  )
+                ),
+                TE.chainIOK(
+                  r => () =>
+                    set(state => ({
+                      data: {
+                        ...state.data,
+                        isLoading: false,
+                        hasNext: r.query.hasNext,
+                        dataverse: pipe(data.dataverse, A.concat(r.data))
+                      }
+                    }))
                 )
               )
             )

@@ -1,9 +1,10 @@
+import type * as O from 'fp-ts/Option'
+import * as A from 'fp-ts/Array'
+import * as TE from 'fp-ts/TaskEither'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import * as O from 'fp-ts/Option'
-import * as A from 'fp-ts/Array'
 import { pipe } from 'fp-ts/lib/function'
 import { useBreakpoint } from '@/ui/hook/useBreakpoint'
 import { useDataverseStore, useAppStore } from '@/ui/store/index'
@@ -17,15 +18,22 @@ import '@/ui/view/dataverse/component/filters/i18n/index'
 import { activeLanguageWithDefault } from '@/ui/languages/languages'
 import { LottieLoader } from '@/ui/component/loader/lottieLoader'
 import threeDots from '@/ui/asset/animations/threeDots.json'
+import type { DispatchNotificationInput } from '@/ui/hook/useDispatchNotification'
 import { useDispatchNotification } from '@/ui/hook/useDispatchNotification'
 import { loadingDataverseCards } from '@/ui/view/loadingDataverseCards/loadingDataverseCards'
-import type { ByTypeFilterInput, DataverseElementType } from '@/domain/dataverse/command'
+import type {
+  ByTypeFilterInput,
+  DataverseElementType,
+  LoadDataverseError
+} from '@/domain/dataverse/command'
 import { SearchBar } from '@/ui/component/searchbar/searchbar'
 import { NoResultFound } from '@/ui/view/dataverse/component/noResultFound/noResultFound'
 import { DateRangeFilter } from '@/ui/view/dataverse/component/filters/dateRangeFilter/dateRangeFilter'
 import { FilterLabel } from '@/ui/view/dataverse/component/filters/filter'
 import './i18n/index'
 import './dataverse.scss'
+import { ShowNetworkError } from '@/shared/error/network'
+import { ShowSerializationError } from '@/shared/error/serialize'
 
 type DataverseItemType = 'service' | 'zone' | 'dataset'
 type FilterLabel = 'zones' | 'datasets' | 'services' | 'all'
@@ -613,7 +621,6 @@ const Dataverse = (): JSX.Element => {
     hasNext,
     byTypeFilter,
     setLanguage,
-    error,
     byPropertyFilter,
     setByPropertyFilter,
     resetByTypeFilter,
@@ -626,7 +633,6 @@ const Dataverse = (): JSX.Element => {
     setLanguage: state.setLanguage,
     setByTypeFilter: state.setByTypeFilter,
     byTypeFilter: state.byTypeFilter,
-    error: state.error,
     byPropertyFilter: state.byPropertyFilter,
     setByPropertyFilter: state.setByPropertyFilter,
     resetByTypeFilter: state.resetByTypeFilter,
@@ -641,26 +647,45 @@ const Dataverse = (): JSX.Element => {
   const isLargeScreen = isDesktop || isLargeDesktop
   const filtersLabel = t('filters')
 
+  const handleLoadDataverseError = useCallback(
+    (error: LoadDataverseError): void => {
+      const message: DispatchNotificationInput = {
+        action: 'refresh',
+        messageKey: 'error.processing',
+        titleKey: 'error.problem',
+        type: 'error'
+      }
+
+      switch (error._tag) {
+        case 'network-request-aborted':
+          break
+        case 'serialization':
+          console.error(ShowSerializationError.show(error))
+          return dispatchNotification(message)
+        case 'network-http':
+        case 'network-unspecified':
+          console.error(ShowNetworkError.show(error))
+          return dispatchNotification(message)
+      }
+    },
+    [dispatchNotification]
+  )
+
+  const retrieveDataverse = useCallback((): void => {
+    pipe(loadDataverse(), TE.mapLeft(handleLoadDataverseError))()
+  }, [handleLoadDataverseError, loadDataverse])
+
   const toggleFilter = useCallback(
     (filter: ByTypeFilterInput) => () => {
       setByTypeFilter(filter)()
-      loadDataverse()()
+      retrieveDataverse()
     },
-    [loadDataverse, setByTypeFilter]
+    [retrieveDataverse, setByTypeFilter]
   )
 
   const toggleMobileFilters = useCallback(() => {
     setShowMobileFilters(!showMobileFilters)
   }, [showMobileFilters])
-
-  const handleDataverseError = useCallback(() => {
-    dispatchNotification({
-      type: 'error',
-      titleKey: 'error.problem',
-      messageKey: 'error.processing',
-      action: 'refresh'
-    })
-  }, [dispatchNotification])
 
   const handleDataverseItemDetails = useCallback(
     (id: string, type: DataverseItemType) => (): void => {
@@ -672,9 +697,9 @@ const Dataverse = (): JSX.Element => {
   const handleSearch = useCallback(
     (searchTearm: string) => {
       setByPropertyFilter({ property: 'title', value: searchTearm })()
-      loadDataverse()()
+      retrieveDataverse()
     },
-    [loadDataverse, setByPropertyFilter]
+    [retrieveDataverse, setByPropertyFilter]
   )
 
   const FiltersChips = (): JSX.Element =>
@@ -706,13 +731,10 @@ const Dataverse = (): JSX.Element => {
       ),
       []
     )
-  useEffect(() => {
-    O.map(handleDataverseError)(error()())
-  }, [error, handleDataverseError])
 
   useEffect(() => {
     setLanguage(currentLng)()
-    loadDataverse()()
+    retrieveDataverse()
     return () => {
       resetByPropertyFilter()()
       resetByTypeFilter()()
@@ -770,7 +792,7 @@ const Dataverse = (): JSX.Element => {
               !showMobileFilters &&
               dataverse()().length && <LottieLoader animationData={threeDots} />
             }
-            next={loadDataverse()}
+            next={retrieveDataverse}
             scrollThreshold={0.91}
             scrollableTarget="page-wrapper"
           >

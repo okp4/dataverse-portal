@@ -1,6 +1,12 @@
 import type * as TE from 'fp-ts/TaskEither'
 import type { DataverseElement } from '@/domain/dataverse/entity'
 import type { Option } from 'fp-ts/Option'
+import type {
+  HTTPNetworkError,
+  NetworkRequestAbortedError,
+  NetworkUnspecifiedError
+} from '@/shared/error/network'
+import type { SerializationError } from '@/shared/error/serialize'
 
 export type DataverseElementType = 'Zone' | 'Dataset' | 'Service'
 export type ByTypeQueryFilter = DataverseElementType[] | 'all'
@@ -28,6 +34,9 @@ export type DataversePort = {
     limit: number,
     offset: number,
     filters: RetrieveDataverseQueryFilters
-  ) => TE.TaskEither<Error, RetrieveDataverseResult>
+  ) => TE.TaskEither<
+    HTTPNetworkError | NetworkUnspecifiedError | NetworkRequestAbortedError | SerializationError,
+    RetrieveDataverseResult
+  >
   cancelDataverseRetrieval: () => void
 }

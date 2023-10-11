@@ -6,7 +6,8 @@ import {
   escapeSparqlStr,
   updateItemById,
   without,
-  createIntermediateNumericPattern
+  createIntermediateNumericPattern,
+  extractErrorMessage
 } from './util'
 import type { Item } from './util'
 
@@ -217,6 +218,21 @@ describe('Considering the createIntermediateNumericPattern utility function', ()
     describe(`When testing the pattern against the string "${input}"`, () => {
       it(`Then it ${match ? 'matches' : 'not match'} the pattern`, () => {
         expect(pattern.test(input)).toBe(match)
+      })
+    })
+  })
+})
+
+describe('Considering the extractErrorMessage() function', () => {
+  describe.each`
+    arg                                                  | expectedResult
+    ${new Error('foo')}                                  | ${'foo'}
+    ${{ myCustomError: { code: 'foo', reason: 'bar' } }} | ${JSON.stringify({ myCustomError: { code: 'foo', reason: 'bar' } })}
+  `('Given an unknown error <"$error">', ({ arg, expectedResult }: Data) => {
+    describe('When extracting the message from this error', () => {
+      const result = extractErrorMessage(arg)
+      test('Then, the result is as expected', () => {
+        expect(result).toStrictEqual(expectedResult)
       })
     })
   })
