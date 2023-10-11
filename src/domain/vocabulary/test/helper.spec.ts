@@ -1,9 +1,8 @@
+/* eslint-disable max-lines-per-function */
 import * as E from 'fp-ts/Either'
-import type { RetrieveVocabularyDependencies } from '../helper/dependencies'
 import {
-  MandatoryDependenciesError,
-  LanguageEmptyError,
-  NegativeLimitError,
+  MandatoryDependencyError,
+  InvalidValueError,
   createVocabularyDependenciesWithOptions,
   withLanguage,
   withLimit,
@@ -13,33 +12,40 @@ import { pipe } from 'fp-ts/lib/function'
 import type { VocabularyPort } from '../port'
 // eslint-disable-next-line import/no-restricted-paths
 import { sparqlGateway } from '@/infra/vocabulary/sparql/sparqlGateway'
+import type { Deps } from '../command'
 
 type Data = {
   vocabularyGateway?: VocabularyPort
   language?: string
   limit?: number
-  expectedDeps: RetrieveVocabularyDependencies
+  expectedDeps: Omit<Deps, '_opaque'>
   expectedError?: Error
 }
 
 describe('Considering the createDepsWithOptions() function', () => {
   // Expected Deps
   const emptyDeps = Object.create(null)
-  const expectedDeps1: RetrieveVocabularyDependencies = {
-    _tag: 'retrieve-vocabulary-deps',
+  const expectedDeps1: Omit<Deps, '_opaque'> = {
     language: 'en',
     limit: 20,
     vocabularyGateway: sparqlGateway
   }
+  const expectedDeps2: Omit<Deps, '_opaque'> = {
+    language: 'en',
+    limit: 0,
+    vocabularyGateway: sparqlGateway
+  }
+
   describe.each`
     vocabularyGateway | language     | limit        | expectedDeps     | expectedError
-    ${undefined}      | ${undefined} | ${undefined} | ${emptyDeps}     | ${MandatoryDependenciesError({})}
-    ${sparqlGateway}  | ${''}        | ${20}        | ${emptyDeps}     | ${LanguageEmptyError()}
-    ${sparqlGateway}  | ${'en'}      | ${-1}        | ${emptyDeps}     | ${NegativeLimitError(-1)}
+    ${undefined}      | ${undefined} | ${undefined} | ${emptyDeps}     | ${MandatoryDependencyError('language')}
+    ${sparqlGateway}  | ${'en'}      | ${-1}        | ${emptyDeps}     | ${InvalidValueError('limit', 'Limit cannot be a negative value. Please provide a value non-strictly greater than 0')}
     ${sparqlGateway}  | ${'en'}      | ${20}        | ${expectedDeps1} | ${undefined}
-    ${sparqlGateway}  | ${undefined} | ${undefined} | ${emptyDeps}     | ${MandatoryDependenciesError({ vocabularyGateway: sparqlGateway })}
-    ${undefined}      | ${'en'}      | ${undefined} | ${emptyDeps}     | ${MandatoryDependenciesError({ language: 'en' })}
-    ${undefined}      | ${undefined} | ${20}        | ${emptyDeps}     | ${MandatoryDependenciesError({ limit: 20 })}
+    ${sparqlGateway}  | ${'en'}      | ${0}         | ${expectedDeps2} | ${undefined}
+    ${sparqlGateway}  | ${undefined} | ${undefined} | ${emptyDeps}     | ${MandatoryDependencyError('language')}
+    ${undefined}      | ${'en'}      | ${undefined} | ${emptyDeps}     | ${MandatoryDependencyError('limit')}
+    ${undefined}      | ${'en'}      | ${20}        | ${emptyDeps}     | ${MandatoryDependencyError('vocabularyGateway')}
+    ${sparqlGateway}  | ${''}        | ${20}        | ${emptyDeps}     | ${MandatoryDependencyError('language')}
   `(
     'Given a vocabularyGateway <$vocabularyGateway>, a language <$language> and a limit <$limit>',
     ({ vocabularyGateway, language, limit, expectedDeps, expectedError }: Data) => {
@@ -58,7 +64,11 @@ describe('Considering the createDepsWithOptions() function', () => {
             deps,
             E.match(
               e => expect(e).toStrictEqual(expectedError),
-              d => expect(d).toStrictEqual(expectedDeps)
+              d => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { _opaque: _, ...rest } = d
+                return expect(rest).toStrictEqual(expectedDeps)
+              }
             )
           )
         })

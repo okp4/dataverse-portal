@@ -37,9 +37,13 @@ const initStore = (initialState?: VocabularyDomain.Options): InitialProps => {
   return { store }
 }
 
-const spy = jest.spyOn(sparqlGateway, 'retrieveVocabulary')
-
 describe('Retrieve vocabulary by type from a thesaurus', () => {
+  const spy = jest.spyOn(sparqlGateway, 'retrieveVocabulary')
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   // Preloaded state
   const defaultVocabulary: Vocabulary = {
     isLoading: false,
@@ -121,10 +125,6 @@ describe('Retrieve vocabulary by type from a thesaurus', () => {
         ),
         E.getOrElseW(() => undefined)
       )
-
-      afterEach(() => {
-        jest.clearAllMocks()
-      })
 
       describe('When retrieving vocabulary', () => {
         test(`Then, expect vocabulary by type to be ${JSON.stringify(
