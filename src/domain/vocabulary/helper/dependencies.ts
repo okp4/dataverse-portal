@@ -2,83 +2,52 @@ import * as E from 'fp-ts/Either'
 import * as S from 'fp-ts/string'
 import * as P from 'fp-ts/Predicate'
 import * as N from 'fp-ts/number'
+import * as A from 'fp-ts/Array'
 import * as ORD from 'fp-ts/Ord'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import type { Show } from 'fp-ts/lib/Show'
 import type { VocabularyPort } from '../port'
+import type { Deps, RawDeps } from '../command'
+import { buildDeps } from '../command'
 
-declare const depsSymbol: unique symbol
-
-type Deps = {
-  _opaque: typeof depsSymbol
-  vocabularyGateway: VocabularyPort
-  language: string
-  limit: number
-}
-
-export type RetrieveVocabularyDependencies = Readonly<Deps>
-
-type TransientDeps = Partial<{
-  vocabularyGateway: VocabularyPort
-  language: string
-  limit: number
-}>
+type TransientDeps = Partial<RawDeps>
 
 type Option = (deps: TransientDeps) => E.Either<VocabularyDependenciesError, TransientDeps>
 
-export const LanguageEmptyError = () =>
+export const InvalidValueError = (propertyName: keyof TransientDeps, reason: string) =>
   ({
-    _tag: 'language-empty'
+    _tag: 'invalid-value',
+    propertyName,
+    reason
   } as const)
 
 /**
- *  Error when withLanguage() function is called with an empty language argument
+ *  Error when the value given as argument is invalid, whatever the reason
  */
-export type LanguageEmptyError = ReturnType<typeof LanguageEmptyError>
+export type InvalidValueError = ReturnType<typeof InvalidValueError>
 
-export const NegativeLimitError = (limit: number) =>
+export const MandatoryDependencyError = (missingPropertyName: keyof TransientDeps) =>
   ({
-    _tag: 'negative-limit',
-    limit
-  } as const)
-
-/**
- *  Error when withLimit() function is called with a negative limit argument
- */
-export type NegativeLimitError = ReturnType<typeof NegativeLimitError>
-
-export const MandatoryDependenciesError = (deps: TransientDeps) =>
-  ({
-    _tag: 'mandatory-dependencies',
-    deps
+    _tag: 'mandatory-dependency',
+    missingPropertyName
   } as const)
 
 /**
  *  Error when one oor more properties are missing in the created Dependencies
  */
-export type MandatoryDependenciesError = ReturnType<typeof MandatoryDependenciesError>
+export type MandatoryDependencyError = ReturnType<typeof MandatoryDependencyError>
 
-export type VocabularyDependenciesError =
-  | LanguageEmptyError
-  | NegativeLimitError
-  | MandatoryDependenciesError
+export type VocabularyDependenciesError = InvalidValueError | MandatoryDependencyError
 
 export const ShowVocabularyDependenciesError: Show<VocabularyDependenciesError> = {
   show: (error: VocabularyDependenciesError): string => {
     switch (error._tag) {
-      case 'language-empty': {
-        return `Error ${error._tag}: The given language parameter cannot be empty`
+      case 'invalid-value': {
+        return `Error ${error._tag}: The given parameter <${error.propertyName}> is invalid regarding the following reason: ${error.reason}`
       }
-      case 'negative-limit': {
-        return `Error ${error._tag}: The given limit parameter <${error.limit}> cannot be negative`
-      }
-      case 'mandatory-dependencies': {
-        return `Error ${
-          error._tag
-        }: All properties are mandatory, but received a partial object: <${JSON.stringify(
-          error.deps
-        )}>`
+      case 'mandatory-dependency': {
+        return `Error ${error._tag}: The ${error.missingPropertyName} property is missing, so we cannot build dependencies.`
       }
     }
   }
@@ -100,7 +69,7 @@ export const withLanguage =
   (deps: TransientDeps) =>
     pipe(
       lng,
-      E.fromPredicate(P.not(S.isEmpty), LanguageEmptyError),
+      E.fromPredicate(P.not(S.isEmpty), () => MandatoryDependencyError('language')),
       E.map(language => ({
         ...deps,
         language
@@ -112,37 +81,41 @@ export const withLimit =
   (deps: TransientDeps) =>
     pipe(
       limit,
-      E.fromPredicate(x => ORD.gt(N.Ord)(x, 0), NegativeLimitError),
+      E.fromPredicate(
+        x => ORD.geq(N.Ord)(x, 0),
+        () =>
+          InvalidValueError(
+            'limit',
+            'Limit cannot be a negative value. Please provide a value non-strictly greater than 0'
+          )
+      ),
       E.map(l => ({
         ...deps,
         limit: l
       }))
     )
 
-const validateDeps = (
-  deps: TransientDeps
-): E.Either<VocabularyDependenciesError, RetrieveVocabularyDependencies> =>
+const validateDeps = (deps: TransientDeps): E.Either<VocabularyDependenciesError, Deps> =>
   pipe(
     deps,
     O.fromPredicate(depsIsRequiredTransientDeps),
-    O.map(({ vocabularyGateway, limit, language }) => ({
-      _opaque: depsSymbol as typeof depsSymbol,
-      vocabularyGateway,
-      limit,
-      language
-    })),
-
-    E.fromOption(() => MandatoryDependenciesError(deps))
+    O.map(buildDeps),
+    E.fromOption(() => {
+      const rawDepsKeys: Array<keyof RawDeps> = ['language', 'limit', 'vocabularyGateway']
+      const r = pipe(rawDepsKeys, A.difference(S.Eq)(Object.keys(deps))) as Array<keyof RawDeps>
+      return MandatoryDependencyError(r[0])
+    })
   )
 
 export const createVocabularyDependenciesWithOptions = (
   ...options: Option[]
-): E.Either<VocabularyDependenciesError, RetrieveVocabularyDependencies> =>
+): E.Either<VocabularyDependenciesError, Deps> =>
   pipe(
-    options.reduce(
+    options,
+    A.reduce(
+      E.right({}),
       (acc: E.Either<VocabularyDependenciesError, TransientDeps>, cur: Option) =>
-        pipe(acc, E.chain(cur)),
-      E.right({})
+        pipe(acc, E.chain(cur))
     ),
     E.chain(validateDeps)
   )
