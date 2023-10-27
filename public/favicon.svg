@@ -1,36 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Calque_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+<svg id="okp4-favicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 59.85 59.85">
     <defs>
         <style>
-            .cls-1{fill:none;}.cls-2{fill:#004073;}.cls-3{fill:#008fad;}.cls-4{fill:#ff9500;}.cls-5{fill:url(#Dégradé_sans_nom_40);}.cls-6{fill:url(#Dégradé_sans_nom_41);}.cls-7{fill:url(#Dégradé_sans_nom_45);}.cls-8{fill:url(#Dégradé_sans_nom_15);}.cls-9{fill:url(#Dégradé_sans_nom_60);}.cls-10{fill:url(#Dégradé_sans_nom_50);}.cls-11{fill:url(#Dégradé_sans_nom_56);}.cls-12{opacity:.2;}.cls-13{fill:url(#Dégradé_sans_nom_56-2);}.cls-14{fill:url(#Dégradé_sans_nom_15-2);}.cls-15{fill:url(#Dégradé_sans_nom_41-2);}.cls-16{fill:url(#Dégradé_sans_nom_41-3);}</style>
-        <linearGradient id="Dégradé_sans_nom_15" x1="37.33" y1="47.25" x2="38.54" y2="15.95"
-            gradientUnits="userSpaceOnUse">
+            .cls-1 {
+                fill: none;
+            }
+
+            .cls-2 {
+                fill: #004073;
+            }
+
+            .cls-3 {
+                fill: #008fad;
+            }
+
+            .cls-4 {
+                fill: #ff9500;
+            }
+
+            .cls-5 {
+                fill: url(#gradient-4);
+            }
+
+            .cls-6 {
+                fill: url(#gradient-2);
+            }
+
+            .cls-7 {
+                fill: url(#gradient-5);
+            }
+
+            .cls-8 {
+                fill: url(#gradient-1);
+            }
+
+            .cls-9 {
+                fill: url(#gradient-11);
+            }
+
+            .cls-10 {
+                fill: url(#gradient-9);
+            }
+
+            .cls-11 {
+                fill: url(#gradient-8);
+            }
+
+            .cls-12 {
+                opacity: .2;
+            }
+
+            .cls-13 {
+                fill: url(#gradient-10);
+            }
+
+            .cls-14 {
+                fill: url(#gradient-7);
+            }
+
+            .cls-15 {
+                fill: url(#gradient-3);
+            }
+
+            .cls-16 {
+                fill: url(#gradient-6);
+            }
+        </style>
+        <linearGradient id="gradient-1" x1="37.33" y1="47.25" x2="38.54" y2="15.95" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#004073" />
             <stop offset="1" stop-color="#00b6b7" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_41" x1="23.92" y1="14.53" x2="27.02" y2="14.53"
-            gradientUnits="userSpaceOnUse">
+        <linearGradient id="gradient-2" x1="23.92" y1="14.53" x2="27.02" y2="14.53" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
             <stop offset="1" stop-color="#fff" stop-opacity=".4" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_41-2" x1="1.2" y1="21.64" x2="23.92" y2="21.64"
-            xlink:href="#Dégradé_sans_nom_41" />
-        <linearGradient id="Dégradé_sans_nom_40" x1="16.49" y1="11.28" x2="28.31" y2="11.28"
-            gradientUnits="userSpaceOnUse">
+        <linearGradient id="gradient-3" x1="1.2" y1="21.64" x2="23.92" y2="21.64" xlink:href="#gradient-2" />
+        <linearGradient id="gradient-4" x1="16.49" y1="11.28" x2="28.31" y2="11.28" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
             <stop offset="1" stop-color="#fff" stop-opacity=".2" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_45" x1="15.49" y1="48.06" x2="27.45" y2="48.06"
-            gradientUnits="userSpaceOnUse">
+        <linearGradient id="gradient-5" x1="15.49" y1="48.06" x2="27.45" y2="48.06" gradientUnits="userSpaceOnUse">
             <stop offset=".2" stop-color="#fff" stop-opacity="0" />
             <stop offset="1" stop-color="#fff" stop-opacity=".4" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_41-3" x1="17.38" y1="22.43" x2="40.11" y2="22.43"
-            xlink:href="#Dégradé_sans_nom_41" />
-        <linearGradient id="Dégradé_sans_nom_15-2" x1="44.16" y1="10.64" x2="46.1" y2="46.06"
-            xlink:href="#Dégradé_sans_nom_15" />
-        <linearGradient id="Dégradé_sans_nom_56" x1="35.68" y1="13.48" x2="60.19" y2="13.48"
+        <linearGradient id="gradient-6" x1="17.38" y1="22.43" x2="40.11" y2="22.43" xlink:href="#gradient-2" />
+        <linearGradient id="gradient-7" x1="44.16" y1="10.64" x2="46.1" y2="46.06" xlink:href="#gradient-1" />
+        <linearGradient id="gradient-8" x1="35.68" y1="13.48" x2="60.19" y2="13.48"
             gradientTransform="translate(-3.07 5.12)" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
             <stop offset=".49" stop-color="#fff" stop-opacity=".2" />
@@ -39,16 +95,13 @@
             <stop offset=".87" stop-color="#fff" stop-opacity=".02" />
             <stop offset="1" stop-color="#fff" stop-opacity="0" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_50" x1="31.65" y1="48.06" x2="43.61" y2="48.06"
-            gradientUnits="userSpaceOnUse">
+        <linearGradient id="gradient-9" x1="31.65" y1="48.06" x2="43.61" y2="48.06" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#004073" />
             <stop offset=".71" stop-color="#00b6b7" />
         </linearGradient>
-        <linearGradient id="Dégradé_sans_nom_56-2" y1="-281.17" y2="-281.17"
-            gradientTransform="translate(-3.07 -239.09) scale(1 -1)"
-            xlink:href="#Dégradé_sans_nom_56" />
-        <linearGradient id="Dégradé_sans_nom_60" x1="38.25" y1="30.32" x2="47.89" y2="30.32"
-            gradientUnits="userSpaceOnUse">
+        <linearGradient id="gradient-10" y1="-281.17" y2="-281.17"
+            gradientTransform="translate(-3.07 -239.09) scale(1 -1)" xlink:href="#gradient-8" />
+        <linearGradient id="gradient-11" x1="38.25" y1="30.32" x2="47.89" y2="30.32" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
             <stop offset="1" stop-color="#fff" stop-opacity=".4" />
         </linearGradient>
@@ -63,8 +116,7 @@
                 <path class="cls-4"
                     d="m36.45,36.33l5.99-5.99-5.99-5.99,3.25-3.25,7.53,7.53c.9.9.9,2.52,0,3.42l-7.53,7.53c-1.08-1.08-2.16-2.16-3.25-3.25Z" />
                 <g>
-                    <path class="cls-6"
-                        d="m25.07,15.63l1.95-1.95c-.88-.44-1.97-.32-2.71.41l-.39.39,1.15,1.15Z" />
+                    <path class="cls-6" d="m25.07,15.63l1.95-1.95c-.88-.44-1.97-.32-2.71.41l-.39.39,1.15,1.15Z" />
                     <path class="cls-15"
                         d="m4.2,26.93c1.47-1.39,12.78-12.14,13.46-12.81.14-.14.59-.6,1.33-.95,0,0,.39-.18.75-.27,1.27-.31,2.64.47,2.97.67.4-1.45.8-2.9,1.2-4.35-2.39-.74-5.08-.25-6.97,1.63L3.23,24.57c-2.71,2.71-2.71,7.11,0,9.82-.2-.27-1.52-2.12-.96-4.48.35-1.49,1.33-2.42,1.93-2.98Z" />
                 </g>
