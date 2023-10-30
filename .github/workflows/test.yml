@@ -26,7 +26,7 @@ jobs:
           version: 8.3.0
 
       - name: Setup node environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 16.19
           cache: "pnpm"
