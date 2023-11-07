@@ -146,15 +146,14 @@ jobs:
 
       - name: Create artifacts directory
         run: |
-          mkdir -p ${{ github.workspace }}/tmp/artifacts/desktop
-          mkdir -p ${{ github.workspace }}/tmp/artifacts/mobile
+          mkdir -p ${{ github.workspace }}/tmp/artifacts
 
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@v10.0.0
         with:
           prCommentEnabled: true
           maxRetries: 2
-          outputDirectory: ${{ github.workspace }}/tmp/artifacts/mobile
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts
           device: all
           urls: >-
             http://localhost:4173/
