@@ -21,6 +21,10 @@ export const ShareDataset: FC = () => {
     hasStoredFiles: store.hasStoredFiles
   }))
 
+  const { hasTextFieldValue } = useAppStore(state => ({
+    hasTextFieldValue: state.shareData.hasTextFieldValue
+  }))
+
   const storageServiceSelection: StepElement = {
     id: 'step1',
     content: <ServiceStorageSelection />,
@@ -31,7 +35,11 @@ export const ShareDataset: FC = () => {
     content: <DataSelection />,
     validate: () => hasStoredFiles()()
   }
-  const metadataFilling: StepElement = { id: 'step3', content: <MetadataFilling /> }
+  const metadataFilling: StepElement = {
+    id: 'step3',
+    content: <MetadataFilling />,
+    validate: hasTextFieldValue('input-field-1')
+  }
   const summary: StepElement = { id: 'step4', content: <Summary /> }
   const completeTransaction: StepElement = { id: 'step5', content: <CompleteTransaction /> }
 

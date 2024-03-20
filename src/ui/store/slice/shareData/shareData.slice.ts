@@ -8,7 +8,7 @@ import type { IOEither } from 'fp-ts/IOEither'
 import type { IOOption } from 'fp-ts/IOOption'
 import type { Eq } from 'fp-ts/lib/Eq'
 import type { Show } from 'fp-ts/lib/Show'
-import type IO from 'fp-ts/IO'
+import * as IO from 'fp-ts/IO'
 import * as A from 'fp-ts/Array'
 import * as IOE from 'fp-ts/IOEither'
 import * as IOO from 'fp-ts/IOOption'
@@ -137,6 +137,7 @@ export type ShareDataSlice = {
       id: string,
       value: FormItemValue
     ) => IOEither<ResourceNotFoundError | PayloadIsEmptyError | FormItemWrongTypeError, void>
+    hasTextFieldValue: (id: FormItemId) => IO.IO<boolean>
   }
 }
 const eqFormItemId: Eq<FormItemId> = S.Eq
@@ -286,6 +287,8 @@ export const isDateStringRange = (formItemValue: FormItemValue): formItemValue i
   'from' in formItemValue &&
   'to' in formItemValue
 
+export const isTextField = (item: FormItem): item is TextField => item.type === 'text'
+
 const updateFormItem =
   (updatedValue: FormItemValue) =>
   (formItem: FormItem): E.Either<FormItemWrongTypeError, FormItem> => {
@@ -432,6 +435,23 @@ export const createShareDataSlice: ShareDataStateCreator =
         pipe(
           IOO.fromIO(() => get().shareData.form),
           IOO.chainOptionK(flow(A.findFirst(formItem => eqFormItem.equals(formItem, { id }))))
+        ),
+      hasTextFieldValue: (id: FormItemId) =>
+        pipe(
+          IOO.fromIO(() => get().shareData.form),
+          IOO.chainOptionK(flow(A.findFirst(formItem => eqFormItem.equals(formItem, { id })))),
+          IOO.flatMap(formItem =>
+            IOO.fromOption(
+              pipe(
+                formItem,
+                O.fromPredicate(isTextField),
+                O.flatMap(({ value }) => value),
+                O.map(S.trim),
+                O.map(isNotEmpty)
+              )
+            )
+          ),
+          IOO.getOrElse(constant(IO.of(false)))
         ),
       setFormItemValue: (id: string, value: FormItemValue) =>
         pipe(
